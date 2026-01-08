@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add0d790b46347df8b0b2d39f34ddd43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSoundsServicePrefab: {fileID: 0}
-  _particleEffectsService: {fileID: 0}
+  _audioSoundsServicePrefab: {fileID: 1081434827416047050, guid: 567029ed7fedcfe45806ada75cfa54cd, type: 3}
+  _particleEffectsService: {fileID: 8025066812198353854, guid: 79df315e16969924597fb7cb36295ae3, type: 3}
   _uiRootViewPrefab: {fileID: 0}
   _gameEntryPointPrefab: {fileID: 0}
