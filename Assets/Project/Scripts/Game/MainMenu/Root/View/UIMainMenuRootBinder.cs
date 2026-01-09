@@ -14,7 +14,7 @@ namespace Project.Scripts.Game.MainMenu.Root.View
         [SerializeField] private MainMenuElements _uiScene;
 
         [SerializeField] private Button _playButton;
-        [SerializeField] private Button _startOperationButton;
+        // [SerializeField] private Button _startOperationButton;
 
         private Subject<Unit> _exitSceneSubjectSignal;
         private AudioSoundsService _audioSoundsService;
@@ -30,14 +30,14 @@ namespace Project.Scripts.Game.MainMenu.Root.View
 
         private void OnEnable()
         {
-            _playButton.onClick.AddListener(HandlePlayButtonClick);
-            _startOperationButton.onClick.AddListener(HandleGoToGameplayButtonClick);
+            _playButton.onClick.AddListener(HandleGoToGameplayButtonClick);
+            // _startOperationButton.onClick.AddListener(HandleGoToGameplayButtonClick);
         }
-
+        
         private void OnDisable()
         {
-            _playButton.onClick.RemoveListener(HandlePlayButtonClick);
-            _startOperationButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);
+            _playButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);
+            // _startOperationButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);
         }
 
         private void OnDestroy()

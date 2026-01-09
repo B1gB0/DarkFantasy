@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Project.Scripts.Services
 {
-    public class ResourceService
+    public class ResourceService : IResourceService
     {
         public async UniTask<T> Load<T>(string assetName)
         {
