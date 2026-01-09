@@ -4,5 +4,6 @@
     {
         public const string Boot = nameof(Boot);
         public const string MainMenu = nameof(MainMenu);
+        public const string VillageHub = nameof(VillageHub);
     }
 }
