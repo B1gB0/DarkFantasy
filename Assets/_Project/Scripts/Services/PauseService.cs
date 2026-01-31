@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public class PauseService : IPauseService
     {

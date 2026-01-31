@@ -1,4 +1,4 @@
-﻿namespace Project.Scripts.UI.StateMachine.States
+﻿namespace _Project.Scripts.UI.StateMachine.States
 {
     public abstract class ViewState : UIState
     {

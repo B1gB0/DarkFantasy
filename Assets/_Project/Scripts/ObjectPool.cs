@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Project.Scripts
+namespace _Project.Scripts
 {
     public class ObjectPool<T>
         where T : MonoBehaviour

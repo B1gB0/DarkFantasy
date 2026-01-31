@@ -1,4 +1,4 @@
-namespace Project.Scripts.UI.StateMachine
+namespace _Project.Scripts.UI.StateMachine
 {
     public abstract class UIState
     {

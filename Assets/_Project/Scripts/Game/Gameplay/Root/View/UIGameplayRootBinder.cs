@@ -1,9 +1,9 @@
-﻿using Project.Scripts.UI.StateMachine;
-using Project.Scripts.UI.StateMachine.States;
+﻿using _Project.Scripts.UI.StateMachine;
+using _Project.Scripts.UI.StateMachine.States;
 using R3;
 using UnityEngine;
 
-namespace Project.Scripts.Game.Gameplay.Root.View
+namespace _Project.Scripts.Game.Gameplay.Root.View
 {
     public class UIGameplayRootBinder : MonoBehaviour
     {

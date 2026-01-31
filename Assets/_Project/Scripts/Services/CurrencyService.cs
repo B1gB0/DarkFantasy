@@ -1,8 +1,9 @@
 using System;
 using Cysharp.Threading.Tasks;
+
 // using YG;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public class CurrencyService : ICurrencyService
     {

@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public interface IService
     {

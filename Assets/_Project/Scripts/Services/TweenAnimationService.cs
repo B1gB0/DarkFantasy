@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public class TweenAnimationService : ITweenAnimationService
     {

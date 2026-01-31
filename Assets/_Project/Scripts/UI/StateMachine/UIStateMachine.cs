@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Project.Scripts.UI.StateMachine
+namespace _Project.Scripts.UI.StateMachine
 {
     public class UIStateMachine
     {

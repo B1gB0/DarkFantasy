@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Project.Scripts.Game.GameRoot
+namespace _Project.Scripts.Game.GameRoot
 {
     public class UISceneContainer : MonoBehaviour
     {

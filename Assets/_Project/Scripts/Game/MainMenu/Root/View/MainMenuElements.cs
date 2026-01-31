@@ -1,10 +1,10 @@
-﻿using DG.Tweening;
-using Project.Scripts.Services;
-using Project.Scripts.UI;
+﻿using _Project.Scripts.Services;
+using _Project.Scripts.UI;
+using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
 
-namespace Project.Scripts.Game.MainMenu.Root.View
+namespace _Project.Scripts.Game.MainMenu.Root.View
 {
     public class MainMenuElements : MonoBehaviour, IView
     {

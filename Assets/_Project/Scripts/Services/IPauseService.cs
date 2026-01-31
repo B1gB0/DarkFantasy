@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.EventSystems;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public interface IPauseService
     {

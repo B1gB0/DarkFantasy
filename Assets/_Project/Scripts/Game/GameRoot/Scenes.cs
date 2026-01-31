@@ -1,4 +1,4 @@
-﻿namespace Project.Scripts.Game.GameRoot
+﻿namespace _Project.Scripts.Game.GameRoot
 {
     public static class Scenes
     {

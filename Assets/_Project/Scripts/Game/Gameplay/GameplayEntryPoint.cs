@@ -1,14 +1,12 @@
+using _Project.Scripts.Game.Gameplay.Root.View;
+using _Project.Scripts.Game.GameRoot;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Game.Gameplay.Root.View;
-using Project.Scripts.Game.GameRoot;
-using Project.Scripts.UI.View;
 using R3;
-using Reflex.Attributes;
 using Reflex.Core;
 using Reflex.Extensions;
 using UnityEngine;
 
-namespace Project.Scripts.Game.Gameplay
+namespace _Project.Scripts.Game.Gameplay
 {
     public class GameplayEntryPoint : MonoBehaviour
     {

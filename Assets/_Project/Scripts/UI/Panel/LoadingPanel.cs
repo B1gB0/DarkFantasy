@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Project.Scripts.UI.Panel
+namespace _Project.Scripts.UI.Panel
 {
     public class LoadingPanel : MonoBehaviour, IView
     {

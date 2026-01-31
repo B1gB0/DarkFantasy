@@ -1,7 +1,7 @@
-﻿using Project.Scripts.UI;
+﻿using _Project.Scripts.UI;
 using UnityEngine;
 
-namespace Project.Scripts.Game.Gameplay.Root.View
+namespace _Project.Scripts.Game.Gameplay.Root.View
 {
     public class GameplayElements : MonoBehaviour, IView
     {

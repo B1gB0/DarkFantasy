@@ -1,12 +1,12 @@
-using Project.Scripts.Services;
-using Project.Scripts.UI.Panel;
-using Project.Scripts.UI.StateMachine;
-using Project.Scripts.UI.StateMachine.States;
+using _Project.Scripts.Services;
+using _Project.Scripts.UI.Panel;
+using _Project.Scripts.UI.StateMachine;
+using _Project.Scripts.UI.StateMachine.States;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Project.Scripts.Game.GameRoot
+namespace _Project.Scripts.Game.GameRoot
 {
     public class UIRootView : MonoBehaviour
     {

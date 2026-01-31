@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public class ResourceService : IResourceService
     {

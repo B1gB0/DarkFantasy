@@ -1,13 +1,13 @@
 ﻿using System;
-using Project.Scripts.Services;
-using Project.Scripts.UI.StateMachine;
-using Project.Scripts.UI.StateMachine.States;
+using _Project.Scripts.Services;
+using _Project.Scripts.UI.StateMachine;
+using _Project.Scripts.UI.StateMachine.States;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Project.Scripts.Game.MainMenu.Root.View
+namespace _Project.Scripts.Game.MainMenu.Root.View
 {
     public class UIMainMenuRootBinder : MonoBehaviour
     {

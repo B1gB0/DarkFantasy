@@ -1,13 +1,12 @@
-using Project.Scripts.Game.Gameplay;
-using Project.Scripts.Game.GameRoot;
-using Project.Scripts.Game.MainMenu.Root.View;
+using _Project.Scripts.Game.Gameplay;
+using _Project.Scripts.Game.GameRoot;
+using _Project.Scripts.Game.MainMenu.Root.View;
 using R3;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
-using YG;
 
-namespace Project.Scripts.Game.MainMenu
+namespace _Project.Scripts.Game.MainMenu
 {
     public class MainMenuEntryPoint : MonoBehaviour
     {

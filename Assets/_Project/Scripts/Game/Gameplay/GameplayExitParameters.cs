@@ -1,6 +1,6 @@
-﻿using Project.Scripts.Game.GameRoot;
+﻿using _Project.Scripts.Game.GameRoot;
 
-namespace Project.Scripts.Game.Gameplay
+namespace _Project.Scripts.Game.Gameplay
 {
     public class GameplayExitParameters
     {

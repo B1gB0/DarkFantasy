@@ -1,6 +1,6 @@
 using System;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public interface ICurrencyService : IService
     {

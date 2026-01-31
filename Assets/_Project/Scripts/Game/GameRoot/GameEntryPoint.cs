@@ -1,8 +1,8 @@
+using _Project.Scripts.Game.Gameplay;
+using _Project.Scripts.Game.MainMenu;
+using _Project.Scripts.Services;
+using _Project.Scripts.UI.StateMachine.States;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Game.Gameplay;
-using Project.Scripts.Game.MainMenu;
-using Project.Scripts.Services;
-using Project.Scripts.UI.StateMachine.States;
 using R3;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -14,7 +14,7 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using YG;
 
-namespace Project.Scripts.Game.GameRoot
+namespace _Project.Scripts.Game.GameRoot
 {
     public class GameEntryPoint : MonoBehaviour
     {

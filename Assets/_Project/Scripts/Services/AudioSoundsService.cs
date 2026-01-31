@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public class AudioSoundsService : MonoBehaviour, IService
     {

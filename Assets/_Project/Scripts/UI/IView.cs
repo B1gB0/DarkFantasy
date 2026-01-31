@@ -1,4 +1,4 @@
-﻿namespace Project.Scripts.UI
+﻿namespace _Project.Scripts.UI
 {
     public interface IView
     {
