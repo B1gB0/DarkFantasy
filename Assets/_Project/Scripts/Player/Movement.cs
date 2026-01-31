@@ -1,30 +1,31 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Player
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class Movement : MonoBehaviour
     {
-        [SerializeField] private float _speed = 5;
-        [SerializeField] private float _gravity = -9.81f;
+        [SerializeField] private float _speed = 5f;
+        [SerializeField] private float _rotationSpeed = 10f;
 
-        private CharacterController _characterController;
         private InputSystem _inputSystem;
-
-        private Vector3 _moveInput;
-        private Vector3 _velocity;
+        private Rigidbody _rigidbody;
+        private Vector2 _moveInput;
 
         private void Awake()
         {
-            _characterController = GetComponent<CharacterController>();
             _inputSystem = new InputSystem();
+            _rigidbody = GetComponent<Rigidbody>();
+
+            // Блокируем вращение физики
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX |
+                                     RigidbodyConstraints.FreezeRotationZ;
         }
 
         private void OnEnable()
         {
             _inputSystem.PLayer.Enable();
-
             _inputSystem.PLayer.Move.performed += OnMovePerformed;
             _inputSystem.PLayer.Move.canceled += OnMoveCanceled;
         }
@@ -32,11 +33,45 @@ namespace _Project.Scripts.Player
         private void OnDisable()
         {
             _inputSystem.PLayer.Disable();
-
             _inputSystem.PLayer.Move.performed -= OnMovePerformed;
             _inputSystem.PLayer.Move.canceled -= OnMoveCanceled;
         }
 
+        private void FixedUpdate()
+        {
+            // Если нет камеры — не двигаем
+            if (Camera.main == null)
+                return;
+
+            // Берём forward камеры, но убираем наклон
+            Vector3 camForward = Camera.main.transform.forward;
+            camForward.y = 0;
+            camForward.Normalize();
+
+            // Берём right камеры
+            Vector3 camRight = Camera.main.transform.right;
+            camRight.y = 0;
+            camRight.Normalize();
+
+            // Преобразуем ввод в направление движения относительно камеры
+            Vector3 moveDir = camForward * _moveInput.y + camRight * _moveInput.x;
+
+            // Двигаем Rigidbody
+            Vector3 velocity = moveDir * _speed;
+            velocity.y = _rigidbody.velocity.y; // сохраняем гравитацию
+            _rigidbody.velocity = velocity;
+
+            // Поворот игрока в сторону движения
+            if (moveDir.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.fixedDeltaTime * _rotationSpeed
+                );
+            }
+        }
 
         private void OnMovePerformed(InputAction.CallbackContext ctx)
         {
@@ -45,23 +80,7 @@ namespace _Project.Scripts.Player
 
         private void OnMoveCanceled(InputAction.CallbackContext ctx)
         {
-            _moveInput = Vector3.zero;
-        }
-
-        private void Update()
-        {
-            Vector3 move = new Vector3(_moveInput.x, 0, _moveInput.y);
-            move = transform.TransformDirection(move);
-
-            _characterController.Move(move * _speed * Time.deltaTime);
-
-            if (_characterController.isGrounded && _velocity.y < 0)
-            {
-                _velocity.y = -2f;
-            }
-
-            _velocity.y += _gravity * Time.deltaTime;
-            _characterController.Move(_velocity * Time.deltaTime);
+            _moveInput = Vector2.zero;
         }
     }
 }
