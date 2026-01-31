@@ -12,6 +12,7 @@ namespace _Project.Scripts.Player
         {
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
+                Debug.Log("Зашел");
                 transform.LookAt(other.transform);
                 _animatorPlayer.SetBool("Attack", true);
             }

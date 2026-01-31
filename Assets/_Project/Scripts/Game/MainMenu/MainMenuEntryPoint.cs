@@ -5,7 +5,6 @@ using R3;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
-using YG;
 
 namespace Project.Scripts.Game.MainMenu
 {
@@ -15,7 +14,7 @@ namespace Project.Scripts.Game.MainMenu
 
         private UIMainMenuRootBinder _uiScene;
         private MainMenuExitParameters _exitParameters;
-        
+
         public Observable<MainMenuExitParameters> Run(UIRootView uiRoot, MainMenuEnterParameters enterParameters)
         {
             // uiRoot.ExitButton.gameObject.SetActive(false);
@@ -37,7 +36,7 @@ namespace Project.Scripts.Game.MainMenu
 
             return exitToGameplaySceneSignal;
         }
-        
+
         private void GetMainMenuExitParameters()
         {
             var sceneName = Scenes.VillageHub;
