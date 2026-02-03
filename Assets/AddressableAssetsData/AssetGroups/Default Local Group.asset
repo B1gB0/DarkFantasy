@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 512391555351ef44380a87b7e2844db9
   m_SerializeEntries:
+  - m_GUID: 090bb86a7910c324f9afdde3c0f6f9b7
+    m_Address: MainMenuMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Music
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a9fdc7f7ca96ac46b38a976437ff71a
     m_Address: MainMenu
     m_ReadOnly: 0
@@ -24,6 +30,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9247c52158d4aa1478b2db8aab59a046
     m_Address: VillageHub
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b51fae0fb753be7438ece33b15d99dc9
+    m_Address: AudioConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
