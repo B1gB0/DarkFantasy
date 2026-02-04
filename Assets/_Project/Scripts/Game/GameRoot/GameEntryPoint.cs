@@ -104,17 +104,6 @@ namespace _Project.Scripts.Game.GameRoot
             var sceneEntryPoint = FindFirstObjectByType<MainMenuEntryPoint>();
             sceneEntryPoint.Run(_uiRoot, enterParameters).Subscribe(mainMenuExitParameters =>
             {
-                // if (_operationService.CurrentOperation.Id == Operations.Mars)
-                // {
-                //     mainMenuExitParameters.TargetSceneEnterParameters
-                //         .SetNewSceneName(_operationService.GetSceneNameByCurrentNumber());
-                // }
-                // else if (_operationService.CurrentOperation.Id == Operations.MysteryPlanet)
-                // {
-                //     mainMenuExitParameters.TargetSceneEnterParameters
-                //         .SetNewSceneName(_operationService.GetSceneNameByCurrentNumber());
-                // }
-                
                 LoadAndStartGameplay(mainMenuExitParameters
                     .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
             });

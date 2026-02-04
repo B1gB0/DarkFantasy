@@ -1,10 +1,13 @@
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.StateMachine.States;
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Game.GameRoot
 {
@@ -13,6 +16,8 @@ namespace _Project.Scripts.Game.GameRoot
         [SerializeField] private UISceneContainer _uiSceneContainer;
 
         [SerializeField] private LoadingPanel _loadingPanel;
+        [SerializeField] private SettingsPanel _settingsPanel;
+        [SerializeField] private Button _settingsButton;
 
         private AudioSoundsService _audioSoundsService;
         private IPauseService _pauseService;
@@ -32,6 +37,20 @@ namespace _Project.Scripts.Game.GameRoot
             UIStateMachine.AddState(new LoadingPanelState(_loadingPanel));
         }
 
+        private void OnEnable()
+        {
+            _settingsPanel.OnBackToSceneButtonPressed += ShowUIScene;
+            _settingsButton.onClick.AddListener(StopGame);
+            _settingsButton.onClick.AddListener(_settingsPanel.Show);
+        }
+
+        private void OnDisable()
+        {
+            _settingsPanel.OnBackToSceneButtonPressed -= ShowUIScene;
+            _settingsButton.onClick.RemoveListener(StopGame);
+            _settingsButton.onClick.RemoveListener(_settingsPanel.Show);
+        }
+
         public void ShowLoadingProgress(float progress)
         {
             _loadingPanel.SetProgressText(progress);
@@ -46,6 +65,8 @@ namespace _Project.Scripts.Game.GameRoot
 
         private void StopGame()
         {
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            
             if (SceneManager.GetActiveScene().name == Scenes.MainMenu)
                 return;
 
@@ -54,7 +75,7 @@ namespace _Project.Scripts.Game.GameRoot
 
         private void ShowUIScene()
         {
-            // _audioSoundsService.PlaySound(SoundsType.Button).Forget();
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
 
             var sceneName = SceneManager.GetActiveScene().name;
 

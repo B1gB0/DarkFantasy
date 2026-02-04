@@ -1,7 +1,9 @@
 ﻿using System;
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.StateMachine.States;
+using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
@@ -14,7 +16,6 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
         [SerializeField] private MainMenuElements _uiScene;
 
         [SerializeField] private Button _playButton;
-        // [SerializeField] private Button _startOperationButton;
 
         private Subject<Unit> _exitSceneSubjectSignal;
         private AudioSoundsService _audioSoundsService;
@@ -31,13 +32,11 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
         private void OnEnable()
         {
             _playButton.onClick.AddListener(HandleGoToGameplayButtonClick);
-            // _startOperationButton.onClick.AddListener(HandleGoToGameplayButtonClick);
         }
         
         private void OnDisable()
         {
             _playButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);
-            // _startOperationButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);
         }
 
         private void OnDestroy()
@@ -50,8 +49,6 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
             _uiStateMachine = uiStateMachine;
 
             _uiStateMachine.AddState(new MainMenuState(_uiScene));
-            // _uiStateMachine.AddState(new ChoosingOperationPanelState(_choosingOperationPanel));
-            // _choosingOperationPanel.GetUIStateMachine(_uiStateMachine);
 
             _uiStateMachine.EnterIn<MainMenuState>();
         }
@@ -63,15 +60,9 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
 
         private void HandleGoToGameplayButtonClick()
         {
+            _audioSoundsService.PlaySound(SoundsType.PaperButton).Forget();
             OnGameplayStarted?.Invoke();
-            // _audioSoundsService.PlaySound(SoundsType.Button).Forget();
             _exitSceneSubjectSignal?.OnNext(Unit.Default);
-        }
-
-        private void HandlePlayButtonClick()
-        {
-            // _audioSoundsService.PlaySound(SoundsType.Button).Forget();
-            // _uiStateMachine.EnterIn<ChoosingOperationPanelState>();
         }
     }
 }

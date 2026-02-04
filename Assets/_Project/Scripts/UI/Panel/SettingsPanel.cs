@@ -96,6 +96,7 @@ namespace _Project.Scripts.UI.Panel
 
         private void MoveBackToScene()
         {
+            Hide();
             OnBackToSceneButtonPressed?.Invoke();
         }
 

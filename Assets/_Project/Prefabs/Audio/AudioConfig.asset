@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
   Sounds:
+  - ClipName: PaperButton
+    Clip: {fileID: 0}
+    IsLoop: 0
+    Volume: 1
+  - ClipName: UIButtonClick
+    Clip: {fileID: 0}
+    IsLoop: 0
+    Volume: 1
   - ClipName: MainMenuMusic
     Clip: {fileID: 0}
     IsLoop: 1
