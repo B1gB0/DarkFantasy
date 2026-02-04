@@ -79,19 +79,32 @@ namespace _Project.Scripts.Game.GameRoot
 #if UNITY_EDITOR
             var sceneName = SceneManager.GetActiveScene().name;
 
-            if (sceneName == Scenes.MainMenu)
-            {
-                await LoadAndStartMainMenu();
-                return;
-            }
-
             if (sceneName != Scenes.Boot)
             {
+                InitiateSceneScope();
+
+                if (sceneName == Scenes.MainMenu)
+                {
+                    var sceneEntryPoint = FindFirstObjectByType<MainMenuEntryPoint>();
+                    sceneEntryPoint.Run(_uiRoot, null).Subscribe(mainMenuExitParameters =>
+                    {
+                        LoadAndStartGameplay(mainMenuExitParameters
+                            .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
+                    });
+                }
+                else
+                {
+                    var sceneEntryPoint = FindFirstObjectByType<GameplayEntryPoint>();
+                    var observable = await sceneEntryPoint.Run(_uiRoot, null);
+
+                    var exitParameters = await observable.FirstAsync();
+                    await HandleExitGameplayScene(exitParameters);
+                }
                 return;
             }
 #endif
             _uiRoot.UIStateMachine.EnterIn<LoadingPanelState>();
-
+            
             await LoadAndStartMainMenu();
         }
 
@@ -176,17 +189,22 @@ namespace _Project.Scripts.Game.GameRoot
                 }
 
                 _sceneHandle = newSceneHandle;
-
-                SceneScope sceneScope = FindAnyObjectByType<SceneScope>();
-
-                if (sceneScope != null)
-                {
-                    SceneScope.OnSceneContainerBuilding += OnPreInstallScene;
-                }
+                
+                InitiateSceneScope();
             }
             finally
             {
                 _isLoadingScene = false;
+            }
+        }
+
+        private void InitiateSceneScope()
+        {
+            SceneScope sceneScope = FindAnyObjectByType<SceneScope>();
+
+            if (sceneScope != null)
+            {
+                SceneScope.OnSceneContainerBuilding += OnPreInstallScene;
             }
         }
 

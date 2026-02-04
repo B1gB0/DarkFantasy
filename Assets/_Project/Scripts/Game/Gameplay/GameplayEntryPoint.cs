@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Core;
 using Reflex.Extensions;
+using Reflex.Injectors;
 using UnityEngine;
 
 namespace _Project.Scripts.Game.Gameplay
@@ -21,7 +22,7 @@ namespace _Project.Scripts.Game.Gameplay
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
             UIRootView uiRoot,
-            GameplayEnterParameters enterParameters)
+            GameplayEnterParameters enterParameters = null)
         {
             _container = gameObject.scene.GetSceneContainer();
 
@@ -35,12 +36,20 @@ namespace _Project.Scripts.Game.Gameplay
 
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
+            
+            var container = gameObject.scene.GetSceneContainer();
+            GameObjectInjector.InjectRecursive(uiRoot.gameObject, container);
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine);
 
 
             // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
             //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
+            
+            //Вот здесь можно писать код для механик
+            
+            
+            
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);
