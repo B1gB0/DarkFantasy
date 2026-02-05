@@ -33,7 +33,7 @@ namespace _Project.Scripts.Game.MainMenu
             _audioSoundsService.PlayMusic(SoundsType.MainMenuMusic);
         }
 
-        public Observable<MainMenuExitParameters> Run(UIRootView uiRoot, MainMenuEnterParameters enterParameters)
+        public Observable<MainMenuExitParameters> Run(UIRootView uiRoot, MainMenuEnterParameters enterParameters = null)
         {
             // uiRoot.ExitButton.gameObject.SetActive(false);
 

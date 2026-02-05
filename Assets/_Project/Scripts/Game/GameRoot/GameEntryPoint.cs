@@ -86,7 +86,7 @@ namespace _Project.Scripts.Game.GameRoot
                 if (sceneName == Scenes.MainMenu)
                 {
                     var sceneEntryPoint = FindFirstObjectByType<MainMenuEntryPoint>();
-                    sceneEntryPoint.Run(_uiRoot, null).Subscribe(mainMenuExitParameters =>
+                    sceneEntryPoint.Run(_uiRoot).Subscribe(mainMenuExitParameters =>
                     {
                         LoadAndStartGameplay(mainMenuExitParameters
                             .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
@@ -95,7 +95,7 @@ namespace _Project.Scripts.Game.GameRoot
                 else
                 {
                     var sceneEntryPoint = FindFirstObjectByType<GameplayEntryPoint>();
-                    var observable = await sceneEntryPoint.Run(_uiRoot, null);
+                    var observable = await sceneEntryPoint.Run(_uiRoot);
 
                     var exitParameters = await observable.FirstAsync();
                     await HandleExitGameplayScene(exitParameters);
