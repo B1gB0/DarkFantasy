@@ -32,14 +32,17 @@ namespace _Project.Scripts.Game.GameRoot
 
         private UIRootView _uiRoot;
         private IPauseService _pauseService;
+        private IDataBaseService _dataBaseService;
 
         [Inject]
         private void Construct(
             UIRootView uiRoot,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            IDataBaseService dataBaseService)
         {
             _uiRoot = uiRoot;
             _pauseService = pauseService;
+            _dataBaseService = dataBaseService;
 
             EventSystem eventSystem = FindAnyObjectByType<EventSystem>();
             _pauseService.GetEventSystem(eventSystem);
@@ -53,6 +56,7 @@ namespace _Project.Scripts.Game.GameRoot
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             await StartGame();
+            await _dataBaseService.Init();
 
             _pauseService.OnPlayGame();
 
