@@ -1,3 +1,4 @@
+using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
@@ -15,6 +16,9 @@ namespace _Project.Scripts.Game.Gameplay
     {
         // [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
+        [SerializeField] private DataFactory _dataFactory;
+        [SerializeField] private LevelInitData _levelInitData;
+        [SerializeField] private Level.Level _level;
         // [SerializeField] private ViewFactory _viewFactory;
 
         private UIRootView _uiRoot;
@@ -23,11 +27,15 @@ namespace _Project.Scripts.Game.Gameplay
         private GameplayExitParameters _exitParameters;
 
         private IEnemyService _enemyService;
+        private IDataBaseService _dataBaseService;
+
+        private SkeletonInitData _skeletonInitData;
 
         [Inject]
-        private void Construct(IEnemyService enemyService)
+        private void Construct(IEnemyService enemyService, IDataBaseService dataBaseService)
         {
             _enemyService = enemyService;
+            _dataBaseService = dataBaseService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -52,22 +60,27 @@ namespace _Project.Scripts.Game.Gameplay
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine);
 
-
             // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
             //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
             
             //Вот здесь можно писать код для механик и инициализации
-
+            
+            await InitData();
+            
+            await _dataBaseService.Init();
             await _enemyService.Init();
             
+            _enemyService.GetData(_levelInitData, _skeletonInitData);
             
-            
-            
-            
-            
-            
-            
-            
+            _level.GetServices(_enemyService, _levelInitData);
+
+
+
+
+
+
+
+
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);
@@ -75,6 +88,12 @@ namespace _Project.Scripts.Game.Gameplay
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 
             return exitToSceneSignal;
+        }
+        
+        private async UniTask InitData()
+        {
+            _levelInitData = Instantiate(_levelInitData);
+            _skeletonInitData = await _dataFactory.CreateSkeletonInitData();
         }
     }
 }

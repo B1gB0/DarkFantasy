@@ -15,12 +15,19 @@ MonoBehaviour:
   foldoutImportGUI: 1
   documentId: 17yz-year6BJLbgv4HmcRX9K99M6b3cC4p330a_JtYlU
   selectedTogglesIds:
-  - Enemies
   - Players
+  - Enemies
   foldoutSerializationGUI: 1
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
   serializationFormat: 0
   _content:
-    Players: []
-    Enemies: []
+    Enemies:
+    - _type: 0
+      _health: 10
+      _speed: 5
+      _damage: 9
+      _fireRate: 5
+      _rangeAttack: 5
+      _experience: 8
+      _score: 7

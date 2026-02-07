@@ -56,8 +56,7 @@ namespace _Project.Scripts.Game.GameRoot
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             await StartGame();
-            await _dataBaseService.Init();
-
+            
             _pauseService.OnPlayGame();
 
             YG2.onShowWindowGame += _pauseService.OnPlayGame;

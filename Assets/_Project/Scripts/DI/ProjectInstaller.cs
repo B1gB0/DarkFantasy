@@ -38,6 +38,7 @@ namespace _Project.Scripts.DI
         {
             builder.AddSingleton(typeof(ResourceService), typeof(IResourceService));
             builder.AddSingleton(typeof(DataBaseService), typeof(IDataBaseService));
+            builder.AddSingleton(typeof(EnemyService), typeof(IEnemyService));
             builder.AddSingleton(typeof(PauseService), typeof(IPauseService));
             
             builder.AddSingleton(typeof(CurrencyService), typeof(ICurrencyService));

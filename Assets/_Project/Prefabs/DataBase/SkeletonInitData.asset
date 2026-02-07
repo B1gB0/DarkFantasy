@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f36d48212014aa89a3127c1b68efc8b, type: 3}
+  m_Name: SkeletonInitData
+  m_EditorClassIdentifier: 
+  <SkeletonPrefab>k__BackingField: {fileID: 8661130645717166190, guid: 95ccb6f312bd53543874a0534a33fc3b, type: 3}
+  <SkeletonFleshPrefab>k__BackingField: {fileID: 1287701725629071134, guid: 35b7555b43a95ba49bf92dbd44143cf2, type: 3}
+  <SkeletonRangerPrefab>k__BackingField: {fileID: 1070502169137675531, guid: 729745931588a2d429f6a0691ef88e8e, type: 3}
+  <SkeletonLightArmorPrefab>k__BackingField: {fileID: 8607069868467063519, guid: 5e6aba74b81f0744ba1896956f6491b9, type: 3}
+  <SkeletonHeavyArmorPrefab>k__BackingField: {fileID: 6557877987626449069, guid: 10f17c40d526ef4498049d4527046ebf, type: 3}
