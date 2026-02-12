@@ -18,9 +18,9 @@ namespace _Project.Scripts.Game.Gameplay
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
-        [SerializeField] private Level.Level _level;
         // [SerializeField] private ViewFactory _viewFactory;
 
+        private Level.Level _level;
         private UIRootView _uiRoot;
         private UIGameplayRootBinder _uiScene;
         private Container _container;
@@ -71,13 +71,8 @@ namespace _Project.Scripts.Game.Gameplay
             await _enemyService.Init();
             
             _enemyService.GetData(_levelInitData, _skeletonInitData);
-            
+            _level = FindObjectOfType<Level.Level>();
             _level.GetServices(_enemyService, _levelInitData);
-
-
-
-
-
 
 
 

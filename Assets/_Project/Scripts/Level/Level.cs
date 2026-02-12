@@ -9,6 +9,10 @@ namespace _Project.Scripts.Level
     public abstract class Level : MonoBehaviour
     {
         [SerializeField] protected int CountSkeletonEnemy;
+        [SerializeField] protected int CountSkeletonFleshEnemy;
+        [SerializeField] protected int CountSkeletonHeavyArmorEnemy;
+        [SerializeField] protected int CountSkeletonLightArmorEnemy;
+        [SerializeField] protected int CountSkeletonRangerEnemy;
         
         private EnemySpawner _enemySpawner;
         private LevelInitData _levelInitData;

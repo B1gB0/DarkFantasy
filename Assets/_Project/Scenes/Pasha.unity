@@ -229,13 +229,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541292568}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.013547198, y: 0.98559016, z: -0.13816485, w: 0.096638076}
+  m_LocalPosition: {x: 0.03, y: 2.459, z: 7.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.96, y: 168.8, z: 0}
 --- !u!1 &561901091
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +377,6 @@ MonoBehaviour:
   _sceneUIRootPrefab: {fileID: 4392302739474468379, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
   _dataFactory: {fileID: 979533352}
   _levelInitData: {fileID: 11400000, guid: 0a58bdaab356f204487f473a2bd866d4, type: 2}
-  _level: {fileID: 7594630314422729246}
 --- !u!114 &979533352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,6 +784,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountSkeletonEnemy: 4
+  CountSkeletonFleshEnemy: 0
+  CountSkeletonHeavyArmorEnemy: 0
+  CountSkeletonLightArmorEnemy: 0
+  CountSkeletonRangerEnemy: 0
 --- !u!114 &7594630314422729247
 MonoBehaviour:
   m_ObjectHideFlags: 0

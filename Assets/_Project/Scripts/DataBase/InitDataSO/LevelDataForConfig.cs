@@ -10,9 +10,16 @@ namespace _Project.Scripts.DataBase.InitDataSO
         [ContextMenu("Save Data")]
         public void SaveDataToConfigLevel()
         {
+            // GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+            
             GameObject[] enemyPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyPatrolPoints");
+            
             GameObject[] skeletonPoints = GameObject.FindGameObjectsWithTag("SkeletonPoints");
-
+            GameObject[] skeletonFleshPoints = GameObject.FindGameObjectsWithTag("SkeletonFleshPoints");
+            GameObject[] skeletonHeavyArmorPoints = GameObject.FindGameObjectsWithTag("SkeletonHeavyArmorPoints");
+            GameObject[] skeletonLightArmorPoints = GameObject.FindGameObjectsWithTag("SkeletonLightArmorPoints");
+            GameObject[] skeletonRangerPoints = GameObject.FindGameObjectsWithTag("SkeletonRangerPoints");
+            
             // GameObject[] firstWaveSmallEnemy = GameObject.FindGameObjectsWithTag("FirstWaveSmallEnemyAlienSpawnPoint");
             // GameObject[] firstWaveBigEnemy = GameObject.FindGameObjectsWithTag("FirstWaveBigEnemyAlienSpawnPoint");
             // GameObject[] firstWaveGunnerEnemy =
@@ -32,9 +39,16 @@ namespace _Project.Scripts.DataBase.InitDataSO
             // GameObject[] healingCoreSpawnPoints = GameObject.FindGameObjectsWithTag("HealingCoreSpawnPoint");
             // GameObject[] iceCrystalSpawnPoints = GameObject.FindGameObjectsWithTag("IceCrystalSpawnPoint");
             // GameObject[] goldCoreSpawnPoints = GameObject.FindGameObjectsWithTag("GoldCoreSpawnPoint");
-            // GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
 
+            // levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
+            
             levelInitData.EnemyPatrolPositions.Clear();
+            
+            levelInitData.SkeletonEnemySpawnPositions.Clear();
+            levelInitData.SkeletonFleshEnemySpawnPositions.Clear();
+            levelInitData.SkeletonHeavyArmorEnemySpawnPositions.Clear();
+            levelInitData.SkeletonLightArmorEnemySpawnPositions.Clear();
+            levelInitData.SkeletonRangerEnemySpawnPositions.Clear();
             
             // levelInitData.FirstWaveSmallEnemyAlienSpawnPositions.Clear();
             // levelInitData.FirstWaveBigEnemyAlienSpawnPositions.Clear();
@@ -49,16 +63,35 @@ namespace _Project.Scripts.DataBase.InitDataSO
             // levelInitData.EnemyTurretsSpawnPoints.Clear();
             // levelInitData.IceCrystalsSpawnPositions.Clear();
             //
-            // levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
+            
+            foreach (var point in enemyPatrolPoints)
+            {
+                levelInitData.EnemyPatrolPositions.Add(point.transform.position);
+            }
 
             foreach (var point in skeletonPoints)
             {
                 levelInitData.SkeletonEnemySpawnPositions.Add(point.transform.position);
             }
-            
-            foreach (var point in enemyPatrolPoints)
+
+            foreach (var point in skeletonFleshPoints)
             {
-                levelInitData.EnemyPatrolPositions.Add(point.transform.position);
+                levelInitData.SkeletonFleshEnemySpawnPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in skeletonHeavyArmorPoints)
+            {
+                levelInitData.SkeletonHeavyArmorEnemySpawnPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in skeletonLightArmorPoints)
+            {
+                levelInitData.SkeletonLightArmorEnemySpawnPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in skeletonRangerPoints)
+            {
+                levelInitData.SkeletonRangerEnemySpawnPositions.Add(point.transform.position);
             }
 
             // foreach (var point in firstWaveSmallEnemy)

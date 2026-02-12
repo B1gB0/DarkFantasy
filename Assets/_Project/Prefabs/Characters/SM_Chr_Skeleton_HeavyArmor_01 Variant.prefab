@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &346328897617702493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4796089503633425623}
+  m_Layer: 0
+  m_Name: HitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4796089503633425623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346328897617702493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4564627408236563548}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &625491581106661801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,12 +84,35 @@ PrefabInstance:
       value: SM_Chr_Skeleton_HeavyArmor_01 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4599304689448807054, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 6888105628820051300, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 6772638983041358477, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 1799852747486684788, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 4374696132917997016, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 7621257398880737398, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 5147928762153788362, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 5948777857812088849, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 1207745334125853270, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 3613675368025533671, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 8665743205076299427, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 8367277809696763599, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 4955536028239313449, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 6479315743883795165, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 6960306883544133520, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 2221292824831863162, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    - {fileID: 3861328795456064231, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4032658138706470389, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4796089503633425623}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4376708952660885327, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6557877987626449069}
+    - targetCorrespondingSourceObject: {fileID: 4376708952660885327, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3350875041654478630}
   m_SourcePrefab: {fileID: 100100000, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
 --- !u!1 &3752343867563939558 stripped
 GameObject:
@@ -77,4 +131,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9119a5c8454ad38b9a77c9ba827d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _health: {fileID: 3350875041654478630}
+--- !u!114 &3350875041654478630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752343867563939558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _value: 100
+  _hitPoint: {fileID: 4796089503633425623}
+--- !u!4 &4564627408236563548 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4032658138706470389, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+  m_PrefabInstance: {fileID: 625491581106661801}
+  m_PrefabAsset: {fileID: 0}

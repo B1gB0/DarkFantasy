@@ -6,6 +6,10 @@ TagManager:
   tags:
   - SkeletonPoints
   - EnemyPatrolPoints
+  - SkeletonFleshPoints
+  - SkeletonHeavyArmorPoints
+  - SkeletonLightArmorPoints
+  - SkeletonRangerPoints
   layers:
   - Default
   - TransparentFX

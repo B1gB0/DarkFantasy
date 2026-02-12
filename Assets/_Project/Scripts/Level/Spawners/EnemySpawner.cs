@@ -8,8 +8,9 @@ namespace _Project.Scripts.Level.Spawners
     public class EnemySpawner
     {
         private const int MinValue = 0;
-        private const float RandomPositionFactor = 2f;
         private const int CorrectCountFactor = 1;
+        private const float RandomPositionFactor = 2f;
+        private const float OffsetYPolygonEnemies = 0.5f;
 
         private readonly IEnemyService _enemyService;
 
@@ -39,7 +40,7 @@ namespace _Project.Scripts.Level.Spawners
                 var enemySpawnPosition = enemyPosition +
                                          (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
 
-                enemySpawnPosition.y = enemyPosition.y;
+                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
                 skeleton.transform.position = enemySpawnPosition;
 

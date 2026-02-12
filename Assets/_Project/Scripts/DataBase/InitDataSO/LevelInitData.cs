@@ -7,7 +7,12 @@ namespace _Project.Scripts.DataBase.InitDataSO
     public class LevelInitData : InitData
     {
         public List<Vector3> EnemyPatrolPositions;
+        
         public List<Vector3> SkeletonEnemySpawnPositions;
+        public List<Vector3> SkeletonFleshEnemySpawnPositions;
+        public List<Vector3> SkeletonHeavyArmorEnemySpawnPositions;
+        public List<Vector3> SkeletonLightArmorEnemySpawnPositions;
+        public List<Vector3> SkeletonRangerEnemySpawnPositions;
         
         // public Vector3 PlayerSpawnPosition;
 
