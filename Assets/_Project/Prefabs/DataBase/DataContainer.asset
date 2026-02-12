@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251638e918974aa8966f9477c35ef1c0, type: 3}
+  m_Name: DataContainer
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 17yz-year6BJLbgv4HmcRX9K99M6b3cC4p330a_JtYlU
+  selectedTogglesIds:
+  - Players
+  - Enemies
+  foldoutSerializationGUI: 1
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  _content:
+    Enemies:
+    - _type: 0
+      _health: 10
+      _speed: 5
+      _damage: 3
+      _fireRate: 0
+      _rangeAttack: 5
+      _experience: 8
+      _score: 7
+    - _type: 1
+      _health: 15
+      _speed: 5
+      _damage: 3
+      _fireRate: 0
+      _rangeAttack: 2
+      _experience: 8
+      _score: 7
+    - _type: 2
+      _health: 30
+      _speed: 3
+      _damage: 8
+      _fireRate: 0
+      _rangeAttack: 3
+      _experience: 15
+      _score: 20
+    - _type: 3
+      _health: 20
+      _speed: 4
+      _damage: 6
+      _fireRate: 0
+      _rangeAttack: 4
+      _experience: 10
+      _score: 15
+    - _type: 4
+      _health: 10
+      _speed: 5
+      _damage: 5
+      _fireRate: 3
+      _rangeAttack: 5
+      _experience: 8
+      _score: 10

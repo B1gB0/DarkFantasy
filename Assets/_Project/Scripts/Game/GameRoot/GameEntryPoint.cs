@@ -32,14 +32,17 @@ namespace _Project.Scripts.Game.GameRoot
 
         private UIRootView _uiRoot;
         private IPauseService _pauseService;
+        private IDataBaseService _dataBaseService;
 
         [Inject]
         private void Construct(
             UIRootView uiRoot,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            IDataBaseService dataBaseService)
         {
             _uiRoot = uiRoot;
             _pauseService = pauseService;
+            _dataBaseService = dataBaseService;
 
             EventSystem eventSystem = FindAnyObjectByType<EventSystem>();
             _pauseService.GetEventSystem(eventSystem);
@@ -53,7 +56,7 @@ namespace _Project.Scripts.Game.GameRoot
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             await StartGame();
-
+            
             _pauseService.OnPlayGame();
 
             YG2.onShowWindowGame += _pauseService.OnPlayGame;
@@ -79,19 +82,32 @@ namespace _Project.Scripts.Game.GameRoot
 #if UNITY_EDITOR
             var sceneName = SceneManager.GetActiveScene().name;
 
-            if (sceneName == Scenes.MainMenu)
-            {
-                await LoadAndStartMainMenu();
-                return;
-            }
-
             if (sceneName != Scenes.Boot)
             {
+                InitiateSceneScope();
+
+                if (sceneName == Scenes.MainMenu)
+                {
+                    var sceneEntryPoint = FindFirstObjectByType<MainMenuEntryPoint>();
+                    sceneEntryPoint.Run(_uiRoot).Subscribe(mainMenuExitParameters =>
+                    {
+                        LoadAndStartGameplay(mainMenuExitParameters
+                            .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
+                    });
+                }
+                else
+                {
+                    var sceneEntryPoint = FindFirstObjectByType<GameplayEntryPoint>();
+                    var observable = await sceneEntryPoint.Run(_uiRoot);
+
+                    var exitParameters = await observable.FirstAsync();
+                    await HandleExitGameplayScene(exitParameters);
+                }
                 return;
             }
 #endif
             _uiRoot.UIStateMachine.EnterIn<LoadingPanelState>();
-
+            
             await LoadAndStartMainMenu();
         }
 
@@ -104,17 +120,6 @@ namespace _Project.Scripts.Game.GameRoot
             var sceneEntryPoint = FindFirstObjectByType<MainMenuEntryPoint>();
             sceneEntryPoint.Run(_uiRoot, enterParameters).Subscribe(mainMenuExitParameters =>
             {
-                // if (_operationService.CurrentOperation.Id == Operations.Mars)
-                // {
-                //     mainMenuExitParameters.TargetSceneEnterParameters
-                //         .SetNewSceneName(_operationService.GetSceneNameByCurrentNumber());
-                // }
-                // else if (_operationService.CurrentOperation.Id == Operations.MysteryPlanet)
-                // {
-                //     mainMenuExitParameters.TargetSceneEnterParameters
-                //         .SetNewSceneName(_operationService.GetSceneNameByCurrentNumber());
-                // }
-                
                 LoadAndStartGameplay(mainMenuExitParameters
                     .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
             });
@@ -187,17 +192,22 @@ namespace _Project.Scripts.Game.GameRoot
                 }
 
                 _sceneHandle = newSceneHandle;
-
-                SceneScope sceneScope = FindAnyObjectByType<SceneScope>();
-
-                if (sceneScope != null)
-                {
-                    SceneScope.OnSceneContainerBuilding += OnPreInstallScene;
-                }
+                
+                InitiateSceneScope();
             }
             finally
             {
                 _isLoadingScene = false;
+            }
+        }
+
+        private void InitiateSceneScope()
+        {
+            SceneScope sceneScope = FindAnyObjectByType<SceneScope>();
+
+            if (sceneScope != null)
+            {
+                SceneScope.OnSceneContainerBuilding += OnPreInstallScene;
             }
         }
 

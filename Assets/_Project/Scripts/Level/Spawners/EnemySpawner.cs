@@ -1,0 +1,175 @@
+﻿using System.Collections.Generic;
+using _Project.Scripts.Enemy;
+using _Project.Scripts.Services;
+using UnityEngine;
+
+namespace _Project.Scripts.Level.Spawners
+{
+    public class EnemySpawner
+    {
+        private const int MinValue = 0;
+        private const int CorrectCountFactor = 1;
+        private const float RandomPositionFactor = 2f;
+        private const float OffsetYPolygonEnemies = 0.5f;
+
+        private readonly IEnemyService _enemyService;
+
+        private int _counterSmallEnemies;
+        private int _counterSkeletonHeavyArmorEnemies;
+        private int _counterSkeletonEnemies;
+
+        public EnemySpawner(IEnemyService enemyService)
+        {
+            _enemyService = enemyService;
+        }
+
+        public void SpawnSkeletonEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        {
+            if (spawnPointPositions.Count == MinValue)
+                return;
+
+            foreach (var enemyPosition in spawnPointPositions)
+            {
+                if (_counterSkeletonEnemies > countEnemies - CorrectCountFactor)
+                    return;
+
+                Skeleton skeleton = _enemyService.CreateSkeleton();
+
+                skeleton.NavMeshAgent.enabled = false;
+
+                var enemySpawnPosition = enemyPosition +
+                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+                skeleton.transform.position = enemySpawnPosition;
+
+                skeleton.NavMeshAgent.enabled = true;
+
+                // gunnerEnemy.Die += OnKillGunnerEnemy;
+                _counterSkeletonEnemies++;
+            }
+        }
+        
+        public void SpawnSkeletonHeavyArmorEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        {
+            if (spawnPointPositions.Count == MinValue)
+                return;
+
+            foreach (var enemyPosition in spawnPointPositions)
+            {
+                if (_counterSkeletonHeavyArmorEnemies > countEnemies - CorrectCountFactor)
+                    return;
+
+                SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
+
+                skeleton.NavMeshAgent.enabled = false;
+
+                var enemySpawnPosition = enemyPosition +
+                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+                skeleton.transform.position = enemySpawnPosition;
+
+                skeleton.NavMeshAgent.enabled = true;
+
+                // gunnerEnemy.Die += OnKillGunnerEnemy;
+                _counterSkeletonHeavyArmorEnemies++;
+            }
+        }
+
+        // public void SpawnSmallAlienEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        // {
+        //     if (spawnPointPositions.Count == MinValue)
+        //         return;
+        //
+        //     foreach (var enemyPosition in spawnPointPositions)
+        //     {
+        //         if (_counterSmallEnemies > countEnemies - CorrectCountFactor)
+        //             return;
+        //
+        //         SmallEnemy smallEnemy = _gameInitSystem.CreateSmallAlienEnemy(_gameInitSystem.Player);
+        //
+        //         smallEnemy.NavMeshAgent.enabled = false;
+        //
+        //         var enemySpawnPosition = enemyPosition +
+        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+        //
+        //         enemySpawnPosition.y = enemyPosition.y;
+        //
+        //         smallEnemy.transform.position = enemySpawnPosition;
+        //
+        //         smallEnemy.NavMeshAgent.enabled = true;
+        //
+        //         smallEnemy.Die += OnKillSmallEnemy;
+        //         _counterSmallEnemies++;
+        //     }
+        // }
+        //
+        // public void SpawnBigEnemyAlien(List<Vector3> spawnPointPositions, int countEnemies)
+        // {
+        //     if (spawnPointPositions.Count == MinValue)
+        //         return;
+        //
+        //     foreach (var enemyPosition in spawnPointPositions)
+        //     {
+        //         if (_counterBigEnemies > countEnemies - CorrectCountFactor)
+        //             return;
+        //
+        //         BigEnemy bigEnemy = _gameInitSystem.CreateBigAlienEnemy(_gameInitSystem.Player);
+        //
+        //         bigEnemy.NavMeshAgent.enabled = false;
+        //
+        //         var enemySpawnPosition = enemyPosition +
+        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+        //
+        //         enemySpawnPosition.y = enemyPosition.y;
+        //
+        //         bigEnemy.transform.position = enemySpawnPosition;
+        //
+        //         bigEnemy.NavMeshAgent.enabled = true;
+        //
+        //         bigEnemy.Die += OnKillBigEnemy;
+        //         _counterBigEnemies++;
+        //     }
+        // }
+        //
+        // public void SpawnAlienEnemyTurret(List<Vector3> spawnPointPositions, Vector3 playerSpawnPoint)
+        // {
+        //     if (spawnPointPositions.Count == MinValue)
+        //         return;
+        //
+        //     foreach (var enemyPosition in spawnPointPositions)
+        //     {
+        //         EnemyTurret enemyTurret = _gameInitSystem.CreateEnemyTurret(_gameInitSystem.Player, enemyPosition);
+        //         enemyTurret.transform.LookAt(playerSpawnPoint);
+        //
+        //         var enemySpawnPosition = enemyPosition +
+        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+        //         
+        //         enemySpawnPosition.y = enemyPosition.y;
+        //
+        //         enemyTurret.transform.position = enemySpawnPosition;
+        //     }
+        // }
+
+        private void OnKillSmallEnemy(Enemy.Enemy enemyActor)
+        {
+            _counterSmallEnemies--;
+            // enemyActor.Die -= OnKillSmallEnemy;
+        }
+
+        private void OnKillBigEnemy(Enemy.Enemy enemyActor)
+        {
+            _counterSkeletonHeavyArmorEnemies--;
+            // enemyActor.Die -= OnKillBigEnemy;
+        }
+
+        private void OnKillGunnerEnemy(Enemy.Enemy enemyActor)
+        {
+            _counterSkeletonEnemies--;
+            // enemyActor.Die -= OnKillGunnerEnemy;
+        }
+    }
+}

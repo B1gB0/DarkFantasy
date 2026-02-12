@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 512391555351ef44380a87b7e2844db9
   m_SerializeEntries:
+  - m_GUID: 090bb86a7910c324f9afdde3c0f6f9b7
+    m_Address: MainMenuMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Music
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a9fdc7f7ca96ac46b38a976437ff71a
     m_Address: MainMenu
     m_ReadOnly: 0
@@ -26,6 +32,33 @@ MonoBehaviour:
     m_Address: VillageHub
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96a649fc56cb99d4697328181731bca1
+    m_Address: PaperButton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b51fae0fb753be7438ece33b15d99dc9
+    m_Address: AudioConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c319f9167c359c743be80b761939aa98
+    m_Address: DataContainer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f63d6cc17b900cd419f78bd0f7c20a91
+    m_Address: SkeletonInitData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9bc6b20471484044b4743e8ab97b7c5
+    m_Address: UIButtonClick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: fd9fc6533fdc9384cb6d1e16da437289, type: 2}

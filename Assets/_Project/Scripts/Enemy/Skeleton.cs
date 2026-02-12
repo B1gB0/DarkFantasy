@@ -1,0 +1,9 @@
+﻿using UnityEngine;
+
+namespace _Project.Scripts.Enemy
+{
+    public class Skeleton : Enemy
+    {
+        [field: SerializeField] public UnityEngine.AI.NavMeshAgent NavMeshAgent { get; private set; }
+    }
+}
