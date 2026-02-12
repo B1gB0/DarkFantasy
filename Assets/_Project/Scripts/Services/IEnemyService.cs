@@ -9,5 +9,6 @@ namespace _Project.Scripts.Services
         public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData);
         public EnemyData GetEnemyDataByType(EnemyType type);
         public Skeleton CreateSkeleton();
+        public SkeletonHeavyArmor CreateSkeletonHeavyArmor();
     }
 }

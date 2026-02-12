@@ -15,8 +15,8 @@ namespace _Project.Scripts.Level.Spawners
         private readonly IEnemyService _enemyService;
 
         private int _counterSmallEnemies;
-        private int _counterBigEnemies;
-        private int _counterGunnerEnemies;
+        private int _counterSkeletonHeavyArmorEnemies;
+        private int _counterSkeletonEnemies;
 
         public EnemySpawner(IEnemyService enemyService)
         {
@@ -30,7 +30,7 @@ namespace _Project.Scripts.Level.Spawners
 
             foreach (var enemyPosition in spawnPointPositions)
             {
-                if (_counterGunnerEnemies > countEnemies - CorrectCountFactor)
+                if (_counterSkeletonEnemies > countEnemies - CorrectCountFactor)
                     return;
 
                 Skeleton skeleton = _enemyService.CreateSkeleton();
@@ -47,7 +47,35 @@ namespace _Project.Scripts.Level.Spawners
                 skeleton.NavMeshAgent.enabled = true;
 
                 // gunnerEnemy.Die += OnKillGunnerEnemy;
-                _counterGunnerEnemies++;
+                _counterSkeletonEnemies++;
+            }
+        }
+        
+        public void SpawnSkeletonHeavyArmorEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        {
+            if (spawnPointPositions.Count == MinValue)
+                return;
+
+            foreach (var enemyPosition in spawnPointPositions)
+            {
+                if (_counterSkeletonHeavyArmorEnemies > countEnemies - CorrectCountFactor)
+                    return;
+
+                SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
+
+                skeleton.NavMeshAgent.enabled = false;
+
+                var enemySpawnPosition = enemyPosition +
+                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+                skeleton.transform.position = enemySpawnPosition;
+
+                skeleton.NavMeshAgent.enabled = true;
+
+                // gunnerEnemy.Die += OnKillGunnerEnemy;
+                _counterSkeletonHeavyArmorEnemies++;
             }
         }
 
@@ -134,13 +162,13 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillBigEnemy(Enemy.Enemy enemyActor)
         {
-            _counterBigEnemies--;
+            _counterSkeletonHeavyArmorEnemies--;
             // enemyActor.Die -= OnKillBigEnemy;
         }
 
         private void OnKillGunnerEnemy(Enemy.Enemy enemyActor)
         {
-            _counterGunnerEnemies--;
+            _counterSkeletonEnemies--;
             // enemyActor.Die -= OnKillGunnerEnemy;
         }
     }

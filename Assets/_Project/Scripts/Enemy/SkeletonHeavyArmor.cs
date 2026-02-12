@@ -1,7 +1,9 @@
-﻿namespace _Project.Scripts.Enemy
+﻿using UnityEngine;
+
+namespace _Project.Scripts.Enemy
 {
     public class SkeletonHeavyArmor : Enemy
     {
-        
+        [field: SerializeField] public UnityEngine.AI.NavMeshAgent NavMeshAgent { get; private set; }
     }
 }
