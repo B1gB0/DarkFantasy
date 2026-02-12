@@ -12,6 +12,7 @@ namespace _Project.Scripts.Services
     {
         private const string SkeletonPool = nameof(SkeletonPool);
         private const string SkeletonHeavyArmorPool = nameof(SkeletonHeavyArmorPool);
+        private const string SkeletonRangerPool = nameof(SkeletonRangerPool);
         
         private const bool IsAutoExpand = true;
         private const int MinValue = 0;
@@ -25,6 +26,7 @@ namespace _Project.Scripts.Services
         
         private ObjectPool<Skeleton> _skeletonPool;
         private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
+        private ObjectPool<SkeletonRanger> _skeletonRangerPool;
 
         public bool IsInitiated { get; private set; }
 
@@ -65,6 +67,14 @@ namespace _Project.Scripts.Services
             return skeletonHeavyArmor;
         }
 
+        public SkeletonRanger CreateSkeletonRanger()
+        {
+            var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
+            var skeletonRanger = _skeletonRangerPool.GetFreeElement();
+
+            return skeletonRanger;
+        }
+
         public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData)
         {
             _levelInitData = levelInitData;
@@ -100,6 +110,17 @@ namespace _Project.Scripts.Services
                     AutoExpand = IsAutoExpand,
                 };
             }
+            
+            // if (_levelInitData.SkeletonRangerEnemySpawnPositions.Count > MinValue)
+            // {
+            //     _skeletonHeavyArmorPool = new ObjectPool<SkeletonRanger>(
+            //         _skeletonInitData.SkeletonRangerPrefab,
+            //         DefaultCountObjectsInPool,
+            //         new GameObject(SkeletonRangerPool).transform)
+            //     {
+            //         AutoExpand = IsAutoExpand,
+            //     };
+            // }
         }
     }
 }
