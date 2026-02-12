@@ -10,7 +10,7 @@ namespace _Project.Scripts.DataBase.InitDataSO
         [ContextMenu("Save Data")]
         public void SaveDataToConfigLevel()
         {
-            // GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+            GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
             
             GameObject[] enemyPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyPatrolPoints");
             
@@ -40,7 +40,7 @@ namespace _Project.Scripts.DataBase.InitDataSO
             // GameObject[] iceCrystalSpawnPoints = GameObject.FindGameObjectsWithTag("IceCrystalSpawnPoint");
             // GameObject[] goldCoreSpawnPoints = GameObject.FindGameObjectsWithTag("GoldCoreSpawnPoint");
 
-            // levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
+            levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
             
             levelInitData.EnemyPatrolPositions.Clear();
             

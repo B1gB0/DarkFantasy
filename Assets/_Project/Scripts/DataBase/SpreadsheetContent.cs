@@ -8,7 +8,7 @@ namespace _Project.Scripts.DataBase
     [Serializable]
     public class SpreadsheetContent
     {
-        // [SpreadsheetPage("Players")] public List<PlayerData> Players;
+        [SpreadsheetPage("Players")] public List<PlayerData> Players;
         [SpreadsheetPage("Enemies")] public List<EnemyData> Enemies;
     }
 }

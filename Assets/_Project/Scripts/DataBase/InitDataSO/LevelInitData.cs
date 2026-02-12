@@ -7,14 +7,14 @@ namespace _Project.Scripts.DataBase.InitDataSO
     public class LevelInitData : InitData
     {
         public List<Vector3> EnemyPatrolPositions;
-        
+
         public List<Vector3> SkeletonEnemySpawnPositions;
         public List<Vector3> SkeletonFleshEnemySpawnPositions;
         public List<Vector3> SkeletonHeavyArmorEnemySpawnPositions;
         public List<Vector3> SkeletonLightArmorEnemySpawnPositions;
         public List<Vector3> SkeletonRangerEnemySpawnPositions;
-        
-        // public Vector3 PlayerSpawnPosition;
+
+        public Vector3 PlayerSpawnPosition;
 
         // public List<Vector3> FirstWaveSmallEnemyAlienSpawnPositions;
         // public List<Vector3> FirstWaveBigEnemyAlienSpawnPositions;
@@ -31,6 +31,5 @@ namespace _Project.Scripts.DataBase.InitDataSO
         // public List<Vector3> GoldCoreSpawnPositions;
         // public List<Vector3> HealingCoreSpawnPositions;
         // public List<Vector3> IceCrystalsSpawnPositions;
-
     }
 }

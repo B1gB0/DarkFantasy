@@ -22,6 +22,11 @@ MonoBehaviour:
   serializationFileName: Configs.v0.1
   serializationFormat: 0
   _content:
+    Players:
+    - _type: 0
+      _health: 100
+      _moveSpeed: 10
+      _rotationSpeed: 10
     Enemies:
     - _type: 0
       _health: 10
