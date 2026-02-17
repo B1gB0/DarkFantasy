@@ -79,6 +79,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _playerService.Init();
 
             _enemyService.GetData(_levelInitData, _skeletonInitData);
+            
             _level = FindObjectOfType<Level.Level>();
             _level.GetServices(_enemyService, _levelInitData);
 
@@ -87,7 +88,6 @@ namespace _Project.Scripts.Game.Gameplay
             
             _cinemachineVirtualCamera.LookAt = player.transform;
             _cinemachineVirtualCamera.Follow = player.transform;
-
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);

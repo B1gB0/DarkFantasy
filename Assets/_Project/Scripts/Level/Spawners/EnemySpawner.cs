@@ -45,7 +45,7 @@ namespace _Project.Scripts.Level.Spawners
                 skeleton.transform.position = enemySpawnPosition;
 
                 skeleton.NavMeshAgent.enabled = true;
-
+                
                 // gunnerEnemy.Die += OnKillGunnerEnemy;
                 _counterSkeletonEnemies++;
             }

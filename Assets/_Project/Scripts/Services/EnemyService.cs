@@ -55,6 +55,10 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.Skeleton];
             var skeleton = _skeletonPool.GetFreeElement();
+            
+            skeleton.EnemyPatrolComponent.InitPatrol(
+                _levelInitData.EnemyPatrolPositions,
+                skeleton.AnimatedStateMachine);
 
             return skeleton;
         }
@@ -63,6 +67,10 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
             var skeletonHeavyArmor = _skeletonHeavyArmorPool.GetFreeElement();
+            
+            skeletonHeavyArmor.EnemyPatrolComponent.InitPatrol(
+                _levelInitData.EnemyPatrolPositions,
+                skeletonHeavyArmor.AnimatedStateMachine);
 
             return skeletonHeavyArmor;
         }
@@ -71,6 +79,10 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
+            
+            skeletonRanger.EnemyPatrolComponent.InitPatrol(
+                _levelInitData.EnemyPatrolPositions,
+                skeletonRanger.AnimatedStateMachine);
 
             return skeletonRanger;
         }
