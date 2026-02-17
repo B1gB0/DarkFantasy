@@ -13,10 +13,10 @@ namespace _Project.Scripts.Level.Spawners
         private const float OffsetYPolygonEnemies = 0.5f;
 
         private readonly IEnemyService _enemyService;
-
-        private int _counterSmallEnemies;
-        private int _counterSkeletonHeavyArmorEnemies;
+        
         private int _counterSkeletonEnemies;
+        private int _counterSkeletonHeavyArmorEnemies;
+        private int _counterSkeletonRangerEnemies;
 
         public EnemySpawner(IEnemyService enemyService)
         {
@@ -62,6 +62,34 @@ namespace _Project.Scripts.Level.Spawners
                     return;
 
                 SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
+
+                skeleton.NavMeshAgent.enabled = false;
+
+                var enemySpawnPosition = enemyPosition +
+                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+                skeleton.transform.position = enemySpawnPosition;
+
+                skeleton.NavMeshAgent.enabled = true;
+
+                // gunnerEnemy.Die += OnKillGunnerEnemy;
+                _counterSkeletonHeavyArmorEnemies++;
+            }
+        }
+        
+        public void SpawnSkeletonRangerEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        {
+            if (spawnPointPositions.Count == MinValue)
+                return;
+
+            foreach (var enemyPosition in spawnPointPositions)
+            {
+                if (_counterSkeletonRangerEnemies > countEnemies - CorrectCountFactor)
+                    return;
+
+                SkeletonRanger skeleton = _enemyService.CreateSkeletonRanger();
 
                 skeleton.NavMeshAgent.enabled = false;
 
@@ -156,7 +184,7 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSmallEnemy(Enemy.Enemy enemyActor)
         {
-            _counterSmallEnemies--;
+            // _counterSmallEnemies--;
             // enemyActor.Die -= OnKillSmallEnemy;
         }
 

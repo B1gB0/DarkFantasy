@@ -29,9 +29,14 @@ namespace _Project.Scripts.Level
         protected void CreateSkeletonWaveEnemy()
         {
             _enemySpawner.SpawnSkeletonEnemy(_levelInitData.SkeletonEnemySpawnPositions, CountSkeletonEnemy);
+            
             _enemySpawner.SpawnSkeletonHeavyArmorEnemy(
                 _levelInitData.SkeletonHeavyArmorEnemySpawnPositions,
                 CountSkeletonHeavyArmorEnemy);
+            
+            _enemySpawner.SpawnSkeletonRangerEnemy(
+                _levelInitData.SkeletonRangerEnemySpawnPositions,
+                CountSkeletonRangerEnemy);
         }
         
         private void InitSpawners(IEnemyService enemyService)

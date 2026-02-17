@@ -69,7 +69,7 @@ namespace _Project.Scripts.Services
 
         public SkeletonRanger CreateSkeletonRanger()
         {
-            var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
+            var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
 
             return skeletonRanger;
@@ -111,16 +111,16 @@ namespace _Project.Scripts.Services
                 };
             }
             
-            // if (_levelInitData.SkeletonRangerEnemySpawnPositions.Count > MinValue)
-            // {
-            //     _skeletonHeavyArmorPool = new ObjectPool<SkeletonRanger>(
-            //         _skeletonInitData.SkeletonRangerPrefab,
-            //         DefaultCountObjectsInPool,
-            //         new GameObject(SkeletonRangerPool).transform)
-            //     {
-            //         AutoExpand = IsAutoExpand,
-            //     };
-            // }
+            if (_levelInitData.SkeletonRangerEnemySpawnPositions.Count > MinValue)
+            {
+                _skeletonRangerPool = new ObjectPool<SkeletonRanger>(
+                    _skeletonInitData.SkeletonRangerPrefab,
+                    DefaultCountObjectsInPool,
+                    new GameObject(SkeletonRangerPool).transform)
+                {
+                    AutoExpand = IsAutoExpand,
+                };
+            }
         }
     }
 }
