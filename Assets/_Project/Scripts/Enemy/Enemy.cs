@@ -10,21 +10,20 @@ namespace _Project.Scripts.Enemy
     [RequireComponent(typeof(Animator))]
     public abstract class Enemy : MonoBehaviour
     {
-        private Animator _animator;
+        [SerializeField] private Animator _animator;
         
         public event Action<Enemy> Die;
         public event Action OnFollowPlayer;
 
+        [field: SerializeField] public Health Health { get; private set; }
+        [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
+        
         public EnemyData Data { get; private set; }
         public Player.Player Player { get; private set; }
-        public Health Health { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
-        public EnemyStateMachine EnemyStateMachine { get; private set; }
 
-        private void Awake()
+        private void Start()
         {
-            _animator = GetComponent<Animator>();
-            Health = GetComponent<Health>();
             AnimatedStateMachine = new EnemyAnimatedStateMachine(_animator);
         }
 

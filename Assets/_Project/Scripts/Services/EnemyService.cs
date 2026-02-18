@@ -71,6 +71,8 @@ namespace _Project.Scripts.Services
             }
             
             skeleton.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
+            skeleton.EnemyStateMachine.InitializeAllStates();
+            skeleton.EnemyStateMachine.SwitchState<PatrolState>();
 
             return skeleton;
         }
@@ -88,6 +90,8 @@ namespace _Project.Scripts.Services
             }
             
             skeletonHeavyArmor.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
+            skeletonHeavyArmor.EnemyStateMachine.InitializeAllStates();
+            skeletonHeavyArmor.EnemyStateMachine.SwitchState<PatrolState>();
 
             return skeletonHeavyArmor;
         }
@@ -107,6 +111,8 @@ namespace _Project.Scripts.Services
             }
             
             skeletonRanger.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
+            skeletonRanger.EnemyStateMachine.InitializeAllStates();
+            skeletonRanger.EnemyStateMachine.SwitchState<PatrolState>();
 
             return skeletonRanger;
         }

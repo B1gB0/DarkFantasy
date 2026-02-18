@@ -7,7 +7,7 @@ namespace _Project.Scripts.Player
         public Health Health { get; private set; }
         public bool CanFollow { get; private set; }
         
-        private void Awake()
+        private void Start()
         {
             Health = GetComponent<Health>();
         }

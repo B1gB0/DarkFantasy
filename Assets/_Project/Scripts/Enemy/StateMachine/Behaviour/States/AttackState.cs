@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Enemy.StateMachine.Animation.States;
+﻿using _Project.Scripts.Enemy.StateMachine.Animation;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
@@ -16,9 +17,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Update()
         {
-            if (Player == null 
-                || !Player.CanFollow 
-                || Player.Health.TargetHealth <= 0 
+            if (Player == null
+                || !Player.CanFollow
+                || Player.Health.TargetHealth <= 0
                 || Enemy.Health.TargetHealth <= 0)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
@@ -26,22 +27,26 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             }
 
             float distanceToPlayer = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-            
+
             if (distanceToPlayer > _attackRange)
             {
                 EnemyStateMachine.SwitchState<FollowState>();
                 return;
             }
-            
+
+
+            AnimStateMachine.EnterIn<IdleAnimatedState>();
+
+
             Vector3 direction = (Player.transform.position - Enemy.transform.position).normalized;
             float rotationSpeed = Data.RotationSpeed;
-            
+
             Enemy.transform.forward = Vector3.RotateTowards(
                 Enemy.transform.forward,
-                direction, 
+                direction,
                 rotationSpeed * Time.fixedDeltaTime,
                 0f);
-            
+
             if (_lastShotTime <= 0f)
             {
                 AnimStateMachine.EnterIn<AttackAnimatedState>();

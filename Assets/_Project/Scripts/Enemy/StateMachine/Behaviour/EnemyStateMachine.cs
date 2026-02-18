@@ -27,20 +27,22 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
                 { typeof(FollowState), new FollowState() },
                 { typeof(AttackState), new AttackState() },
             };
-
-            foreach (var state in _states.Values)
-            {
-                state.Initialize(_enemy, _agent);
-            }
-            
-            SwitchState<PatrolState>();
         }
 
         private void FixedUpdate()
         {
             _currentState?.Update();
+            Debug.Log(_currentState);
         }
-        
+
+        public void InitializeAllStates()
+        {
+            foreach (var state in _states.Values)
+            {
+                state.Initialize(_enemy, _agent);
+            }
+        }
+
         public void AddState(EnemyState state)
         {
             var type = state.GetType();

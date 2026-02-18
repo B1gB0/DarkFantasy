@@ -275,6 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0a27b622eb431999a5e4cb8dced7f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 5860570252841868919}
+  <Health>k__BackingField: {fileID: 3922643240233000228}
+  <EnemyStateMachine>k__BackingField: {fileID: -4720795918328091737}
   <NavMeshAgent>k__BackingField: {fileID: 1777935901818556143}
 --- !u!114 &3922643240233000228
 MonoBehaviour:
@@ -340,5 +343,10 @@ MonoBehaviour:
 --- !u!4 &3766772835051481095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4634281489188792519, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
+  m_PrefabInstance: {fileID: 8364879515504181440}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5860570252841868919 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2684963421195984567, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
   m_PrefabInstance: {fileID: 8364879515504181440}
   m_PrefabAsset: {fileID: 0}
