@@ -1,7 +1,12 @@
-﻿namespace _Project.Scripts.Services
+﻿using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Player;
+using UnityEngine;
+
+namespace _Project.Scripts.Services
 {
-    public interface IPlayerService : IService 
+    public interface IPlayerService : IService
     {
-        
+        public PlayerData GetPlayerDataByType(PlayerType type);
+        public Player.Player CreatePlayerByPrefab(Player.Player playerPrefab, Vector3 spawnPoint);
     }
 }

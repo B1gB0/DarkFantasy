@@ -21,6 +21,8 @@ namespace _Project.Scripts.Services
         private readonly Dictionary<EnemyType, EnemyData> _enemiesData = new ();
 
         private IDataBaseService _dataBaseService;
+        private IPlayerService _playerService;
+        
         private LevelInitData _levelInitData;
         private SkeletonInitData _skeletonInitData;
         
@@ -31,9 +33,10 @@ namespace _Project.Scripts.Services
         public bool IsInitiated { get; private set; }
 
         [Inject]
-        public void Construct(IDataBaseService dataBaseService)
+        public void Construct(IDataBaseService dataBaseService, IPlayerService playerService)
         {
             _dataBaseService = dataBaseService;
+            _playerService = playerService;
         }
 
         public UniTask Init()

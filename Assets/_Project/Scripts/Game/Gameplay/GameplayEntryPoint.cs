@@ -81,13 +81,13 @@ namespace _Project.Scripts.Game.Gameplay
             _enemyService.GetData(_levelInitData, _skeletonInitData);
             
             _level = FindObjectOfType<Level.Level>();
-            _level.GetServices(_enemyService, _levelInitData);
-
-            Player.Player player = Instantiate(_playerInitData.PlayerPrefab, _levelInitData.PlayerSpawnPosition,
-                Quaternion.identity);
             
-            _cinemachineVirtualCamera.LookAt = player.transform;
-            _cinemachineVirtualCamera.Follow = player.transform;
+            _level.GetServices(
+                _enemyService,
+                _levelInitData,
+                _playerInitData,
+                _playerService,
+                _cinemachineVirtualCamera);
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);

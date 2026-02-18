@@ -2,6 +2,7 @@
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Services;
+using Cinemachine;
 using UnityEngine;
 
 namespace _Project.Scripts.Level
@@ -13,32 +14,60 @@ namespace _Project.Scripts.Level
         [SerializeField] protected int CountSkeletonHeavyArmorEnemy;
         [SerializeField] protected int CountSkeletonLightArmorEnemy;
         [SerializeField] protected int CountSkeletonRangerEnemy;
-        
+
+        private IPlayerService _playerService;
+
         private EnemySpawner _enemySpawner;
         private LevelInitData _levelInitData;
-        
+        private PlayerInitData _playerInitData;
+        private CinemachineFreeLook _cinemachineFreeLook;
+
         public event Action IsInitiatedSpawners;
 
-        public void GetServices(IEnemyService enemyService, LevelInitData levelInitData)
+        public void GetServices(
+            IEnemyService enemyService,
+            LevelInitData levelInitData,
+            PlayerInitData playerInitData,
+            IPlayerService playerService,
+            CinemachineFreeLook cinemachineFreeLook
+        )
         {
             _levelInitData = levelInitData;
+            _playerInitData = playerInitData;
+            _playerService = playerService;
+            _cinemachineFreeLook = cinemachineFreeLook;
+            
+            CreatePlayer();
+            
             InitSpawners(enemyService);
             CreateSkeletonWaveEnemy();
+        }
+
+        protected void CreatePlayer()
+        {
+            Player.Player player = _playerService.CreatePlayerByPrefab(
+                _playerInitData.CommonHero,
+                _levelInitData.PlayerSpawnPosition);
+
+            var playerTransform = player.transform;
+            
+            _cinemachineFreeLook.LookAt = playerTransform;
+            _cinemachineFreeLook.Follow = playerTransform;
         }
 
         protected void CreateSkeletonWaveEnemy()
         {
             _enemySpawner.SpawnSkeletonEnemy(_levelInitData.SkeletonEnemySpawnPositions, CountSkeletonEnemy);
-            
+
             _enemySpawner.SpawnSkeletonHeavyArmorEnemy(
                 _levelInitData.SkeletonHeavyArmorEnemySpawnPositions,
                 CountSkeletonHeavyArmorEnemy);
-            
+
             _enemySpawner.SpawnSkeletonRangerEnemy(
                 _levelInitData.SkeletonRangerEnemySpawnPositions,
                 CountSkeletonRangerEnemy);
         }
-        
+
         private void InitSpawners(IEnemyService enemyService)
         {
             _enemySpawner = new EnemySpawner(enemyService);

@@ -11,6 +11,7 @@ namespace _Project.Scripts.Enemy
         
         public event Action<Enemy> Die;
 
+        public Player.Player Player { get; private set; }
         public Health Health { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
 
