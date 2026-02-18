@@ -19,6 +19,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
             AddState(new AimAnimatedState(animator, animationBase));
             AddState(new MoveAnimatedState(animator, animationBase));
             AddState(new AttackAnimatedState(animator, animationBase));
+            AddState(new ReloadingAnimatedState(animator, animationBase));
         }
 
         public void EnterIn<T>()

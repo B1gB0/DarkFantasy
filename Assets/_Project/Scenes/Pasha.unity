@@ -2046,9 +2046,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd0d2aeac9249aaba755702bcba4c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CountSkeletonEnemy: 4
+  CountSkeletonEnemy: 0
   CountSkeletonFleshEnemy: 3
-  CountSkeletonHeavyArmorEnemy: 3
+  CountSkeletonHeavyArmorEnemy: 0
   CountSkeletonLightArmorEnemy: 3
   CountSkeletonRangerEnemy: 3
 --- !u!114 &7594630314422729247

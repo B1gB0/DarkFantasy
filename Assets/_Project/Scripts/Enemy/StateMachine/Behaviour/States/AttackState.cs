@@ -6,13 +6,40 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public class AttackState : EnemyState
     {
-        private float _lastShotTime;
         private float _attackRange;
+        
+        private float _reloadDuration = 3f;
+        private float _aimDuration = 2f;
+        private float _shootDuration = 3f;
+        
+        private AttackSubState _currentSubState;
+        private float _subStateTimer;
 
         public override void Enter()
         {
-            _lastShotTime = 1f;
             _attackRange = Data.RangeAttack;
+        }
+        
+        private void EnterSubState(AttackSubState newSubState)
+        {
+            _currentSubState = newSubState;
+            switch (_currentSubState)
+            {
+                case AttackSubState.Reloading:
+                    AnimStateMachine.EnterIn<ReloadingAnimatedState>();
+                    _subStateTimer = _reloadDuration;
+                    break;
+                case AttackSubState.Aiming:
+                    AnimStateMachine.EnterIn<AimAnimatedState>();
+                    _subStateTimer = _aimDuration;
+                    break;
+                case AttackSubState.Shooting:
+                    AnimStateMachine.EnterIn<AttackAnimatedState>(); // или ShootAnimatedState
+                    _subStateTimer = _shootDuration;
+                    // Наносим урон в момент выстрела (можно также через Animation Event)
+                    // Enemy.Attack(Player);
+                    break;
+            }
         }
 
         public override void Update()
@@ -30,14 +57,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (distanceToPlayer > _attackRange)
             {
-                Debug.Log(distanceToPlayer);
-                Debug.Log(_attackRange);
-                
                 EnemyStateMachine.SwitchState<FollowState>();
                 return;
             }
-            
-            AnimStateMachine.EnterIn<IdleAnimatedState>();
 
             Vector3 direction = (Player.transform.position - Enemy.transform.position).normalized;
             float rotationSpeed = Data.RotationSpeed;
@@ -48,19 +70,23 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 rotationSpeed * Time.fixedDeltaTime,
                 0f);
 
-            if (_lastShotTime <= 0f)
+            _subStateTimer -= Time.fixedDeltaTime;
+            if (_subStateTimer <= 0f)
             {
-                Debug.Log(_lastShotTime);
-                AnimStateMachine.EnterIn<AttackAnimatedState>();
-                // Здесь можно вызвать метод нанесения урона, например Enemy.Attack(Player);
-                _lastShotTime = Data.FireRate;
+                // Переход к следующему подсостоянию
+                switch (_currentSubState)
+                {
+                    case AttackSubState.Reloading:
+                        EnterSubState(AttackSubState.Aiming);
+                        break;
+                    case AttackSubState.Aiming:
+                        EnterSubState(AttackSubState.Shooting);
+                        break;
+                    case AttackSubState.Shooting:
+                        EnterSubState(AttackSubState.Reloading);
+                        break;
+                }
             }
-            else if (_lastShotTime <= Data.FireRate)
-            {
-                AnimStateMachine.EnterIn<AimAnimatedState>();
-            }
-
-            _lastShotTime -= Time.fixedDeltaTime;
         }
     }
 }
