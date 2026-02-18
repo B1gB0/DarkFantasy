@@ -1,5 +1,4 @@
 using _Project.Scripts.Services;
-using Project.Scripts.Weapon.Enemy;
 using UnityEngine;
 
 namespace _Project.Scripts.Weapon

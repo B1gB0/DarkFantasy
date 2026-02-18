@@ -4,16 +4,17 @@ namespace _Project.Scripts.Player
 {
     public class Player : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public Health Health { get; private set; }
+        public bool CanFollow { get; private set; }
         
+        private void Awake()
+        {
+            Health = GetComponent<Health>();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
+        public void ChangeFollowEnemyState(bool canFollow)
+        {
+            CanFollow = canFollow;
         }
     }
 }
