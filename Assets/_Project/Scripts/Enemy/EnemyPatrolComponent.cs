@@ -14,9 +14,10 @@ namespace _Project.Scripts.Enemy
 
         private List<Vector3> _waypoints = new();
         private int _currentWaypointIndex;
+        private Player.Player _player;
         private NavMeshAgent _agent;
         private EnemyAnimatedStateMachine _animatedStateMachine;
-        
+
         public bool IsPatrol { get; private set; }
 
         private void Start()
@@ -28,6 +29,12 @@ namespace _Project.Scripts.Enemy
         {
             if (!_agent.gameObject.activeSelf || _animatedStateMachine == null)
                 return;
+
+            if (_player.CanFollow)
+            {
+                IsPatrol = false;
+                return;
+            }
 
             if (!IsPatrol)
             {
@@ -43,10 +50,14 @@ namespace _Project.Scripts.Enemy
             }
         }
 
-        public void InitPatrol(List<Vector3> waypoints, EnemyAnimatedStateMachine animatedStateMachine)
+        public void InitPatrol(
+            List<Vector3> waypoints,
+            EnemyAnimatedStateMachine animatedStateMachine,
+            Player.Player player)
         {
             _waypoints = waypoints;
             _animatedStateMachine = animatedStateMachine;
+            _player = player;
         }
 
         private void SetNextPoint()

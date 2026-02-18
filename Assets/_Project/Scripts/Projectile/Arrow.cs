@@ -1,7 +1,4 @@
 ﻿namespace _Project.Scripts.Projectile
 {
-    public class Arrow : Projectile
-    {
-        
-    }
+    public class Arrow : EnemyProjectile { }
 }

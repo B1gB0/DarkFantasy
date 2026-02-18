@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Enemy;
+using _Project.Scripts.Projectile;
 using UnityEngine;
 
 namespace _Project.Scripts.DataBase.InitDataSO
@@ -11,5 +12,6 @@ namespace _Project.Scripts.DataBase.InitDataSO
         [field: SerializeField] public SkeletonRanger SkeletonRangerPrefab { get; private set; }
         [field: SerializeField] public SkeletonLightArmor SkeletonLightArmorPrefab { get; private set; }
         [field: SerializeField] public SkeletonHeavyArmor SkeletonHeavyArmorPrefab { get; private set; }
+        [field: SerializeField] public Arrow ArrowProjectilePrefab;
     }
 }

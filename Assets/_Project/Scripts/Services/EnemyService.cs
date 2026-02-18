@@ -2,6 +2,7 @@
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
+using _Project.Scripts.Projectile;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace _Project.Scripts.Services
         private const string SkeletonPool = nameof(SkeletonPool);
         private const string SkeletonHeavyArmorPool = nameof(SkeletonHeavyArmorPool);
         private const string SkeletonRangerPool = nameof(SkeletonRangerPool);
+        private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
         
         private const bool IsAutoExpand = true;
         private const int MinValue = 0;
@@ -29,6 +31,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<Skeleton> _skeletonPool;
         private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
         private ObjectPool<SkeletonRanger> _skeletonRangerPool;
+        private ObjectPool<Arrow> _arrowProjectilePool;
 
         public bool IsInitiated { get; private set; }
 
@@ -61,7 +64,10 @@ namespace _Project.Scripts.Services
             
             skeleton.EnemyPatrolComponent.InitPatrol(
                 _levelInitData.EnemyPatrolPositions,
-                skeleton.AnimatedStateMachine);
+                skeleton.AnimatedStateMachine,
+                _playerService.Player);
+            
+            skeleton.GetData(_playerService.Player, _enemiesData[EnemyType.Skeleton]);
 
             return skeleton;
         }
@@ -73,7 +79,10 @@ namespace _Project.Scripts.Services
             
             skeletonHeavyArmor.EnemyPatrolComponent.InitPatrol(
                 _levelInitData.EnemyPatrolPositions,
-                skeletonHeavyArmor.AnimatedStateMachine);
+                skeletonHeavyArmor.AnimatedStateMachine,
+                _playerService.Player);
+            
+            skeletonHeavyArmor.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonHeavyArmor]);
 
             return skeletonHeavyArmor;
         }
@@ -85,7 +94,18 @@ namespace _Project.Scripts.Services
             
             skeletonRanger.EnemyPatrolComponent.InitPatrol(
                 _levelInitData.EnemyPatrolPositions,
-                skeletonRanger.AnimatedStateMachine);
+                skeletonRanger.AnimatedStateMachine,
+                _playerService.Player);
+            
+            skeletonRanger.FollowComponent.InitFollower(skeletonRanger.AnimatedStateMachine, _playerService.Player);
+            
+            skeletonRanger.AttackComponent.InitAttacker(
+                skeletonRanger.NavMeshAgent,
+                skeletonRanger.AnimatedStateMachine,
+                _playerService.Player);
+            
+            skeletonRanger.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonRanger]);
+            skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);
 
             return skeletonRanger;
         }
@@ -132,6 +152,14 @@ namespace _Project.Scripts.Services
                     _skeletonInitData.SkeletonRangerPrefab,
                     DefaultCountObjectsInPool,
                     new GameObject(SkeletonRangerPool).transform)
+                {
+                    AutoExpand = IsAutoExpand,
+                };
+                
+                _arrowProjectilePool = new ObjectPool<Arrow>(
+                    _skeletonInitData.ArrowProjectilePrefab,
+                    DefaultCountObjectsInPool,
+                    new GameObject(ArrowProjectilePool).transform)
                 {
                     AutoExpand = IsAutoExpand,
                 };
