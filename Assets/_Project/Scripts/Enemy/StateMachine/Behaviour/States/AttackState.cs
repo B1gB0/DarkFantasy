@@ -30,13 +30,14 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (distanceToPlayer > _attackRange)
             {
+                Debug.Log(distanceToPlayer);
+                Debug.Log(_attackRange);
+                
                 EnemyStateMachine.SwitchState<FollowState>();
                 return;
             }
-
-
+            
             AnimStateMachine.EnterIn<IdleAnimatedState>();
-
 
             Vector3 direction = (Player.transform.position - Enemy.transform.position).normalized;
             float rotationSpeed = Data.RotationSpeed;
@@ -49,6 +50,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (_lastShotTime <= 0f)
             {
+                Debug.Log(_lastShotTime);
                 AnimStateMachine.EnterIn<AttackAnimatedState>();
                 // Здесь можно вызвать метод нанесения урона, например Enemy.Attack(Player);
                 _lastShotTime = Data.FireRate;

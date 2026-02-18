@@ -1,6 +1,7 @@
 ﻿using System;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Level.Spawners;
+using _Project.Scripts.Player;
 using _Project.Scripts.Services;
 using Cinemachine;
 using UnityEngine;
@@ -45,9 +46,13 @@ namespace _Project.Scripts.Level
 
         protected void CreatePlayer()
         {
+            var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+            
             Player.Player player = _playerService.CreatePlayerByPrefab(
                 _playerInitData.CommonHero,
                 _levelInitData.PlayerSpawnPosition);
+            
+            player.Health.SetHealthValue(data.Health);
 
             var playerTransform = player.transform;
             

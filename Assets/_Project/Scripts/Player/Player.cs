@@ -4,14 +4,10 @@ namespace _Project.Scripts.Player
 {
     public class Player : MonoBehaviour
     {
-        public Health Health { get; private set; }
+        [field: SerializeField] public Health Health { get; private set; }
+        
         public bool CanFollow { get; private set; }
-        
-        private void Start()
-        {
-            Health = GetComponent<Health>();
-        }
-        
+
         public void ChangeFollowEnemyState(bool canFollow)
         {
             CanFollow = canFollow;
