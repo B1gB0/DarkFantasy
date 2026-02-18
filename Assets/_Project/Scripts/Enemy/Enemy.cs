@@ -1,6 +1,8 @@
 using System;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Enemy.StateMachine;
+using _Project.Scripts.Enemy.StateMachine.Animation;
+using _Project.Scripts.Enemy.StateMachine.Behaviour;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy
@@ -17,6 +19,7 @@ namespace _Project.Scripts.Enemy
         public Player.Player Player { get; private set; }
         public Health Health { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
+        public EnemyStateMachine EnemyStateMachine { get; private set; }
 
         private void Awake()
         {

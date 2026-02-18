@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.Enemy.StateMachine.States;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 
-namespace _Project.Scripts.Enemy.StateMachine
+namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
     public class EnemyAnimatedStateMachine
     {
@@ -15,10 +15,10 @@ namespace _Project.Scripts.Enemy.StateMachine
         {
             AnimationNamesBase animationBase = new();
 
-            AddState(new IdleState(animator, animationBase));
-            AddState(new AimState(animator, animationBase));
-            AddState(new MoveState(animator, animationBase));
-            AddState(new AttackState(animator, animationBase));
+            AddState(new IdleAnimatedState(animator, animationBase));
+            AddState(new AimAnimatedState(animator, animationBase));
+            AddState(new MoveAnimatedState(animator, animationBase));
+            AddState(new AttackAnimatedState(animator, animationBase));
         }
 
         public void EnterIn<T>()

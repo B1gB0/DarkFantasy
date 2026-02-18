@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Enemy.StateMachine;
-using _Project.Scripts.Enemy.StateMachine.States;
+using _Project.Scripts.Enemy.StateMachine.Animation;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,19 +37,19 @@ namespace _Project.Scripts.Enemy
             {
                 if (_lastShotTime <= MinValue)
                 {
-                    _animatedStateMachine.EnterIn<AttackState>();
+                    _animatedStateMachine.EnterIn<AttackAnimatedState>();
                     _lastShotTime = _enemy.Data.FireRate;
                 }
                 else if (_lastShotTime <= _enemy.Data.FireRate)
                 {
-                    _animatedStateMachine.EnterIn<AimState>();
+                    _animatedStateMachine.EnterIn<AimAnimatedState>();
                 }
 
                 _lastShotTime -= Time.fixedDeltaTime;
             }
             else
             {
-                _animatedStateMachine.EnterIn<MoveState>();
+                _animatedStateMachine.EnterIn<MoveAnimatedState>();
             }
         }
 

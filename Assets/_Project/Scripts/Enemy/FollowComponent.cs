@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Enemy.StateMachine;
-using _Project.Scripts.Enemy.StateMachine.States;
+using _Project.Scripts.Enemy.StateMachine.Animation;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,7 +37,7 @@ namespace _Project.Scripts.Enemy
             _enemy.transform.forward = isMoving ? _agent.transform.forward : direction;
             
             if(isMoving)
-                _animatedStateMachine.EnterIn<MoveState>();
+                _animatedStateMachine.EnterIn<MoveAnimatedState>();
         }
 
         public void InitFollower(

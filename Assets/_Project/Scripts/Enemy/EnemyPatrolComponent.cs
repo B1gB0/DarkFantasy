@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Enemy.StateMachine;
-using _Project.Scripts.Enemy.StateMachine.States;
+using _Project.Scripts.Enemy.StateMachine.Animation;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -38,7 +39,7 @@ namespace _Project.Scripts.Enemy
 
             if (!IsPatrol)
             {
-                _animatedStateMachine.EnterIn<MoveState>();
+                _animatedStateMachine.EnterIn<MoveAnimatedState>();
                 GotoCurrentPoint();
                 IsPatrol = true;
             }

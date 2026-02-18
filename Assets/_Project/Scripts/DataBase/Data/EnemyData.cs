@@ -10,6 +10,7 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private EnemyType _type;
         [SerializeField] private float _health;
         [SerializeField] private float _speed;
+        [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _damage;
         [SerializeField] private float _fireRate;
         [SerializeField] private float _rangeAttack;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.DataBase.Data
         public EnemyType Type => _type;
         public float Health => _health;
         public float Speed => _speed;
+        public float RotationSpeed => _rotationSpeed;
         public float Damage => _damage;
         public float FireRate => _fireRate;
         public float RangeAttack => _rangeAttack;

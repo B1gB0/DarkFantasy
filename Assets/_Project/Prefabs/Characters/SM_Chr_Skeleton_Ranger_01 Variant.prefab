@@ -248,16 +248,10 @@ PrefabInstance:
       addedObject: {fileID: 1777935901818556143}
     - targetCorrespondingSourceObject: {fileID: 8712517466539974263, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1158057372674707522}
-    - targetCorrespondingSourceObject: {fileID: 8712517466539974263, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 8446231618929091381}
     - targetCorrespondingSourceObject: {fileID: 8712517466539974263, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7670937263790037309}
-    - targetCorrespondingSourceObject: {fileID: 8712517466539974263, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 754985550135585775}
+      addedObject: {fileID: -4720795918328091737}
   m_SourcePrefab: {fileID: 100100000, guid: 05a0515d31796fe49b7e662dc6ad6acb, type: 3}
 --- !u!4 &555281188930028557 stripped
 Transform:
@@ -282,9 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <NavMeshAgent>k__BackingField: {fileID: 1777935901818556143}
-  <EnemyPatrolComponent>k__BackingField: {fileID: -1158057372674707522}
-  <AttackComponent>k__BackingField: {fileID: 754985550135585775}
-  <FollowComponent>k__BackingField: {fileID: 7670937263790037309}
 --- !u!114 &3922643240233000228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,18 +312,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-1158057372674707522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936486902260948663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7992ff33f1e7433ba38600e516bddfb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8446231618929091381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootPoint: {fileID: 1494415917306368384}
---- !u!114 &7670937263790037309
+--- !u!114 &-4720795918328091737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,19 +334,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 936486902260948663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc607dbd4ef454bb1768777fe01d2f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &754985550135585775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936486902260948663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b14f5bc6110b4e9ea3816d57ea1f0978, type: 3}
+  m_Script: {fileID: 11500000, guid: b6fba2911b0d2e846871bd4e9c6b3db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &3766772835051481095 stripped

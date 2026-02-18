@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Enemy.StateMachine
+namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
     public abstract class AnimatedState
     {

@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Enemy.StateMachine.States
+namespace _Project.Scripts.Enemy.StateMachine.Animation.States
 {
-    public class AimState : AnimatedState
+    public class AttackAnimatedState : AnimatedState
     {
         private const float Duration = 0.1f;
 
-        public AimState(Animator animator, AnimationNamesBase animationNamesBase)
+        public AttackAnimatedState(Animator animator, AnimationNamesBase animationNamesBase) 
             : base(animator, animationNamesBase) { }
 
         public override void Enter()
         {
             base.Enter();
             Animator.StopPlayback();
-            Animator.CrossFade(AnimationBase.Aim, Duration);
+            Animator.CrossFade(AnimationBase.Attack, Duration);
         }
 
         public override void Exit()

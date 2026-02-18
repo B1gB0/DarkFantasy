@@ -2,6 +2,7 @@
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
+using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Projectile;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
@@ -61,13 +62,15 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.Skeleton];
             var skeleton = _skeletonPool.GetFreeElement();
-            
-            skeleton.EnemyPatrolComponent.InitPatrol(
-                _levelInitData.EnemyPatrolPositions,
-                skeleton.AnimatedStateMachine,
-                _playerService.Player);
-            
+
             skeleton.GetData(_playerService.Player, _enemiesData[EnemyType.Skeleton]);
+            
+            if (skeleton.Health.TargetHealth <= MinValue)
+            {
+                skeleton.Health.SetHealthValue(data.Health);
+            }
+            
+            skeleton.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
 
             return skeleton;
         }
@@ -76,13 +79,15 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
             var skeletonHeavyArmor = _skeletonHeavyArmorPool.GetFreeElement();
-            
-            skeletonHeavyArmor.EnemyPatrolComponent.InitPatrol(
-                _levelInitData.EnemyPatrolPositions,
-                skeletonHeavyArmor.AnimatedStateMachine,
-                _playerService.Player);
-            
+
             skeletonHeavyArmor.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonHeavyArmor]);
+            
+            if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
+            {
+                skeletonHeavyArmor.Health.SetHealthValue(data.Health);
+            }
+            
+            skeletonHeavyArmor.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
 
             return skeletonHeavyArmor;
         }
@@ -92,20 +97,16 @@ namespace _Project.Scripts.Services
             var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
             
-            skeletonRanger.EnemyPatrolComponent.InitPatrol(
-                _levelInitData.EnemyPatrolPositions,
-                skeletonRanger.AnimatedStateMachine,
-                _playerService.Player);
-            
-            skeletonRanger.FollowComponent.InitFollower(skeletonRanger.AnimatedStateMachine, _playerService.Player);
-            
-            skeletonRanger.AttackComponent.InitAttacker(
-                skeletonRanger.NavMeshAgent,
-                skeletonRanger.AnimatedStateMachine,
-                _playerService.Player);
-            
+
             skeletonRanger.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonRanger]);
             skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);
+            
+            if (skeletonRanger.Health.TargetHealth <= MinValue)
+            {
+                skeletonRanger.Health.SetHealthValue(data.Health);
+            }
+            
+            skeletonRanger.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
 
             return skeletonRanger;
         }
