@@ -100,7 +100,6 @@ namespace _Project.Scripts.Services
         {
             var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
-            
 
             skeletonRanger.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonRanger]);
             skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);

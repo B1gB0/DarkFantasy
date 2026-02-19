@@ -8,38 +8,17 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
     {
         private float _attackRange;
         
-        private float _reloadDuration = 3f;
+        private float _reloadDuration = 2f;
         private float _aimDuration = 2f;
-        private float _shootDuration = 3f;
+        private float _attackDuration = 2f;
         
         private AttackSubState _currentSubState;
         private float _subStateTimer;
 
         public override void Enter()
         {
+            _currentSubState = Enemy.Type == EnemyType.SkeletonRanger ? AttackSubState.Aiming : AttackSubState.Idle;
             _attackRange = Data.RangeAttack;
-        }
-        
-        private void EnterSubState(AttackSubState newSubState)
-        {
-            _currentSubState = newSubState;
-            switch (_currentSubState)
-            {
-                case AttackSubState.Reloading:
-                    AnimStateMachine.EnterIn<ReloadingAnimatedState>();
-                    _subStateTimer = _reloadDuration;
-                    break;
-                case AttackSubState.Aiming:
-                    AnimStateMachine.EnterIn<AimAnimatedState>();
-                    _subStateTimer = _aimDuration;
-                    break;
-                case AttackSubState.Shooting:
-                    AnimStateMachine.EnterIn<AttackAnimatedState>(); // или ShootAnimatedState
-                    _subStateTimer = _shootDuration;
-                    // Наносим урон в момент выстрела (можно также через Animation Event)
-                    // Enemy.Attack(Player);
-                    break;
-            }
         }
 
         public override void Update()
@@ -73,19 +52,59 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             _subStateTimer -= Time.fixedDeltaTime;
             if (_subStateTimer <= 0f)
             {
-                // Переход к следующему подсостоянию
-                switch (_currentSubState)
+                if (Enemy.Type == EnemyType.SkeletonRanger)
                 {
-                    case AttackSubState.Reloading:
-                        EnterSubState(AttackSubState.Aiming);
-                        break;
-                    case AttackSubState.Aiming:
-                        EnterSubState(AttackSubState.Shooting);
-                        break;
-                    case AttackSubState.Shooting:
-                        EnterSubState(AttackSubState.Reloading);
-                        break;
+                    switch (_currentSubState)
+                    {
+                        case AttackSubState.Reloading:
+                            EnterAttackRangerSubState(AttackSubState.Aiming);
+                            break;
+                        case AttackSubState.Aiming:
+                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            break;
+                        case AttackSubState.Attack:
+                            EnterAttackRangerSubState(AttackSubState.Reloading);
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (_currentSubState)
+                    {
+                        case AttackSubState.Attack:
+                            EnterAttackRangerSubState(AttackSubState.Idle);
+                            break;
+                        case AttackSubState.Idle:
+                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            break;
+                    }
+                }
+            }
+        }
+        
+        private void EnterAttackRangerSubState(AttackSubState newSubState)
+        {
+            _currentSubState = newSubState;
+            switch (_currentSubState)
+            {
+                case AttackSubState.Reloading:
+                    AnimStateMachine.EnterIn<ReloadingAnimatedState>();
+                    _subStateTimer = _reloadDuration;
+                    break;
+                case AttackSubState.Aiming:
+                    AnimStateMachine.EnterIn<AimAnimatedState>();
+                    _subStateTimer = _aimDuration;
+                    break;
+                case AttackSubState.Attack:
+                    AnimStateMachine.EnterIn<AttackAnimatedState>(); // или ShootAnimatedState
+                    _subStateTimer = _attackDuration;
+                    // Наносим урон в момент выстрела (можно также через Animation Event)
+                    // Enemy.Attack(Player);
+                    break;
+                case AttackSubState.Idle:
+                    AnimStateMachine.EnterIn<IdleAnimatedState>();
+                    _subStateTimer = _aimDuration;
+                    break;
             }
         }
     }

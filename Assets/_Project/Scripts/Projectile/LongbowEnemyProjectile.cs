@@ -9,7 +9,7 @@ namespace _Project.Scripts.Projectile
         public override void SetDirection(Vector3 targetPosition)
         {
             Direction = (targetPosition - Transform.position).normalized;
-            // Transform.LookAt(targetPosition);
+            Transform.LookAt(targetPosition);
             Direction.y = DefaultDirectionY;
             Direction = Direction.normalized;
         }

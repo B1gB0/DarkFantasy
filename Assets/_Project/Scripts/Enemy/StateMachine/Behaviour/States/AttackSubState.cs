@@ -4,6 +4,7 @@
     {
         Reloading = 0,
         Aiming = 1,
-        Shooting = 2,
+        Attack = 2,
+        Idle = 3,
     }
 }

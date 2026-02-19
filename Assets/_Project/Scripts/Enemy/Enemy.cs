@@ -21,6 +21,7 @@ namespace _Project.Scripts.Enemy
         public EnemyData Data { get; private set; }
         public Player.Player Player { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
+        public EnemyType Type { get; private set; }
 
         private void Start()
         {
@@ -31,6 +32,7 @@ namespace _Project.Scripts.Enemy
         {
             Player = player;
             Data = enemyData;
+            Type = Data.Type;
         }
 
         protected virtual void OnDie()
