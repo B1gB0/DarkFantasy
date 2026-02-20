@@ -7,6 +7,5 @@ namespace _Project.Scripts.Effects
     public class ParticleEffect
     {
         public string ParticleName;
-        public ParticleSystem ParticleSystem;
     }
 }

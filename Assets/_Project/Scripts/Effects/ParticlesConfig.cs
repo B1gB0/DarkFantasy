@@ -45,18 +45,17 @@ namespace _Project.Scripts.Effects
             {
                 if (entry.labels.Contains(label))
                 {
-                    var particleasset = AssetDatabase.LoadAssetAtPath<ParticleSystem>(entry.AssetPath);
-                    if (particleasset != null)
+                    var particleAsset = AssetDatabase.LoadAssetAtPath<ParticleSystem>(entry.AssetPath);
+                    if (particleAsset != null)
                     {
-                        var existingSound
-                            = Particles.FirstOrDefault(s => s.ParticleName == particleasset.name);
+                        var existingParticle
+                            = Particles.FirstOrDefault(p => p.ParticleName == particleAsset.name);
 
-                        if (existingSound == null)
+                        if (existingParticle == null)
                         {
                             var particle = new ParticleEffect
                             {
-                                ParticleName = particleasset.name,
-                                ParticleSystem = particleasset,
+                                ParticleName = particleAsset.name
                             };
 
                             Particles.Add(particle);

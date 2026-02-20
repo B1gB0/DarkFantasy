@@ -12,7 +12,8 @@ namespace _Project.Scripts.Services
         private const string ParticlesConfigPath = "ParticlesConfig";
         private const string ParticleEffects = nameof(ParticleEffects);
         
-        private readonly Dictionary<ParticleType, ParticleEffect> _particlesDictionary = new();
+        private readonly Dictionary<ParticleType, ParticleSystem> _particles = new();
+        
         private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
         
         private IResourceService _resourceService;
@@ -35,10 +36,51 @@ namespace _Project.Scripts.Services
             _particleParent.SetParent(transform);
 
             _particlePool = new Dictionary<ParticleType, Queue<ParticleSystem>>();
-
-            await InitializeSoundDictionary();
+            
+            await LoadParticles();
             
             IsInitiated = true;
+        }
+        
+        private async UniTask LoadParticles()
+        {
+            ParticlesConfig config = await _resourceService.Load<ParticlesConfig>(ParticlesConfigPath);
+            if (config == null)
+            {
+                Debug.LogError($"Failed to load ParticlesConfig at {ParticlesConfigPath}");
+                return;
+            }
+
+            foreach (var effect in config.Particles)
+            {
+                if (string.IsNullOrEmpty(effect.ParticleName))
+                {
+                    Debug.LogWarning($"Particle effect {effect.ParticleName} has no key, skipping.");
+                    continue;
+                }
+                
+                GameObject prefab = await _resourceService.Load<GameObject>(effect.ParticleName);
+                if (prefab == null)
+                {
+                    Debug.LogError($"Failed to load particle prefab with key: {effect.ParticleName}");
+                    continue;
+                }
+
+                ParticleSystem particle = prefab.GetComponent<ParticleSystem>();
+                if (particle == null)
+                {
+                    Debug.LogError($"Loaded GameObject for key {effect.ParticleName} does not have ParticleSystem component.");
+                    continue;
+                }
+
+                if (!Enum.TryParse(effect.ParticleName, out ParticleType type))
+                {
+                    Debug.LogWarning($"Could not parse ParticleType from {effect.ParticleName}, skipping.");
+                    continue;
+                }
+                
+                _particles[type] = particle;
+            }
         }
         
         public void PlayEffect(ParticleType effectType, Vector3 position)
@@ -46,25 +88,12 @@ namespace _Project.Scripts.Services
             if (!IsInitiated)
                 return;
 
-            if (!_particlesDictionary.ContainsKey(effectType))
+            if (!_particles.ContainsKey(effectType))
                 return;
 
             PlayEffectAsync(effectType, position).Forget();
         }
-        
-        private async UniTask InitializeSoundDictionary()
-        {
-            ParticlesConfig particlesConfig = await _resourceService.Load<ParticlesConfig>(ParticlesConfigPath);
 
-            foreach (var particleEffect in particlesConfig.Particles)
-            {
-                ParticleSystem particle = await _resourceService.Load<ParticleSystem>(particleEffect.ParticleName);
-                particleEffect.ParticleSystem = particle;
-                Enum.TryParse(particleEffect.ParticleName, out ParticleType particleType);
-                _particlesDictionary.TryAdd(particleType, particleEffect);
-            }
-        }
-        
         private async UniTaskVoid PlayEffectAsync(ParticleType effectType, Vector3 position)
         {
             var particleEffect = GetOrCreateParticleSystem(effectType);
@@ -104,11 +133,11 @@ namespace _Project.Scripts.Services
 
         private ParticleSystem CreateNewParticleSystem(ParticleType effectType)
         {
-            if (!_particlesDictionary.ContainsKey(effectType))
+            if (!_particles.ContainsKey(effectType))
                 return null;
 
-            var config = _particlesDictionary[effectType];
-            var particleEffect = Instantiate(config.ParticleSystem, _particleParent);
+            var prefab = _particles[effectType];
+            var particleEffect = Instantiate(prefab, _particleParent);
 
             return particleEffect;
         }

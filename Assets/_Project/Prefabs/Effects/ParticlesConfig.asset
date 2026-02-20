@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Particles:
   - ParticleName: RedBloodHit
-    ParticleSystem: {fileID: 19845262, guid: 9db5aa39effc85947bddf36c79a1fa7f, type: 3}
   _particleLabel: Particles
