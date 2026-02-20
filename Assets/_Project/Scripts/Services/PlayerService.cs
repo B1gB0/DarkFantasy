@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Services
 {
@@ -35,6 +37,25 @@ namespace _Project.Scripts.Services
             IsInitiated = true;
 
             return UniTask.CompletedTask;
+        }
+        
+        public PlayerCharacteristics InitPlayerCharacteristics()
+        {
+            var characteristics = YG2.saves.PlayerCharacteristics;
+
+            if (characteristics != null)
+            {
+                characteristics.SetCharacteristics();
+            }
+            else
+            {
+                characteristics = new PlayerCharacteristics(this);
+                characteristics.SetStartingCharacteristics(GetPlayerDataByType(PlayerType.CommonHero));
+            }
+
+            YG2.saves.PlayerCharacteristics = characteristics;
+
+            return characteristics;
         }
         
         public PlayerData GetPlayerDataByType(PlayerType type)

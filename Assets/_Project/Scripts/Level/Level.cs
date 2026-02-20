@@ -53,6 +53,9 @@ namespace _Project.Scripts.Level
                 _playerInitData.CommonHero,
                 _levelInitData.PlayerSpawnPosition);
             
+            var playerCharacteristics = _playerService.InitPlayerCharacteristics();
+            
+            player.Construct(playerCharacteristics);
             player.Health.SetHealthValue(data.Health);
 
             var playerTransform = player.transform;
