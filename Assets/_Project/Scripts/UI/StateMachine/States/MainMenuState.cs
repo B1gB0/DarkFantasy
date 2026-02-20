@@ -2,7 +2,7 @@
 {
     public class MainMenuState : ViewState
     {
-        public MainMenuState(IView view) : base(view)
+        public MainMenuState(View.View view) : base(view)
         {
         }
     }

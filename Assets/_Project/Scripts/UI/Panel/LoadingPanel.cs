@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace _Project.Scripts.UI.Panel
 {
-    public class LoadingPanel : MonoBehaviour, IView
+    public class LoadingPanel : View.View
     {
         private const int TextFormat = 100;
         private const float StartProgress = 0f;
 
         [SerializeField] private TMP_Text _progressText;
 
-        public void Show()
+        public override void Show()
         {
-            gameObject.SetActive(true);
+            Activate();
             _progressText.text = $"{StartProgress * TextFormat:0}%";
         }
 
-        public void Hide()
+        public override void Hide()
         {
-            gameObject.SetActive(false);
+            Deactivate();
         }
 
         public void SetProgressText(float progress)

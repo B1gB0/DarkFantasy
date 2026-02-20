@@ -1011,6 +1011,7 @@ GameObject:
   - component: {fileID: 979533350}
   - component: {fileID: 979533351}
   - component: {fileID: 979533352}
+  - component: {fileID: 979533353}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: Untagged
@@ -1046,9 +1047,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cinemachineVirtualCamera: {fileID: 643609843}
-  _sceneUIRootPrefab: {fileID: 4392302739474468379, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
+  _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
   _dataFactory: {fileID: 979533352}
   _levelInitData: {fileID: 11400000, guid: 0a58bdaab356f204487f473a2bd866d4, type: 2}
+  _viewFactory: {fileID: 979533353}
 --- !u!114 &979533352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,6 +1061,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 206f50648c0d4a06af223406ca7fb9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &979533353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979533349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d9891907d0b1144ba024f32513ed39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1221962844

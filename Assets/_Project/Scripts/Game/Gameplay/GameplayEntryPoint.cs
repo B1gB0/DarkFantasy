@@ -1,7 +1,9 @@
+using System;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -19,7 +21,7 @@ namespace _Project.Scripts.Game.Gameplay
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
-        // [SerializeField] private ViewFactory _viewFactory;
+        [SerializeField] private ViewFactory _viewFactory;
 
         private Level.Level _level;
         private UIRootView _uiRoot;
@@ -57,8 +59,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _uiScene = Instantiate(_sceneUIRootPrefab);
 
-            // _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
-
+            _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
 
@@ -88,6 +89,9 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerInitData,
                 _playerService,
                 _cinemachineVirtualCamera);
+
+            HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
+            healthBar.Show();
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game.MainMenu.Root.View
 {
-    public class MainMenuElements : MonoBehaviour, IView
+    public class MainMenuElements : UI.View.View
     {
         private ITweenAnimationService _tweenAnimationService;
 
@@ -21,15 +21,15 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
             transform.DOKill();
         }
 
-        public void Show()
+        public override void Show()
         {
             gameObject.SetActive(true);
-            // _tweenAnimationService.AnimateScale(transform);
+            _tweenAnimationService.AnimateScale(transform);
         }
 
-        public void Hide()
+        public override void Hide()
         {
-            // _tweenAnimationService.AnimateScale(transform, true);
+            _tweenAnimationService.AnimateScale(transform, true);
         }
     }
 }

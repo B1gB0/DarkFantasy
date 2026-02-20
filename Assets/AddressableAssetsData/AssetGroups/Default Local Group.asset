@@ -65,6 +65,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fef077bcd8586f24f80da40864cd3edc
+    m_Address: HealthBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: fd9fc6533fdc9384cb6d1e16da437289, type: 2}
   m_SchemaSet:

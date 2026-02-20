@@ -24,6 +24,7 @@ namespace _Project.Scripts.Level
         private CinemachineFreeLook _cinemachineFreeLook;
 
         public event Action IsInitiatedSpawners;
+        public event Action PlayerIsSpawned;
 
         public void GetServices(
             IEnemyService enemyService,
@@ -58,6 +59,8 @@ namespace _Project.Scripts.Level
             
             _cinemachineFreeLook.LookAt = playerTransform;
             _cinemachineFreeLook.Follow = playerTransform;
+            
+            PlayerIsSpawned?.Invoke();
         }
 
         protected void CreateSkeletonWaveEnemy()
