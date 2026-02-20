@@ -17,6 +17,7 @@ namespace _Project.Scripts.Level
         [SerializeField] protected int CountSkeletonRangerEnemy;
 
         private IPlayerService _playerService;
+        private ParticleEffectsService _particleEffectsService;
 
         private EnemySpawner _enemySpawner;
         private LevelInitData _levelInitData;
@@ -31,13 +32,15 @@ namespace _Project.Scripts.Level
             LevelInitData levelInitData,
             PlayerInitData playerInitData,
             IPlayerService playerService,
-            CinemachineFreeLook cinemachineFreeLook
+            CinemachineFreeLook cinemachineFreeLook,
+            ParticleEffectsService particleEffectsService
         )
         {
             _levelInitData = levelInitData;
             _playerInitData = playerInitData;
             _playerService = playerService;
             _cinemachineFreeLook = cinemachineFreeLook;
+            _particleEffectsService = particleEffectsService;
             
             CreatePlayer();
             
@@ -55,7 +58,7 @@ namespace _Project.Scripts.Level
             
             var playerCharacteristics = _playerService.InitPlayerCharacteristics();
             
-            player.Construct(playerCharacteristics);
+            player.Construct(playerCharacteristics, _particleEffectsService);
             player.Health.SetHealthValue(data.Health);
 
             var playerTransform = player.transform;

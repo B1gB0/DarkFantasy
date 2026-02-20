@@ -49,6 +49,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9db5aa39effc85947bddf36c79a1fa7f
+    m_Address: RedBloodHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b51fae0fb753be7438ece33b15d99dc9
     m_Address: AudioConfig
     m_ReadOnly: 0

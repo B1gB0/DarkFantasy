@@ -58,8 +58,8 @@ namespace _Project.Scripts.Services
 
             foreach (var particleEffect in particlesConfig.Particles)
             {
-                ParticleSystem clip = await _resourceService.Load<ParticleSystem>(particleEffect.ParticleName);
-                particleEffect.ParticleSystem = clip;
+                ParticleSystem particle = await _resourceService.Load<ParticleSystem>(particleEffect.ParticleName);
+                particleEffect.ParticleSystem = particle;
                 Enum.TryParse(particleEffect.ParticleName, out ParticleType particleType);
                 _particlesDictionary.TryAdd(particleType, particleEffect);
             }

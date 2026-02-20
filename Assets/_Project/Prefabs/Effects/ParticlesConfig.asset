@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66898159fdbc49bba948aa5b991fe92b, type: 3}
   m_Name: ParticlesConfig
   m_EditorClassIdentifier: 
-  Particles: []
+  Particles:
+  - ParticleName: RedBloodHit
+    ParticleSystem: {fileID: 19845262, guid: 9db5aa39effc85947bddf36c79a1fa7f, type: 3}
   _particleLabel: Particles

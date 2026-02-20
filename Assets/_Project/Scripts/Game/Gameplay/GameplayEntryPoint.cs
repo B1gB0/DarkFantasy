@@ -32,6 +32,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IEnemyService _enemyService;
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
+        private ParticleEffectsService _particleEffectsService;
 
         private SkeletonInitData _skeletonInitData;
         private PlayerInitData _playerInitData;
@@ -40,11 +41,13 @@ namespace _Project.Scripts.Game.Gameplay
         private void Construct(
             IEnemyService enemyService,
             IDataBaseService dataBaseService,
-            IPlayerService playerService)
+            IPlayerService playerService,
+            ParticleEffectsService particleEffectsService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
             _playerService = playerService;
+            _particleEffectsService = particleEffectsService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -55,7 +58,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _uiRoot = uiRoot;
 
-            // await _particleEffectsService.Init();
+            await _particleEffectsService.Init();
 
             _uiScene = Instantiate(_sceneUIRootPrefab);
 
@@ -88,7 +91,8 @@ namespace _Project.Scripts.Game.Gameplay
                 _levelInitData,
                 _playerInitData,
                 _playerService,
-                _cinemachineVirtualCamera);
+                _cinemachineVirtualCamera,
+                _particleEffectsService);
 
             HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
             healthBar.Show();
