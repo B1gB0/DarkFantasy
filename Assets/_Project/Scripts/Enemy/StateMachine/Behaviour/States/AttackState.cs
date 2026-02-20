@@ -76,6 +76,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                         case AttackSubState.Idle:
                             EnterAttackRangerSubState(AttackSubState.Attack);
+                            Player.Health.TakeDamage(Enemy.Data.Damage);
                             break;
                     }
                 }
@@ -96,10 +97,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     _subStateTimer = _aimDuration;
                     break;
                 case AttackSubState.Attack:
-                    AnimStateMachine.EnterIn<AttackAnimatedState>(); // или ShootAnimatedState
+                    AnimStateMachine.EnterIn<AttackAnimatedState>();
                     _subStateTimer = _attackDuration;
-                    // Наносим урон в момент выстрела (можно также через Animation Event)
-                    // Enemy.Attack(Player);
                     break;
                 case AttackSubState.Idle:
                     AnimStateMachine.EnterIn<IdleAnimatedState>();

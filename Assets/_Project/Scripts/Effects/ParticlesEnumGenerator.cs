@@ -1,32 +1,32 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Scripts.Audio.Sounds
+namespace _Project.Scripts.Effects
 {
-    public static class SoundsEnumGenerator
+    public static class ParticlesEnumGenerator
     {
-        private const string EnumTemplate = @"namespace _Project.Scripts.Audio.Sounds
+        private const string EnumTemplate = @"namespace _Project.Scripts.Effects
 {{
-    public enum SoundsType
+    public enum ParticleType
     {{
         None = 0,
 {0}
     }}
 }}";
 
-        [MenuItem("Tools/Audio/Generate Sounds Enum")]
+        [MenuItem("Tools/Particles/Generate Particles Enum")]
         public static void GenerateAll()
         {
-            var guids = AssetDatabase.FindAssets("t:AudioConfig");
+            var guids = AssetDatabase.FindAssets("t:ParticlesConfig");
 
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                var config = AssetDatabase.LoadAssetAtPath<AudioConfig>(path);
+                var config = AssetDatabase.LoadAssetAtPath<ParticlesConfig>(path);
 
                 if (config != null)
                 {
@@ -34,33 +34,33 @@ namespace _Project.Scripts.Audio.Sounds
                 }
             }
 
-            Debug.Log("All AudioConfig enums generated!");
+            Debug.Log("All ParticlesConfig enums generated!");
         }
 
-        public static void Generate(AudioConfig config)
+        public static void Generate(ParticlesConfig config)
         {
             if (config == null)
             {
-                Debug.LogError("AudioConfig is null!");
+                Debug.LogError("ParticlesConfig is null!");
                 return;
             }
 
-            var allClipNames = new HashSet<string>();
+            var allParticleNames = new HashSet<string>();
             var stringBuilder = new StringBuilder();
 
-            foreach (var sound in config.Sounds)
+            foreach (var particle in config.Particles)
             {
-                if (!string.IsNullOrEmpty(sound.ClipName))
+                if (!string.IsNullOrEmpty(particle.ParticleName))
                 {
-                    allClipNames.Add(sound.ClipName);
+                    allParticleNames.Add(particle.ParticleName);
                 }
             }
 
             bool isFirst = true;
             int index = 1;
-            foreach (var clipName in allClipNames)
+            foreach (var particleName in allParticleNames)
             {
-                var enumName = SanitizeIdentifier(clipName);
+                var enumName = SanitizeIdentifier(particleName);
 
                 if (!isFirst)
                 {
@@ -73,13 +73,13 @@ namespace _Project.Scripts.Audio.Sounds
             }
 
             var content = string.Format(EnumTemplate, stringBuilder);
-            var path = Path.Combine(Application.dataPath, "_Project/Scripts/Audio/Sounds/SoundsType.cs");
+            var path = Path.Combine(Application.dataPath, "_Project/Scripts/Effects/ParticleType.cs");
 
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.WriteAllText(path, content);
 
             AssetDatabase.Refresh();
-            Debug.Log($"Sounds enum generated with {allClipNames.Count} entries");
+            Debug.Log($"Particles enum generated with {allParticleNames.Count} entries");
         }
 
         private static string SanitizeIdentifier(string id)
