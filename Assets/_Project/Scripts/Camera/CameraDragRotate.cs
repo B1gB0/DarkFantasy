@@ -11,25 +11,20 @@ public class CameraDragRotate : MonoBehaviour
 
     private void Update()
     {
-        // ПК — ЛКМ
         if (Input.GetMouseButtonDown(0))
         {
             isDragging = true;
             lastPos = Input.mousePosition;
         }
-
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
         }
-
-        // Если ЛКМ не зажата — не вращаем
         if (!Input.GetMouseButton(0))
         {
             isDragging = false;
         }
-
-        // Мобилки — тач
+        
         if (Input.touchCount > 0)
         {
             Touch t = Input.GetTouch(0);
@@ -45,6 +40,11 @@ public class CameraDragRotate : MonoBehaviour
             }
         }
 
+        Rotate();
+    }
+
+    private void Rotate()
+    {
         if (isDragging)
         {
             Vector2 currentPos = Input.touchCount > 0 
@@ -52,12 +52,10 @@ public class CameraDragRotate : MonoBehaviour
                 : (Vector2)Input.mousePosition;
 
             Vector2 delta = currentPos - lastPos;
-
-            // Вращаем только по горизонтали
+            
             freeLookCamera.m_XAxis.Value += delta.x * sensitivity;
-
-            // Фиксируем вертикальную ось, чтобы камера не приближалась
-            freeLookCamera.m_YAxis.Value = 0.5f;
+            
+            // freeLookCamera.m_YAxis.Value = 0.5f;
 
             lastPos = currentPos;
         }

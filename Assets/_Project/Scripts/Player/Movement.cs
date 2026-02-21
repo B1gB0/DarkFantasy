@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,17 +9,22 @@ namespace _Project.Scripts.Player
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _rotationSpeed = 10f;
+        [SerializeField] private Attack _attack;   
 
         private InputSystem _inputSystem;
         private Rigidbody _rigidbody;
         private Vector2 _moveInput;
+
+        public event Action<float> IsMovePerformed;
 
         private void Awake()
         {
             _inputSystem = new InputSystem();
             _rigidbody = GetComponent<Rigidbody>();
 
-            // Блокируем вращение физики
+            if (_attack == null)
+                _attack = GetComponent<Attack>();
+
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX |
                                      RigidbodyConstraints.FreezeRotationZ;
         }
@@ -39,38 +45,16 @@ namespace _Project.Scripts.Player
 
         private void FixedUpdate()
         {
-            // Если нет камеры — не двигаем
             if (Camera.main == null)
                 return;
 
-            // Берём forward камеры, но убираем наклон
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0;
-            camForward.Normalize();
+            Vector3 camForward = SetDirection(Camera.main.transform.forward);
+            Vector3 camRight = SetDirection(Camera.main.transform.right);
 
-            // Берём right камеры
-            Vector3 camRight = Camera.main.transform.right;
-            camRight.y = 0;
-            camRight.Normalize();
-
-            // Преобразуем ввод в направление движения относительно камеры
             Vector3 moveDir = camForward * _moveInput.y + camRight * _moveInput.x;
 
-            // Двигаем Rigidbody
-            Vector3 velocity = moveDir * _speed;
-            velocity.y = _rigidbody.velocity.y; // сохраняем гравитацию
-            _rigidbody.velocity = velocity;
-
-            // Поворот игрока в сторону движения
-            if (moveDir.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    Time.fixedDeltaTime * _rotationSpeed
-                );
-            }
+            Move(moveDir);
+            Rotate(moveDir);
         }
 
         private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -81,6 +65,40 @@ namespace _Project.Scripts.Player
         private void OnMoveCanceled(InputAction.CallbackContext ctx)
         {
             _moveInput = Vector2.zero;
+        }
+
+        private Vector3 SetDirection(Vector3 direction)
+        {
+            direction.y = 0;
+            direction.Normalize();
+            return direction;
+        }
+
+        private void Move(Vector3 moveDir)
+        {
+            Vector3 velocity = moveDir * _speed;
+            velocity.y = _rigidbody.velocity.y;
+            _rigidbody.velocity = velocity;
+
+            float currentSpeed = _rigidbody.velocity.magnitude;
+            IsMovePerformed?.Invoke(currentSpeed);
+        }
+
+        private void Rotate(Vector3 moveDir)
+        {
+            // КЛЮЧЕВОЕ: не вращаемся, если идёт атака
+            if (_attack != null && _attack.IsAttacking)
+                return;
+
+            if (moveDir.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.fixedDeltaTime * _rotationSpeed
+                );
+            }
         }
     }
 }

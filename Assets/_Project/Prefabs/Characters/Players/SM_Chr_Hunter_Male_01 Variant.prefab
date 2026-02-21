@@ -52,7 +52,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Chr_Hunter_Male_01 Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8183935548633840448, guid: 48e71803e3dc7e248a1a532cdef1be17, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
