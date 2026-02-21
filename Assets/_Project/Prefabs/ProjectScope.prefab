@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSoundsServicePrefab: {fileID: 1081434827416047050, guid: 567029ed7fedcfe45806ada75cfa54cd, type: 3}
+  _playerServicePrefab: {fileID: 4575645111920843343, guid: afe8712be61364745ac4db0146e6612c, type: 3}
   _particleEffectsService: {fileID: 8025066812198353854, guid: 79df315e16969924597fb7cb36295ae3, type: 3}
   _uiRootViewPrefab: {fileID: 7385491024677418902, guid: c6ba61368436e3348aa3e115e9cdfb37, type: 3}
   _gameEntryPointPrefab: {fileID: 164181489634598705, guid: fb391e5a0cbeb054e83e56852c075577, type: 3}

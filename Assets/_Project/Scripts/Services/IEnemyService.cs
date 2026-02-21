@@ -10,5 +10,6 @@ namespace _Project.Scripts.Services
         public EnemyData GetEnemyDataByType(EnemyType type);
         public Skeleton CreateSkeleton();
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor();
+        public SkeletonRanger CreateSkeletonRanger();
     }
 }

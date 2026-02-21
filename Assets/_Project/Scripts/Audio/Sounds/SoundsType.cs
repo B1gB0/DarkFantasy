@@ -2,9 +2,9 @@ namespace _Project.Scripts.Audio.Sounds
 {
     public enum SoundsType
     {
-        None,
-        PaperButton,
-        UIButtonClick,
-        MainMenuMusic,
+        None = 0,
+        PaperButton = 1,
+        UIButtonClick = 2,
+        MainMenuMusic = 3,
     }
 }

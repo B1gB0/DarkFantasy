@@ -1,18 +1,22 @@
 ﻿using System.Collections.Generic;
+using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
+using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Services
 {
-    public class PlayerService : IPlayerService
+    public class PlayerService : MonoBehaviour, IPlayerService
     {
         private readonly Dictionary<PlayerType, PlayerData> _playersData = new ();
         
         private IDataBaseService _dataBaseService;
         
         public bool IsInitiated { get; private set; }
+        public Player.Player Player { get; private set; }
         
         [Inject]
         public void Construct(IDataBaseService dataBaseService)
@@ -33,6 +37,37 @@ namespace _Project.Scripts.Services
             IsInitiated = true;
 
             return UniTask.CompletedTask;
+        }
+        
+        public PlayerCharacteristics InitPlayerCharacteristics()
+        {
+            var characteristics = YG2.saves.PlayerCharacteristics;
+
+            if (characteristics != null)
+            {
+                characteristics.SetCharacteristics();
+            }
+            else
+            {
+                characteristics = new PlayerCharacteristics(this);
+                characteristics.SetStartingCharacteristics(GetPlayerDataByType(PlayerType.CommonHero));
+            }
+
+            YG2.saves.PlayerCharacteristics = characteristics;
+
+            return characteristics;
+        }
+        
+        public PlayerData GetPlayerDataByType(PlayerType type)
+        {
+            return _playersData[type];
+        }
+
+        public Player.Player CreatePlayerByPrefab(Player.Player playerPrefab, Vector3 spawnPoint)
+        {
+            Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+
+            return Player;
         }
     }
 }

@@ -28,6 +28,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 640b5be3487905743af9da855935574a
+    m_Address: ParticlesConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 92221ef13f773d1489fb180cf9768fd3
     m_Address: PlayerInitData
     m_ReadOnly: 0
@@ -43,6 +48,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9db5aa39effc85947bddf36c79a1fa7f
+    m_Address: RedBloodHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b51fae0fb753be7438ece33b15d99dc9
     m_Address: AudioConfig
@@ -64,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fef077bcd8586f24f80da40864cd3edc
+    m_Address: HealthBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: fd9fc6533fdc9384cb6d1e16da437289, type: 2}

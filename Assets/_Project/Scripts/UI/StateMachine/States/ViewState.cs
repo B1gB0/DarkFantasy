@@ -2,9 +2,9 @@
 {
     public abstract class ViewState : UIState
     {
-        private readonly IView _view;
-
-        protected ViewState(IView view)
+        private readonly View.View _view;
+        
+        protected ViewState(View.View view)
         {
             _view = view;
         }
@@ -13,7 +13,7 @@
         {
             _view.Show();
         }
-
+        
         public override void Exit()
         {
             _view.Hide();

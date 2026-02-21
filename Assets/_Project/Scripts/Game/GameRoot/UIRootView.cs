@@ -34,7 +34,7 @@ namespace _Project.Scripts.Game.GameRoot
         private void Awake()
         {
             UIStateMachine = new UIStateMachine();
-            UIStateMachine.AddState(new LoadingPanelState(_loadingPanel));
+            // UIStateMachine.AddState(new LoadingPanelState(_loadingPanel));
         }
 
         private void OnEnable()

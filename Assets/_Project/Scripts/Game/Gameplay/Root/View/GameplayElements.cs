@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game.Gameplay.Root.View
 {
-    public class GameplayElements : MonoBehaviour, IView
+    public class GameplayElements : MonoBehaviour
     {
         public void Show()
         {

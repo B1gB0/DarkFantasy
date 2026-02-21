@@ -13,7 +13,7 @@ namespace _Project.Scripts.Audio.Sounds
 {{
     public enum SoundsType
     {{
-        None,
+        None = 0,
 {0}
     }}
 }}";
@@ -57,6 +57,7 @@ namespace _Project.Scripts.Audio.Sounds
             }
 
             bool isFirst = true;
+            int index = 1;
             foreach (var clipName in allClipNames)
             {
                 var enumName = SanitizeIdentifier(clipName);
@@ -66,8 +67,9 @@ namespace _Project.Scripts.Audio.Sounds
                     stringBuilder.AppendLine();
                 }
 
-                stringBuilder.Append($"        {enumName},");
+                stringBuilder.Append($"        {enumName} = {index},");
                 isFirst = false;
+                index++;
             }
 
             var content = string.Format(EnumTemplate, stringBuilder);

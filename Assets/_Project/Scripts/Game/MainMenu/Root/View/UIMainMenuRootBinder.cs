@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace _Project.Scripts.Game.MainMenu.Root.View
 {
-    public class UIMainMenuRootBinder : MonoBehaviour
+    public class UIMainMenuRootBinder : UI.View.View
     {
         [SerializeField] private MainMenuElements _uiScene;
 
@@ -48,7 +48,7 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
         {
             _uiStateMachine = uiStateMachine;
 
-            _uiStateMachine.AddState(new MainMenuState(_uiScene));
+            // _uiStateMachine.AddState(new MainMenuState(_uiScene));
 
             _uiStateMachine.EnterIn<MainMenuState>();
         }

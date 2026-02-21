@@ -27,5 +27,8 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 5.04, y: 0, z: -5.46}
   SkeletonLightArmorEnemySpawnPositions: []
-  SkeletonRangerEnemySpawnPositions: []
+  SkeletonRangerEnemySpawnPositions:
+  - {x: 6.95, y: 0, z: -8.94}
+  - {x: -6.4, y: 0, z: -7.25}
+  - {x: 3.7, y: 0, z: 0.5}
   PlayerSpawnPosition: {x: 0, y: 0.59, z: -4.09}

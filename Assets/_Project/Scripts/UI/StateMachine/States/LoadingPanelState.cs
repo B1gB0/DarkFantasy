@@ -2,6 +2,6 @@
 {
     public class LoadingPanelState : ViewState
     {
-        public LoadingPanelState(IView view) : base(view) { }
+        public LoadingPanelState(View.View view) : base(view) { }
     }
 }

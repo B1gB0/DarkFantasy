@@ -131,6 +131,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4376708952660885327, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6222718641175835822}
+    - targetCorrespondingSourceObject: {fileID: 4376708952660885327, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4037433533464414506}
   m_SourcePrefab: {fileID: 100100000, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
 --- !u!4 &2740374754142726622 stripped
 Transform:
@@ -154,7 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9119a5c8454ad38b9a77c9ba827d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 3350875041654478630}
+  _animator: {fileID: 7618116559500613158}
+  <Health>k__BackingField: {fileID: 3350875041654478630}
+  <EnemyStateMachine>k__BackingField: {fileID: -4037433533464414506}
   <NavMeshAgent>k__BackingField: {fileID: 6222718641175835822}
 --- !u!114 &3350875041654478630
 MonoBehaviour:
@@ -180,11 +185,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2.5
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -192,9 +197,26 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-4037433533464414506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3752343867563939558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fba2911b0d2e846871bd4e9c6b3db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4564627408236563548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4032658138706470389, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+  m_PrefabInstance: {fileID: 625491581106661801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7618116559500613158 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6996005444251697039, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
   m_PrefabInstance: {fileID: 625491581106661801}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5131341776777365513

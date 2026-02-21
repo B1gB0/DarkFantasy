@@ -2,7 +2,7 @@
 {
     public class GameplayState : ViewState
     {
-        public GameplayState(IView view) : base(view)
+        public GameplayState(View.View view) : base(view)
         {
         }
     }
