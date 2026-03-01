@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: GraveyardLevel
   m_EditorClassIdentifier: 
   EnemyPatrolPositions:
-  - {x: -5.1, y: 0, z: -12.6}
-  - {x: 12.78, y: 0, z: -4.96}
-  - {x: -9.86, y: 0, z: 5.81}
+  - {x: 17.09, y: 0, z: 8.47}
+  - {x: -3.35, y: 0, z: 12.59}
+  - {x: -24.54, y: 0, z: 12.2}
   SkeletonEnemySpawnPositions:
-  - {x: -6.13, y: 0, z: -3.59}
-  - {x: 2.29, y: 0, z: -11.54}
-  - {x: -0.28, y: 0, z: 4.03}
-  - {x: 6.55, y: 0, z: -0.88}
+  - {x: -18.03, y: 0, z: 21.3}
+  - {x: -9.955973, y: 0, z: 13.139533}
+  - {x: -20.605831, y: 0, z: 8.592071}
+  - {x: -25.257885, y: 0, z: 16.997154}
   SkeletonFleshEnemySpawnPositions: []
   SkeletonHeavyArmorEnemySpawnPositions:
-  - {x: 0.04, y: 0, z: -7.84}
-  - {x: 0, y: 0, z: 0}
-  - {x: 5.04, y: 0, z: -5.46}
+  - {x: -20.36, y: 0, z: 11.3}
+  - {x: -15.360002, y: 0, z: 13.68}
+  - {x: -20.400002, y: 0, z: 19.14}
   SkeletonLightArmorEnemySpawnPositions: []
   SkeletonRangerEnemySpawnPositions:
-  - {x: 6.95, y: 0, z: -8.94}
-  - {x: -6.4, y: 0, z: -7.25}
-  - {x: 3.7, y: 0, z: 0.5}
-  PlayerSpawnPosition: {x: 0, y: 0.59, z: -4.09}
+  - {x: -5.84, y: 0, z: 19.46}
+  - {x: -11.3, y: 0, z: 16.52}
+  - {x: -18.64, y: 0, z: 15.42}
+  PlayerSpawnPosition: {x: 3.52, y: 0.59, z: 40.13}
