@@ -6,7 +6,7 @@ namespace _Project.Scripts.Services
 {
     public interface IEnemyService : IService
     {
-        public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData, Level.Level level);
+        public void GetData(SkeletonInitData skeletonInitData);
         public EnemyData GetEnemyDataByType(EnemyType type);
         public Skeleton CreateSkeleton();
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor();

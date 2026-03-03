@@ -153,6 +153,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1549088415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &169580889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169580890}
+  m_Layer: 0
+  m_Name: EnemyFirstPatrolPoint (3)
+  m_TagString: EnemyFirstPatrolPoints
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &169580890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169580889}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.38, y: 0, z: 7.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1549512717}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &353063239
 GameObject:
   m_ObjectHideFlags: 3
@@ -257,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 539413458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.22, y: 0, z: 17.17}
+  m_LocalPosition: {x: -16.73, y: 0, z: 14.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -406,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 562552160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.77, y: 0, z: 18.83}
+  m_LocalPosition: {x: -24.65, y: 0, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -891,7 +922,7 @@ GameObject:
   - component: {fileID: 952284542}
   m_Layer: 0
   m_Name: EnemyThirdPatrolPoint (1)
-  m_TagString: EnemySecondPatrolPoints
+  m_TagString: EnemyThirdPatrolPoints
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -905,7 +936,7 @@ Transform:
   m_GameObject: {fileID: 952284541}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.09, y: 0, z: 12.26}
+  m_LocalPosition: {x: -17.71, y: 0, z: 7.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1210,7 +1241,7 @@ GameObject:
   - component: {fileID: 1677542744}
   m_Layer: 0
   m_Name: EnemyThirdPatrolPoint (2)
-  m_TagString: EnemySecondPatrolPoints
+  m_TagString: EnemyThirdPatrolPoints
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,7 +1255,7 @@ Transform:
   m_GameObject: {fileID: 1677542743}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28, y: 0, z: 15.53}
+  m_LocalPosition: {x: -30.3, y: 0, z: 14.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1303,7 +1334,7 @@ GameObject:
   - component: {fileID: 1874573603}
   m_Layer: 0
   m_Name: EnemyThirdPatrolPoint
-  m_TagString: EnemySecondPatrolPoints
+  m_TagString: EnemyThirdPatrolPoints
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1317,7 +1348,7 @@ Transform:
   m_GameObject: {fileID: 1874573602}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.22, y: 0, z: 20.06}
+  m_LocalPosition: {x: -17.38, y: 0, z: 20.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1656,6 +1687,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1931227815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931227816}
+  m_Layer: 0
+  m_Name: PlayerSpawnPoints
+  m_TagString: PlayerSpawnPoint
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1931227816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931227815}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 3.35, y: 0, z: 39.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1549088415}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1953646254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1945,6 +2007,30 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 16.52
       objectReference: {fileID: 0}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: _countEnemyWaves
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: _enemyWaves.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: _enemyWaves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e1ac937ffff55b47a07a9c75b91f671, type: 2}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: _enemyWaves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 12b3d00ed62a9ff49935e0ba5b02623b, type: 2}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: _enemyWaves.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 55b82cf6a7a183a4488c4161e9396009, type: 2}
+    - target: {fileID: 8334500786551352805, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: <CountSkeletonRangerEnemy>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8440684264664594643, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       propertyPath: m_NavMeshData
       value: 
@@ -2051,6 +2137,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1161304057383515051, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1953646255}
+    - targetCorrespondingSourceObject: {fileID: 1161304057383515051, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931227816}
+    - targetCorrespondingSourceObject: {fileID: 9031532656145558502, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 169580890}
     - targetCorrespondingSourceObject: {fileID: 9031532656145558502, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1576751170}

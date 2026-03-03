@@ -84,7 +84,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _level = FindObjectOfType<Level.Level>();
             
-            _enemyService.GetData(_levelInitData, _skeletonInitData, _level);
+            _enemyService.GetData(_skeletonInitData);
 
             _level.GetServices(
                 _enemyService,

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Level.Spawners
 {
+    [CreateAssetMenu(fileName = "EnemyWave")]
     public class EnemyWave : ScriptableObject
     {
         [field: SerializeField] public int SkeletonEnemyCount { get; private set; }

@@ -19,7 +19,6 @@ namespace _Project.Scripts.Level
         [Header("EnemyWaves")]
         [SerializeField] private List<EnemyWave> _enemyWaves;
         [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
-        [SerializeField] private int _countEnemyWaves;
 
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
@@ -52,6 +51,10 @@ namespace _Project.Scripts.Level
             CreatePlayer();
             
             InitSpawners(enemyService);
+            
+            CreateWaveOfDifferentSkeletons(FirstWaveEnemy);
+            CreateWaveOfDifferentSkeletons(SecondWaveEnemy);
+            CreateWaveOfDifferentSkeletons(ThirdWaveEnemy);
         }
 
         protected void CreatePlayer()
@@ -91,7 +94,7 @@ namespace _Project.Scripts.Level
 
         protected void CreateWaveOfDifferentSkeletons(int numberWave)
         {
-            
+            _enemySpawner.SpawnWave(_enemyWaves[numberWave]);
         }
 
         // protected void CreateWaveOfSkeleton(int numberWaveEnemy)

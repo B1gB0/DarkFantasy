@@ -2,7 +2,6 @@
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
-using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Projectile;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
@@ -25,9 +24,7 @@ namespace _Project.Scripts.Services
 
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
-
-        private LevelInitData _levelInitData;
-        private Level.Level _level;
+        
         private SkeletonInitData _skeletonInitData;
 
         private ObjectPool<Skeleton> _skeletonPool;
@@ -73,10 +70,6 @@ namespace _Project.Scripts.Services
                 skeleton.Health.SetHealthValue(data.Health);
             }
 
-            skeleton.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyFirstPatrolPositions));
-            skeleton.EnemyStateMachine.InitializeAllStates();
-            skeleton.EnemyStateMachine.SwitchState<PatrolState>();
-
             return skeleton;
         }
 
@@ -93,10 +86,6 @@ namespace _Project.Scripts.Services
             {
                 skeletonHeavyArmor.Health.SetHealthValue(data.Health);
             }
-
-            skeletonHeavyArmor.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyFirstPatrolPositions));
-            skeletonHeavyArmor.EnemyStateMachine.InitializeAllStates();
-            skeletonHeavyArmor.EnemyStateMachine.SwitchState<PatrolState>();
 
             return skeletonHeavyArmor;
         }
@@ -116,17 +105,12 @@ namespace _Project.Scripts.Services
                 skeletonRanger.Health.SetHealthValue(data.Health);
             }
 
-            skeletonRanger.EnemyStateMachine.InitializeAllStates();
-            skeletonRanger.EnemyStateMachine.SwitchState<IdleState>();
-
             return skeletonRanger;
         }
 
-        public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData, Level.Level level)
+        public void GetData(SkeletonInitData skeletonInitData)
         {
-            _levelInitData = levelInitData;
             _skeletonInitData = skeletonInitData;
-            _level = level;
         }
 
         public EnemyData GetEnemyDataByType(EnemyType type)
