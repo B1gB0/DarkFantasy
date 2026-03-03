@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
@@ -10,11 +11,16 @@ namespace _Project.Scripts.Level
 {
     public abstract class Level : MonoBehaviour
     {
-        [SerializeField] protected int CountSkeletonEnemy;
-        [SerializeField] protected int CountSkeletonFleshEnemy;
-        [SerializeField] protected int CountSkeletonHeavyArmorEnemy;
-        [SerializeField] protected int CountSkeletonLightArmorEnemy;
-        [SerializeField] protected int CountSkeletonRangerEnemy;
+        protected const float MinValue = 0f;
+        protected const int FirstWaveEnemy = 0;
+        protected const int SecondWaveEnemy = 1;
+        protected const int ThirdWaveEnemy = 2;
+        
+        private readonly List<EnemyWave> _enemyWaves = new();
+        
+        [Header("EnemyWaves")]
+        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
+        [SerializeField] private int _countEnemyWaves;
 
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
@@ -23,9 +29,17 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
+        
+        protected float LastSpawnTime;
 
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
+        
+        [field: SerializeField] public int CountSkeletonEnemy { get; private set; }
+        [field: SerializeField] public int CountSkeletonFleshEnemy { get; private set; }
+        [field: SerializeField] public int CountSkeletonHeavyArmorEnemy { get; private set; }
+        [field: SerializeField] public int CountSkeletonLightArmorEnemy { get; private set; }
+        [field: SerializeField] public int CountSkeletonRangerEnemy { get; private set; }
 
         public void GetServices(
             IEnemyService enemyService,
@@ -45,7 +59,6 @@ namespace _Project.Scripts.Level
             CreatePlayer();
             
             InitSpawners(enemyService);
-            CreateSkeletonWaveEnemy();
         }
 
         protected void CreatePlayer()
@@ -68,25 +81,83 @@ namespace _Project.Scripts.Level
             
             PlayerIsSpawned?.Invoke();
         }
-
-        protected void CreateSkeletonWaveEnemy()
+        
+        protected virtual void CreateWaveOfEnemy(int numberWaveEnemy)
         {
-            _enemySpawner.SpawnSkeletonEnemy(_levelInitData.SkeletonEnemySpawnPositions, CountSkeletonEnemy);
+            if (LastSpawnTime <= MinValue)
+            {
+                CreateWaveOfSkeleton(numberWaveEnemy);
+                CreateWaveOfSkeletonHeavyArmor(numberWaveEnemy);
+                CreateWaveOfSkeletonRanger(numberWaveEnemy);
 
+                LastSpawnTime = SpawnWaveOfEnemyDelay;
+            }
+
+            LastSpawnTime -= Time.fixedDeltaTime;
+        }
+
+        protected void CreateWaveOfSkeleton(int numberWaveEnemy)
+        {
+            _enemySpawner.SpawnSkeletonEnemy(
+                _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
+                CountSkeletonEnemy,
+                _enemyWaves[numberWaveEnemy].PatrolPoints);
+        }
+
+        protected void CreateWaveOfSkeletonHeavyArmor(int numberWaveEnemy)
+        {
             _enemySpawner.SpawnSkeletonHeavyArmorEnemy(
-                _levelInitData.SkeletonHeavyArmorEnemySpawnPositions,
-                CountSkeletonHeavyArmorEnemy);
+                _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
+                CountSkeletonHeavyArmorEnemy,
+                _enemyWaves[numberWaveEnemy].PatrolPoints);
+        }
 
+        protected void CreateWaveOfSkeletonRanger(int numberWaveEnemy)
+        {
             _enemySpawner.SpawnSkeletonRangerEnemy(
-                _levelInitData.SkeletonRangerEnemySpawnPositions,
-                CountSkeletonRangerEnemy);
+                _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
+                CountSkeletonRangerEnemy,
+                _enemyWaves[numberWaveEnemy].PatrolPoints);
         }
 
         private void InitSpawners(IEnemyService enemyService)
         {
+            InitEnemyWaves();
+            
             _enemySpawner = new EnemySpawner(enemyService);
 
             IsInitiatedSpawners?.Invoke();
+        }
+        
+        private void InitEnemyWaves()
+        {
+            for (int i = 0; i < _countEnemyWaves; i++)
+            {
+                EnemyWave enemyWave = new EnemyWave();
+
+                switch (i)
+                {
+                    case FirstWaveEnemy:
+                        enemyWave.GetEnemyPositions(
+                            _levelInitData.FirstWaveSpawnPoints,
+                            _levelInitData.EnemyFirstPatrolPositions);
+                        break;
+                    case SecondWaveEnemy:
+                        enemyWave.GetEnemyPositions(
+                            _levelInitData.SecondWaveSpawnPoints,
+                            _levelInitData.EnemySecondPatrolPositions);
+                        break;
+                    case ThirdWaveEnemy:
+                        enemyWave.GetEnemyPositions(
+                            _levelInitData.ThirdWaveSpawnPoints,
+                            _levelInitData.EnemyThirdPatrolPositions);
+                        break;
+                    default:
+                        throw new Exception("There is not enough data for new waves");
+                }
+
+                _enemyWaves.Add(enemyWave);
+            }
         }
     }
 }

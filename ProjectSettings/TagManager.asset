@@ -11,6 +11,9 @@ TagManager:
   - SkeletonLightArmorPoints
   - SkeletonRangerPoints
   - PlayerSpawnPoint
+  - EnemyFirstPatrolPoints
+  - EnemySecondPatrolPoints
+  - EnemyThirdPatrolPoints
   layers:
   - Default
   - TransparentFX

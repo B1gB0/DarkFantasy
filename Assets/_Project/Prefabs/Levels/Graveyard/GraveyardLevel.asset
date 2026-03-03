@@ -12,23 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: GraveyardLevel
   m_EditorClassIdentifier: 
-  EnemyPatrolPositions:
-  - {x: 17.09, y: 0, z: 8.47}
-  - {x: -3.35, y: 0, z: 12.59}
-  - {x: -24.54, y: 0, z: 12.2}
+  EnemyFirstPatrolPositions:
+  - {x: 12.48, y: 0, z: 16.76}
+  - {x: 11.51, y: 0, z: 22.03}
+  - {x: 20.08, y: 0, z: 14.78}
+  EnemySecondPatrolPositions:
+  - {x: 1.52, y: 0, z: 12.09}
+  - {x: 6.27, y: 0, z: 16.25}
+  - {x: -9.11, y: 0, z: 16.77}
+  - {x: -21.22, y: 0, z: 20.06}
+  - {x: -19.09, y: 0, z: 12.26}
+  - {x: -28, y: 0, z: 15.53}
+  EnemyThirdPatrolPositions: []
   SkeletonEnemySpawnPositions:
-  - {x: -18.03, y: 0, z: 21.3}
-  - {x: -9.955973, y: 0, z: 13.139533}
-  - {x: -20.605831, y: 0, z: 8.592071}
-  - {x: -25.257885, y: 0, z: 16.997154}
+  - {x: 19.57, y: 0, z: 18.96}
+  - {x: 14.93, y: 0, z: 20.19}
+  - {x: 5.43, y: 0, z: 11.59}
+  - {x: 3.65, y: 0, z: 16.52}
   SkeletonFleshEnemySpawnPositions: []
   SkeletonHeavyArmorEnemySpawnPositions:
-  - {x: -20.36, y: 0, z: 11.3}
-  - {x: -15.360002, y: 0, z: 13.68}
-  - {x: -20.400002, y: 0, z: 19.14}
+  - {x: -2.03, y: 0, z: 16.03}
+  - {x: -10.1, y: 0, z: 14.33}
+  - {x: -5.66, y: 0, z: 12.24}
   SkeletonLightArmorEnemySpawnPositions: []
   SkeletonRangerEnemySpawnPositions:
-  - {x: -5.84, y: 0, z: 19.46}
-  - {x: -11.3, y: 0, z: 16.52}
   - {x: -18.64, y: 0, z: 15.42}
+  - {x: -18.75, y: 0, z: 18.02}
+  - {x: -22.96, y: 0, z: 9.52}
   PlayerSpawnPosition: {x: 3.52, y: 0.59, z: 40.13}

@@ -6,13 +6,13 @@ namespace _Project.Scripts.DataBase.InitDataSO
     [CreateAssetMenu(menuName = "InitData/LevelData")]
     public class LevelInitData : InitData
     {
-        public List<Vector3> EnemyPatrolPositions;
+        public List<Vector3> EnemyFirstPatrolPositions;
+        public List<Vector3> EnemySecondPatrolPositions;
+        public List<Vector3> EnemyThirdPatrolPositions;
 
-        public List<Vector3> SkeletonEnemySpawnPositions;
-        public List<Vector3> SkeletonFleshEnemySpawnPositions;
-        public List<Vector3> SkeletonHeavyArmorEnemySpawnPositions;
-        public List<Vector3> SkeletonLightArmorEnemySpawnPositions;
-        public List<Vector3> SkeletonRangerEnemySpawnPositions;
+        public List<Vector3> FirstWaveSpawnPoints;
+        public List<Vector3> ThirdWaveSpawnPoints;
+        public List<Vector3> SecondWaveSpawnPoints;
 
         public Vector3 PlayerSpawnPosition;
 

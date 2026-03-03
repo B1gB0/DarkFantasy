@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Enemy;
+using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Services;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace _Project.Scripts.Level.Spawners
             _enemyService = enemyService;
         }
 
-        public void SpawnSkeletonEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        public void SpawnSkeletonEnemy(List<Vector3> spawnPointPositions, int countEnemies, List<Vector3> patrolPoints)
         {
             if (spawnPointPositions.Count == MinValue)
                 return;
@@ -48,10 +49,16 @@ namespace _Project.Scripts.Level.Spawners
                 
                 // gunnerEnemy.Die += OnKillGunnerEnemy;
                 _counterSkeletonEnemies++;
+                
+                skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+                skeleton.EnemyStateMachine.SwitchState<PatrolState>();
             }
         }
         
-        public void SpawnSkeletonHeavyArmorEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        public void SpawnSkeletonHeavyArmorEnemy(
+            List<Vector3> spawnPointPositions,
+            int countEnemies,
+            List<Vector3> patrolPoints)
         {
             if (spawnPointPositions.Count == MinValue)
                 return;
@@ -76,10 +83,16 @@ namespace _Project.Scripts.Level.Spawners
 
                 // gunnerEnemy.Die += OnKillGunnerEnemy;
                 _counterSkeletonHeavyArmorEnemies++;
+                
+                skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+                skeleton.EnemyStateMachine.SwitchState<PatrolState>();
             }
         }
         
-        public void SpawnSkeletonRangerEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        public void SpawnSkeletonRangerEnemy(
+            List<Vector3> spawnPointPositions,
+            int countEnemies,
+            List<Vector3> patrolPoints)
         {
             if (spawnPointPositions.Count == MinValue)
                 return;
@@ -104,83 +117,11 @@ namespace _Project.Scripts.Level.Spawners
 
                 // gunnerEnemy.Die += OnKillGunnerEnemy;
                 _counterSkeletonHeavyArmorEnemies++;
+                
+                skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+                skeleton.EnemyStateMachine.SwitchState<PatrolState>();
             }
         }
-
-        // public void SpawnSmallAlienEnemy(List<Vector3> spawnPointPositions, int countEnemies)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         if (_counterSmallEnemies > countEnemies - CorrectCountFactor)
-        //             return;
-        //
-        //         SmallEnemy smallEnemy = _gameInitSystem.CreateSmallAlienEnemy(_gameInitSystem.Player);
-        //
-        //         smallEnemy.NavMeshAgent.enabled = false;
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         smallEnemy.transform.position = enemySpawnPosition;
-        //
-        //         smallEnemy.NavMeshAgent.enabled = true;
-        //
-        //         smallEnemy.Die += OnKillSmallEnemy;
-        //         _counterSmallEnemies++;
-        //     }
-        // }
-        //
-        // public void SpawnBigEnemyAlien(List<Vector3> spawnPointPositions, int countEnemies)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         if (_counterBigEnemies > countEnemies - CorrectCountFactor)
-        //             return;
-        //
-        //         BigEnemy bigEnemy = _gameInitSystem.CreateBigAlienEnemy(_gameInitSystem.Player);
-        //
-        //         bigEnemy.NavMeshAgent.enabled = false;
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         bigEnemy.transform.position = enemySpawnPosition;
-        //
-        //         bigEnemy.NavMeshAgent.enabled = true;
-        //
-        //         bigEnemy.Die += OnKillBigEnemy;
-        //         _counterBigEnemies++;
-        //     }
-        // }
-        //
-        // public void SpawnAlienEnemyTurret(List<Vector3> spawnPointPositions, Vector3 playerSpawnPoint)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         EnemyTurret enemyTurret = _gameInitSystem.CreateEnemyTurret(_gameInitSystem.Player, enemyPosition);
-        //         enemyTurret.transform.LookAt(playerSpawnPoint);
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //         
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         enemyTurret.transform.position = enemySpawnPosition;
-        //     }
-        // }
 
         private void OnKillSmallEnemy(Enemy.Enemy enemyActor)
         {

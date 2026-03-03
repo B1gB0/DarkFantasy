@@ -27,6 +27,7 @@ namespace _Project.Scripts.Services
         private IPlayerService _playerService;
         
         private LevelInitData _levelInitData;
+        private Level.Level _level;
         private SkeletonInitData _skeletonInitData;
         
         private ObjectPool<Skeleton> _skeletonPool;
@@ -70,7 +71,7 @@ namespace _Project.Scripts.Services
                 skeleton.Health.SetHealthValue(data.Health);
             }
             
-            skeleton.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
+            skeleton.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyFirstPatrolPositions));
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
 
@@ -89,7 +90,7 @@ namespace _Project.Scripts.Services
                 skeletonHeavyArmor.Health.SetHealthValue(data.Health);
             }
             
-            skeletonHeavyArmor.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
+            skeletonHeavyArmor.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyFirstPatrolPositions));
             skeletonHeavyArmor.EnemyStateMachine.InitializeAllStates();
             skeletonHeavyArmor.EnemyStateMachine.SwitchState<PatrolState>();
 
@@ -109,17 +110,17 @@ namespace _Project.Scripts.Services
                 skeletonRanger.Health.SetHealthValue(data.Health);
             }
             
-            skeletonRanger.EnemyStateMachine.AddState(new PatrolState(_levelInitData.EnemyPatrolPositions));
             skeletonRanger.EnemyStateMachine.InitializeAllStates();
-            skeletonRanger.EnemyStateMachine.SwitchState<PatrolState>();
+            skeletonRanger.EnemyStateMachine.SwitchState<IdleState>();
 
             return skeletonRanger;
         }
 
-        public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData)
+        public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData, Level.Level level)
         {
             _levelInitData = levelInitData;
             _skeletonInitData = skeletonInitData;
+            _level = level;
             CreateEnemyObjectPools();
         }
 
@@ -130,7 +131,7 @@ namespace _Project.Scripts.Services
 
         private void CreateEnemyObjectPools()
         {
-            if (_levelInitData.SkeletonEnemySpawnPositions.Count > MinValue)
+            if (_level.CountSkeletonEnemy > MinValue)
             {
                 _skeletonPool = new ObjectPool<Skeleton>(
                     _skeletonInitData.SkeletonPrefab,
@@ -141,7 +142,7 @@ namespace _Project.Scripts.Services
                 };
             }
             
-            if (_levelInitData.SkeletonHeavyArmorEnemySpawnPositions.Count > MinValue)
+            if (_level.CountSkeletonHeavyArmorEnemy > MinValue)
             {
                 _skeletonHeavyArmorPool = new ObjectPool<SkeletonHeavyArmor>(
                     _skeletonInitData.SkeletonHeavyArmorPrefab,
@@ -152,7 +153,7 @@ namespace _Project.Scripts.Services
                 };
             }
             
-            if (_levelInitData.SkeletonRangerEnemySpawnPositions.Count > MinValue)
+            if (_level.CountSkeletonRangerEnemy > MinValue)
             {
                 _skeletonRangerPool = new ObjectPool<SkeletonRanger>(
                     _skeletonInitData.SkeletonRangerPrefab,

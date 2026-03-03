@@ -82,10 +82,10 @@ namespace _Project.Scripts.Game.Gameplay
             await _enemyService.Init();
             await _playerService.Init();
 
-            _enemyService.GetData(_levelInitData, _skeletonInitData);
-            
             _level = FindObjectOfType<Level.Level>();
             
+            _enemyService.GetData(_levelInitData, _skeletonInitData, _level);
+
             _level.GetServices(
                 _enemyService,
                 _levelInitData,
