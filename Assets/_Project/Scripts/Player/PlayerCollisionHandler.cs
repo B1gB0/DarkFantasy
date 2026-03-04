@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Level.Triggers;
-using _Project.Scripts.Services;
-using Reflex.Attributes;
 using UnityEngine;
 
 namespace _Project.Scripts.Player

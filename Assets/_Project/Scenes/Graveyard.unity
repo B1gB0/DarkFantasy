@@ -351,7 +351,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 87
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 0
     m_AccelTime: 0.2
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 18, z: -11}
+  m_FollowOffset: {x: 0, y: 8, z: -12}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1562,7 +1562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 18, z: -11}
+  m_FollowOffset: {x: 0, y: 8, z: -12}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 18, z: -11}
+  m_FollowOffset: {x: 0, y: 8, z: -12}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1

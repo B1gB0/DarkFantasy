@@ -97,6 +97,9 @@ namespace _Project.Scripts.Level
 
         protected void CreateWaveOfDifferentSkeletons(int numberWave)
         {
+            if(_enemyWaves.Count == 0)
+                return;
+            
             _enemySpawner.SpawnWave(_enemyWaves[numberWave]);
         }
 
