@@ -65,9 +65,8 @@ namespace _Project.Scripts.Game.Gameplay
             _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
-
-            var container = gameObject.scene.GetSceneContainer();
-            GameObjectInjector.InjectRecursive(uiRoot.gameObject, container);
+            
+            GameObjectInjector.InjectRecursive(uiRoot.gameObject, _container);
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine);
 
@@ -81,6 +80,8 @@ namespace _Project.Scripts.Game.Gameplay
             await _dataBaseService.Init();
             await _enemyService.Init();
             await _playerService.Init();
+            
+            _playerService.GetSceneContainer(_container);
 
             _level = FindObjectOfType<Level.Level>();
             

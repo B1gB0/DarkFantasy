@@ -9,18 +9,18 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Enter()
         {
-            Agent.updateRotation = false; // отключаем автоматический поворот, управляем сами
+            Agent.updateRotation = false;
             _attackRange = Data.RangeAttack;
         }
 
         public override void Exit()
         {
-            Agent.updateRotation = true; // восстанавливаем на всякий случай
+            Agent.updateRotation = true;
         }
 
         public override void Update()
         {
-            if (Player == null || !Player.CanFollow)
+            if (Player == null || !Player.CanFollow || !Enemy.CanFollow)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
                 return;

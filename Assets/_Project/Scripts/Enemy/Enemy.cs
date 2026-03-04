@@ -22,6 +22,7 @@ namespace _Project.Scripts.Enemy
         public Player.Player Player { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
         public EnemyType Type { get; private set; }
+        public bool CanFollow { get; private set; }
 
         private void Start()
         {
@@ -33,6 +34,11 @@ namespace _Project.Scripts.Enemy
             Player = player;
             Data = enemyData;
             Type = Data.Type;
+        }
+
+        public void ChangeFollowEnemyState(bool canFollow)
+        {
+            CanFollow = canFollow;
         }
 
         protected virtual void OnDie()

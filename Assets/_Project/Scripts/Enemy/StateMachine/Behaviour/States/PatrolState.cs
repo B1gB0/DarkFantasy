@@ -29,13 +29,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Exit()
         {
-            Agent.ResetPath(); // останавливаем движение при выходе из состояния
+            Agent.ResetPath();
         }
 
         public override void Update()
         {
-            // Проверяем, нужно ли переключиться на преследование && IsPlayerInSight()
-            if (Player != null && Player.CanFollow)
+            if (Player != null && Player.CanFollow && Enemy.CanFollow)
             {
                 EnemyStateMachine.SwitchState<FollowState>();
                 return;
@@ -50,8 +49,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 GoToCurrentWaypoint();
                 _isPatrolStarted = true;
             }
-
-            // Если достигли текущей точки – переходим к следующей
+            
             if (!Agent.pathPending && Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 SetNextWaypoint();
@@ -68,12 +66,5 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Count;
         }
-
-        // private bool IsPlayerInSight()
-        // {
-        //     float dist = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-        //     return dist < Data.ViewDistance
-        //            && !Physics.Linecast(Enemy.transform.position, Player.transform.position, Data.ObstacleMask);
-        // }
     }
 }

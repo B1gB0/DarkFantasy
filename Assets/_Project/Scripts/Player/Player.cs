@@ -13,7 +13,7 @@ namespace _Project.Scripts.Player
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
 
-        public bool CanFollow { get; private set; }
+        public bool CanFollow { get; private set; } = true;
 
         private void OnEnable()
         {

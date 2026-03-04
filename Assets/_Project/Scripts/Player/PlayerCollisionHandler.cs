@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Level.Triggers;
+using _Project.Scripts.Services;
 using Reflex.Attributes;
 using UnityEngine;
 
@@ -9,25 +12,34 @@ namespace _Project.Scripts.Player
     public class PlayerCollisionHandler : MonoBehaviour
     {
         private Player _player;
+        private IPlayerService _playerService;
         
-        // private IPlayerService _playerService;
-        //
-        // [Inject]
-        // private void Construct(IPlayerService playerService)
-        // {
-        //     _playerService = playerService;
-        // }
+        [Inject]
+        private void Construct(IPlayerService playerService)
+        {
+            _playerService = playerService;
+        }
+
+        public List<EnemyWave> EnemyWaves { get; private set; }
 
         private void Awake()
         {
             _player = GetComponent<Player>();
         }
 
+        private void Start()
+        {
+            _playerService.GetPlayerCollisionHandler(this);
+        }
+
         private void OnTriggerEnter(Collider trigger)
         {
-            if (trigger.TryGetComponent(out SkeletonRangerTrigger skeletonRangerTrigger))
+            if (trigger.TryGetComponent(out EnemyWaveFollowTrigger skeletonRangerTrigger))
             {
-                _player.ChangeFollowEnemyState(true);
+                foreach (var enemy in EnemyWaves[skeletonRangerTrigger.NumberWaveOfEnemies].Enemies)
+                {
+                    enemy.ChangeFollowEnemyState(true);
+                }
             }
             
             // if (trigger.TryGetComponent(out EntranceTrigger entranceTrigger))
@@ -59,5 +71,10 @@ namespace _Project.Scripts.Player
         //         goldCrystal.Destroy();
         //     }
         // }
+
+        public void GetEnemyWaves(List<EnemyWave> enemyWaves)
+        {
+            EnemyWaves = enemyWaves;
+        }
     }
 }

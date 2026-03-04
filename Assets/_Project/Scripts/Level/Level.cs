@@ -15,10 +15,13 @@ namespace _Project.Scripts.Level
         protected const int FirstWaveEnemy = 0;
         protected const int SecondWaveEnemy = 1;
         protected const int ThirdWaveEnemy = 2;
+        protected const int FourthWaveEnemy = 3;
         
         [Header("EnemyWaves")]
-        [SerializeField] private List<EnemyWave> _enemyWaves;
         [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
+        
+        [SerializeField] private List<EnemyWave> _enemyWaves;
+        [SerializeField] private int _limitEnemies;
 
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
@@ -49,7 +52,7 @@ namespace _Project.Scripts.Level
             _particleEffectsService = particleEffectsService;
             
             CreatePlayer();
-            
+
             InitSpawners(enemyService);
             
             CreateWaveOfDifferentSkeletons(FirstWaveEnemy);
@@ -76,56 +79,32 @@ namespace _Project.Scripts.Level
             _cinemachineFreeLook.Follow = playerTransform;
             
             PlayerIsSpawned?.Invoke();
+            
+            _playerService.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
         }
         
-        // protected virtual void CreateWaveOfEnemy(int numberWaveEnemy)
-        // {
-        //     if (LastSpawnTime <= MinValue)
-        //     {
-        //         CreateWaveOfSkeleton(numberWaveEnemy);
-        //         CreateWaveOfSkeletonHeavyArmor(numberWaveEnemy);
-        //         CreateWaveOfSkeletonRanger(numberWaveEnemy);
-        //
-        //         LastSpawnTime = SpawnWaveOfEnemyDelay;
-        //     }
-        //
-        //     LastSpawnTime -= Time.fixedDeltaTime;
-        // }
+        protected void CreateWaveOfEnemyByTimer(int numberWaveEnemy)
+        {
+            if (LastSpawnTime <= MinValue)
+            {
+                CreateWaveOfDifferentSkeletons(numberWaveEnemy);
+        
+                LastSpawnTime = SpawnWaveOfEnemyDelay;
+            }
+        
+            LastSpawnTime -= Time.fixedDeltaTime;
+        }
 
         protected void CreateWaveOfDifferentSkeletons(int numberWave)
         {
             _enemySpawner.SpawnWave(_enemyWaves[numberWave]);
         }
 
-        // protected void CreateWaveOfSkeleton(int numberWaveEnemy)
-        // {
-        //     _enemySpawner.SpawnSkeletonEnemy(
-        //         _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
-        //         _enemyWaves[numberWaveEnemy].SkeletonEnemyCount,
-        //         _enemyWaves[numberWaveEnemy].PatrolPoints);
-        // }
-        //
-        // protected void CreateWaveOfSkeletonHeavyArmor(int numberWaveEnemy)
-        // {
-        //     _enemySpawner.SpawnSkeletonHeavyArmorEnemy(
-        //         _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
-        //         _enemyWaves[numberWaveEnemy].SkeletonHeavyArmorCount,
-        //         _enemyWaves[numberWaveEnemy].PatrolPoints);
-        // }
-        //
-        // protected void CreateWaveOfSkeletonRanger(int numberWaveEnemy)
-        // {
-        //     _enemySpawner.SpawnSkeletonRangerEnemy(
-        //         _enemyWaves[numberWaveEnemy].WaveSpawnPoints,
-        //         _enemyWaves[numberWaveEnemy].SkeletonRangerCount,
-        //         _enemyWaves[numberWaveEnemy].PatrolPoints);
-        // }
-
         private void InitSpawners(IEnemyService enemyService)
         {
             InitEnemyWaves();
             
-            _enemySpawner = new EnemySpawner(enemyService);
+            _enemySpawner = new EnemySpawner(enemyService, _limitEnemies);
 
             IsInitiatedSpawners?.Invoke();
         }

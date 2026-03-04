@@ -15,21 +15,24 @@ namespace _Project.Scripts.Level.Spawners
 
         private readonly IEnemyService _enemyService;
 
-        private int _counterSkeletonEnemies;
-        private int _counterSkeletonHeavyArmorEnemies;
-        private int _counterSkeletonRangerEnemies;
+        private int _enemyCounter;
+        private int _limitEnemies;
 
-        public EnemySpawner(IEnemyService enemyService)
+        public EnemySpawner(IEnemyService enemyService, int limitEnemies)
         {
             _enemyService = enemyService;
+            _limitEnemies = limitEnemies;
         }
 
         public void SpawnWave(EnemyWave wave)
         {
+            if(_enemyCounter > _limitEnemies - CorrectCountFactor)
+                return;
+            
             List<Vector3> spawnPoints = wave.WaveSpawnPoints;
             List<Vector3> patrolPoints = wave.PatrolPoints;
 
-            if (spawnPoints == null || spawnPoints.Count == 0)
+            if (spawnPoints == null || spawnPoints.Count == MinValue)
                 return;
 
             List<Vector3> availableSpawnPoints = new List<Vector3>(spawnPoints);
@@ -40,36 +43,42 @@ namespace _Project.Scripts.Level.Spawners
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
-                if (availableSpawnPoints.Count == 0)
+                if (availableSpawnPoints.Count == MinValue)
                     break;
 
                 Vector3 candidatePoint = availableSpawnPoints[0];
-                SpawnSkeletonEnemy(candidatePoint, patrolPoints);
+                Skeleton enemy = SpawnSkeletonEnemy(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
             }
             
             for (int i = 0; i < heavyToSpawn; i++)
             {
-                if (availableSpawnPoints.Count == 0)
+                if (availableSpawnPoints.Count == MinValue)
                     break;
 
                 Vector3 candidatePoint = availableSpawnPoints[0];
-                SpawnSkeletonHeavyArmorEnemy(candidatePoint, patrolPoints);
+                SkeletonHeavyArmor enemy = SpawnSkeletonHeavyArmorEnemy(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
             }
             
             for (int i = 0; i < rangersToSpawn; i++)
             {
-                if (availableSpawnPoints.Count == 0)
+                if (availableSpawnPoints.Count == MinValue)
                     break;
 
                 Vector3 candidatePoint = availableSpawnPoints[0];
-                SpawnSkeletonRangerEnemy(candidatePoint, patrolPoints);
+                SkeletonRanger enemy = SpawnSkeletonRangerEnemy(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
             }
         }
 
-        public void SpawnSkeletonEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        private Skeleton SpawnSkeletonEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             Skeleton skeleton = _enemyService.CreateSkeleton();
 
@@ -84,15 +93,16 @@ namespace _Project.Scripts.Level.Spawners
 
             skeleton.NavMeshAgent.enabled = true;
 
-            // gunnerEnemy.Die += OnKillGunnerEnemy;
-            _counterSkeletonEnemies++;
+            skeleton.Die += OnKillSkeleton;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
         }
 
-        public void SpawnSkeletonHeavyArmorEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        private SkeletonHeavyArmor SpawnSkeletonHeavyArmorEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
 
@@ -107,15 +117,16 @@ namespace _Project.Scripts.Level.Spawners
 
             skeleton.NavMeshAgent.enabled = true;
 
-            // gunnerEnemy.Die += OnKillGunnerEnemy;
-            _counterSkeletonHeavyArmorEnemies++;
+            skeleton.Die += OnKillSkeletonHeavyArmor;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
         }
 
-        public void SpawnSkeletonRangerEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        private SkeletonRanger SpawnSkeletonRangerEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             SkeletonRanger skeleton = _enemyService.CreateSkeletonRanger();
 
@@ -130,31 +141,32 @@ namespace _Project.Scripts.Level.Spawners
 
             skeleton.NavMeshAgent.enabled = true;
 
-            // gunnerEnemy.Die += OnKillGunnerEnemy;
-            _counterSkeletonHeavyArmorEnemies++;
+            skeleton.Die += OnKillSkeletonRanger;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
         }
 
 
-        private void OnKillSmallEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeleton(Enemy.Enemy enemy)
         {
-            // _counterSmallEnemies--;
-            // enemyActor.Die -= OnKillSmallEnemy;
+            enemy.Die -= OnKillSkeleton;
+            _enemyCounter--;
         }
 
-        private void OnKillBigEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
-            _counterSkeletonHeavyArmorEnemies--;
-            // enemyActor.Die -= OnKillBigEnemy;
+            enemy.Die -= OnKillSkeletonHeavyArmor;
+            _enemyCounter--;
         }
 
-        private void OnKillGunnerEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
-            _counterSkeletonEnemies--;
-            // enemyActor.Die -= OnKillGunnerEnemy;
+            enemy.Die -= OnKillSkeletonRanger;
+            _enemyCounter--;
         }
     }
 }
