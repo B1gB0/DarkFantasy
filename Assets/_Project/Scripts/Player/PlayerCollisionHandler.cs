@@ -12,24 +12,12 @@ namespace _Project.Scripts.Player
     public class PlayerCollisionHandler : MonoBehaviour
     {
         private Player _player;
-        private IPlayerService _playerService;
-        
-        [Inject]
-        private void Construct(IPlayerService playerService)
-        {
-            _playerService = playerService;
-        }
 
         public List<EnemyWave> EnemyWaves { get; private set; }
 
         private void Awake()
         {
             _player = GetComponent<Player>();
-        }
-
-        private void Start()
-        {
-            _playerService.GetPlayerCollisionHandler(this);
         }
 
         private void OnTriggerEnter(Collider trigger)

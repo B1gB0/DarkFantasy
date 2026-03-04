@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Health>k__BackingField: {fileID: 6950887898748460312}
+  <PlayerCollisionHandler>k__BackingField: {fileID: -5622320724067573927}
 --- !u!114 &5175110340357839719
 MonoBehaviour:
   m_ObjectHideFlags: 0

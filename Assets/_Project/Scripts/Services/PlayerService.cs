@@ -26,8 +26,7 @@ namespace _Project.Scripts.Services
         
         public bool IsInitiated { get; private set; }
         public Player.Player Player { get; private set; }
-        public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
-        
+
         public UniTask Init()
         {
             if (IsInitiated)
@@ -73,11 +72,6 @@ namespace _Project.Scripts.Services
             GameObjectInjector.InjectObject(Player.gameObject, _container);
 
             return Player;
-        }
-
-        public void GetPlayerCollisionHandler(PlayerCollisionHandler playerCollisionHandler)
-        {
-            PlayerCollisionHandler = playerCollisionHandler;
         }
 
         public void GetSceneContainer(Container container)
