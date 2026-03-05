@@ -12,10 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: CryptLevel
   m_EditorClassIdentifier: 
-  EnemyPatrolPositions: []
-  SkeletonEnemySpawnPositions: []
-  SkeletonFleshEnemySpawnPositions: []
-  SkeletonHeavyArmorEnemySpawnPositions: []
-  SkeletonLightArmorEnemySpawnPositions: []
-  SkeletonRangerEnemySpawnPositions: []
-  PlayerSpawnPosition: {x: -1.2199697, y: 0.0080907345, z: 0.6244892}
+  EnemyFirstPatrolPositions:
+  - {x: -5.26, y: 0, z: 0.66}
+  - {x: -8.26, y: 0, z: -3.78}
+  - {x: -12.52, y: 0, z: 1.89}
+  EnemySecondPatrolPositions:
+  - {x: -11.14, y: 0, z: -0.48}
+  EnemyThirdPatrolPositions: []
+  FirstWaveSpawnPoints:
+  - {x: -5.269, y: 0, z: 2.978}
+  - {x: -9.15, y: 0, z: 1.35}
+  - {x: -12.34, y: 0, z: -0.02}
+  - {x: -9.61, y: 0, z: -3.85}
+  - {x: -13.22, y: 0, z: 3.11}
+  - {x: -5.31, y: 0, z: -2.17}
+  ThirdWaveSpawnPoints: []
+  SecondWaveSpawnPoints:
+  - {x: -18.82, y: 0, z: -3.75}
+  - {x: -18.5, y: 0, z: 0.04}
+  - {x: -17.77, y: 0, z: 3.37}
+  PlayerSpawnPosition: {x: -0.45, y: 0.0080907345, z: 0.2}

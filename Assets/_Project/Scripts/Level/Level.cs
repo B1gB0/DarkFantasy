@@ -88,7 +88,12 @@ namespace _Project.Scripts.Level
             if (LastSpawnTime <= MinValue)
             {
                 CreateWaveOfDifferentSkeletons(numberWaveEnemy);
-        
+                
+                foreach (var enemy in _enemyWaves[numberWaveEnemy].Enemies)
+                {
+                    enemy.ChangeFollowEnemyState(true);
+                }
+
                 LastSpawnTime = SpawnWaveOfEnemyDelay;
             }
         
