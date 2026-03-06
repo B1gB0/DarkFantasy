@@ -54,10 +54,6 @@ namespace _Project.Scripts.Level
             CreatePlayer();
 
             InitSpawners(enemyService);
-            
-            CreateWaveOfDifferentSkeletons(FirstWaveEnemy);
-            CreateWaveOfDifferentSkeletons(SecondWaveEnemy);
-            CreateWaveOfDifferentSkeletons(ThirdWaveEnemy);
         }
 
         protected void CreatePlayer()
@@ -137,6 +133,11 @@ namespace _Project.Scripts.Level
                         _enemyWaves[i].GetEnemyPositions(
                             _levelInitData.ThirdWaveSpawnPoints,
                             _levelInitData.EnemyThirdPatrolPositions);
+                        break;
+                    case FourthWaveEnemy:
+                        _enemyWaves[i].GetEnemyPositions(
+                            _levelInitData.FourthWaveSpawnPoints,
+                            _levelInitData.EnemyFourthPatrolPositions);
                         break;
                     default:
                         throw new Exception("There is not enough data for new waves");

@@ -10,6 +10,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         public override void Enter()
         {
             Agent.updateRotation = false;
+            Agent.stoppingDistance = Data.StopDistance;
             _attackRange = Data.RangeAttack;
         }
 
@@ -44,7 +45,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 Enemy.transform.forward,
                 direction, 
                 rotationSpeed * Time.fixedDeltaTime,
-                0f);
+                MinValue);
             
             bool isMoving = Agent.remainingDistance > Agent.stoppingDistance;
             

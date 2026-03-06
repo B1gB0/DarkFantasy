@@ -25,8 +25,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             if (Player == null
                 || !Player.CanFollow
-                || Player.Health.TargetHealth <= 0
-                || Enemy.Health.TargetHealth <= 0)
+                || Player.Health.TargetHealth <= MinValue
+                || Enemy.Health.TargetHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
                 return;
@@ -47,10 +47,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 Enemy.transform.forward,
                 direction,
                 rotationSpeed * Time.fixedDeltaTime,
-                0f);
+                MinValue);
 
             _subStateTimer -= Time.fixedDeltaTime;
-            if (_subStateTimer <= 0f)
+            
+            if (_subStateTimer <= MinValue)
             {
                 if (Enemy.Type == EnemyType.SkeletonRanger)
                 {
