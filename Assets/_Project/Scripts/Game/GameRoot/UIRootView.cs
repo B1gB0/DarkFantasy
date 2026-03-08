@@ -47,6 +47,7 @@ namespace _Project.Scripts.Game.GameRoot
             _settingsPanel.OnBackToSceneButtonPressed += ShowUIScene;
             _settingsButton.onClick.AddListener(StopGame);
             _settingsButton.onClick.AddListener(_settingsPanel.Show);
+            _settingsPanel.OnBackToSceneButtonPressed += PlayGame;
             
             _leaderboardButton.onClick.AddListener(ShowLeaderboardPanel);
             _leaderboardPanel.OnBackToSceneButtonPressed += ShowUIScene;
@@ -58,6 +59,7 @@ namespace _Project.Scripts.Game.GameRoot
             _settingsPanel.OnBackToSceneButtonPressed -= ShowUIScene;
             _settingsButton.onClick.RemoveListener(StopGame);
             _settingsButton.onClick.RemoveListener(_settingsPanel.Show);
+            _settingsPanel.OnBackToSceneButtonPressed -= PlayGame;
             
             _leaderboardButton.onClick.RemoveListener(ShowLeaderboardPanel);
             _leaderboardPanel.OnBackToSceneButtonPressed -= ShowUIScene;
