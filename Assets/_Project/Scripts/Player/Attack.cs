@@ -7,7 +7,6 @@ namespace _Project.Scripts.Player
     public class Attack : MonoBehaviour
     {
         [SerializeField] private float power = 10;
-        [SerializeField] private float _velocity;
 
         private Transform _currentTarget;
         private InputSystem _inputSystem;
@@ -46,6 +45,7 @@ namespace _Project.Scripts.Player
 
         public void EndDamageWindow()
         {
+            Debug.Log("End damage window");
             _swordHitbox.CanDamage = false;
             IsAttacking = false;
             OnAttaсked?.Invoke(false);
