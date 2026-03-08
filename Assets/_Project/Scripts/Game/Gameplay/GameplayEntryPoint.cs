@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;

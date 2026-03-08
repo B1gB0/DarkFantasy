@@ -26,6 +26,8 @@ namespace _Project.Scripts.Services
 
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
+        private AudioSoundsService _audioSoundsService;
+        private ParticleEffectsService _particleEffectsService;
         
         private EnemyInitData _enemyInitData;
 
@@ -39,10 +41,16 @@ namespace _Project.Scripts.Services
         public bool IsInitiated { get; private set; }
 
         [Inject]
-        public void Construct(IDataBaseService dataBaseService, IPlayerService playerService)
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IPlayerService playerService,
+            AudioSoundsService audioSoundsService,
+            ParticleEffectsService particleEffectsService)
         {
             _dataBaseService = dataBaseService;
             _playerService = playerService;
+            _audioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
         }
 
         public UniTask Init()
@@ -120,6 +128,7 @@ namespace _Project.Scripts.Services
             var priest = _priestPool.GetFreeElement();
 
             priest.GetData(_playerService.Player, data);
+            priest.MagicSpell.GetServices(_audioSoundsService, _particleEffectsService);
             priest.MagicSpell.SetData(_playerService.Player.transform, _magicBallProjectilePool, data.Damage);
 
             if (priest.Health.TargetHealth <= MinValue)

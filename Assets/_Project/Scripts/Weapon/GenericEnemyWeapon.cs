@@ -11,15 +11,18 @@ namespace _Project.Scripts.Weapon
         [SerializeField] private Transform _shootPoint;
 
         protected AudioSoundsService AudioSoundsService;
+        protected ParticleEffectsService ParticleEffectsService;
+        
         private Transform _target;
         private T _projectile;
         private float _damage;
 
         private ObjectPool<T> _projectilePool;
 
-        public void GetServices(AudioSoundsService audioSoundsService)
+        public void GetServices(AudioSoundsService audioSoundsService, ParticleEffectsService particleEffectsService)
         {
             AudioSoundsService = audioSoundsService;
+            ParticleEffectsService = particleEffectsService;
         }
 
         public override void Shoot()
@@ -28,6 +31,7 @@ namespace _Project.Scripts.Weapon
             _projectile.transform.position = _shootPoint.position;
             _projectile.SetCharacteristics(_damage, DefaultBulletSpeed);
             _projectile.SetDirection(_target.position);
+            _projectile.GetServices(ParticleEffectsService);
         }
 
         public virtual void SetData(Transform target, ObjectPool<T> projectilePool, float damage)
