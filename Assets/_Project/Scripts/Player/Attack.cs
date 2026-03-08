@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Player
 {
@@ -8,37 +9,47 @@ namespace _Project.Scripts.Player
         [SerializeField] private float power = 10;
         [SerializeField] private float _velocity;
 
-        public event Action<bool> OnAttaked;
-
-        public bool IsAttacking { get; private set; }
         private Transform _currentTarget;
+        private InputSystem _inputSystem;
+        private bool _isPressedMouse;
+        
+        public event Action<bool> OnAttaсked;
 
-        private void OnTriggerStay(Collider other)
+        [SerializeField] private SwordHitbox _swordHitbox;
+        
+        public bool IsAttacking { get; private set; }
+
+        public void OnAttackPerformed(InputAction.CallbackContext context)
         {
-            if (other.TryGetComponent(out Enemy.Enemy enemy))
+            if (IsAttacking) return;
+            CommonAttack();
+        }
+        
+        public void OnAttackCanceled(InputAction.CallbackContext context)
+        {
+            if (context.control!= null && context.control.device is Mouse)
             {
-                _currentTarget = other.transform;
-                IsAttacking = true;
-                
-                Vector3 lookPos = _currentTarget.position - transform.position;
-                lookPos.y = 0f;
-                if (lookPos.sqrMagnitude > 0.001f)
-                {
-                    transform.rotation = Quaternion.LookRotation(lookPos);
-                }
-
-                OnAttaked?.Invoke(true);
+                _isPressedMouse = false;
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        private void CommonAttack()
         {
-            if (_currentTarget != null && other.transform == _currentTarget)
-            {
-                _currentTarget = null;
-                IsAttacking = false;
-                OnAttaked?.Invoke(false);
-            }
+            IsAttacking = true;
+            OnAttaсked?.Invoke(true);
         }
+    
+        public void StartDamageWindow()
+        {
+            _swordHitbox.CanDamage = true;
+        }
+
+        public void EndDamageWindow()
+        {
+            _swordHitbox.CanDamage = false;
+            IsAttacking = false;
+            OnAttaсked?.Invoke(false);
+        }
+
     }
 }
