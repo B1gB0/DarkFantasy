@@ -17,7 +17,6 @@ namespace _Project.Scripts.Game.Gameplay
     public class GameplayEntryPoint : MonoBehaviour
     {
         [SerializeField] private CinemachineFreeLook _cinemachineVirtualCamera;
-        [SerializeField] private CinemachineVirtualCamera _testCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
@@ -97,8 +96,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerInitData,
                 _playerService,
                 _cinemachineVirtualCamera,
-                _particleEffectsService,
-                _testCamera);
+                _particleEffectsService);
 
             HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
             healthBar.Show();

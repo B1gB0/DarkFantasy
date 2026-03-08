@@ -45,8 +45,7 @@ namespace _Project.Scripts.Level
             PlayerInitData playerInitData,
             IPlayerService playerService,
             CinemachineFreeLook cinemachineFreeLook,
-            ParticleEffectsService particleEffectsService,
-            CinemachineVirtualCamera testCamera
+            ParticleEffectsService particleEffectsService
         )
         {
             _levelInitData = levelInitData;
@@ -54,8 +53,7 @@ namespace _Project.Scripts.Level
             _playerService = playerService;
             _cinemachineFreeLook = cinemachineFreeLook;
             _particleEffectsService = particleEffectsService;
-            _testCamera = testCamera;
-            
+
             CreatePlayer();
 
             InitSpawners(enemyService);
