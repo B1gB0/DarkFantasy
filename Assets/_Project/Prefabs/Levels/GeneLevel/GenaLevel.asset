@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: GenaLevel
   m_EditorClassIdentifier: 
-  EnemyPatrolPositions: []
-  SkeletonEnemySpawnPositions: []
-  SkeletonFleshEnemySpawnPositions: []
-  SkeletonHeavyArmorEnemySpawnPositions: []
-  SkeletonLightArmorEnemySpawnPositions: []
-  SkeletonRangerEnemySpawnPositions: []
+  EnemyFirstPatrolPositions:
+  - {x: 2.44, y: -1.928915, z: -22.279999}
+  EnemySecondPatrolPositions: []
+  EnemyThirdPatrolPositions: []
+  EnemyFourthPatrolPositions: []
+  EnemyFifthPatrolPositions: []
+  FirstWaveSpawnPoints:
+  - {x: 2.2020087, y: -1.956044, z: -14.514736}
+  SecondWaveSpawnPoints: []
+  ThirdWaveSpawnPoints: []
+  FourthWaveSpawnPoints: []
+  FifthWaveSpawnPoints: []
   PlayerSpawnPosition: {x: 4, y: 0.65000004, z: -67.36}
