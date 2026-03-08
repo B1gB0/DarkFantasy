@@ -32,8 +32,7 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
-        private CinemachineVirtualCamera _testCamera;
-        
+
         protected float LastSpawnTime;
 
         public event Action IsInitiatedSpawners;
@@ -77,9 +76,6 @@ namespace _Project.Scripts.Level
             _cinemachineFreeLook.LookAt = playerTransform;
             _cinemachineFreeLook.Follow = playerTransform;
 
-            _testCamera.LookAt = playerTransform;
-            _testCamera.Follow = playerTransform;
-            
             PlayerIsSpawned?.Invoke();
             
             _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
