@@ -46,6 +46,7 @@ namespace _Project.Scripts.Player
 
         public void EndDamageWindow()
         {
+            Debug.Log("End damage window");
             _swordHitbox.CanDamage = false;
             IsAttacking = false;
             OnAttaсked?.Invoke(false);

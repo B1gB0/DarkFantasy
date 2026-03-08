@@ -4,17 +4,13 @@ namespace _Project.Scripts.Player
 {
     public class StateAnimation : MonoBehaviour
     {
-        private const string NameParameterRun = "Run";
-        private const string NameParameterAttack = "Attack";
-
-        private static readonly int Run = Animator.StringToHash(NameParameterRun);
-        private static readonly int Attack = Animator.StringToHash(NameParameterAttack);
+        private static readonly int Run = Animator.StringToHash("Run");
+        private static readonly int Attack = Animator.StringToHash("Attack");
 
         [SerializeField] private Animator _animator;
         [SerializeField] private Movement _movement;
         [SerializeField] private Attack _attack;
 
-        // Время сглаживания параметра Run (в секундах)
         [SerializeField] private float _runDampTime = 0.08f;
 
         private void Awake()
@@ -31,31 +27,25 @@ namespace _Project.Scripts.Player
 
         private void OnEnable()
         {
-            if (_movement != null)
-                _movement.IsMovePerformed += ActiveRun;
-
-            if (_attack != null)
-                _attack.OnAttaсked += ActiveAttack;
+            _movement.IsMovePerformed += OnMove;
+            _attack.OnAttaсked += OnAttack;
         }
 
         private void OnDisable()
         {
-            if (_movement != null)
-                _movement.IsMovePerformed -= ActiveRun;
-
-            if (_attack != null)
-                _attack.OnAttaсked -= ActiveAttack;
+            _movement.IsMovePerformed -= OnMove;
+            _attack.OnAttaсked -= OnAttack;
         }
 
-        private void ActiveRun(float speed)
+        private void OnMove(float speed)
         {
-            // Сглаживаем изменение параметра, чтобы избежать кратковременных провалов
             _animator.SetFloat(Run, speed, _runDampTime, Time.deltaTime);
         }
 
-        private void ActiveAttack(bool onAttack)
+        private void OnAttack(bool isAttacking)
         {
-            _animator.SetBool(Attack, onAttack);
+            Debug.Log(isAttacking);
+            _animator.SetBool(Attack, isAttacking);
         }
     }
 }
