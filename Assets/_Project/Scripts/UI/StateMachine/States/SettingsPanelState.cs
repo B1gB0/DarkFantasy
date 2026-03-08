@@ -1,22 +1,22 @@
 ﻿namespace _Project.Scripts.UI.StateMachine.States
 {
-    public abstract class ViewState : UIState
+    public class SettingsPanelState : ViewState
     {
         private readonly View.View _view;
-        
-        protected ViewState(View.View view)
+
+        public SettingsPanelState(View.View view) : base(view)
         {
             _view = view;
         }
 
         public override void Enter()
         {
-            _view.Activate();
+            _view.Show();
         }
-        
+
         public override void Exit()
         {
-            _view.Deactivate();
+            _view.Hide();
         }
     }
 }

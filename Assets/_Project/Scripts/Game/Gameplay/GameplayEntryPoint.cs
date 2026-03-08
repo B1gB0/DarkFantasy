@@ -17,6 +17,7 @@ namespace _Project.Scripts.Game.Gameplay
     public class GameplayEntryPoint : MonoBehaviour
     {
         [SerializeField] private CinemachineFreeLook _cinemachineVirtualCamera;
+        [SerializeField] private CinemachineVirtualCamera _testCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
@@ -32,6 +33,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -41,12 +43,14 @@ namespace _Project.Scripts.Game.Gameplay
             IEnemyService enemyService,
             IDataBaseService dataBaseService,
             IPlayerService playerService,
-            ParticleEffectsService particleEffectsService)
+            ParticleEffectsService particleEffectsService,
+            AudioSoundsService audioSoundsService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -79,6 +83,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _dataBaseService.Init();
             await _enemyService.Init();
             await _playerService.Init();
+            await _audioSoundsService.Init();
             
             _playerService.GetSceneContainer(_container);
 
@@ -92,7 +97,8 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerInitData,
                 _playerService,
                 _cinemachineVirtualCamera,
-                _particleEffectsService);
+                _particleEffectsService,
+                _testCamera);
 
             HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
             healthBar.Show();

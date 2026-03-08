@@ -32,6 +32,7 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
+        private CinemachineVirtualCamera _testCamera;
         
         protected float LastSpawnTime;
 
@@ -44,7 +45,8 @@ namespace _Project.Scripts.Level
             PlayerInitData playerInitData,
             IPlayerService playerService,
             CinemachineFreeLook cinemachineFreeLook,
-            ParticleEffectsService particleEffectsService
+            ParticleEffectsService particleEffectsService,
+            CinemachineVirtualCamera testCamera
         )
         {
             _levelInitData = levelInitData;
@@ -52,6 +54,7 @@ namespace _Project.Scripts.Level
             _playerService = playerService;
             _cinemachineFreeLook = cinemachineFreeLook;
             _particleEffectsService = particleEffectsService;
+            _testCamera = testCamera;
             
             CreatePlayer();
 
@@ -75,6 +78,9 @@ namespace _Project.Scripts.Level
             
             _cinemachineFreeLook.LookAt = playerTransform;
             _cinemachineFreeLook.Follow = playerTransform;
+
+            _testCamera.LookAt = playerTransform;
+            _testCamera.Follow = playerTransform;
             
             PlayerIsSpawned?.Invoke();
             
