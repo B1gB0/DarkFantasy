@@ -29,9 +29,10 @@ namespace _Project.Scripts.Level
 
         private void SpawnStartWaves()
         {
-            CreateWaveOfDifferentSkeletons(FirstWaveEnemy);
-            CreateWaveOfDifferentSkeletons(SecondWaveEnemy);
-            CreateWaveOfDifferentSkeletons(ThirdWaveEnemy);
+            CreateWaveOfEnemies(FirstWaveEnemy);
+            CreateWaveOfEnemies(SecondWaveEnemy);
+            CreateWaveOfEnemies(ThirdWaveEnemy);
+            CreateWaveOfEnemies(FifthWaveNumber);
         }
 
         private void SpawnCyclicWave()

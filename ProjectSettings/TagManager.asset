@@ -19,6 +19,8 @@ TagManager:
   - ThirdWaveEnemySpawnPoints
   - FourthWaveEnemySpawnPoints
   - EnemyFourthPatrolPoints
+  - FifthWaveEnemySpawnPoints
+  - EnemyFifthPatrolPoints
   layers:
   - Default
   - TransparentFX

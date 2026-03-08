@@ -16,11 +16,13 @@ namespace _Project.Scripts.DataBase.InitDataSO
             GameObject[] enemySecondPatrolPoints = GameObject.FindGameObjectsWithTag("EnemySecondPatrolPoints");
             GameObject[] enemyThirdPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyThirdPatrolPoints");
             GameObject[] enemyFourthPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyFourthPatrolPoints");
+            GameObject[] enemyFifthPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyFifthPatrolPoints");
             
             GameObject[] firstWavePoints = GameObject.FindGameObjectsWithTag("FirstWaveEnemySpawnPoints");
             GameObject[] secondWavePoints = GameObject.FindGameObjectsWithTag("SecondWaveEnemySpawnPoints");
             GameObject[] thirdWavePoints = GameObject.FindGameObjectsWithTag("ThirdWaveEnemySpawnPoints");
             GameObject[] fourthWavePoints = GameObject.FindGameObjectsWithTag("FourthWaveEnemySpawnPoints");
+            GameObject[] fifthWavePoints = GameObject.FindGameObjectsWithTag("FifthWaveEnemySpawnPoints");
 
             levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
             
@@ -28,11 +30,13 @@ namespace _Project.Scripts.DataBase.InitDataSO
             levelInitData.EnemySecondPatrolPositions.Clear();
             levelInitData.EnemyThirdPatrolPositions.Clear();
             levelInitData.EnemyFourthPatrolPositions.Clear();
+            levelInitData.EnemyFifthPatrolPositions.Clear();
             
             levelInitData.FirstWaveSpawnPoints.Clear();
             levelInitData.SecondWaveSpawnPoints.Clear();
             levelInitData.ThirdWaveSpawnPoints.Clear();
             levelInitData.FourthWaveSpawnPoints.Clear();
+            levelInitData.FifthWaveSpawnPoints.Clear();
 
             foreach (var point in enemyFirstPatrolPoints)
             {
@@ -53,6 +57,11 @@ namespace _Project.Scripts.DataBase.InitDataSO
             {
                 levelInitData.EnemyFourthPatrolPositions.Add(point.transform.position);
             }
+            
+            foreach (var point in enemyFifthPatrolPoints)
+            {
+                levelInitData.EnemyFifthPatrolPositions.Add(point.transform.position);
+            }
 
             foreach (var point in firstWavePoints)
             {
@@ -72,6 +81,11 @@ namespace _Project.Scripts.DataBase.InitDataSO
             foreach (var point in fourthWavePoints)
             {
                 levelInitData.FourthWaveSpawnPoints.Add(point.transform.position);
+            }
+            
+            foreach (var point in fifthWavePoints)
+            {
+                levelInitData.FifthWaveSpawnPoints.Add(point.transform.position);
             }
 
             if (!Application.isPlaying)

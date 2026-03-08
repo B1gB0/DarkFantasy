@@ -34,7 +34,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
 
-        private SkeletonInitData _skeletonInitData;
+        private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
 
         [Inject]
@@ -85,7 +85,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _level = FindObjectOfType<Level.Level>();
             
-            _enemyService.GetData(_skeletonInitData);
+            _enemyService.GetData(_enemyInitData);
 
             _level.GetServices(
                 _enemyService,
@@ -109,7 +109,7 @@ namespace _Project.Scripts.Game.Gameplay
         private async UniTask InitData()
         {
             _levelInitData = Instantiate(_levelInitData);
-            _skeletonInitData = await _dataFactory.CreateSkeletonInitData();
+            _enemyInitData = await _dataFactory.CreateSkeletonInitData();
             _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
     }

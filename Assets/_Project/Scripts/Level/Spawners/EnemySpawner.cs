@@ -40,6 +40,7 @@ namespace _Project.Scripts.Level.Spawners
             int skeletonsToSpawn = wave.SkeletonEnemyCount;
             int heavyToSpawn = wave.SkeletonHeavyArmorCount;
             int rangersToSpawn = wave.SkeletonRangerCount;
+            int priestToSpawn = wave.PriestCount;
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
@@ -72,6 +73,18 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[0];
                 SkeletonRanger enemy = SpawnSkeletonRangerEnemy(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < priestToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[0];
+                Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(0);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -149,7 +162,30 @@ namespace _Project.Scripts.Level.Spawners
 
             return skeleton;
         }
+        
+        private Priest SpawnPriest(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            Priest priest = _enemyService.CreatePriest();
 
+            priest.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            priest.transform.position = enemySpawnPosition;
+
+            priest.NavMeshAgent.enabled = true;
+
+            priest.Die += OnKillSkeletonRanger;
+
+            priest.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            priest.EnemyStateMachine.InitializeAllStates();
+            priest.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return priest;
+        }
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {

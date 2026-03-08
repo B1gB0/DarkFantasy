@@ -58,13 +58,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     switch (_currentSubState)
                     {
                         case AttackSubState.Reloading:
-                            EnterAttackRangerSubState(AttackSubState.Aiming);
+                            EnterAttackSubState(AttackSubState.Aiming);
                             break;
                         case AttackSubState.Aiming:
-                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            EnterAttackSubState(AttackSubState.Attack);
                             break;
                         case AttackSubState.Attack:
-                            EnterAttackRangerSubState(AttackSubState.Reloading);
+                            EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
                 }
@@ -73,10 +73,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     switch (_currentSubState)
                     {
                         case AttackSubState.Attack:
-                            EnterAttackRangerSubState(AttackSubState.Idle);
+                            EnterAttackSubState(AttackSubState.Idle);
                             break;
                         case AttackSubState.Idle:
-                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            EnterAttackSubState(AttackSubState.Attack);
                             Player.Health.TakeDamage(Enemy.Data.Damage);
                             break;
                     }
@@ -84,7 +84,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             }
         }
         
-        private void EnterAttackRangerSubState(AttackSubState newSubState)
+        private void EnterAttackSubState(AttackSubState newSubState)
         {
             _currentSubState = newSubState;
             switch (_currentSubState)

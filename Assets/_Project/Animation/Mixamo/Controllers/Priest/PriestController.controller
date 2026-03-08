@@ -395,9 +395,6 @@ AnimatorStateMachine:
     m_State: {fileID: -6394329306043027124}
     m_Position: {x: 1130, y: -330, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 4462543224157735418}
-    m_Position: {x: 870, y: -440, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -4952801443849153555}
     m_Position: {x: 870, y: -390, z: 0}
   - serializedVersion: 1
@@ -499,6 +496,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -6584455286376674147}
     m_Position: {x: -40, y: 60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4864108363542003723}
+    m_Position: {x: 860, y: -510, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -620,7 +620,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Run
+  m_Name: Move
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -895,14 +895,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &4462543224157735418
+--- !u!1102 &4864108363542003723
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanF@MagicAttackDirect1H01_R
+  m_Name: Attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -915,7 +915,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3094330708855449807, guid: 5e777c22f4914c24bb1ab4df99f3832e, type: 3}
+  m_Motion: {fileID: 7400000, guid: 11a045f441002b5459a5c56866b3f305, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

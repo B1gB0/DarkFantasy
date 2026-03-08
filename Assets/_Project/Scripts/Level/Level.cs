@@ -12,10 +12,12 @@ namespace _Project.Scripts.Level
     public abstract class Level : MonoBehaviour
     {
         protected const float MinValue = 0f;
+        
         protected const int FirstWaveEnemy = 0;
         protected const int SecondWaveEnemy = 1;
         protected const int ThirdWaveEnemy = 2;
         protected const int FourthWaveEnemy = 3;
+        protected const int FifthWaveNumber = 4;
         
         [Header("EnemyWaves")]
         [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
@@ -83,7 +85,7 @@ namespace _Project.Scripts.Level
         {
             if (LastSpawnTime <= MinValue)
             {
-                CreateWaveOfDifferentSkeletons(numberWaveEnemy);
+                CreateWaveOfEnemies(numberWaveEnemy);
                 
                 foreach (var enemy in _enemyWaves[numberWaveEnemy].Enemies)
                 {
@@ -96,7 +98,7 @@ namespace _Project.Scripts.Level
             LastSpawnTime -= Time.fixedDeltaTime;
         }
 
-        protected void CreateWaveOfDifferentSkeletons(int numberWave)
+        protected void CreateWaveOfEnemies(int numberWave)
         {
             if(_enemyWaves.Count == 0)
                 return;
@@ -138,6 +140,11 @@ namespace _Project.Scripts.Level
                         _enemyWaves[i].GetEnemyPositions(
                             _levelInitData.FourthWaveSpawnPoints,
                             _levelInitData.EnemyFourthPatrolPositions);
+                        break;
+                    case FifthWaveNumber:
+                        _enemyWaves[i].GetEnemyPositions(
+                            _levelInitData.FifthWaveSpawnPoints,
+                            _levelInitData.EnemyFifthPatrolPositions);
                         break;
                     default:
                         throw new Exception("There is not enough data for new waves");

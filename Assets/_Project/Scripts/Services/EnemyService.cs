@@ -14,7 +14,9 @@ namespace _Project.Scripts.Services
         private const string SkeletonPool = nameof(SkeletonPool);
         private const string SkeletonHeavyArmorPool = nameof(SkeletonHeavyArmorPool);
         private const string SkeletonRangerPool = nameof(SkeletonRangerPool);
+        private const string PriestPool = nameof(PriestPool);
         private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
+        private const string MagicBallProjectilePool = nameof(MagicBallProjectilePool);
 
         private const bool IsAutoExpand = true;
         private const int MinValue = 0;
@@ -25,12 +27,14 @@ namespace _Project.Scripts.Services
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
         
-        private SkeletonInitData _skeletonInitData;
+        private EnemyInitData _enemyInitData;
 
         private ObjectPool<Skeleton> _skeletonPool;
         private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
         private ObjectPool<SkeletonRanger> _skeletonRangerPool;
+        private ObjectPool<Priest> _priestPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
+        private ObjectPool<MagicBall> _magicBallProjectilePool;
 
         public bool IsInitiated { get; private set; }
 
@@ -63,7 +67,7 @@ namespace _Project.Scripts.Services
             var data = _enemiesData[EnemyType.Skeleton];
             var skeleton = _skeletonPool.GetFreeElement();
 
-            skeleton.GetData(_playerService.Player, _enemiesData[EnemyType.Skeleton]);
+            skeleton.GetData(_playerService.Player, data);
 
             if (skeleton.Health.TargetHealth <= MinValue)
             {
@@ -80,7 +84,7 @@ namespace _Project.Scripts.Services
             var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
             var skeletonHeavyArmor = _skeletonHeavyArmorPool.GetFreeElement();
 
-            skeletonHeavyArmor.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonHeavyArmor]);
+            skeletonHeavyArmor.GetData(_playerService.Player, data);
 
             if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
             {
@@ -97,7 +101,7 @@ namespace _Project.Scripts.Services
             var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
 
-            skeletonRanger.GetData(_playerService.Player, _enemiesData[EnemyType.SkeletonRanger]);
+            skeletonRanger.GetData(_playerService.Player, data);
             skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);
 
             if (skeletonRanger.Health.TargetHealth <= MinValue)
@@ -107,10 +111,28 @@ namespace _Project.Scripts.Services
 
             return skeletonRanger;
         }
-
-        public void GetData(SkeletonInitData skeletonInitData)
+        
+        public Priest CreatePriest()
         {
-            _skeletonInitData = skeletonInitData;
+            CreatePriestPool();
+            
+            var data = _enemiesData[EnemyType.Priest];
+            var priest = _priestPool.GetFreeElement();
+
+            priest.GetData(_playerService.Player, data);
+            priest.MagicSpell.SetData(_playerService.Player.transform, _magicBallProjectilePool, data.Damage);
+
+            if (priest.Health.TargetHealth <= MinValue)
+            {
+                priest.Health.SetHealthValue(data.Health);
+            }
+
+            return priest;
+        }
+
+        public void GetData(EnemyInitData enemyInitData)
+        {
+            _enemyInitData = enemyInitData;
         }
 
         public EnemyData GetEnemyDataByType(EnemyType type)
@@ -124,7 +146,7 @@ namespace _Project.Scripts.Services
                 return;
 
             _skeletonPool = new ObjectPool<Skeleton>(
-                _skeletonInitData.SkeletonPrefab,
+                _enemyInitData.SkeletonPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonPool).transform)
             {
@@ -138,7 +160,7 @@ namespace _Project.Scripts.Services
                 return;
 
             _skeletonHeavyArmorPool = new ObjectPool<SkeletonHeavyArmor>(
-                _skeletonInitData.SkeletonHeavyArmorPrefab,
+                _enemyInitData.SkeletonHeavyArmorPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonHeavyArmorPool).transform)
             {
@@ -152,7 +174,7 @@ namespace _Project.Scripts.Services
                 return;
 
             _skeletonRangerPool = new ObjectPool<SkeletonRanger>(
-                _skeletonInitData.SkeletonRangerPrefab,
+                _enemyInitData.SkeletonRangerPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonRangerPool).transform)
             {
@@ -160,9 +182,31 @@ namespace _Project.Scripts.Services
             };
 
             _arrowProjectilePool = new ObjectPool<Arrow>(
-                _skeletonInitData.ArrowProjectilePrefab,
+                _enemyInitData.ArrowProjectilePrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(ArrowProjectilePool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+        }
+
+        private void CreatePriestPool()
+        {
+            if(_magicBallProjectilePool != null)
+                return;
+            
+            _priestPool = new ObjectPool<Priest>(
+                _enemyInitData.PriestPrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(PriestPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+            
+            _magicBallProjectilePool = new ObjectPool<MagicBall>(
+                _enemyInitData.MagicBallProjectilePrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(MagicBallProjectilePool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };

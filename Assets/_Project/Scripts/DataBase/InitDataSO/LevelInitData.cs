@@ -10,11 +10,13 @@ namespace _Project.Scripts.DataBase.InitDataSO
         public List<Vector3> EnemySecondPatrolPositions;
         public List<Vector3> EnemyThirdPatrolPositions;
         public List<Vector3> EnemyFourthPatrolPositions;
+        public List<Vector3> EnemyFifthPatrolPositions;
 
         public List<Vector3> FirstWaveSpawnPoints;
         public List<Vector3> SecondWaveSpawnPoints;
         public List<Vector3> ThirdWaveSpawnPoints;
         public List<Vector3> FourthWaveSpawnPoints;
+        public List<Vector3> FifthWaveSpawnPoints;
 
         public Vector3 PlayerSpawnPosition;
     }
