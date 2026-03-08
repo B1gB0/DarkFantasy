@@ -106,8 +106,7 @@ namespace _Project.Scripts.Game.GameRoot
                 return;
             }
 #endif
-            _uiRoot.UIStateMachine.EnterIn<LoadingPanelState>();
-            
+
             await LoadAndStartMainMenu();
         }
 

@@ -32,7 +32,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
         private void FixedUpdate()
         {
             _currentState?.Update();
-            Debug.Log(_currentState);
         }
 
         public void InitializeAllStates()

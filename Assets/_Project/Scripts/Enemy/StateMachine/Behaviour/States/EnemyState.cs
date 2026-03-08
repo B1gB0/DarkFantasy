@@ -6,6 +6,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public abstract class EnemyState
     {
+        protected const int MinValue = 0;
+        
         protected NavMeshAgent Agent;
         protected Enemy Enemy;
 

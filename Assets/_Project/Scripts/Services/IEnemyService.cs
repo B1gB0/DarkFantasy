@@ -6,10 +6,11 @@ namespace _Project.Scripts.Services
 {
     public interface IEnemyService : IService
     {
-        public void GetData(LevelInitData levelInitData, SkeletonInitData skeletonInitData);
+        public void GetData(EnemyInitData enemyInitData);
         public EnemyData GetEnemyDataByType(EnemyType type);
         public Skeleton CreateSkeleton();
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor();
         public SkeletonRanger CreateSkeletonRanger();
+        public Priest CreatePriest();
     }
 }

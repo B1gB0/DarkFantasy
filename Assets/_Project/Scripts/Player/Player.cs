@@ -10,10 +10,11 @@ namespace _Project.Scripts.Player
         private ParticleEffectsService _particleEffectsService;
 
         [field: SerializeField] public Health Health { get; private set; }
+        [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
 
-        public bool CanFollow { get; private set; }
+        public bool CanFollow { get; private set; } = true;
 
         private void OnEnable()
         {

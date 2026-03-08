@@ -11,12 +11,12 @@
 
         public override void Enter()
         {
-            _view.Show();
+            _view.Activate();
         }
         
         public override void Exit()
         {
-            _view.Hide();
+            _view.Deactivate();
         }
     }
 }

@@ -25,8 +25,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             if (Player == null
                 || !Player.CanFollow
-                || Player.Health.TargetHealth <= 0
-                || Enemy.Health.TargetHealth <= 0)
+                || Player.Health.TargetHealth <= MinValue
+                || Enemy.Health.TargetHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
                 return;
@@ -47,23 +47,24 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 Enemy.transform.forward,
                 direction,
                 rotationSpeed * Time.fixedDeltaTime,
-                0f);
+                MinValue);
 
             _subStateTimer -= Time.fixedDeltaTime;
-            if (_subStateTimer <= 0f)
+            
+            if (_subStateTimer <= MinValue)
             {
                 if (Enemy.Type == EnemyType.SkeletonRanger)
                 {
                     switch (_currentSubState)
                     {
                         case AttackSubState.Reloading:
-                            EnterAttackRangerSubState(AttackSubState.Aiming);
+                            EnterAttackSubState(AttackSubState.Aiming);
                             break;
                         case AttackSubState.Aiming:
-                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            EnterAttackSubState(AttackSubState.Attack);
                             break;
                         case AttackSubState.Attack:
-                            EnterAttackRangerSubState(AttackSubState.Reloading);
+                            EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
                 }
@@ -72,10 +73,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     switch (_currentSubState)
                     {
                         case AttackSubState.Attack:
-                            EnterAttackRangerSubState(AttackSubState.Idle);
+                            EnterAttackSubState(AttackSubState.Idle);
                             break;
                         case AttackSubState.Idle:
-                            EnterAttackRangerSubState(AttackSubState.Attack);
+                            EnterAttackSubState(AttackSubState.Attack);
                             Player.Health.TakeDamage(Enemy.Data.Damage);
                             break;
                     }
@@ -83,7 +84,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             }
         }
         
-        private void EnterAttackRangerSubState(AttackSubState newSubState)
+        private void EnterAttackSubState(AttackSubState newSubState)
         {
             _currentSubState = newSubState;
             switch (_currentSubState)

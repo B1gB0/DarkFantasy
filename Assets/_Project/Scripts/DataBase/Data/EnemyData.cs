@@ -16,6 +16,7 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private float _rangeAttack;
         [SerializeField] private int _experience;
         [SerializeField] private int _score;
+        [SerializeField] private int _stopDistance;
         
         public EnemyType Type => _type;
         public float Health => _health;
@@ -26,5 +27,6 @@ namespace _Project.Scripts.DataBase.Data
         public float RangeAttack => _rangeAttack;
         public int Experience => _experience;
         public int Score => _score;
+        public int StopDistance => _stopDistance;
     }
 }
