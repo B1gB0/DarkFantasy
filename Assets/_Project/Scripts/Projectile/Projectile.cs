@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using _Project.Scripts.Services;
 using UnityEngine;
 
 namespace _Project.Scripts.Projectile
@@ -15,6 +16,8 @@ namespace _Project.Scripts.Projectile
 
         protected Vector3 Direction;
         protected Transform Transform;
+
+        protected ParticleEffectsService ParticleEffectsService;
 
         [field: SerializeField] public float LifeTime { get; private set; } = 4f;
 
@@ -61,6 +64,11 @@ namespace _Project.Scripts.Projectile
         {
             Damage = damage;
             ProjectileSpeed = bulletSpeed;
+        }
+
+        public void GetServices(ParticleEffectsService particleEffectsService)
+        {
+            ParticleEffectsService = particleEffectsService;
         }
 
         protected void CheckDefaultAndResourceLayer(Collider collision)

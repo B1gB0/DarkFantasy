@@ -15,14 +15,11 @@ namespace _Project.Scripts.Player
 
         private void Awake()
         {
-            if (_animator == null)
-                _animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
 
-            if (_movement == null)
-                _movement = GetComponent<Movement>();
-
-            if (_attack == null)
-                _attack = GetComponent<Attack>();
+            _movement = GetComponent<Movement>();
+            
+            _attack = GetComponent<Attack>();
         }
 
         private void OnEnable()
@@ -49,4 +46,3 @@ namespace _Project.Scripts.Player
         }
     }
 }
-

@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
@@ -33,8 +32,9 @@ namespace _Project.Scripts.Game.Gameplay
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
 
-        private SkeletonInitData _skeletonInitData;
+        private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
 
         [Inject]
@@ -42,12 +42,14 @@ namespace _Project.Scripts.Game.Gameplay
             IEnemyService enemyService,
             IDataBaseService dataBaseService,
             IPlayerService playerService,
-            ParticleEffectsService particleEffectsService)
+            ParticleEffectsService particleEffectsService,
+            AudioSoundsService audioSoundsService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -65,9 +67,8 @@ namespace _Project.Scripts.Game.Gameplay
             _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
-
-            var container = gameObject.scene.GetSceneContainer();
-            GameObjectInjector.InjectRecursive(uiRoot.gameObject, container);
+            
+            GameObjectInjector.InjectRecursive(uiRoot.gameObject, _container);
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine);
 
@@ -81,11 +82,14 @@ namespace _Project.Scripts.Game.Gameplay
             await _dataBaseService.Init();
             await _enemyService.Init();
             await _playerService.Init();
-
-            _enemyService.GetData(_levelInitData, _skeletonInitData);
+            await _audioSoundsService.Init();
             
+            _playerService.GetSceneContainer(_container);
+
             _level = FindObjectOfType<Level.Level>();
             
+            _enemyService.GetData(_enemyInitData);
+
             _level.GetServices(
                 _enemyService,
                 _levelInitData,
@@ -108,7 +112,7 @@ namespace _Project.Scripts.Game.Gameplay
         private async UniTask InitData()
         {
             _levelInitData = Instantiate(_levelInitData);
-            _skeletonInitData = await _dataFactory.CreateSkeletonInitData();
+            _enemyInitData = await _dataFactory.CreateSkeletonInitData();
             _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
     }

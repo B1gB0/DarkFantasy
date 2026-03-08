@@ -37,6 +37,7 @@ MonoBehaviour:
       _rangeAttack: 5
       _experience: 8
       _score: 7
+      _stopDistance: 2
     - _type: 1
       _health: 15
       _speed: 5
@@ -46,6 +47,7 @@ MonoBehaviour:
       _rangeAttack: 2
       _experience: 8
       _score: 7
+      _stopDistance: 2
     - _type: 2
       _health: 30
       _speed: 3
@@ -55,6 +57,7 @@ MonoBehaviour:
       _rangeAttack: 3
       _experience: 15
       _score: 20
+      _stopDistance: 2
     - _type: 3
       _health: 20
       _speed: 4
@@ -64,6 +67,7 @@ MonoBehaviour:
       _rangeAttack: 4
       _experience: 10
       _score: 15
+      _stopDistance: 2
     - _type: 4
       _health: 10
       _speed: 5
@@ -73,3 +77,14 @@ MonoBehaviour:
       _rangeAttack: 5
       _experience: 8
       _score: 10
+      _stopDistance: 5
+    - _type: 5
+      _health: 50
+      _speed: 5
+      _rotationSpeed: 250
+      _damage: 7
+      _fireRate: 2
+      _rangeAttack: 5
+      _experience: 20
+      _score: 25
+      _stopDistance: 4

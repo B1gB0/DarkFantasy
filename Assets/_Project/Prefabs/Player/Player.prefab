@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Health>k__BackingField: {fileID: 6950887898748460312}
+  <PlayerCollisionHandler>k__BackingField: {fileID: -5622320724067573927}
 --- !u!114 &5175110340357839719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,9 +287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63bb318719aab3439b02f81128ae061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
+  _animator: {fileID: 3362632024281080851}
   _movement: {fileID: 7584936550656702346}
   _attack: {fileID: 5175110340357839719}
+  _runDampTime: 0.08
 --- !u!114 &-5622320724067573927
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Enemy;
+using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Services;
 using UnityEngine;
 
@@ -13,191 +14,195 @@ namespace _Project.Scripts.Level.Spawners
         private const float OffsetYPolygonEnemies = 0.5f;
 
         private readonly IEnemyService _enemyService;
-        
-        private int _counterSkeletonEnemies;
-        private int _counterSkeletonHeavyArmorEnemies;
-        private int _counterSkeletonRangerEnemies;
 
-        public EnemySpawner(IEnemyService enemyService)
+        private int _enemyCounter;
+        private int _limitEnemies;
+
+        public EnemySpawner(IEnemyService enemyService, int limitEnemies)
         {
             _enemyService = enemyService;
+            _limitEnemies = limitEnemies;
         }
 
-        public void SpawnSkeletonEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        public void SpawnWave(EnemyWave wave)
         {
-            if (spawnPointPositions.Count == MinValue)
+            if(_enemyCounter > _limitEnemies - CorrectCountFactor)
+                return;
+            
+            List<Vector3> spawnPoints = wave.WaveSpawnPoints;
+            List<Vector3> patrolPoints = wave.PatrolPoints;
+
+            if (spawnPoints == null || spawnPoints.Count == MinValue)
                 return;
 
-            foreach (var enemyPosition in spawnPointPositions)
+            List<Vector3> availableSpawnPoints = new List<Vector3>(spawnPoints);
+
+            int skeletonsToSpawn = wave.SkeletonEnemyCount;
+            int heavyToSpawn = wave.SkeletonHeavyArmorCount;
+            int rangersToSpawn = wave.SkeletonRangerCount;
+            int priestToSpawn = wave.PriestCount;
+
+            for (int i = 0; i < skeletonsToSpawn; i++)
             {
-                if (_counterSkeletonEnemies > countEnemies - CorrectCountFactor)
-                    return;
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
 
-                Skeleton skeleton = _enemyService.CreateSkeleton();
-
-                skeleton.NavMeshAgent.enabled = false;
-
-                var enemySpawnPosition = enemyPosition +
-                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-
-                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
-
-                skeleton.transform.position = enemySpawnPosition;
-
-                skeleton.NavMeshAgent.enabled = true;
-                
-                // gunnerEnemy.Die += OnKillGunnerEnemy;
-                _counterSkeletonEnemies++;
+                Vector3 candidatePoint = availableSpawnPoints[0];
+                Skeleton enemy = SpawnSkeletonEnemy(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
             }
+            
+            for (int i = 0; i < heavyToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[0];
+                SkeletonHeavyArmor enemy = SpawnSkeletonHeavyArmorEnemy(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < rangersToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[0];
+                SkeletonRanger enemy = SpawnSkeletonRangerEnemy(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < priestToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[0];
+                Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(0);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+        }
+
+        private Skeleton SpawnSkeletonEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            Skeleton skeleton = _enemyService.CreateSkeleton();
+
+            skeleton.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            skeleton.transform.position = enemySpawnPosition;
+
+            skeleton.NavMeshAgent.enabled = true;
+
+            skeleton.Die += OnKillSkeleton;
+
+            skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.InitializeAllStates();
+            skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
+        }
+
+        private SkeletonHeavyArmor SpawnSkeletonHeavyArmorEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
+
+            skeleton.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            skeleton.transform.position = enemySpawnPosition;
+
+            skeleton.NavMeshAgent.enabled = true;
+
+            skeleton.Die += OnKillSkeletonHeavyArmor;
+
+            skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.InitializeAllStates();
+            skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
+        }
+
+        private SkeletonRanger SpawnSkeletonRangerEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            SkeletonRanger skeleton = _enemyService.CreateSkeletonRanger();
+
+            skeleton.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            skeleton.transform.position = enemySpawnPosition;
+
+            skeleton.NavMeshAgent.enabled = true;
+
+            skeleton.Die += OnKillSkeletonRanger;
+
+            skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.InitializeAllStates();
+            skeleton.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return skeleton;
         }
         
-        public void SpawnSkeletonHeavyArmorEnemy(List<Vector3> spawnPointPositions, int countEnemies)
+        private Priest SpawnPriest(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
-            if (spawnPointPositions.Count == MinValue)
-                return;
+            Priest priest = _enemyService.CreatePriest();
 
-            foreach (var enemyPosition in spawnPointPositions)
-            {
-                if (_counterSkeletonHeavyArmorEnemies > countEnemies - CorrectCountFactor)
-                    return;
+            priest.NavMeshAgent.enabled = false;
 
-                SkeletonHeavyArmor skeleton = _enemyService.CreateSkeletonHeavyArmor();
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
 
-                skeleton.NavMeshAgent.enabled = false;
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
-                var enemySpawnPosition = enemyPosition +
-                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+            priest.transform.position = enemySpawnPosition;
 
-                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+            priest.NavMeshAgent.enabled = true;
 
-                skeleton.transform.position = enemySpawnPosition;
+            priest.Die += OnKillSkeletonRanger;
 
-                skeleton.NavMeshAgent.enabled = true;
+            priest.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            priest.EnemyStateMachine.InitializeAllStates();
+            priest.EnemyStateMachine.SwitchState<PatrolState>();
 
-                // gunnerEnemy.Die += OnKillGunnerEnemy;
-                _counterSkeletonHeavyArmorEnemies++;
-            }
-        }
-        
-        public void SpawnSkeletonRangerEnemy(List<Vector3> spawnPointPositions, int countEnemies)
-        {
-            if (spawnPointPositions.Count == MinValue)
-                return;
-
-            foreach (var enemyPosition in spawnPointPositions)
-            {
-                if (_counterSkeletonRangerEnemies > countEnemies - CorrectCountFactor)
-                    return;
-
-                SkeletonRanger skeleton = _enemyService.CreateSkeletonRanger();
-
-                skeleton.NavMeshAgent.enabled = false;
-
-                var enemySpawnPosition = enemyPosition +
-                                         (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-
-                enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
-
-                skeleton.transform.position = enemySpawnPosition;
-
-                skeleton.NavMeshAgent.enabled = true;
-
-                // gunnerEnemy.Die += OnKillGunnerEnemy;
-                _counterSkeletonHeavyArmorEnemies++;
-            }
+            return priest;
         }
 
-        // public void SpawnSmallAlienEnemy(List<Vector3> spawnPointPositions, int countEnemies)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         if (_counterSmallEnemies > countEnemies - CorrectCountFactor)
-        //             return;
-        //
-        //         SmallEnemy smallEnemy = _gameInitSystem.CreateSmallAlienEnemy(_gameInitSystem.Player);
-        //
-        //         smallEnemy.NavMeshAgent.enabled = false;
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         smallEnemy.transform.position = enemySpawnPosition;
-        //
-        //         smallEnemy.NavMeshAgent.enabled = true;
-        //
-        //         smallEnemy.Die += OnKillSmallEnemy;
-        //         _counterSmallEnemies++;
-        //     }
-        // }
-        //
-        // public void SpawnBigEnemyAlien(List<Vector3> spawnPointPositions, int countEnemies)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         if (_counterBigEnemies > countEnemies - CorrectCountFactor)
-        //             return;
-        //
-        //         BigEnemy bigEnemy = _gameInitSystem.CreateBigAlienEnemy(_gameInitSystem.Player);
-        //
-        //         bigEnemy.NavMeshAgent.enabled = false;
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         bigEnemy.transform.position = enemySpawnPosition;
-        //
-        //         bigEnemy.NavMeshAgent.enabled = true;
-        //
-        //         bigEnemy.Die += OnKillBigEnemy;
-        //         _counterBigEnemies++;
-        //     }
-        // }
-        //
-        // public void SpawnAlienEnemyTurret(List<Vector3> spawnPointPositions, Vector3 playerSpawnPoint)
-        // {
-        //     if (spawnPointPositions.Count == MinValue)
-        //         return;
-        //
-        //     foreach (var enemyPosition in spawnPointPositions)
-        //     {
-        //         EnemyTurret enemyTurret = _gameInitSystem.CreateEnemyTurret(_gameInitSystem.Player, enemyPosition);
-        //         enemyTurret.transform.LookAt(playerSpawnPoint);
-        //
-        //         var enemySpawnPosition = enemyPosition +
-        //                                  (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
-        //         
-        //         enemySpawnPosition.y = enemyPosition.y;
-        //
-        //         enemyTurret.transform.position = enemySpawnPosition;
-        //     }
-        // }
-
-        private void OnKillSmallEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeleton(Enemy.Enemy enemy)
         {
-            // _counterSmallEnemies--;
-            // enemyActor.Die -= OnKillSmallEnemy;
+            enemy.Die -= OnKillSkeleton;
+            _enemyCounter--;
         }
 
-        private void OnKillBigEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
-            _counterSkeletonHeavyArmorEnemies--;
-            // enemyActor.Die -= OnKillBigEnemy;
+            enemy.Die -= OnKillSkeletonHeavyArmor;
+            _enemyCounter--;
         }
 
-        private void OnKillGunnerEnemy(Enemy.Enemy enemyActor)
+        private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
-            _counterSkeletonEnemies--;
-            // enemyActor.Die -= OnKillGunnerEnemy;
+            enemy.Die -= OnKillSkeletonRanger;
+            _enemyCounter--;
         }
     }
 }

@@ -70,8 +70,14 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1871eaa3da924e498a54a74c28d628e
+    m_Address: ExplosionFireball
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f63d6cc17b900cd419f78bd0f7c20a91
-    m_Address: SkeletonInitData
+    m_Address: EnemyInitData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
