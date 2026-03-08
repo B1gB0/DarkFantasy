@@ -13,7 +13,7 @@ namespace _Project.Scripts.Player
 
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
-                enemy.Health.TakeDamage(10f); // или через Health
+                enemy.Health.TakeDamage(1000f); // или через Health
             }
         }
     }
