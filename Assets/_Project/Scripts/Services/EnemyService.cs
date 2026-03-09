@@ -4,6 +4,7 @@ using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
 using _Project.Scripts.Projectile;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Services;
 using Reflex.Attributes;
 using UnityEngine;
 
@@ -26,9 +27,10 @@ namespace _Project.Scripts.Services
 
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
+        private IFloatingTextService _floatingTextService;
         private AudioSoundsService _audioSoundsService;
         private ParticleEffectsService _particleEffectsService;
-        
+
         private EnemyInitData _enemyInitData;
 
         private ObjectPool<Skeleton> _skeletonPool;
@@ -45,12 +47,14 @@ namespace _Project.Scripts.Services
             IDataBaseService dataBaseService,
             IPlayerService playerService,
             AudioSoundsService audioSoundsService,
-            ParticleEffectsService particleEffectsService)
+            ParticleEffectsService particleEffectsService,
+            IFloatingTextService floatingTextService)
         {
             _dataBaseService = dataBaseService;
             _playerService = playerService;
             _audioSoundsService = audioSoundsService;
             _particleEffectsService = particleEffectsService;
+            _floatingTextService = floatingTextService;
         }
 
         public UniTask Init()
@@ -71,11 +75,16 @@ namespace _Project.Scripts.Services
         public Skeleton CreateSkeleton()
         {
             CreateEnemySkeletonPool();
-            
+
             var data = _enemiesData[EnemyType.Skeleton];
             var skeleton = _skeletonPool.GetFreeElement();
 
-            skeleton.GetData(_playerService.Player, data);
+            skeleton.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService);
 
             if (skeleton.Health.TargetHealth <= MinValue)
             {
@@ -88,11 +97,16 @@ namespace _Project.Scripts.Services
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor()
         {
             CreateHeavyArmorSkeletonPool();
-                
+
             var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
             var skeletonHeavyArmor = _skeletonHeavyArmorPool.GetFreeElement();
 
-            skeletonHeavyArmor.GetData(_playerService.Player, data);
+            skeletonHeavyArmor.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService);
 
             if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
             {
@@ -105,11 +119,17 @@ namespace _Project.Scripts.Services
         public SkeletonRanger CreateSkeletonRanger()
         {
             CreateRangerSkeletonPool();
-            
+
             var data = _enemiesData[EnemyType.SkeletonRanger];
             var skeletonRanger = _skeletonRangerPool.GetFreeElement();
 
-            skeletonRanger.GetData(_playerService.Player, data);
+            skeletonRanger.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService);
+            
             skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);
 
             if (skeletonRanger.Health.TargetHealth <= MinValue)
@@ -119,15 +139,21 @@ namespace _Project.Scripts.Services
 
             return skeletonRanger;
         }
-        
+
         public Priest CreatePriest()
         {
             CreatePriestPool();
-            
+
             var data = _enemiesData[EnemyType.Priest];
             var priest = _priestPool.GetFreeElement();
 
-            priest.GetData(_playerService.Player, data);
+            priest.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService);
+
             priest.MagicSpell.GetServices(_audioSoundsService, _particleEffectsService);
             priest.MagicSpell.SetData(_playerService.Player.transform, _magicBallProjectilePool, data.Damage);
 
@@ -201,9 +227,9 @@ namespace _Project.Scripts.Services
 
         private void CreatePriestPool()
         {
-            if(_magicBallProjectilePool != null)
+            if (_magicBallProjectilePool != null)
                 return;
-            
+
             _priestPool = new ObjectPool<Priest>(
                 _enemyInitData.PriestPrefab,
                 DefaultCountObjectsInPool,
@@ -211,7 +237,7 @@ namespace _Project.Scripts.Services
             {
                 AutoExpand = IsAutoExpand,
             };
-            
+
             _magicBallProjectilePool = new ObjectPool<MagicBall>(
                 _enemyInitData.MagicBallProjectilePrefab,
                 DefaultCountObjectsInPool,

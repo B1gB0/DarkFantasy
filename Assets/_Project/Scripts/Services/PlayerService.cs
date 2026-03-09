@@ -2,6 +2,7 @@
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -26,6 +27,7 @@ namespace _Project.Scripts.Services
         
         public bool IsInitiated { get; private set; }
         public Player.Player Player { get; private set; }
+        public CinemachineFreeLook FreeLookCamera { get; private set; }
 
         public UniTask Init()
         {
@@ -74,9 +76,10 @@ namespace _Project.Scripts.Services
             return Player;
         }
 
-        public void GetSceneContainer(Container container)
+        public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera)
         {
             _container = container;
+            FreeLookCamera = freeLookCamera;
         }
     }
 }

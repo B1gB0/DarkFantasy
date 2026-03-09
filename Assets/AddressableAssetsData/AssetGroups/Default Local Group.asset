@@ -60,6 +60,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Particles
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1ad57241a917cf44ad06051c23a2952
+    m_Address: TextView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b51fae0fb753be7438ece33b15d99dc9
     m_Address: AudioConfig
     m_ReadOnly: 0

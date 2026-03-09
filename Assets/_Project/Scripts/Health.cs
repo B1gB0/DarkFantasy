@@ -1,6 +1,9 @@
 using System;
 using System.Threading;
+using _Project.Scripts.Game.Constant;
+using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Game.Constant;
 using UnityEngine;
 
 namespace _Project.Scripts
@@ -18,7 +21,7 @@ namespace _Project.Scripts
         public event Action Die;
         public event Action<Health> DieHealth;
 
-        // public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
+        public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
         // public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
 
         public event Action IsDamaged;
@@ -46,10 +49,10 @@ namespace _Project.Scripts
 
         public void TakeDamage(float damage)
         {
-            // IsSpawnedDamageText?.Invoke(damage.ToString(),
-            //     transform,
-            //     FloatingTextViewType.Damage,
-            //     Colors.GetColor(ColorName.DefaultWhiteTextColor));
+            IsSpawnedDamageText?.Invoke(damage.ToString(),
+                transform,
+                FloatingTextViewType.Damage,
+                Colors.GetColor(ColorName.DefaultWhiteTextColor));
 
             IsDamaged?.Invoke();
 

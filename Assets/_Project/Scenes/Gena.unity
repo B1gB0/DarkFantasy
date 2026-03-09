@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70253f9aaa0a1914e8b885c0eb6bb16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cinemachineVirtualCamera: {fileID: 313184892}
+  _freeLookCamera: {fileID: 313184892}
   _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
   _dataFactory: {fileID: 64096860}
   _levelInitData: {fileID: 11400000, guid: 7030cf24e03ab9845ae520e2c70cabbd, type: 2}

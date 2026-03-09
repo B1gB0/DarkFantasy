@@ -17,7 +17,7 @@ namespace _Project.Scripts.UI.View
 
         // private const string MissionProgressBarPath = "MissionProgressBar";
         private const string HealthBarPath = "HealthBar";
-        // private const string TextViewPath = "TextView";
+        private const string TextViewPath = "TextView";
         // private const string ProgressRadialBarPath = "ProgressRadialBar";
         // private const string LevelUpPanelPath = "LevelUpPanel";
         // private const string EndGamePanelPath = "EndGamePanel";
@@ -99,16 +99,16 @@ namespace _Project.Scripts.UI.View
         //     progressRadialBar.Construct(experiencePoints, target);
         //     return progressRadialBar;
         // }
-        //
-        // public async UniTask<FloatingTextView> CreateDamageTextView()
-        // {
-        //     var textViewTemplate = await _resourceService.Load<GameObject>(TextViewPath);
-        //     textViewTemplate = Instantiate(textViewTemplate);
-        //
-        //     FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
-        //     return textView;
-        // }
-        //
+        
+        public async UniTask<FloatingTextView> CreateFloatingTextView()
+        {
+            var textViewTemplate = await _resourceService.Load<GameObject>(TextViewPath);
+            textViewTemplate = Instantiate(textViewTemplate);
+        
+            FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
+            return textView;
+        }
+        
         // public async UniTask<LevelUpPanel> CreateLevelUpPanel()
         // {
         //     var levelUpPanelTemplate = await _resourceService.Load<GameObject>(LevelUpPanelPath);

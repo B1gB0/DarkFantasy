@@ -5,6 +5,7 @@ using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Services;
 using R3;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -16,7 +17,7 @@ namespace _Project.Scripts.Game.Gameplay
 {
     public class GameplayEntryPoint : MonoBehaviour
     {
-        [SerializeField] private CinemachineFreeLook _cinemachineVirtualCamera;
+        [SerializeField] private CinemachineFreeLook _freeLookCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
@@ -31,6 +32,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IEnemyService _enemyService;
         private IDataBaseService _dataBaseService;
         private IPlayerService _playerService;
+        private IFloatingTextService _floatingTextService;
         private ParticleEffectsService _particleEffectsService;
         private AudioSoundsService _audioSoundsService;
 
@@ -43,13 +45,15 @@ namespace _Project.Scripts.Game.Gameplay
             IDataBaseService dataBaseService,
             IPlayerService playerService,
             ParticleEffectsService particleEffectsService,
-            AudioSoundsService audioSoundsService)
+            AudioSoundsService audioSoundsService,
+            IFloatingTextService floatingTextService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
             _audioSoundsService = audioSoundsService;
+            _floatingTextService = floatingTextService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -84,7 +88,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _playerService.Init();
             await _audioSoundsService.Init();
             
-            _playerService.GetSceneContainer(_container);
+            _playerService.GetSceneObjects(_container, _freeLookCamera);
 
             _level = FindObjectOfType<Level.Level>();
             
@@ -95,11 +99,16 @@ namespace _Project.Scripts.Game.Gameplay
                 _levelInitData,
                 _playerInitData,
                 _playerService,
-                _cinemachineVirtualCamera,
+                _freeLookCamera,
                 _particleEffectsService);
 
             HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
             healthBar.Show();
+
+            FloatingTextView floatingTextView = await _viewFactory.CreateFloatingTextView();
+            floatingTextView.Deactivate();
+            
+            _floatingTextService.Init(floatingTextView);
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);

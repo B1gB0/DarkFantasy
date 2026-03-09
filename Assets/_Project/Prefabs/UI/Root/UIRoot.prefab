@@ -1032,26 +1032,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -37
       objectReference: {fileID: 0}
-    - target: {fileID: 4674729056624653911, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674729056624653911, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -80.00003
-      objectReference: {fileID: 0}
-    - target: {fileID: 6097406147487330034, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: advanced
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6097406147487330034, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: playerDataPrefab
-      value: 
-      objectReference: {fileID: 8786385199781207971}
-    - target: {fileID: 6097406147487330034, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: rootSpawnPlayersData
-      value: 
-      objectReference: {fileID: 1541823254068254999}
     - target: {fileID: 6431010096095047027, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
       propertyPath: m_Name
       value: LeaderboardPanel
@@ -1140,36 +1120,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8193669108231385598, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8193669108231385598, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8193669108231385598, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
---- !u!224 &1541823254068254999 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4653730891463815109, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-  m_PrefabInstance: {fileID: 6192721627446949586}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4601436632138957966 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7650315863773835868, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
-  m_PrefabInstance: {fileID: 6192721627446949586}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8786385199781207971 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3179388827071408497, guid: 9fdd464a6887e6d4e8097fa5701ddeca, type: 3}
   m_PrefabInstance: {fileID: 6192721627446949586}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &9100828063639877131 stripped
