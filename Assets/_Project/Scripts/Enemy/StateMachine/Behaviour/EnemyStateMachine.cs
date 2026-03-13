@@ -26,6 +26,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
                 { typeof(IdleState), new IdleState() },
                 { typeof(FollowState), new FollowState() },
                 { typeof(AttackState), new AttackState() },
+                { typeof(HitState), new HitState() },
             };
         }
 

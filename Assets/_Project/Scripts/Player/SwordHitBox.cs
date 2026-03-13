@@ -1,3 +1,4 @@
+using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Player
@@ -13,7 +14,8 @@ namespace _Project.Scripts.Player
 
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
-                enemy.Health.TakeDamage(1000f); // или через Health
+                enemy.EnemyStateMachine.SwitchState<HitState>();
+                enemy.Health.TakeDamage(10f); // или через Health
             }
         }
     }
