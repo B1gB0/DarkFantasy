@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef80b52257c41b0b2d66ba6e9348469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <NumberWaveOfEnemies>k__BackingField: 1
+  <NumberWaveOfEnemies>k__BackingField: 01000000
 --- !u!1 &1078672970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef80b52257c41b0b2d66ba6e9348469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <NumberWaveOfEnemies>k__BackingField: 2
+  <NumberWaveOfEnemies>k__BackingField: 0200000003000000
 --- !u!1 &1110064796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,6 +2334,10 @@ PrefabInstance:
     - target: {fileID: 5725473564201224108, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 20.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055441950570805500, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: <NumberWaveOfEnemies>k__BackingField.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7543450377152625823, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       propertyPath: m_LocalPosition.x
