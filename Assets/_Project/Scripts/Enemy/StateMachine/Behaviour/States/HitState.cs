@@ -28,6 +28,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             _timer -= Time.deltaTime;
             if (_timer <= MinValue)
             {
+                Enemy.ChangeFollowEnemyState(true);
                 EnemyStateMachine.SwitchState<FollowState>();
             }
         }
