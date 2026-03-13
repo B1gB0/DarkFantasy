@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace _Project.Scripts.Level.Triggers
 {
     public class EnemyWaveFollowTrigger : Trigger
     {
-        [field: SerializeField] public int NumberWaveOfEnemies { get; private set; }
+        [field: SerializeField] public List<int> NumberWaveOfEnemies { get; private set; }
 
         private void OnTriggerEnter(Collider other)
         {
