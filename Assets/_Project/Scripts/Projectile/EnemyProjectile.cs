@@ -8,7 +8,7 @@ namespace _Project.Scripts.Projectile
         {
             if (collision.gameObject.TryGetComponent(out Player.Player player))
             {
-                player.Health.TakeDamage(Damage);
+                player.Health.TakeDamage(Damage, player.PlayerCharacteristics.Armor);
                 gameObject.SetActive(false);
             }
 

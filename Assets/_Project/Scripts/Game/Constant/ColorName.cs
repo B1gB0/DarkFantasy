@@ -8,5 +8,6 @@ namespace _Project.Scripts.Game.Constant
         DefaultWhiteTextColor = 3,
         BlueUIPanelColor = 4,
         RedUIPanelColor = 5,
+        BlackUIColor = 6,
     }
 }

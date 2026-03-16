@@ -1,7 +1,6 @@
-using _Project.Scripts.Game.Constant;
 using UnityEngine;
 
-namespace Project.Scripts.Game.Constant
+namespace _Project.Scripts.Game.Constant
 {
     [CreateAssetMenu(fileName = "ColorPalette", menuName = "Colors/Color Palette")]
     public class CustomPalette : ScriptableObject

@@ -19,6 +19,8 @@ namespace _Project.Scripts.Characteristics
         {
             _playerService = playerService;
         }
+        
+        public float Armor { get; private set; }
 
         public void SetStartingCharacteristics(PlayerData data)
         {
@@ -26,6 +28,7 @@ namespace _Project.Scripts.Characteristics
             _targetHealth = data.Health;
             _moveSpeed = data.MoveSpeed;
             _baseMoveSpeed = data.MoveSpeed;
+            Armor = data.Armor;
 
             SetCharacteristics();
         }
@@ -49,12 +52,15 @@ namespace _Project.Scripts.Characteristics
                 case CharacteristicType.Health:
                     IncreaseHealth(factor);
                     break;
-                case CharacteristicType.DiggingSpeed:
-                    IncreaseDiggingSpeedFactor(factor);
+                case CharacteristicType.Armor:
+                    IncreaseArmor(factor);
                     break;
-                case CharacteristicType.MoveSpeed:
-                    IncreaseMoveSpeed(factor);
-                    break;
+                // case CharacteristicType.DiggingSpeed:
+                //     IncreaseDiggingSpeedFactor(factor);
+                //     break;
+                // case CharacteristicType.MoveSpeed:
+                //     IncreaseMoveSpeed(factor);
+                //     break;
             }
         }
 
@@ -98,6 +104,13 @@ namespace _Project.Scripts.Characteristics
         private void IncreaseHealth(float healthValue)
         {
             SetHealth(healthValue);
+        }
+
+        private void IncreaseArmor(float armorValue)
+        {
+            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Armor = data.Armor + armorValue;
         }
 
         private void IncreaseDiggingSpeedFactor(float diggingSpeedFactor)

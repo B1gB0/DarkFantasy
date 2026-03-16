@@ -40,8 +40,12 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Show()
         {
-            Activate();
-            // _tweenAnimationService.AnimateScale();
+            _tweenAnimationService.AnimateScale(transform);
+        }
+
+        public override void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
         }
 
         private void MoveBackToScene()

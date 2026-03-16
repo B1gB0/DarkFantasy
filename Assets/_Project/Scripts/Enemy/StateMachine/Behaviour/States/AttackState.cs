@@ -77,7 +77,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                         case AttackSubState.Idle:
                             EnterAttackSubState(AttackSubState.Attack);
-                            Player.Health.TakeDamage(Enemy.Data.Damage);
+                            Player.Health.TakeDamage(Enemy.Data.Damage, Player.PlayerCharacteristics.Armor);
                             break;
                     }
                 }
