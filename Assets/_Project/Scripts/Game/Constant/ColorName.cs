@@ -9,5 +9,8 @@ namespace _Project.Scripts.Game.Constant
         BlueUIPanelColor = 4,
         RedUIPanelColor = 5,
         BlackUIColor = 6,
+        ArmorIconColor = 7,
+        HealthIconColor = 8,
+        DamageIconColor = 9,
     }
 }

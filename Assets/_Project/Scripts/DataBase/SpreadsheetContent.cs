@@ -10,5 +10,7 @@ namespace _Project.Scripts.DataBase
     {
         [SpreadsheetPage("Players")] public List<PlayerData> Players;
         [SpreadsheetPage("Enemies")] public List<EnemyData> Enemies;
+        [SpreadsheetPage("CharacteristicsLocalization")]
+        public List<CharacteristicsLocalizationData> CharacteristicsLocalizationData;
     }
 }

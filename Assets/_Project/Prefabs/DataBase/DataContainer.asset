@@ -17,6 +17,7 @@ MonoBehaviour:
   selectedTogglesIds:
   - Players
   - Enemies
+  - CharacteristicsLocalizationData
   foldoutSerializationGUI: 1
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -27,6 +28,7 @@ MonoBehaviour:
       _health: 100
       _moveSpeed: 10
       _rotationSpeed: 10
+      _armor: 2
     Enemies:
     - _type: 0
       _health: 10
@@ -38,6 +40,7 @@ MonoBehaviour:
       _experience: 8
       _score: 7
       _stopDistance: 2
+      _armor: 0
     - _type: 1
       _health: 15
       _speed: 5
@@ -48,6 +51,7 @@ MonoBehaviour:
       _experience: 8
       _score: 7
       _stopDistance: 2
+      _armor: 0
     - _type: 2
       _health: 30
       _speed: 3
@@ -58,6 +62,7 @@ MonoBehaviour:
       _experience: 15
       _score: 20
       _stopDistance: 2
+      _armor: 7
     - _type: 3
       _health: 20
       _speed: 4
@@ -68,6 +73,7 @@ MonoBehaviour:
       _experience: 10
       _score: 15
       _stopDistance: 2
+      _armor: 3
     - _type: 4
       _health: 10
       _speed: 5
@@ -78,6 +84,7 @@ MonoBehaviour:
       _experience: 8
       _score: 10
       _stopDistance: 5
+      _armor: 0
     - _type: 5
       _health: 50
       _speed: 5
@@ -88,3 +95,28 @@ MonoBehaviour:
       _experience: 20
       _score: 25
       _stopDistance: 4
+      _armor: 0
+    CharacteristicsLocalizationData:
+    - _type: 0
+      _nameRu: "\u0423\u0440\u043E\u043D"
+      _nameEn: Damage
+      _nameTr: Hasar
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0443\u0440\u043E\u043D"
+      _descriptionEn: Increase damage
+      _descriptionTr: "Hasar\u0131 art\u0131rmak"
+    - _type: 1
+      _nameRu: "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
+      _nameEn: Health
+      _nameTr: "Sa\u011Fl\u0131k"
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435
+        \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
+      _descriptionEn: Increase the maximum amount of health
+      _descriptionTr: "Maksimum sa\u011Fl\u0131k miktar\u0131n\u0131 art\u0131rmak"
+    - _type: 2
+      _nameRu: "\u0411\u0440\u043E\u043D\u044F"
+      _nameEn: Armor
+      _nameTr: "Z\u0131rh"
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E
+        \u0431\u0440\u043E\u043D\u0438"
+      _descriptionEn: Increase the amount of armor
+      _descriptionTr: "Z\u0131rh miktar\u0131n\u0131 art\u0131r\u0131n"

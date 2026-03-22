@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Enemy
 {
     public abstract class EnemyWeapon : MonoBehaviour
     {
-        public abstract void Shoot();
+        public abstract void Attack();
     }
 }

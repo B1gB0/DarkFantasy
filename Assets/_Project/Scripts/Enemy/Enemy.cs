@@ -28,6 +28,7 @@ namespace _Project.Scripts.Enemy
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
         public EnemyType Type { get; private set; }
         public bool CanFollow { get; private set; }
+        public float Armor { get; private set; }
 
         private void Start()
         {
@@ -60,6 +61,8 @@ namespace _Project.Scripts.Enemy
             FloatingTextService = floatingTextService;
             ParticleEffectsService = particleEffectsService;
             AudioSoundsService = audioSoundsService;
+
+            Armor = Data.Armor;
             
             Health.IsSpawnedDamageText += FloatingTextService.OnSpawnFloatingText;
         }

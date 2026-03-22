@@ -15,7 +15,7 @@ namespace _Project.Scripts.Player
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
                 enemy.EnemyStateMachine.SwitchState<HitState>();
-                enemy.Health.TakeDamage(5f);
+                enemy.Health.TakeDamage(5f, enemy.Armor);
             }
         }
     }

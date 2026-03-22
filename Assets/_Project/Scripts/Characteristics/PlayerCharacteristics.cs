@@ -55,6 +55,8 @@ namespace _Project.Scripts.Characteristics
                 case CharacteristicType.Armor:
                     IncreaseArmor(factor);
                     break;
+                case CharacteristicType.Damage:
+                    break;
                 // case CharacteristicType.DiggingSpeed:
                 //     IncreaseDiggingSpeedFactor(factor);
                 //     break;

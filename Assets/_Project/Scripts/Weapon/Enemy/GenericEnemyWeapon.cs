@@ -1,7 +1,7 @@
 using _Project.Scripts.Services;
 using UnityEngine;
 
-namespace _Project.Scripts.Weapon
+namespace _Project.Scripts.Weapon.Enemy
 {
     public abstract class GenericEnemyWeapon<T> : EnemyWeapon 
         where T : Projectile.Projectile
@@ -25,7 +25,7 @@ namespace _Project.Scripts.Weapon
             ParticleEffectsService = particleEffectsService;
         }
 
-        public override void Shoot()
+        public override void Attack()
         {
             _projectile = _projectilePool.GetFreeElement();
             _projectile.transform.position = _shootPoint.position;
