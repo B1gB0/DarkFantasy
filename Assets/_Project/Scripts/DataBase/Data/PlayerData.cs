@@ -12,11 +12,13 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _armor;
+        [SerializeField] private float _damage;
 
         public PlayerType Type => _type;
         public float Health => _health;
         public float MoveSpeed => _moveSpeed;
         public float RotationSpeed => _rotationSpeed;
         public float Armor => _armor;
+        public float Damage => _damage;
     }
 }

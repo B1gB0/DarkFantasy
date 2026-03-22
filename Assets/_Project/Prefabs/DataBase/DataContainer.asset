@@ -18,6 +18,7 @@ MonoBehaviour:
   - Players
   - Enemies
   - CharacteristicsLocalizationData
+  - PlayerAttributeLevelData
   foldoutSerializationGUI: 1
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -29,6 +30,7 @@ MonoBehaviour:
       _moveSpeed: 10
       _rotationSpeed: 10
       _armor: 2
+      _damage: 0
     Enemies:
     - _type: 0
       _health: 10
@@ -120,3 +122,124 @@ MonoBehaviour:
         \u0431\u0440\u043E\u043D\u0438"
       _descriptionEn: Increase the amount of armor
       _descriptionTr: "Z\u0131rh miktar\u0131n\u0131 art\u0131r\u0131n"
+    PlayerAttributeLevelData:
+    - _id: damage_1
+      _type: 0
+      _value: 1
+      _price: 10
+    - _id: damage_2
+      _type: 0
+      _value: 2
+      _price: 20
+    - _id: damage_3
+      _type: 0
+      _value: 3
+      _price: 30
+    - _id: damage_4
+      _type: 0
+      _value: 4
+      _price: 40
+    - _id: damage_5
+      _type: 0
+      _value: 5
+      _price: 50
+    - _id: damage_6
+      _type: 0
+      _value: 6
+      _price: 60
+    - _id: damage_7
+      _type: 0
+      _value: 7
+      _price: 70
+    - _id: damage_8
+      _type: 0
+      _value: 8
+      _price: 80
+    - _id: damage_9
+      _type: 0
+      _value: 9
+      _price: 90
+    - _id: damage_10
+      _type: 0
+      _value: 10
+      _price: 100
+    - _id: health_1
+      _type: 1
+      _value: 1
+      _price: 10
+    - _id: health_2
+      _type: 1
+      _value: 2
+      _price: 20
+    - _id: health_3
+      _type: 1
+      _value: 3
+      _price: 30
+    - _id: health_4
+      _type: 1
+      _value: 4
+      _price: 40
+    - _id: health_5
+      _type: 1
+      _value: 5
+      _price: 50
+    - _id: health_6
+      _type: 1
+      _value: 6
+      _price: 60
+    - _id: health_7
+      _type: 1
+      _value: 7
+      _price: 70
+    - _id: health_8
+      _type: 1
+      _value: 8
+      _price: 80
+    - _id: health_9
+      _type: 1
+      _value: 9
+      _price: 90
+    - _id: health_10
+      _type: 1
+      _value: 10
+      _price: 100
+    - _id: armor_1
+      _type: 2
+      _value: 1
+      _price: 10
+    - _id: armor_2
+      _type: 2
+      _value: 2
+      _price: 20
+    - _id: armor_3
+      _type: 2
+      _value: 3
+      _price: 30
+    - _id: armor_4
+      _type: 2
+      _value: 4
+      _price: 40
+    - _id: armor_5
+      _type: 2
+      _value: 5
+      _price: 50
+    - _id: armor_6
+      _type: 2
+      _value: 6
+      _price: 60
+    - _id: armor_7
+      _type: 2
+      _value: 7
+      _price: 70
+    - _id: armor_8
+      _type: 2
+      _value: 8
+      _price: 80
+    - _id: armor_9
+      _type: 2
+      _value: 9
+      _price: 90
+    - _id: armor_10
+      _type: 2
+      _value: 10
+      _price: 100

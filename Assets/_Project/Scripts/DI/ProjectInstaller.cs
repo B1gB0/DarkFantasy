@@ -19,6 +19,7 @@ namespace _Project.Scripts.DI
         [SerializeField] private ParticleEffectsService _particleEffectsService;
         [SerializeField] private UIRootView _uiRootViewPrefab;
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
+        
 
         private void OnDestroy()
         {

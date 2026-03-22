@@ -115,6 +115,13 @@ namespace _Project.Scripts.Characteristics
             Armor = data.Armor + armorValue;
         }
 
+        private void IncreaseDamage(float damageValue)
+        {
+            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Armor = data.Damage + damageValue;
+        }
+
         private void IncreaseDiggingSpeedFactor(float diggingSpeedFactor)
         {
             SetDiggingSpeed(diggingSpeedFactor);
