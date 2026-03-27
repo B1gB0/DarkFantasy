@@ -12,31 +12,50 @@ namespace _Project.Scripts.UI.View
 {
     public class AttributeView : View
     {
+        [SerializeField] private Button _attributeButton;
         [SerializeField] private List<Sprite> _icons;
-        [SerializeField] private TMP_Text _title;
         [SerializeField] private Image _iconAttribute;
+        
+        [SerializeField] private TMP_Text _title;
         [SerializeField] private TMP_Text _value;
         [SerializeField] private TMP_Text _price;
 
-        public void Set(CharacteristicsLocalizationData data)
+        private PlayerAttributeLevelData _currentData;
+        
+        public event Action<PlayerAttributeLevelData> OnButtonClicked;
+        
+        private void OnEnable()
         {
-            switch (data.Type)
+            _attributeButton.onClick.AddListener(OnButtonClick);
+        }
+
+        private void OnDisable()
+        {
+            _attributeButton.onClick.RemoveListener(OnButtonClick);
+        }
+
+        public void Set(CharacteristicsLocalizationData localizationData, PlayerAttributeLevelData attributeData)
+        {
+            switch (localizationData.Type)
             {
                 case CharacteristicType.Health:
                     _iconAttribute.sprite = _icons[0];
-                    SetLocalization(data);
+                    SetLocalization(localizationData);
                     break;
                 case CharacteristicType.Damage:
                     _iconAttribute.sprite = _icons[1];
-                    SetLocalization(data);
+                    SetLocalization(localizationData);
                     break;
                 case CharacteristicType.Armor:
                     _iconAttribute.sprite = _icons[2];
-                    SetLocalization(data);
+                    SetLocalization(localizationData);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _value.text = attributeData.Value.ToString();
+            _price.text = attributeData.Price.ToString();
         }
 
         private void SetLocalization(CharacteristicsLocalizationData data)
@@ -48,6 +67,11 @@ namespace _Project.Scripts.UI.View
                 LocalizationCode.Tr => data.NameTr,
                 _ => _title.text
             };
+        }
+
+        private void OnButtonClick()
+        {
+            OnButtonClicked?.Invoke(_currentData);
         }
     }
 }

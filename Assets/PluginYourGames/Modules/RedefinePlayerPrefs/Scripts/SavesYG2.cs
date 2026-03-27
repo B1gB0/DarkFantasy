@@ -9,6 +9,10 @@ namespace YG
         public int Gold;
         public int AcumulatedScore;
         public int ExperiencePointsValue;
+
+        public int HealthAttributeNumber;
+        public int DamageAttributeNumber;
+        public int ArmorAttributeNumber;
         
         public PlayerCharacteristics PlayerCharacteristics;
         

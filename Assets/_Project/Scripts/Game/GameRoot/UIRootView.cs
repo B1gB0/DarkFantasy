@@ -18,6 +18,7 @@ namespace _Project.Scripts.Game.GameRoot
         [SerializeField] private LoadingPanel _loadingPanel;
         [SerializeField] private SettingsPanel _settingsPanel;
         [SerializeField] private LeaderboardPanel _leaderboardPanel;
+        [SerializeField] private LocalizationLanguageSwitcher _localizationLanguageSwitcher;
         
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _leaderboardButton;
@@ -26,6 +27,7 @@ namespace _Project.Scripts.Game.GameRoot
         private IPauseService _pauseService;
 
         public UIStateMachine UIStateMachine { get; private set; }
+        public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
 
         [Inject]
         private void Construct(AudioSoundsService audioSoundsService, IPauseService pauseService)
