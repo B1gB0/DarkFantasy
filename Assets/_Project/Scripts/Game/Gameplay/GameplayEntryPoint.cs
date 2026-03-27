@@ -100,7 +100,8 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerInitData,
                 _playerService,
                 _freeLookCamera,
-                _particleEffectsService);
+                _particleEffectsService,
+                _viewFactory);
 
             HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
             healthBar.Show();

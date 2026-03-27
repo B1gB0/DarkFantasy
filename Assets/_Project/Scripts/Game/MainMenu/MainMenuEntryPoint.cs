@@ -35,8 +35,6 @@ namespace _Project.Scripts.Game.MainMenu
 
         public Observable<MainMenuExitParameters> Run(UIRootView uiRoot, MainMenuEnterParameters enterParameters = null)
         {
-            // uiRoot.ExitButton.gameObject.SetActive(false);
-
             _uiScene = Instantiate(_sceneUIRootPrefab);
             uiRoot.AttachSceneUI(_uiScene.gameObject);
 

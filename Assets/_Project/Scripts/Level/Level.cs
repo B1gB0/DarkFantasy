@@ -4,6 +4,7 @@ using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.View;
 using Cinemachine;
 using UnityEngine;
 
@@ -25,6 +26,9 @@ namespace _Project.Scripts.Level
         [SerializeField] private List<EnemyWave> _enemyWaves;
         [SerializeField] private int _limitEnemies;
 
+        protected ViewFactory ViewFactory;
+        protected float LastSpawnTime;
+        
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
 
@@ -32,9 +36,7 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
-
-        protected float LastSpawnTime;
-
+        
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
 
@@ -44,7 +46,8 @@ namespace _Project.Scripts.Level
             PlayerInitData playerInitData,
             IPlayerService playerService,
             CinemachineFreeLook cinemachineFreeLook,
-            ParticleEffectsService particleEffectsService
+            ParticleEffectsService particleEffectsService,
+            ViewFactory viewFactory
         )
         {
             _levelInitData = levelInitData;
@@ -52,6 +55,7 @@ namespace _Project.Scripts.Level
             _playerService = playerService;
             _cinemachineFreeLook = cinemachineFreeLook;
             _particleEffectsService = particleEffectsService;
+            ViewFactory = viewFactory;
 
             CreatePlayer();
 

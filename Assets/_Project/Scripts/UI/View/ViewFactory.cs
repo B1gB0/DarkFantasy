@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.Panel;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -18,6 +19,8 @@ namespace _Project.Scripts.UI.View
         // private const string MissionProgressBarPath = "MissionProgressBar";
         private const string HealthBarPath = "HealthBar";
         private const string TextViewPath = "TextView";
+        private const string ShopAttributePanelPath = "ShopAttributePanel";
+        
         // private const string ProgressRadialBarPath = "ProgressRadialBar";
         // private const string LevelUpPanelPath = "LevelUpPanel";
         // private const string EndGamePanelPath = "EndGamePanel";
@@ -108,7 +111,18 @@ namespace _Project.Scripts.UI.View
             FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
             return textView;
         }
-        
+
+        public async UniTask<ShopPanel> CreateShopPanel()
+        {
+            var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopAttributePanelPath);
+            shopPanelTemplate = Instantiate(shopPanelTemplate);
+
+            ShopPanel shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
+            GameObjectInjector.InjectRecursive(shopPanel.gameObject, _container);
+            shopPanel.transform.SetParent(_uiScene.transform);
+            return shopPanel;
+        }
+
         // public async UniTask<LevelUpPanel> CreateLevelUpPanel()
         // {
         //     var levelUpPanelTemplate = await _resourceService.Load<GameObject>(LevelUpPanelPath);
