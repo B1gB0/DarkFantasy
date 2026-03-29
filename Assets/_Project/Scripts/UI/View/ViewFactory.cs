@@ -2,6 +2,8 @@
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
+using _Project.Scripts.UI.StateMachine;
+using _Project.Scripts.UI.StateMachine.States;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -34,7 +36,7 @@ namespace _Project.Scripts.UI.View
         private Container _container;
         
         private ShopPanel _shopPanel;
-
+        
         [Inject]
         public void Construct(IResourceService resourceService, IPlayerService playerService)
         {
@@ -113,7 +115,9 @@ namespace _Project.Scripts.UI.View
             _shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
             GameObjectInjector.InjectRecursive(_shopPanel.gameObject, _container);
             _shopPanel.transform.SetParent(_uiScene.transform, false);
+            
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
+
             return _shopPanel;
         }
 

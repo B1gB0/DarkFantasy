@@ -27,6 +27,15 @@ namespace _Project.Scripts.UI.StateMachine
             _currentState.Enter();
         }
 
+        public void ExitFrom<T>()
+            where T : UIState
+        {
+            var type = typeof(T);
+            
+            if(_currentState.GetType() == type)
+                _currentState.Exit();
+        }
+
         public void AddState(UIState state)
         {
             var type = state.GetType();

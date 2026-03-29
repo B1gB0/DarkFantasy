@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project.Scripts.DataBase.InitDataSO;
+using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -29,9 +31,13 @@ namespace _Project.Scripts.Level
         [SerializeField] private int _limitEnemies;
 
         protected ViewFactory ViewFactory;
-        protected float LastSpawnTime;
+        protected UIStateMachine UIStateMachine;
+        protected UIRootView UIRootView;
+        protected HealthBar HealthBar;
 
         protected IShopService ShopService;
+
+        protected float LastSpawnTime;
 
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
@@ -62,13 +68,18 @@ namespace _Project.Scripts.Level
             LevelInitData levelInitData,
             PlayerInitData playerInitData,
             CinemachineFreeLook cinemachineFreeLook,
-            ViewFactory viewFactory
+            ViewFactory viewFactory,
+            UIStateMachine uiStateMachine,
+            UIRootView uiRootView
         )
         {
             _levelInitData = levelInitData;
             _playerInitData = playerInitData;
             _cinemachineFreeLook = cinemachineFreeLook;
+            
             ViewFactory = viewFactory;
+            UIStateMachine = uiStateMachine;
+            UIRootView = uiRootView;
         }
 
         public virtual async UniTask OnStartLevel()
@@ -89,8 +100,8 @@ namespace _Project.Scripts.Level
             var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
             player.Construct(playerCharacteristics, _particleEffectsService);
 
-            HealthBar healthBar = await ViewFactory.CreateHealthBar(player.Health);
-            healthBar.Show();
+            HealthBar = await ViewFactory.CreateHealthBar(player.Health);
+            HealthBar.Show();
 
             var playerTransform = player.transform;
 

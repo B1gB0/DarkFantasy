@@ -4,8 +4,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
 {
     public class HitAnimatedState : AnimatedState
     {
-        private const float Duration = 0.1f;
-
         public HitAnimatedState(Animator animator, AnimationNamesBase animationNamesBase) 
             : base(animator, animationNamesBase) { }
 

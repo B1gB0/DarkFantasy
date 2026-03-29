@@ -68,6 +68,21 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                     }
                 }
+                else if (Enemy.Type == EnemyType.Priest)
+                {
+                    switch (_currentSubState)
+                    {
+                        case AttackSubState.Reloading:
+                            EnterAttackSubState(AttackSubState.Aiming);
+                            break;
+                        case AttackSubState.Idle:
+                            EnterAttackSubState(AttackSubState.Attack);
+                            break;
+                        case AttackSubState.Attack:
+                            EnterAttackSubState(AttackSubState.Idle);
+                            break;
+                    }
+                }
                 else
                 {
                     switch (_currentSubState)

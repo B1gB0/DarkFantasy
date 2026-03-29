@@ -4,6 +4,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
     public abstract class AnimatedState
     {
+        protected const float Duration = 0.1f;
+        
         protected readonly Animator Animator;
         protected readonly AnimationNamesBase AnimationBase;
 

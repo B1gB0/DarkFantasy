@@ -353,6 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6147432536631158499}
+  - component: {fileID: 4674456210482467445}
   m_Layer: 5
   m_Name: UIRootButtons
   m_TagString: Untagged
@@ -380,6 +381,18 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4674456210482467445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015200791248970653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c4ce14ccb04bd091d54834c4123989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6423511008314957712
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiSceneContainer: {fileID: 1118541157044971349}
+  _uiRootButtons: {fileID: 4674456210482467445}
   _loadingPanel: {fileID: 4558841691454157833}
   _settingsPanel: {fileID: 4288889128158527726}
   _leaderboardPanel: {fileID: 9100828063639877131}

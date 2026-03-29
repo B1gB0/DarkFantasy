@@ -85,7 +85,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanF@CastingDamage01
+  m_Name: Hit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -137,7 +137,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanF@MagicAttackCall1H01_L
+  m_Name: Coil
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -468,7 +468,7 @@ AnimatorStateMachine:
     m_Position: {x: 210, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8825695192722900536}
-    m_Position: {x: -50, y: -420, z: 0}
+    m_Position: {x: -40, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5277030848487253881}
     m_Position: {x: -80, y: -370, z: 0}
@@ -501,7 +501,7 @@ AnimatorStateMachine:
     m_Position: {x: 860, y: -510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1448898528216334819}
-    m_Position: {x: -60, y: 160, z: 0}
+    m_Position: {x: -50, y: -490, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -571,7 +571,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit
+  m_Name: Hit_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1009,7 +1009,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanF@MagicAttackOmni01
+  m_Name: Omni
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

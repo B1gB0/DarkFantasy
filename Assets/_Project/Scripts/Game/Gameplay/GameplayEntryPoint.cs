@@ -75,7 +75,7 @@ namespace _Project.Scripts.Game.Gameplay
             
             GameObjectInjector.InjectRecursive(uiRoot.gameObject, _container);
 
-            _uiScene.GetUIStateMachine(uiRoot.UIStateMachine);
+            _uiScene.GetUIStateMachine(uiRoot.UIStateMachine, _uiRoot.UIRootButtons);
 
             // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
             //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
@@ -100,7 +100,9 @@ namespace _Project.Scripts.Game.Gameplay
                 _levelInitData,
                 _playerInitData,
                 _freeLookCamera,
-                _viewFactory);
+                _viewFactory,
+                _uiRoot.UIStateMachine,
+                _uiRoot);
 
             FloatingTextView floatingTextView = await _viewFactory.CreateFloatingTextView();
             floatingTextView.Deactivate();

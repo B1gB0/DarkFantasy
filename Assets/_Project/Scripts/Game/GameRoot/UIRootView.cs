@@ -3,6 +3,7 @@ using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.StateMachine.States;
+using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace _Project.Scripts.Game.GameRoot
     {
         [SerializeField] private UISceneContainer _uiSceneContainer;
 
+        [SerializeField] private UIRootButtons _uiRootButtons;
         [SerializeField] private LoadingPanel _loadingPanel;
         [SerializeField] private SettingsPanel _settingsPanel;
         [SerializeField] private LeaderboardPanel _leaderboardPanel;
@@ -27,6 +29,7 @@ namespace _Project.Scripts.Game.GameRoot
         private IPauseService _pauseService;
 
         public UIStateMachine UIStateMachine { get; private set; }
+        public UIRootButtons UIRootButtons => _uiRootButtons;
         public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
 
         [Inject]

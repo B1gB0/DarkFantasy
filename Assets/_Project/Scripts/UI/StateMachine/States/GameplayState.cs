@@ -2,8 +2,23 @@
 {
     public class GameplayState : ViewState
     {
-        public GameplayState(View.View view) : base(view)
+        private readonly View.View _uiRootButtons;
+
+        public GameplayState(View.View view, View.View uiRootButtons) : base(view)
         {
+            _uiRootButtons = uiRootButtons;
+        }
+
+        public override void Enter()
+        {
+            _uiRootButtons.Activate();
+            base.Enter();
+        }
+
+        public override void Exit()
+        {
+            _uiRootButtons.Deactivate();
+            base.Exit();
         }
     }
 }

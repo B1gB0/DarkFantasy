@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Services;
@@ -24,6 +25,8 @@ namespace _Project.Scripts.UI.Panel
         private List<PlayerAttributeLevelData> _damageAttributes;
         private List<PlayerAttributeLevelData> _armorAttributes;
 
+        public event Action OnBackToSceneButtonPressed;
+
         [Inject]
         private void Construct(
             ITweenAnimationService tweenAnimationService,
@@ -46,7 +49,7 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnEnable()
         {
-            _backSceneButton.onClick.AddListener(Hide);
+            _backSceneButton.onClick.AddListener(MoveBackToScene);
             _attributeViews[0].OnButtonClicked += ApplyPurchase;
             _attributeViews[1].OnButtonClicked += ApplyPurchase;
             _attributeViews[2].OnButtonClicked += ApplyPurchase;
@@ -54,7 +57,7 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnDisable()
         {
-            _backSceneButton.onClick.RemoveListener(Hide);
+            _backSceneButton.onClick.RemoveListener(MoveBackToScene);
             _attributeViews[0].OnButtonClicked -= ApplyPurchase;
             _attributeViews[1].OnButtonClicked -= ApplyPurchase;
             _attributeViews[2].OnButtonClicked -= ApplyPurchase;
@@ -79,6 +82,11 @@ namespace _Project.Scripts.UI.Panel
         public void OnChangeLanguage()
         {
             SetAttributeViews();
+        }
+        
+        private void MoveBackToScene()
+        {
+            OnBackToSceneButtonPressed?.Invoke();
         }
 
         private void SetAttributeViews()
