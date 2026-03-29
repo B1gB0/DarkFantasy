@@ -20,7 +20,6 @@ namespace _Project.Scripts.DI
         [SerializeField] private UIRootView _uiRootViewPrefab;
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
         
-
         private void OnDestroy()
         {
             foreach (var obj in _monoServiceObjects)
@@ -44,6 +43,7 @@ namespace _Project.Scripts.DI
             builder.AddSingleton(typeof(EnemyService), typeof(IEnemyService));
             builder.AddSingleton(typeof(PauseService), typeof(IPauseService));
             builder.AddSingleton(typeof(FloatingTextService), typeof(IFloatingTextService));
+            builder.AddSingleton(typeof(ShopService), typeof(IShopService));
 
             builder.AddSingleton(typeof(CurrencyService), typeof(ICurrencyService));
             builder.AddSingleton(typeof(TweenAnimationService), typeof(ITweenAnimationService));

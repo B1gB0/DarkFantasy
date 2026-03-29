@@ -13,7 +13,7 @@ namespace _Project.Scripts.Services
         public CinemachineFreeLook FreeLookCamera { get; }
         public PlayerData GetPlayerDataByType(PlayerType type);
         public Player.Player CreatePlayerByPrefab(Player.Player playerPrefab, Vector3 spawnPoint);
-        public PlayerCharacteristics InitPlayerCharacteristics();
+        public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data);
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
     }
 }

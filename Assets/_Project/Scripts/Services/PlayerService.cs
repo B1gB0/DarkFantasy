@@ -44,18 +44,19 @@ namespace _Project.Scripts.Services
             return UniTask.CompletedTask;
         }
         
-        public PlayerCharacteristics InitPlayerCharacteristics()
+        public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data)
         {
             var characteristics = YG2.saves.PlayerCharacteristics;
 
             if (characteristics != null)
             {
-                characteristics.SetCharacteristics();
+                characteristics.SetCharacteristics(this);
             }
             else
             {
-                characteristics = new PlayerCharacteristics(this);
-                characteristics.SetStartingCharacteristics(GetPlayerDataByType(PlayerType.CommonHero));
+                characteristics = new PlayerCharacteristics();
+                characteristics.SetStartingData(data);
+                characteristics.SetCharacteristics(this);
             }
 
             YG2.saves.PlayerCharacteristics = characteristics;

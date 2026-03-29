@@ -22,7 +22,7 @@ namespace _Project.Scripts.UI.View
 
         private PlayerAttributeLevelData _currentData;
         
-        public event Action<PlayerAttributeLevelData> OnButtonClicked;
+        public event Action<PlayerAttributeLevelData, AttributeView> OnButtonClicked;
         
         private void OnEnable()
         {
@@ -54,6 +54,8 @@ namespace _Project.Scripts.UI.View
                     throw new ArgumentOutOfRangeException();
             }
 
+            _currentData = attributeData;
+
             _value.text = attributeData.Value.ToString();
             _price.text = attributeData.Price.ToString();
         }
@@ -71,7 +73,7 @@ namespace _Project.Scripts.UI.View
 
         private void OnButtonClick()
         {
-            OnButtonClicked?.Invoke(_currentData);
+            OnButtonClicked?.Invoke(_currentData, this);
         }
     }
 }

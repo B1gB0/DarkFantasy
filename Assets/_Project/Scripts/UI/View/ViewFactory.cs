@@ -78,7 +78,7 @@ namespace _Project.Scripts.UI.View
             healthBarTemplate = Instantiate(healthBarTemplate);
 
             HealthBar healthBar = healthBarTemplate.GetComponent<HealthBar>();
-            GameObjectInjector.InjectObject(healthBar.gameObject, _container);
+            GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
             healthBar.transform.SetParent(_uiScene.transform, false);
             healthBar.GetPoints(_uiScene.ShowHealthPoint, _uiScene.HideHealthPoint, _uiScene.WeaponPoint);
@@ -112,7 +112,7 @@ namespace _Project.Scripts.UI.View
 
             _shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
             GameObjectInjector.InjectRecursive(_shopPanel.gameObject, _container);
-            _shopPanel.transform.SetParent(_uiScene.transform);
+            _shopPanel.transform.SetParent(_uiScene.transform, false);
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
             return _shopPanel;
         }

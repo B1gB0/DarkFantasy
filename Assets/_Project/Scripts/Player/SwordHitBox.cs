@@ -1,5 +1,6 @@
 using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Player
 {
@@ -15,7 +16,7 @@ namespace _Project.Scripts.Player
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
                 enemy.EnemyStateMachine.SwitchState<HitState>();
-                enemy.Health.TakeDamage(5f, enemy.Armor);
+                enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, enemy.Armor);
             }
         }
     }

@@ -1,5 +1,8 @@
 ﻿using _Project.Scripts.Level.Triggers;
+using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
+using Cysharp.Threading.Tasks;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace _Project.Scripts.Level
@@ -10,21 +13,38 @@ namespace _Project.Scripts.Level
         
         private ShopPanel _shopPanel;
         
+        // private IShopService _shopService;
+
+        // [Inject]
+        // private void Construct(IShopService shopService)
+        // {
+        //     _shopService = shopService;
+        // }
+
         private void OnEnable()
         {
-            IsInitiatedSpawners += OnCreateShop;
-            _shopTrigger.OnOpenShop += _shopPanel.Show;
+            
         }
         
         private void OnDisable()
         {
-            IsInitiatedSpawners -= OnCreateShop;
+            
+        }
+
+        private void OnDestroy()
+        {
             _shopTrigger.OnOpenShop -= _shopPanel.Show;
         }
 
-        private async void OnCreateShop()
+        public override async UniTask OnStartLevel()
         {
+            await ShopService.Init();
+            
             _shopPanel = await ViewFactory.CreateShopPanel();
+            
+            _shopTrigger.OnOpenShop += _shopPanel.Show;
+            
+            await base.OnStartLevel();
         }
     }
 }

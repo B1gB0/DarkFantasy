@@ -12,6 +12,7 @@ using Reflex.Core;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Game.Gameplay
 {
@@ -91,25 +92,22 @@ namespace _Project.Scripts.Game.Gameplay
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 
             _level = FindObjectOfType<Level.Level>();
-            
+            GameObjectInjector.InjectObject(_level.gameObject, _container);
+
             _enemyService.GetData(_enemyInitData);
 
-            _level.GetServices(
-                _enemyService,
+            _level.GetDependencies(
                 _levelInitData,
                 _playerInitData,
-                _playerService,
                 _freeLookCamera,
-                _particleEffectsService,
                 _viewFactory);
-
-            HealthBar healthBar = await _viewFactory.CreateHealthBar(_playerService.Player.Health);
-            healthBar.Show();
 
             FloatingTextView floatingTextView = await _viewFactory.CreateFloatingTextView();
             floatingTextView.Deactivate();
             
             _floatingTextService.Init(floatingTextView);
+
+            await _level.OnStartLevel();
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);

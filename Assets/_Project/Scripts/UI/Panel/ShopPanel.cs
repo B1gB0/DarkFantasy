@@ -6,6 +6,7 @@ using _Project.Scripts.UI.View;
 using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
+using UnityEngine.UI;
 using YG;
 
 namespace _Project.Scripts.UI.Panel
@@ -13,6 +14,7 @@ namespace _Project.Scripts.UI.Panel
     public class ShopPanel : View.View
     {
         [SerializeField] private List<AttributeView> _attributeViews;
+        [SerializeField] private Button _backSceneButton;
         
         private ITweenAnimationService _tweenAnimationService;
         private IShopService _shopService;
@@ -35,15 +37,16 @@ namespace _Project.Scripts.UI.Panel
 
         private void Start()
         {
+            Deactivate();
+            
             _healthAttributes = _shopService.GetAttributesByType(CharacteristicType.Health);
             _damageAttributes = _shopService.GetAttributesByType(CharacteristicType.Damage);
             _armorAttributes = _shopService.GetAttributesByType(CharacteristicType.Armor);
-            
-            SetAttributeViews();
         }
 
         private void OnEnable()
         {
+            _backSceneButton.onClick.AddListener(Hide);
             _attributeViews[0].OnButtonClicked += ApplyPurchase;
             _attributeViews[1].OnButtonClicked += ApplyPurchase;
             _attributeViews[2].OnButtonClicked += ApplyPurchase;
@@ -51,6 +54,7 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnDisable()
         {
+            _backSceneButton.onClick.RemoveListener(Hide);
             _attributeViews[0].OnButtonClicked -= ApplyPurchase;
             _attributeViews[1].OnButtonClicked -= ApplyPurchase;
             _attributeViews[2].OnButtonClicked -= ApplyPurchase;
@@ -63,6 +67,7 @@ namespace _Project.Scripts.UI.Panel
         
         public override void Show()
         {
+            SetAttributeViews();
             _tweenAnimationService.AnimateScale(transform);
         }
 
@@ -91,10 +96,41 @@ namespace _Project.Scripts.UI.Panel
                 _armorAttributes[YG2.saves.ArmorAttributeNumber]);
         }
 
-        private void ApplyPurchase(PlayerAttributeLevelData data)
+        private void ApplyPurchase(PlayerAttributeLevelData data, AttributeView attributeView)
         {
+            List<PlayerAttributeLevelData> attributeList = data.Type switch
+            {
+                CharacteristicType.Health => _healthAttributes,
+                CharacteristicType.Damage => _damageAttributes,
+                CharacteristicType.Armor => _armorAttributes,
+                _ => null
+            };
+            
+            if (attributeList == null || attributeList.IndexOf(data) == attributeList.Count - 1)
+                return;
             
             YG2.saves.PlayerCharacteristics.ApplyImprovement(data.Type, data.Value);
+            
+            PlayerAttributeLevelData newAttributeData = null;
+            
+            switch (data.Type)
+            {
+                case CharacteristicType.Health:
+                    newAttributeData = _healthAttributes[YG2.saves.HealthAttributeNumber];
+                    break;
+                case CharacteristicType.Damage:
+                    newAttributeData = _damageAttributes[YG2.saves.DamageAttributeNumber];
+                    break;
+                case CharacteristicType.Armor:
+                    newAttributeData = _armorAttributes[YG2.saves.ArmorAttributeNumber];
+                    break;
+            }
+            
+            attributeView.Set(
+                _shopService.GetLocalizationDataByType(data.Type),
+                newAttributeData);
+            
+            YG2.SaveProgress();
         }
     }
 }
