@@ -138,7 +138,7 @@ MonoBehaviour:
   Flags:
     flags: []
   InterstitialAdv:
-    showFirstAdv: 1
+    showFirstAdv: 0
     interAdvInterval: 60
     postponeCallByFail: 0
     postponeCallTimer: 10
@@ -356,13 +356,14 @@ MonoBehaviour:
     saveCloud: 1
     flush: 0
   Basic:
-    platform: {fileID: 11400000, guid: c2a303d33a9fd394bae4c4b88b9a1c44, type: 2}
+    platform: {fileID: 0}
     autoApplySettings: 1
-    autoPauseGame: 0
+    autoPauseGame: 1
     editEventSystem: 1
     autoGRA: 1
     logInEditor: 1
-    archivingBuild: 0
+    archivingBuild: 1
+    autoDefineSymbols: 1
     syncInitSDK: 0
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
@@ -374,10 +375,10 @@ MonoBehaviour:
     advIntervalSimulation: 60
     durationAdv: 0.5
     loadAdv: 0
-    testFailAds: 1
+    testFailAds: 0
   Templates:
-    logoImageFormat: 1
-    backgroundImgFormat: 3
+    logoImageFormat: 0
+    backgroundImgFormat: 0
     gradientBackgroundByLoadGame:
       radial: 0
       angleInclination: 140

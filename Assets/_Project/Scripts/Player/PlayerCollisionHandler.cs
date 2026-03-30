@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace _Project.Scripts.Player
 {
-    [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(Core.Player))]
     public class PlayerCollisionHandler : MonoBehaviour
     {
-        private Player _player;
+        private Core.Player _player;
         
         // private IPlayerService _playerService;
         //
@@ -20,7 +20,7 @@ namespace _Project.Scripts.Player
 
         private void Awake()
         {
-            _player = GetComponent<Player>();
+            _player = GetComponent<Core.Player>();
         }
 
         private void OnTriggerEnter(Collider trigger)

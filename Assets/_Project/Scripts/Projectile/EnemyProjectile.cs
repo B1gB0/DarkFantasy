@@ -6,7 +6,7 @@ namespace _Project.Scripts.Projectile
     {
         protected override void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.TryGetComponent(out Player.Player player))
+            if (collision.gameObject.TryGetComponent(out Player.Core.Player player))
             {
                 player.Health.TakeDamage(Damage);
                 gameObject.SetActive(false);

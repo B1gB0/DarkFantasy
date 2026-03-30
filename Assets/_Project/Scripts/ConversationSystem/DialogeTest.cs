@@ -1,7 +1,7 @@
 using DialogueEditor;
 using UnityEngine;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.ConversationSystem
 {
     public class DialogeTest : MonoBehaviour
     {

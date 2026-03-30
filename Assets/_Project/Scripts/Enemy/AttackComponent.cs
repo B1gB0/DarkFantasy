@@ -13,7 +13,7 @@ namespace _Project.Scripts.Enemy
         
         private NavMeshAgent _agent;
         private EnemyAnimatedStateMachine _animatedStateMachine;
-        private Player.Player _player;
+        private Player.Core.Player _player;
         private Enemy _enemy;
         
         private float _lastShotTime = 1f;
@@ -56,7 +56,7 @@ namespace _Project.Scripts.Enemy
         public void InitAttacker(
             NavMeshAgent agent,
             EnemyAnimatedStateMachine animatedStateMachine,
-            Player.Player player)
+            Player.Core.Player player)
         {
             _agent = agent;
             _animatedStateMachine = animatedStateMachine;

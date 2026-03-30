@@ -16,7 +16,7 @@ namespace _Project.Scripts.Services
         private IDataBaseService _dataBaseService;
         
         public bool IsInitiated { get; private set; }
-        public Player.Player Player { get; private set; }
+        public Player.Core.Player Player { get; private set; }
         
         [Inject]
         public void Construct(IDataBaseService dataBaseService)
@@ -63,7 +63,7 @@ namespace _Project.Scripts.Services
             return _playersData[type];
         }
 
-        public Player.Player CreatePlayerByPrefab(Player.Player playerPrefab, Vector3 spawnPoint)
+        public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint)
         {
             Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
 

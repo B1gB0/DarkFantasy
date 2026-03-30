@@ -11,7 +11,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         protected EnemyStateMachine EnemyStateMachine => Enemy.EnemyStateMachine;
         protected EnemyAnimatedStateMachine AnimStateMachine => Enemy.AnimatedStateMachine;
-        protected Player.Player Player => Enemy.Player;
+        protected Player.Core.Player Player => Enemy.Player;
         protected EnemyData Data => Enemy.Data;
 
         public virtual void Initialize(Enemy enemy, NavMeshAgent agent)

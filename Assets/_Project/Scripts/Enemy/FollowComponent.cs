@@ -8,7 +8,7 @@ namespace _Project.Scripts.Enemy
 {
     public class FollowComponent : MonoBehaviour
     {
-        private Player.Player _player;
+        private Player.Core.Player _player;
         private NavMeshAgent _agent;
         private EnemyAnimatedStateMachine _animatedStateMachine;
         private Enemy _enemy;
@@ -42,7 +42,7 @@ namespace _Project.Scripts.Enemy
 
         public void InitFollower(
             EnemyAnimatedStateMachine animatedStateMachine,
-            Player.Player player)
+            Player.Core.Player player)
         {
             _animatedStateMachine = animatedStateMachine;
             _player = player;

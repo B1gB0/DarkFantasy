@@ -1,0 +1,20 @@
+using UnityEngine;
+
+namespace _Project.Scripts.Player
+{
+    public class SwordHitbox : MonoBehaviour
+    {
+        public bool CanDamage { get; set; }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!CanDamage)
+                return;
+
+            if (other.TryGetComponent(out Enemy.Enemy enemy))
+            {
+                enemy.Health.TakeDamage(10f);
+            }
+        }
+    }
+}

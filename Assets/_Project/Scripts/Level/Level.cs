@@ -52,7 +52,7 @@ namespace _Project.Scripts.Level
         {
             var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
             
-            Player.Player player = _playerService.CreatePlayerByPrefab(
+            Player.Core.Player player = _playerService.CreatePlayerByPrefab(
                 _playerInitData.CommonHero,
                 _levelInitData.PlayerSpawnPosition);
             

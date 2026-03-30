@@ -15,7 +15,7 @@ namespace _Project.Scripts.Enemy
 
         private List<Vector3> _waypoints = new();
         private int _currentWaypointIndex;
-        private Player.Player _player;
+        private Player.Core.Player _player;
         private NavMeshAgent _agent;
         private EnemyAnimatedStateMachine _animatedStateMachine;
 
@@ -54,7 +54,7 @@ namespace _Project.Scripts.Enemy
         public void InitPatrol(
             List<Vector3> waypoints,
             EnemyAnimatedStateMachine animatedStateMachine,
-            Player.Player player)
+            Player.Core.Player player)
         {
             _waypoints = waypoints;
             _animatedStateMachine = animatedStateMachine;

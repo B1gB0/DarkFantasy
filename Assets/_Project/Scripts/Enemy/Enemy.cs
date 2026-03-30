@@ -19,7 +19,7 @@ namespace _Project.Scripts.Enemy
         [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
         
         public EnemyData Data { get; private set; }
-        public Player.Player Player { get; private set; }
+        public Player.Core.Player Player { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
         public EnemyType Type { get; private set; }
 
@@ -28,7 +28,7 @@ namespace _Project.Scripts.Enemy
             AnimatedStateMachine = new EnemyAnimatedStateMachine(_animator);
         }
 
-        public void GetData(Player.Player player, EnemyData enemyData)
+        public void GetData(Player.Core.Player player, EnemyData enemyData)
         {
             Player = player;
             Data = enemyData;
