@@ -3,16 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game.Gameplay.Root.View
 {
-    public class GameplayElements : MonoBehaviour
+    public class GameplayElements : UI.View.View
     {
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
-        }
     }
 }

@@ -23,6 +23,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Music
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 170287d6ceb47a749a540348f32bcdc6
+    m_Address: ShopAttributePanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4bb320af82664234fb74c297726b5d5e
     m_Address: Graveyard
     m_ReadOnly: 0
@@ -60,6 +65,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Particles
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1ad57241a917cf44ad06051c23a2952
+    m_Address: TextView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b51fae0fb753be7438ece33b15d99dc9
     m_Address: AudioConfig
     m_ReadOnly: 0
@@ -70,8 +80,14 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1871eaa3da924e498a54a74c28d628e
+    m_Address: ExplosionFireball
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f63d6cc17b900cd419f78bd0f7c20a91
-    m_Address: SkeletonInitData
+    m_Address: EnemyInitData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

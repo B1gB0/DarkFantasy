@@ -4,5 +4,6 @@ namespace _Project.Scripts.Effects
     {
         None = 0,
         RedBloodHit = 1,
+        ExplosionFireball = 2,
     }
 }

@@ -1,0 +1,39 @@
+﻿using _Project.Scripts.Level.Triggers;
+using _Project.Scripts.UI.Panel;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+namespace _Project.Scripts.Level
+{
+    public class VillageLevel : Level
+    {
+        [SerializeField] private ShopTrigger _shopTrigger;
+
+        private ShopPanel _shopPanel;
+
+        private void OnDestroy()
+        {
+            _shopTrigger.OnOpenShop -= _shopPanel.Show;
+            _shopTrigger.OnOpenShop -= UIRootView.UIRootButtons.Deactivate;
+            _shopTrigger.OnOpenShop -= HealthBar.Hide;
+            _shopPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
+            _shopPanel.OnBackToSceneButtonPressed -= _shopPanel.Hide;
+        }
+
+        public override async UniTask OnStartLevel()
+        {
+            await ShopService.Init();
+
+            _shopPanel = await ViewFactory.CreateShopPanel();
+
+            _shopTrigger.OnOpenShop += _shopPanel.Show;
+            _shopTrigger.OnOpenShop += UIRootView.UIRootButtons.Deactivate;
+            _shopPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
+            _shopPanel.OnBackToSceneButtonPressed += _shopPanel.Hide;
+
+            await base.OnStartLevel();
+            
+            _shopTrigger.OnOpenShop += HealthBar.Hide;
+        }
+    }
+}

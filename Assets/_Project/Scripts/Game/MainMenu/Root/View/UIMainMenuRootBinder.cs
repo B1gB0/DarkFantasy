@@ -48,7 +48,7 @@ namespace _Project.Scripts.Game.MainMenu.Root.View
         {
             _uiStateMachine = uiStateMachine;
 
-            // _uiStateMachine.AddState(new MainMenuState(_uiScene));
+            _uiStateMachine.AddState(new MainMenuState(_uiScene));
 
             _uiStateMachine.EnterIn<MainMenuState>();
         }

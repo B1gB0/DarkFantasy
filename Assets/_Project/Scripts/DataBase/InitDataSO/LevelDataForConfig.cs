@@ -12,147 +12,81 @@ namespace _Project.Scripts.DataBase.InitDataSO
         {
             GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
             
-            GameObject[] enemyPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyPatrolPoints");
+            GameObject[] enemyFirstPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyFirstPatrolPoints");
+            GameObject[] enemySecondPatrolPoints = GameObject.FindGameObjectsWithTag("EnemySecondPatrolPoints");
+            GameObject[] enemyThirdPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyThirdPatrolPoints");
+            GameObject[] enemyFourthPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyFourthPatrolPoints");
+            GameObject[] enemyFifthPatrolPoints = GameObject.FindGameObjectsWithTag("EnemyFifthPatrolPoints");
             
-            GameObject[] skeletonPoints = GameObject.FindGameObjectsWithTag("SkeletonPoints");
-            GameObject[] skeletonFleshPoints = GameObject.FindGameObjectsWithTag("SkeletonFleshPoints");
-            GameObject[] skeletonHeavyArmorPoints = GameObject.FindGameObjectsWithTag("SkeletonHeavyArmorPoints");
-            GameObject[] skeletonLightArmorPoints = GameObject.FindGameObjectsWithTag("SkeletonLightArmorPoints");
-            GameObject[] skeletonRangerPoints = GameObject.FindGameObjectsWithTag("SkeletonRangerPoints");
-            
-            // GameObject[] firstWaveSmallEnemy = GameObject.FindGameObjectsWithTag("FirstWaveSmallEnemyAlienSpawnPoint");
-            // GameObject[] firstWaveBigEnemy = GameObject.FindGameObjectsWithTag("FirstWaveBigEnemyAlienSpawnPoint");
-            // GameObject[] firstWaveGunnerEnemy =
-            //     GameObject.FindGameObjectsWithTag("FirstWaveGunnerEnemyAlienSpawnPoint");
-            //
-            // GameObject[] secondWaveSmallEnemy =
-            //     GameObject.FindGameObjectsWithTag("SecondWaveSmallEnemyAlienSpawnPoint");
-            // GameObject[] secondWaveBigEnemy = GameObject.FindGameObjectsWithTag("SecondWaveBigEnemyAlienSpawnPoint");
-            // GameObject[] secondWaveGunnerEnemy =
-            //     GameObject.FindGameObjectsWithTag("SecondWaveGunnerEnemyAlienSpawnPoint");
-            //
-            // GameObject[] enemyTurretSpawnPoints =
-            //     GameObject.FindGameObjectsWithTag("EnemyTurretSpawnPoints");
-            //
-            // GameObject[] alienCocoonSpawnPoints = GameObject.FindGameObjectsWithTag("AlienCocoonSpawnPoints");
-            // GameObject[] stoneSpawnPoints = GameObject.FindGameObjectsWithTag("StoneSpawnPoint");
-            // GameObject[] healingCoreSpawnPoints = GameObject.FindGameObjectsWithTag("HealingCoreSpawnPoint");
-            // GameObject[] iceCrystalSpawnPoints = GameObject.FindGameObjectsWithTag("IceCrystalSpawnPoint");
-            // GameObject[] goldCoreSpawnPoints = GameObject.FindGameObjectsWithTag("GoldCoreSpawnPoint");
+            GameObject[] firstWavePoints = GameObject.FindGameObjectsWithTag("FirstWaveEnemySpawnPoints");
+            GameObject[] secondWavePoints = GameObject.FindGameObjectsWithTag("SecondWaveEnemySpawnPoints");
+            GameObject[] thirdWavePoints = GameObject.FindGameObjectsWithTag("ThirdWaveEnemySpawnPoints");
+            GameObject[] fourthWavePoints = GameObject.FindGameObjectsWithTag("FourthWaveEnemySpawnPoints");
+            GameObject[] fifthWavePoints = GameObject.FindGameObjectsWithTag("FifthWaveEnemySpawnPoints");
 
             levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
             
-            levelInitData.EnemyPatrolPositions.Clear();
+            levelInitData.EnemyFirstPatrolPositions.Clear();
+            levelInitData.EnemySecondPatrolPositions.Clear();
+            levelInitData.EnemyThirdPatrolPositions.Clear();
+            levelInitData.EnemyFourthPatrolPositions.Clear();
+            levelInitData.EnemyFifthPatrolPositions.Clear();
             
-            levelInitData.SkeletonEnemySpawnPositions.Clear();
-            levelInitData.SkeletonFleshEnemySpawnPositions.Clear();
-            levelInitData.SkeletonHeavyArmorEnemySpawnPositions.Clear();
-            levelInitData.SkeletonLightArmorEnemySpawnPositions.Clear();
-            levelInitData.SkeletonRangerEnemySpawnPositions.Clear();
-            
-            // levelInitData.FirstWaveSmallEnemyAlienSpawnPositions.Clear();
-            // levelInitData.FirstWaveBigEnemyAlienSpawnPositions.Clear();
-            // levelInitData.FirstWaveGunnerEnemyAlienSpawnPositions.Clear();
-            // levelInitData.SecondWaveSmallEnemyAlienSpawnPositions.Clear();
-            // levelInitData.SecondWaveBigEnemyAlienSpawnPositions.Clear();
-            // levelInitData.SecondWaveGunnerEnemyAlienSpawnPositions.Clear();
-            // levelInitData.StoneSpawnPositions.Clear();
-            // levelInitData.HealingCoreSpawnPositions.Clear();
-            // levelInitData.GoldCoreSpawnPositions.Clear();
-            // levelInitData.AlienCocoonSpawnPoints.Clear();
-            // levelInitData.EnemyTurretsSpawnPoints.Clear();
-            // levelInitData.IceCrystalsSpawnPositions.Clear();
-            //
-            
-            foreach (var point in enemyPatrolPoints)
+            levelInitData.FirstWaveSpawnPoints.Clear();
+            levelInitData.SecondWaveSpawnPoints.Clear();
+            levelInitData.ThirdWaveSpawnPoints.Clear();
+            levelInitData.FourthWaveSpawnPoints.Clear();
+            levelInitData.FifthWaveSpawnPoints.Clear();
+
+            foreach (var point in enemyFirstPatrolPoints)
             {
-                levelInitData.EnemyPatrolPositions.Add(point.transform.position);
+                levelInitData.EnemyFirstPatrolPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in enemySecondPatrolPoints)
+            {
+                levelInitData.EnemySecondPatrolPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in enemyThirdPatrolPoints)
+            {
+                levelInitData.EnemyThirdPatrolPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in enemyFourthPatrolPoints)
+            {
+                levelInitData.EnemyFourthPatrolPositions.Add(point.transform.position);
+            }
+            
+            foreach (var point in enemyFifthPatrolPoints)
+            {
+                levelInitData.EnemyFifthPatrolPositions.Add(point.transform.position);
             }
 
-            foreach (var point in skeletonPoints)
+            foreach (var point in firstWavePoints)
             {
-                levelInitData.SkeletonEnemySpawnPositions.Add(point.transform.position);
+                levelInitData.FirstWaveSpawnPoints.Add(point.transform.position);
             }
 
-            foreach (var point in skeletonFleshPoints)
+            foreach (var point in secondWavePoints)
             {
-                levelInitData.SkeletonFleshEnemySpawnPositions.Add(point.transform.position);
+                levelInitData.SecondWaveSpawnPoints.Add(point.transform.position);
             }
             
-            foreach (var point in skeletonHeavyArmorPoints)
+            foreach (var point in thirdWavePoints)
             {
-                levelInitData.SkeletonHeavyArmorEnemySpawnPositions.Add(point.transform.position);
+                levelInitData.ThirdWaveSpawnPoints.Add(point.transform.position);
             }
             
-            foreach (var point in skeletonLightArmorPoints)
+            foreach (var point in fourthWavePoints)
             {
-                levelInitData.SkeletonLightArmorEnemySpawnPositions.Add(point.transform.position);
+                levelInitData.FourthWaveSpawnPoints.Add(point.transform.position);
             }
             
-            foreach (var point in skeletonRangerPoints)
+            foreach (var point in fifthWavePoints)
             {
-                levelInitData.SkeletonRangerEnemySpawnPositions.Add(point.transform.position);
+                levelInitData.FifthWaveSpawnPoints.Add(point.transform.position);
             }
-
-            // foreach (var point in firstWaveSmallEnemy)
-            // {
-            //     levelInitData.FirstWaveSmallEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in firstWaveBigEnemy)
-            // {
-            //     levelInitData.FirstWaveBigEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in firstWaveGunnerEnemy)
-            // {
-            //     levelInitData.FirstWaveGunnerEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in secondWaveSmallEnemy)
-            // {
-            //     levelInitData.SecondWaveSmallEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in secondWaveBigEnemy)
-            // {
-            //     levelInitData.SecondWaveBigEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in secondWaveGunnerEnemy)
-            // {
-            //     levelInitData.SecondWaveGunnerEnemyAlienSpawnPositions.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in enemyTurretSpawnPoints)
-            // {
-            //     levelInitData.EnemyTurretsSpawnPoints.Add(point.transform.position);
-            // }
-            //
-            // foreach (var point in alienCocoonSpawnPoints)
-            // {
-            //     levelInitData.AlienCocoonSpawnPoints.Add(point.transform.position);
-            // }
-            //
-            // foreach (var stone in stoneSpawnPoints)
-            // {
-            //     levelInitData.StoneSpawnPositions.Add(stone.transform.position);
-            // }
-            //
-            // foreach (var healingCore in healingCoreSpawnPoints)
-            // {
-            //     levelInitData.HealingCoreSpawnPositions.Add(healingCore.transform.position);
-            // }
-            //
-            // foreach (var goldCore in goldCoreSpawnPoints)
-            // {
-            //     levelInitData.GoldCoreSpawnPositions.Add(goldCore.transform.position);
-            // }
-            //
-            // foreach (var iceCrystal in iceCrystalSpawnPoints)
-            // {
-            //     levelInitData.IceCrystalsSpawnPositions.Add(iceCrystal.transform.position);
-            // }
 
             if (!Application.isPlaying)
             {

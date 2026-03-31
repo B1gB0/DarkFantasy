@@ -1,6 +1,9 @@
 ﻿using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.Panel;
+using _Project.Scripts.UI.StateMachine;
+using _Project.Scripts.UI.StateMachine.States;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -14,31 +17,26 @@ namespace _Project.Scripts.UI.View
 #if UNITY_EDITOR
         private const string CheatPanelPath = "CheatPanel";
 #endif
-
-        // private const string MissionProgressBarPath = "MissionProgressBar";
         private const string HealthBarPath = "HealthBar";
-        // private const string TextViewPath = "TextView";
+        private const string TextViewPath = "TextView";
+        private const string ShopAttributePanelPath = "ShopAttributePanel";
+        
         // private const string ProgressRadialBarPath = "ProgressRadialBar";
         // private const string LevelUpPanelPath = "LevelUpPanel";
         // private const string EndGamePanelPath = "EndGamePanel";
         // private const string TimerPath = "Timer";
         // private const string AdviserMessagePanelPath = "AdviserMessagePanel";
         // private const string GoldViewPath = "GoldView";
-        // private const string AlienCocoonViewPath = "AlienCocoonView";
-        // private const string ObjectiveTextViewPath = "ObjectiveTextView";
-        // private const string ArrowPath = "Arrow";
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
 
         private UIRootView _uiRoot;
         private UIGameplayRootBinder _uiScene;
-        // private MissionProgressBar _missionProgressBar;
-        // private ObjectiveTextView _objectiveTextView;
-        // private AlienCocoonView _alienCocoonView;
-        // private LevelUpPanel _levelUpPanel;
         private Container _container;
-
+        
+        private ShopPanel _shopPanel;
+        
         [Inject]
         public void Construct(IResourceService resourceService, IPlayerService playerService)
         {
@@ -46,15 +44,15 @@ namespace _Project.Scripts.UI.View
             _playerService = playerService;
         }
 
-        // private void OnDestroy()
-        // {
-        //     if (_missionProgressBar != null)
-        //         _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _missionProgressBar.SetText;
-        //     if (_objectiveTextView != null)
-        //         _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _objectiveTextView.SetText;
-        //     if (_levelUpPanel != null)
-        //         _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _levelUpPanel.OnLanguageChanged;
-        // }
+        private void OnDestroy()
+        {
+            if (_shopPanel != null)
+                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopPanel.OnChangeLanguage;
+            // if (_objectiveTextView != null)
+            //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _objectiveTextView.SetText;
+            // if (_levelUpPanel != null)
+            //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _levelUpPanel.OnLanguageChanged;
+        }
 
         public void GetUIRootAndUIScene(UIRootView uiRoot, UIGameplayRootBinder uiScene, Container container)
         {
@@ -82,7 +80,7 @@ namespace _Project.Scripts.UI.View
             healthBarTemplate = Instantiate(healthBarTemplate);
 
             HealthBar healthBar = healthBarTemplate.GetComponent<HealthBar>();
-            GameObjectInjector.InjectObject(healthBar.gameObject, _container);
+            GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
             healthBar.transform.SetParent(_uiScene.transform, false);
             healthBar.GetPoints(_uiScene.ShowHealthPoint, _uiScene.HideHealthPoint, _uiScene.WeaponPoint);
@@ -99,16 +97,30 @@ namespace _Project.Scripts.UI.View
         //     progressRadialBar.Construct(experiencePoints, target);
         //     return progressRadialBar;
         // }
-        //
-        // public async UniTask<FloatingTextView> CreateDamageTextView()
-        // {
-        //     var textViewTemplate = await _resourceService.Load<GameObject>(TextViewPath);
-        //     textViewTemplate = Instantiate(textViewTemplate);
-        //
-        //     FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
-        //     return textView;
-        // }
-        //
+        
+        public async UniTask<FloatingTextView> CreateFloatingTextView()
+        {
+            var textViewTemplate = await _resourceService.Load<GameObject>(TextViewPath);
+            textViewTemplate = Instantiate(textViewTemplate);
+        
+            FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
+            return textView;
+        }
+
+        public async UniTask<ShopPanel> CreateShopPanel()
+        {
+            var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopAttributePanelPath);
+            shopPanelTemplate = Instantiate(shopPanelTemplate);
+
+            _shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
+            GameObjectInjector.InjectRecursive(_shopPanel.gameObject, _container);
+            _shopPanel.transform.SetParent(_uiScene.transform, false);
+            
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
+
+            return _shopPanel;
+        }
+
         // public async UniTask<LevelUpPanel> CreateLevelUpPanel()
         // {
         //     var levelUpPanelTemplate = await _resourceService.Load<GameObject>(LevelUpPanelPath);

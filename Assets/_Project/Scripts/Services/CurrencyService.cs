@@ -22,7 +22,7 @@ namespace _Project.Scripts.Services
             if (IsInitiated)
                 return UniTask.CompletedTask;
 
-            // Gold = YG2.saves.Gold;
+            Gold = YG2.saves.Gold;
             OnGoldValueChanged?.Invoke(Gold);
 
             IsInitiated = true;
@@ -53,8 +53,8 @@ namespace _Project.Scripts.Services
 
         private void SaveGold()
         {
-            // YG2.saves.Gold = Gold;
-            // YG2.SaveProgress();
+            YG2.saves.Gold = Gold;
+            YG2.SaveProgress();
         }
     }
 }

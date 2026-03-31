@@ -1,45 +1,46 @@
+using System;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
+using YG;
 
 namespace _Project.Scripts.Characteristics
 {
+    [Serializable]
     public class PlayerCharacteristics
     {
         private const float MoveSpeedFactor = 1f;
-        private readonly IPlayerService _playerService;
+        
+        public float MaxHealth;
+        public float TargetHealth;
+        public float Armor;
+        public float Damage;
 
-        private float _maxHealth;
-        private float _targetHealth;
+        private IPlayerService _playerService;
+        
         private float _moveSpeed;
-
         private float _baseMoveSpeed;
 
-        public PlayerCharacteristics(IPlayerService playerService)
+        public void SetStartingData(PlayerData data)
         {
-            _playerService = playerService;
-        }
-
-        public void SetStartingCharacteristics(PlayerData data)
-        {
-            _maxHealth = data.Health;
-            _targetHealth = data.Health;
+            MaxHealth = data.Health;
+            TargetHealth = data.Health;
+            Armor = data.Armor;
+            Damage = data.Damage;
+            
             _moveSpeed = data.MoveSpeed;
             _baseMoveSpeed = data.MoveSpeed;
-
-            SetCharacteristics();
         }
 
-        public void SetCharacteristics()
+        public void SetCharacteristics(IPlayerService playerService)
         {
-            _playerService.Player.Health.LoadHealth(_maxHealth, _targetHealth);
-
-            ChangeMovableComponentSpeed(_moveSpeed);
+            _playerService = playerService;
+            _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
         }
 
         public void SaveTargetHealth(float targetHealth)
         {
-            _targetHealth = targetHealth;
+            TargetHealth = targetHealth;
         }
 
         public void ApplyImprovement(CharacteristicType type, float factor)
@@ -47,14 +48,23 @@ namespace _Project.Scripts.Characteristics
             switch (type)
             {
                 case CharacteristicType.Health:
+                    YG2.saves.HealthAttributeNumber++;
                     IncreaseHealth(factor);
                     break;
-                case CharacteristicType.DiggingSpeed:
-                    IncreaseDiggingSpeedFactor(factor);
+                case CharacteristicType.Armor:
+                    YG2.saves.ArmorAttributeNumber++;
+                    IncreaseArmor(factor);
                     break;
-                case CharacteristicType.MoveSpeed:
-                    IncreaseMoveSpeed(factor);
+                case CharacteristicType.Damage:
+                    YG2.saves.DamageAttributeNumber++;
+                    IncreaseDamage(factor);
                     break;
+                // case CharacteristicType.DiggingSpeed:
+                //     IncreaseDiggingSpeedFactor(factor);
+                //     break;
+                // case CharacteristicType.MoveSpeed:
+                //     IncreaseMoveSpeed(factor);
+                //     break;
             }
         }
 
@@ -62,12 +72,6 @@ namespace _Project.Scripts.Characteristics
         {
             // _moveSpeed = _baseMoveSpeed * (MoveSpeedFactor + _playerService.Player.GetCurrentModifier());
             // ChangeMovableComponentSpeed(_moveSpeed);
-        }
-
-        private void SetHealth(float healthValue)
-        {
-            _maxHealth += healthValue;
-            _playerService.Player.Health.ImproveHealth(healthValue);
         }
 
         private void SetDiggingSpeed(float diggingSpeedFactor)
@@ -97,7 +101,22 @@ namespace _Project.Scripts.Characteristics
 
         private void IncreaseHealth(float healthValue)
         {
-            SetHealth(healthValue);
+            MaxHealth += healthValue;
+            _playerService.Player.Health.ImproveHealth(healthValue);
+        }
+
+        private void IncreaseArmor(float armorValue)
+        {
+            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Armor = data.Armor + armorValue;
+        }
+
+        private void IncreaseDamage(float damageValue)
+        {
+            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Damage = data.Damage + damageValue;
         }
 
         private void IncreaseDiggingSpeedFactor(float diggingSpeedFactor)

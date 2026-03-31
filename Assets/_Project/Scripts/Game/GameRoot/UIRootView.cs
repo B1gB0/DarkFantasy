@@ -3,6 +3,7 @@ using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.StateMachine.States;
+using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
@@ -15,14 +16,21 @@ namespace _Project.Scripts.Game.GameRoot
     {
         [SerializeField] private UISceneContainer _uiSceneContainer;
 
+        [SerializeField] private UIRootButtons _uiRootButtons;
         [SerializeField] private LoadingPanel _loadingPanel;
         [SerializeField] private SettingsPanel _settingsPanel;
+        [SerializeField] private LeaderboardPanel _leaderboardPanel;
+        [SerializeField] private LocalizationLanguageSwitcher _localizationLanguageSwitcher;
+        
         [SerializeField] private Button _settingsButton;
+        [SerializeField] private Button _leaderboardButton;
 
         private AudioSoundsService _audioSoundsService;
         private IPauseService _pauseService;
 
         public UIStateMachine UIStateMachine { get; private set; }
+        public UIRootButtons UIRootButtons => _uiRootButtons;
+        public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
 
         [Inject]
         private void Construct(AudioSoundsService audioSoundsService, IPauseService pauseService)
@@ -34,7 +42,9 @@ namespace _Project.Scripts.Game.GameRoot
         private void Awake()
         {
             UIStateMachine = new UIStateMachine();
-            // UIStateMachine.AddState(new LoadingPanelState(_loadingPanel));
+            UIStateMachine.AddState(new LeaderboardPanelState(_leaderboardPanel));
+            UIStateMachine.AddState(new LoadingPanelState(_loadingPanel));
+            UIStateMachine.AddState(new SettingsPanelState(_settingsPanel));
         }
 
         private void OnEnable()
@@ -42,6 +52,11 @@ namespace _Project.Scripts.Game.GameRoot
             _settingsPanel.OnBackToSceneButtonPressed += ShowUIScene;
             _settingsButton.onClick.AddListener(StopGame);
             _settingsButton.onClick.AddListener(_settingsPanel.Show);
+            _settingsPanel.OnBackToSceneButtonPressed += PlayGame;
+            
+            _leaderboardButton.onClick.AddListener(ShowLeaderboardPanel);
+            _leaderboardPanel.OnBackToSceneButtonPressed += ShowUIScene;
+            _leaderboardPanel.OnBackToSceneButtonPressed += PlayGame;
         }
 
         private void OnDisable()
@@ -49,6 +64,11 @@ namespace _Project.Scripts.Game.GameRoot
             _settingsPanel.OnBackToSceneButtonPressed -= ShowUIScene;
             _settingsButton.onClick.RemoveListener(StopGame);
             _settingsButton.onClick.RemoveListener(_settingsPanel.Show);
+            _settingsPanel.OnBackToSceneButtonPressed -= PlayGame;
+            
+            _leaderboardButton.onClick.RemoveListener(ShowLeaderboardPanel);
+            _leaderboardPanel.OnBackToSceneButtonPressed -= ShowUIScene;
+            _leaderboardPanel.OnBackToSceneButtonPressed -= PlayGame;
         }
 
         public void ShowLoadingProgress(float progress)
@@ -61,6 +81,24 @@ namespace _Project.Scripts.Game.GameRoot
             ClearSceneUI();
 
             sceneUI.transform.SetParent(_uiSceneContainer.transform, false);
+        }
+        
+        private void ShowLeaderboardPanel()
+        {
+            _audioSoundsService.PauseAllSounds();
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            UIStateMachine.EnterIn<LeaderboardPanelState>();
+            StopGame();
+        }
+        
+        private void PlayGame()
+        {
+            if (SceneManager.GetActiveScene().name == Scenes.MainMenu)
+                return;
+
+            _pauseService.OnPlayGame();
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            _audioSoundsService.ResumeAllSounds();
         }
 
         private void StopGame()

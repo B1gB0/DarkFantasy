@@ -17,6 +17,8 @@ MonoBehaviour:
   selectedTogglesIds:
   - Players
   - Enemies
+  - CharacteristicsLocalizationData
+  - PlayerAttributeLevelData
   foldoutSerializationGUI: 1
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -27,6 +29,8 @@ MonoBehaviour:
       _health: 100
       _moveSpeed: 10
       _rotationSpeed: 10
+      _armor: 2
+      _damage: 0
     Enemies:
     - _type: 0
       _health: 10
@@ -37,6 +41,8 @@ MonoBehaviour:
       _rangeAttack: 5
       _experience: 8
       _score: 7
+      _stopDistance: 2
+      _armor: 0
     - _type: 1
       _health: 15
       _speed: 5
@@ -46,6 +52,8 @@ MonoBehaviour:
       _rangeAttack: 2
       _experience: 8
       _score: 7
+      _stopDistance: 2
+      _armor: 0
     - _type: 2
       _health: 30
       _speed: 3
@@ -55,6 +63,8 @@ MonoBehaviour:
       _rangeAttack: 3
       _experience: 15
       _score: 20
+      _stopDistance: 2
+      _armor: 7
     - _type: 3
       _health: 20
       _speed: 4
@@ -64,6 +74,8 @@ MonoBehaviour:
       _rangeAttack: 4
       _experience: 10
       _score: 15
+      _stopDistance: 2
+      _armor: 3
     - _type: 4
       _health: 10
       _speed: 5
@@ -73,3 +85,161 @@ MonoBehaviour:
       _rangeAttack: 5
       _experience: 8
       _score: 10
+      _stopDistance: 5
+      _armor: 0
+    - _type: 5
+      _health: 50
+      _speed: 5
+      _rotationSpeed: 250
+      _damage: 7
+      _fireRate: 2
+      _rangeAttack: 5
+      _experience: 20
+      _score: 25
+      _stopDistance: 4
+      _armor: 0
+    CharacteristicsLocalizationData:
+    - _type: 0
+      _nameRu: "\u0423\u0440\u043E\u043D"
+      _nameEn: Damage
+      _nameTr: Hasar
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u0443\u0440\u043E\u043D"
+      _descriptionEn: Increase damage
+      _descriptionTr: "Hasar\u0131 art\u0131rmak"
+    - _type: 1
+      _nameRu: "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
+      _nameEn: Health
+      _nameTr: "Sa\u011Fl\u0131k"
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435
+        \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
+      _descriptionEn: Increase the maximum amount of health
+      _descriptionTr: "Maksimum sa\u011Fl\u0131k miktar\u0131n\u0131 art\u0131rmak"
+    - _type: 2
+      _nameRu: "\u0411\u0440\u043E\u043D\u044F"
+      _nameEn: Armor
+      _nameTr: "Z\u0131rh"
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E
+        \u0431\u0440\u043E\u043D\u0438"
+      _descriptionEn: Increase the amount of armor
+      _descriptionTr: "Z\u0131rh miktar\u0131n\u0131 art\u0131r\u0131n"
+    PlayerAttributeLevelData:
+    - _id: damage_1
+      _type: 0
+      _value: 1
+      _price: 10
+    - _id: damage_2
+      _type: 0
+      _value: 2
+      _price: 20
+    - _id: damage_3
+      _type: 0
+      _value: 3
+      _price: 30
+    - _id: damage_4
+      _type: 0
+      _value: 4
+      _price: 40
+    - _id: damage_5
+      _type: 0
+      _value: 5
+      _price: 50
+    - _id: damage_6
+      _type: 0
+      _value: 6
+      _price: 60
+    - _id: damage_7
+      _type: 0
+      _value: 7
+      _price: 70
+    - _id: damage_8
+      _type: 0
+      _value: 8
+      _price: 80
+    - _id: damage_9
+      _type: 0
+      _value: 9
+      _price: 90
+    - _id: damage_10
+      _type: 0
+      _value: 10
+      _price: 100
+    - _id: health_1
+      _type: 1
+      _value: 1
+      _price: 10
+    - _id: health_2
+      _type: 1
+      _value: 2
+      _price: 20
+    - _id: health_3
+      _type: 1
+      _value: 3
+      _price: 30
+    - _id: health_4
+      _type: 1
+      _value: 4
+      _price: 40
+    - _id: health_5
+      _type: 1
+      _value: 5
+      _price: 50
+    - _id: health_6
+      _type: 1
+      _value: 6
+      _price: 60
+    - _id: health_7
+      _type: 1
+      _value: 7
+      _price: 70
+    - _id: health_8
+      _type: 1
+      _value: 8
+      _price: 80
+    - _id: health_9
+      _type: 1
+      _value: 9
+      _price: 90
+    - _id: health_10
+      _type: 1
+      _value: 10
+      _price: 100
+    - _id: armor_1
+      _type: 2
+      _value: 1
+      _price: 10
+    - _id: armor_2
+      _type: 2
+      _value: 2
+      _price: 20
+    - _id: armor_3
+      _type: 2
+      _value: 3
+      _price: 30
+    - _id: armor_4
+      _type: 2
+      _value: 4
+      _price: 40
+    - _id: armor_5
+      _type: 2
+      _value: 5
+      _price: 50
+    - _id: armor_6
+      _type: 2
+      _value: 6
+      _price: 60
+    - _id: armor_7
+      _type: 2
+      _value: 7
+      _price: 70
+    - _id: armor_8
+      _type: 2
+      _value: 8
+      _price: 80
+    - _id: armor_9
+      _type: 2
+      _value: 9
+      _price: 90
+    - _id: armor_10
+      _type: 2
+      _value: 10
+      _price: 100

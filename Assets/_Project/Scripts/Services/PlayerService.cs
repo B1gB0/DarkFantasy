@@ -2,8 +2,11 @@
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
+using Reflex.Core;
+using Reflex.Injectors;
 using UnityEngine;
 using YG;
 
@@ -18,12 +21,16 @@ namespace _Project.Scripts.Services
         public bool IsInitiated { get; private set; }
         public Player.Core.Player Player { get; private set; }
         
+        private Container _container;
+
         [Inject]
         public void Construct(IDataBaseService dataBaseService)
         {
             _dataBaseService = dataBaseService;
         }
         
+        public CinemachineFreeLook FreeLookCamera { get; private set; }
+
         public UniTask Init()
         {
             if (IsInitiated)
@@ -39,18 +46,19 @@ namespace _Project.Scripts.Services
             return UniTask.CompletedTask;
         }
         
-        public PlayerCharacteristics InitPlayerCharacteristics()
+        public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data)
         {
             var characteristics = YG2.saves.PlayerCharacteristics;
 
             if (characteristics != null)
             {
-                characteristics.SetCharacteristics();
+                characteristics.SetCharacteristics(this);
             }
             else
             {
-                characteristics = new PlayerCharacteristics(this);
-                characteristics.SetStartingCharacteristics(GetPlayerDataByType(PlayerType.CommonHero));
+                characteristics = new PlayerCharacteristics();
+                characteristics.SetStartingData(data);
+                characteristics.SetCharacteristics(this);
             }
 
             YG2.saves.PlayerCharacteristics = characteristics;
@@ -66,8 +74,15 @@ namespace _Project.Scripts.Services
         public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint)
         {
             Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+            GameObjectInjector.InjectObject(Player.gameObject, _container);
 
             return Player;
+        }
+
+        public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera)
+        {
+            _container = container;
+            FreeLookCamera = freeLookCamera;
         }
     }
 }

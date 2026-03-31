@@ -1,5 +1,7 @@
 using System;
 using System.Threading;
+using _Project.Scripts.Game.Constant;
+using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -7,6 +9,7 @@ namespace _Project.Scripts
 {
     public class Health : MonoBehaviour
     {
+        private const int MinValue = 0;
         private const float RecoveryRate = 10f;
 
         [SerializeField] private float _value;
@@ -18,7 +21,7 @@ namespace _Project.Scripts
         public event Action Die;
         public event Action<Health> DieHealth;
 
-        // public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
+        public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
         // public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
 
         public event Action IsDamaged;
@@ -44,23 +47,24 @@ namespace _Project.Scripts
             _healthCts?.Cancel();
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, float armor = MinValue)
         {
-            // IsSpawnedDamageText?.Invoke(damage.ToString(),
-            //     transform,
-            //     FloatingTextViewType.Damage,
-            //     Colors.GetColor(ColorName.DefaultWhiteTextColor));
+            IsSpawnedDamageText?.Invoke(damage.ToString(),
+                transform,
+                FloatingTextViewType.Damage,
+                Colors.GetColor(ColorName.DefaultWhiteTextColor));
 
             IsDamaged?.Invoke();
 
+            damage -= armor;
             TargetHealth -= damage;
 
             OnChangeHealth();
 
-            if (TargetHealth < 0f)
-                TargetHealth = 0f;
+            if (TargetHealth < MinValue)
+                TargetHealth = MinValue;
 
-            if (TargetHealth == 0)
+            if (TargetHealth == MinValue)
             {
                 Die?.Invoke();
                 DieHealth?.Invoke(this);

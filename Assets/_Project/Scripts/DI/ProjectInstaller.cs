@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
+using Project.Scripts.Services;
 using Reflex.Core;
 using Reflex.Injectors;
 using Unity.VisualScripting;
@@ -18,7 +19,7 @@ namespace _Project.Scripts.DI
         [SerializeField] private ParticleEffectsService _particleEffectsService;
         [SerializeField] private UIRootView _uiRootViewPrefab;
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
-
+        
         private void OnDestroy()
         {
             foreach (var obj in _monoServiceObjects)
@@ -41,6 +42,8 @@ namespace _Project.Scripts.DI
             builder.AddSingleton(typeof(DataBaseService), typeof(IDataBaseService));
             builder.AddSingleton(typeof(EnemyService), typeof(IEnemyService));
             builder.AddSingleton(typeof(PauseService), typeof(IPauseService));
+            builder.AddSingleton(typeof(FloatingTextService), typeof(IFloatingTextService));
+            builder.AddSingleton(typeof(ShopService), typeof(IShopService));
 
             builder.AddSingleton(typeof(CurrencyService), typeof(ICurrencyService));
             builder.AddSingleton(typeof(TweenAnimationService), typeof(ITweenAnimationService));
