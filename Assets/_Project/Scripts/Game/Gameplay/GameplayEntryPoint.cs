@@ -5,7 +5,6 @@ using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Services;
 using R3;
 using Reflex.Attributes;
 using Reflex.Core;

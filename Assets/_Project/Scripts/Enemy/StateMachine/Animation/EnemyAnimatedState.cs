@@ -2,17 +2,17 @@
 
 namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
-    public abstract class AnimatedState
+    public abstract class EnemyAnimatedState
     {
         protected const float Duration = 0.1f;
         
         protected readonly Animator Animator;
-        protected readonly AnimationNamesBase AnimationBase;
+        protected readonly EnemyAnimationNamesBase EnemyAnimationBase;
 
-        protected AnimatedState(Animator animator, AnimationNamesBase animationBase)
+        protected EnemyAnimatedState(Animator animator, EnemyAnimationNamesBase enemyAnimationBase)
         {
             Animator = animator;
-            AnimationBase = animationBase;
+            EnemyAnimationBase = enemyAnimationBase;
         }
 
         public virtual void Enter() { }

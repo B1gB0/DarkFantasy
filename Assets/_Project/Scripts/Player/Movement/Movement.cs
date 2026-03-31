@@ -37,8 +37,8 @@ namespace _Project.Scripts.Player.Movement
 
         private void FixedUpdate()
         {
-            Vector3 camForward = Camera.main.transform.forward;
-            Vector3 camRight = Camera.main.transform.right;
+            Vector3 camForward = UnityEngine.Camera.main.transform.forward;
+            Vector3 camRight = UnityEngine.Camera.main.transform.right;
 
             camForward.y = 0;
             camRight.y = 0;

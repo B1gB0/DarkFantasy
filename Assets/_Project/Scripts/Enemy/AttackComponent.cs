@@ -37,19 +37,19 @@ namespace _Project.Scripts.Enemy
             {
                 if (_lastShotTime <= MinValue)
                 {
-                    _animatedStateMachine.EnterIn<AttackAnimatedState>();
+                    _animatedStateMachine.EnterIn<AttackEnemyAnimatedState>();
                     _lastShotTime = _enemy.Data.FireRate;
                 }
                 else if (_lastShotTime <= _enemy.Data.FireRate)
                 {
-                    _animatedStateMachine.EnterIn<AimAnimatedState>();
+                    _animatedStateMachine.EnterIn<AimEnemyAnimatedState>();
                 }
 
                 _lastShotTime -= Time.fixedDeltaTime;
             }
             else
             {
-                _animatedStateMachine.EnterIn<MoveAnimatedState>();
+                _animatedStateMachine.EnterIn<MoveEnemyAnimatedState>();
             }
         }
 

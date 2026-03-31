@@ -16,7 +16,7 @@ namespace _Project.Scripts.Player.Combat
         private int _comboStep = 0;
         private bool _canQueueNextAttack = false;
 
-        public void OnAttackPerformed(InputAction.CallbackContext context)
+        public void OnAttackPerformed()
         {
             if (!IsAttacking)
             {
@@ -51,15 +51,15 @@ namespace _Project.Scripts.Player.Combat
             _canQueueNextAttack = true;
         }
 
-        public void StartDamageWindow()
-        {
-            _swordHitbox.CanDamage = true;
-        }
-
-        public void EndDamageWindow()
-        {
-            _swordHitbox.CanDamage = false;
-        }
+        // public void StartDamageWindow()
+        // {
+        //     _swordHitbox.CanDamage = true;
+        // }
+        //
+        // public void EndDamageWindow()
+        // {
+        //     _swordHitbox.CanDamage = false;
+        // }
 
         public void EndAttack()
         {

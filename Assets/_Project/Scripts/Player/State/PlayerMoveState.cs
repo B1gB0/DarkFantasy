@@ -1,5 +1,6 @@
-using _Project.Scripts.Player.Combat;
+using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Core;
+using UnityEngine;
 
 namespace _Project.Scripts.Player
 {
@@ -7,33 +8,83 @@ namespace _Project.Scripts.Player
     {
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
-        private readonly Movement.Movement _movement;
-        private readonly Attack _attack;
+        private readonly PlayerAnimatedState _playerAnimatedState;
+        
+        private float _currentSpeed => new Vector3(
+            _player.Rigidbody.velocity.x,
+            0,
+            _player.Rigidbody.velocity.z)
+            .magnitude;
 
-        public PlayerMoveState(Core.Player player, PlayerStateMachine stateMachine, Movement.Movement movement, Attack attack)
+        public PlayerMoveState(
+            Core.Player player,
+            PlayerStateMachine stateMachine,
+            PlayerAnimatedState playerAnimatedState)
         {
             _player = player;
             _stateMachine = stateMachine;
-            _movement = movement;
-            _attack = attack;
+            _playerAnimatedState = playerAnimatedState;
         }
 
         public void Enter() { }
 
-        public void Update()
+        public void Update() { }
+
+        public void FixedUpdate()
         {
-            if (_attack.IsAttacking)
+            if (_player.InputController.IsAttackButtonPressed)
             {
-                _stateMachine.SetState(new PlayerAttackState(_player, _stateMachine, _movement, _attack));
+                _stateMachine.SwitchState<PlayerAttackState>();
                 return;
             }
 
-            if (_movement.CurrentSpeed <= 0.1f)
+            if (!_player.InputController.IsMoveInputPerformed)
             {
-                _stateMachine.SetState(new PlayerIdleState(_player, _stateMachine, _movement, _attack));
+                _stateMachine.SwitchState<PlayerIdleState>();
+                return;
             }
+            
+            Vector3 camForward = UnityEngine.Camera.main.transform.forward;
+            Vector3 camRight = UnityEngine.Camera.main.transform.right;
+
+            camForward.y = 0;
+            camRight.y = 0;
+
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 moveDirection = camForward * _player.InputController.MoveDirection.y
+                              + camRight * _player.InputController.MoveDirection.x;
+
+            Move(moveDirection);
+            Rotate(moveDirection);
         }
 
         public void Exit() { }
+
+        private void Move(Vector3 moveDirection)
+        {
+            Vector3 velocity = moveDirection * _player.PlayerCharacteristics.MoveSpeed;
+            velocity.y = _player.Rigidbody.velocity.y;
+
+            _player.Rigidbody.velocity = velocity;
+            
+            _playerAnimatedState.OnMove(_currentSpeed);
+        }
+
+        private void Rotate(Vector3 moveDirection)
+        {
+            if (_player.InputController.IsAttackButtonPressed)
+                return;
+
+            if (moveDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion target = Quaternion.LookRotation(moveDirection);
+                _player.transform.rotation = Quaternion.Slerp(
+                    _player.transform.rotation,
+                    target,
+                    Time.fixedDeltaTime * _player.PlayerCharacteristics.RotationSpeed);
+            }
+        }
     }
 }

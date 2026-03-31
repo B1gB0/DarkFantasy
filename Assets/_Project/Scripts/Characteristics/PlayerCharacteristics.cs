@@ -15,6 +15,8 @@ namespace _Project.Scripts.Characteristics
         public float TargetHealth;
         public float Armor;
         public float Damage;
+        public float MoveSpeed;
+        public float RotationSpeed;
 
         private IPlayerService _playerService;
         
@@ -25,9 +27,11 @@ namespace _Project.Scripts.Characteristics
         {
             MaxHealth = data.Health;
             TargetHealth = data.Health;
+            MoveSpeed = data.MoveSpeed;
+            RotationSpeed = data.RotationSpeed;
             Armor = data.Armor;
             Damage = data.Damage;
-            
+
             _moveSpeed = data.MoveSpeed;
             _baseMoveSpeed = data.MoveSpeed;
         }

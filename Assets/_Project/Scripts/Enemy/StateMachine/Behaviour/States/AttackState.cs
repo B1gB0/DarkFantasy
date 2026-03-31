@@ -105,19 +105,19 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             switch (_currentSubState)
             {
                 case AttackSubState.Reloading:
-                    AnimStateMachine.EnterIn<ReloadingAnimatedState>();
+                    AnimStateMachine.EnterIn<ReloadingEnemyAnimatedState>();
                     _subStateTimer = _reloadDuration;
                     break;
                 case AttackSubState.Aiming:
-                    AnimStateMachine.EnterIn<AimAnimatedState>();
+                    AnimStateMachine.EnterIn<AimEnemyAnimatedState>();
                     _subStateTimer = _aimDuration;
                     break;
                 case AttackSubState.Attack:
-                    AnimStateMachine.EnterIn<AttackAnimatedState>();
+                    AnimStateMachine.EnterIn<AttackEnemyAnimatedState>();
                     _subStateTimer = _attackDuration;
                     break;
                 case AttackSubState.Idle:
-                    AnimStateMachine.EnterIn<IdleAnimatedState>();
+                    AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
                     _subStateTimer = _aimDuration;
                     break;
             }

@@ -1,7 +1,7 @@
 ﻿using _Project.Scripts.UI.View;
 using UnityEngine;
 
-namespace Project.Scripts.Services
+namespace _Project.Scripts.Services
 {
     public interface IFloatingTextService
     {

@@ -63,14 +63,14 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     SetNextWaypoint();
                     GoToCurrentWaypoint();
                     
-                    AnimStateMachine.EnterIn<MoveAnimatedState>();
+                    AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
                 }
                 return;
             }
             
             if (!_isPatrolStarted)
             {
-                AnimStateMachine.EnterIn<MoveAnimatedState>();
+                AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
                 GoToCurrentWaypoint();
                 _isPatrolStarted = true;
             }
@@ -82,7 +82,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
                 Agent.ResetPath();
                 
-                AnimStateMachine.EnterIn<IdleAnimatedState>();
+                AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
             }
         }
 

@@ -7,25 +7,25 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
     public class EnemyAnimatedStateMachine
     {
-        private readonly Dictionary<Type, AnimatedState> _states = new();
+        private readonly Dictionary<Type, EnemyAnimatedState> _states = new();
 
-        private AnimatedState _currentState;
+        private EnemyAnimatedState _currentState;
 
         public EnemyAnimatedStateMachine(Animator animator)
         {
-            AnimationNamesBase animationBase = new();
+            EnemyAnimationNamesBase enemyAnimationBase = new();
 
-            AddState(new IdleAnimatedState(animator, animationBase));
-            AddState(new AimAnimatedState(animator, animationBase));
-            AddState(new MoveAnimatedState(animator, animationBase));
-            AddState(new AttackAnimatedState(animator, animationBase));
-            AddState(new ReloadingAnimatedState(animator, animationBase));
-            AddState(new HitAnimatedState(animator, animationBase));
-            AddState(new CoilAnimatedState(animator, animationBase));
+            AddState(new IdleEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new AimEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new MoveEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new AttackEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new ReloadingEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new HitEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new CoilEnemyAnimatedState(animator, enemyAnimationBase));
         }
 
         public void EnterIn<T>()
-            where T : AnimatedState
+            where T : EnemyAnimatedState
         {
             var type = typeof(T);
 
@@ -42,7 +42,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
             _currentState.Enter();
         }
 
-        private void AddState(AnimatedState state)
+        private void AddState(EnemyAnimatedState state)
         {
             var type = state.GetType();
 

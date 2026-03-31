@@ -153,11 +153,8 @@ GameObject:
   - component: {fileID: 4991542210687395947}
   - component: {fileID: 6708549917855744306}
   - component: {fileID: 3362632024281080851}
-  - component: {fileID: 7584936550656702346}
   - component: {fileID: 782423295252841653}
   - component: {fileID: 608013755043256510}
-  - component: {fileID: 5175110340357839719}
-  - component: {fileID: 2549398900952659706}
   - component: {fileID: 1793756251772395078}
   - component: {fileID: 6950887898748460312}
   - component: {fileID: 8922784168463292903}
@@ -277,21 +274,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7584936550656702346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3377939940947086566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 356501572fef7af49aaa75489cf89205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 5
-  _rotationSpeed: 10
-  _attack: {fileID: 5175110340357839719}
 --- !u!114 &782423295252841653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: {fileID: 6950887898748460312}
   <PlayerCollisionHandler>k__BackingField: {fileID: 3821203034156557898}
+  <SwordHitbox>k__BackingField: {fileID: 7338495321699086787}
 --- !u!114 &608013755043256510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,34 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e09c1eb1bcf584a96f67b515f98364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5175110340357839719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3377939940947086566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001a903a36a73d74799e27c0300ee20e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _swordHitbox: {fileID: 7338495321699086787}
---- !u!114 &2549398900952659706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3377939940947086566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e63bb318719aab3439b02f81128ae061, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _movement: {fileID: 7584936550656702346}
-  _attack: {fileID: 5175110340357839719}
 --- !u!114 &1793756251772395078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,8 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4834f2eb0422aa24ea16a68fe72ffab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 7584936550656702346}
-  _attack: {fileID: 5175110340357839719}
 --- !u!114 &6950887898748460312
 MonoBehaviour:
   m_ObjectHideFlags: 0

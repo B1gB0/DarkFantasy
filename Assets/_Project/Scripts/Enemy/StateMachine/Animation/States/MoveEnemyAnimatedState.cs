@@ -2,16 +2,16 @@
 
 namespace _Project.Scripts.Enemy.StateMachine.Animation.States
 {
-    public class AttackAnimatedState : AnimatedState
+    public class MoveEnemyAnimatedState : EnemyAnimatedState
     {
-        public AttackAnimatedState(Animator animator, AnimationNamesBase animationNamesBase) 
-            : base(animator, animationNamesBase) { }
+        public MoveEnemyAnimatedState(Animator animator, EnemyAnimationNamesBase enemyAnimationNamesBase)
+            : base(animator, enemyAnimationNamesBase) { }
 
         public override void Enter()
         {
             base.Enter();
             Animator.StopPlayback();
-            Animator.CrossFade(AnimationBase.Attack, Duration);
+            Animator.CrossFade(EnemyAnimationBase.Move, Duration);
         }
 
         public override void Exit()

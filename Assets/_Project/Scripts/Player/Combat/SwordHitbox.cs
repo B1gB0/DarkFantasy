@@ -6,7 +6,7 @@ namespace _Project.Scripts.Player.Combat
 {
     public class SwordHitbox : MonoBehaviour
     {
-        public bool CanDamage { get; set; }
+        public bool CanDamage { get; private set; }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -18,6 +18,16 @@ namespace _Project.Scripts.Player.Combat
                 enemy.EnemyStateMachine.SwitchState<HitState>();
                 enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, enemy.Armor);
             }
+        }
+
+        public void ActivateHitBox()
+        {
+            CanDamage = true;
+        }
+        
+        public void DeactivateHitBox()
+        {
+            CanDamage = false;
         }
     }
 }

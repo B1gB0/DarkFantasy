@@ -50,9 +50,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             bool isMoving = Agent.remainingDistance > Agent.stoppingDistance;
             
             if (isMoving)
-                AnimStateMachine.EnterIn<MoveAnimatedState>();
+                AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
             else
-                AnimStateMachine.EnterIn<IdleAnimatedState>();
+                AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
         }
     }
 }

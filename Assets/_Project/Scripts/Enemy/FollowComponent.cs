@@ -37,7 +37,7 @@ namespace _Project.Scripts.Enemy
             _enemy.transform.forward = isMoving ? _agent.transform.forward : direction;
             
             if(isMoving)
-                _animatedStateMachine.EnterIn<MoveAnimatedState>();
+                _animatedStateMachine.EnterIn<MoveEnemyAnimatedState>();
         }
 
         public void InitFollower(

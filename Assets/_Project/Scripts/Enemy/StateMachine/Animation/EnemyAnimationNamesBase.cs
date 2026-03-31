@@ -2,7 +2,7 @@
 
 namespace _Project.Scripts.Enemy.StateMachine.Animation
 {
-    public class AnimationNamesBase
+    public class EnemyAnimationNamesBase
     {
         public readonly int Idle = Animator.StringToHash(nameof(Idle));
         public readonly int Move = Animator.StringToHash(nameof(Move));

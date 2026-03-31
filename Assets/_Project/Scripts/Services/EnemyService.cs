@@ -4,7 +4,6 @@ using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
 using _Project.Scripts.Projectile;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Services;
 using Reflex.Attributes;
 using UnityEngine;
 

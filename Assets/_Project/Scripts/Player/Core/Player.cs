@@ -1,6 +1,9 @@
+using System;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
+using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Combat;
+using _Project.Scripts.Player.Input;
 using _Project.Scripts.Services;
 using UnityEngine;
 
@@ -10,26 +13,35 @@ namespace _Project.Scripts.Player.Core
     {
         private ParticleEffectsService _particleEffectsService;
         private PlayerStateMachine _stateMachine;
-        private Movement.Movement _movement;
-        private Attack _attack;
 
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
+        [field: SerializeField] public SwordHitbox SwordHitbox { get; private set; }
 
+        public Animator Animator { get; private set; }
+        public PlayerAnimatedState PlayerAnimatedState { get; private set; }
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
-        
         public bool CanFollow { get; private set; }
+        public bool IsAttacking { get; private set; }
+        public InputController InputController { get; private set; }
+        public Rigidbody Rigidbody { get; private set; }
+        public PlayerAttackState PlayerAttackState { get; private set; }
 
         private void Awake()
         {
+            Animator = GetComponent<Animator>();
+            InputController = GetComponent<InputController>();
+            Rigidbody = GetComponent<Rigidbody>();
+            
+            PlayerAnimatedState = new PlayerAnimatedState(Animator);
             _stateMachine = GetComponent<PlayerStateMachine>();
-            _movement = GetComponent<Movement.Movement>();
-            _attack = GetComponent<Attack>();
+
+            PlayerAttackState = new PlayerAttackState(this, _stateMachine, PlayerAnimatedState);
         }
 
         private void Start()
         {
-            _stateMachine.SetState(new PlayerIdleState(this, _stateMachine, _movement, _attack));
+            _stateMachine.AddState(PlayerAttackState);
         }
 
         private void OnEnable()
@@ -59,6 +71,26 @@ namespace _Project.Scripts.Player.Core
         public void ChangeFollowEnemyState(bool canFollow)
         {
             CanFollow = canFollow;
+        }
+
+        public void AllowCombo()
+        {
+            PlayerAttackState.AllowCombo();
+        }
+
+        public void StartDamageWindow()
+        {
+            SwordHitbox.ActivateHitBox();
+        }
+        
+        public void EndDamageWindow()
+        {
+            SwordHitbox.DeactivateHitBox();
+        }
+
+        public void EndAttack()
+        {
+            PlayerAttackState.EndAttack();
         }
 
         private void OnPlayHitEffect()

@@ -4,7 +4,6 @@ using _Project.Scripts.Effects;
 using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour;
 using _Project.Scripts.Services;
-using Project.Scripts.Services;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy

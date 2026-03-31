@@ -39,7 +39,7 @@ namespace _Project.Scripts.Enemy
 
             if (!IsPatrol)
             {
-                _animatedStateMachine.EnterIn<MoveAnimatedState>();
+                _animatedStateMachine.EnterIn<MoveEnemyAnimatedState>();
                 GotoCurrentPoint();
                 IsPatrol = true;
             }

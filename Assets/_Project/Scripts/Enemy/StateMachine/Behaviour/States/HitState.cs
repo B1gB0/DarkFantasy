@@ -5,7 +5,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public class HitState : EnemyState
     {
-        private float hitDuration = 0.5f;
+        private const float HitDuration = 0.5f;
 
         private float _timer;
 
@@ -18,9 +18,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             // else
             //     AnimStateMachine.EnterIn<Hit2AnimatedState>();
 
-            AnimStateMachine.EnterIn<HitAnimatedState>();
+            AnimStateMachine.EnterIn<HitEnemyAnimatedState>();
 
-            _timer = hitDuration;
+            _timer = HitDuration;
         }
 
         public override void Update()
