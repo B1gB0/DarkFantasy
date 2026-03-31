@@ -27,7 +27,7 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
-            if (!_player.InputController.IsAttackButtonPressed)
+            if (!_player.InputController.IsAttackButtonPressed && _comboStep == 0)
             {
                 if (_player.InputController.IsMoveInputPerformed)
                     _stateMachine.SwitchState<PlayerMoveState>();

@@ -28,7 +28,10 @@ namespace _Project.Scripts.Player
 
         public void Enter() { }
 
-        public void Update() { }
+        public void Update()
+        {
+            
+        }
 
         public void FixedUpdate()
         {
@@ -54,13 +57,16 @@ namespace _Project.Scripts.Player
             camRight.Normalize();
 
             Vector3 moveDirection = camForward * _player.InputController.MoveDirection.y
-                              + camRight * _player.InputController.MoveDirection.x;
+                                    + camRight * _player.InputController.MoveDirection.x;
 
             Move(moveDirection);
             Rotate(moveDirection);
         }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            _player.Rigidbody.velocity = Vector3.zero;
+        }
 
         private void Move(Vector3 moveDirection)
         {
@@ -75,6 +81,9 @@ namespace _Project.Scripts.Player
         private void Rotate(Vector3 moveDirection)
         {
             if (_player.InputController.IsAttackButtonPressed)
+                return;
+            
+            if (!_player.InputController.IsMoveInputPerformed)
                 return;
 
             if (moveDirection.sqrMagnitude > 0.01f)

@@ -69,12 +69,19 @@ namespace _Project.Scripts.Player.Input
         
         private void OnMove(InputAction.CallbackContext context)
         {
-            MoveDirection = context.ReadValue<Vector2>();
+            if (context.performed)
+            {
+                MoveDirection = context.ReadValue<Vector2>();
 
-            IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
+                IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
 
-            if (IsMoveInputPerformed)
-                OnMoveButtonsPressed?.Invoke();
+                if (IsMoveInputPerformed)
+                    OnMoveButtonsPressed?.Invoke();
+            }
+            else if (context.canceled)
+            {
+                MoveDirection = Vector2.zero;
+            }
         }
 
         private void OnAttack(InputAction.CallbackContext context)
