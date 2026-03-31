@@ -5,12 +5,16 @@ namespace _Project.Scripts.Player
 {
     public class PlayerAttackState : IPlayerState
     {
+        private const int MinCombo = 0;
+        private const int MaxCombo = 3;
+        private const int ComboStep = 1;
+
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
 
         private bool _canQueueNextAttack;
-        private int _comboStep;
+        private int _comboCounter;
         private bool _comboExtended;
 
         public PlayerAttackState(
@@ -26,14 +30,14 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressedHandler;
-        
+
             if (_player.InputController.IsAttackButtonPressed)
                 OnAttackButtonPressedHandler();
         }
 
         public void Update()
         {
-            if (!_player.IsAttacking && !_player.InputController.IsAttackButtonPressed && _comboStep == 0)
+            if (!_player.InputController.IsAttackButtonPressed && _comboCounter == MinCombo)
             {
                 if (_player.InputController.IsMoveInputPerformed)
                     _stateMachine.SwitchState<PlayerMoveState>();
@@ -42,7 +46,9 @@ namespace _Project.Scripts.Player
             }
         }
 
-        public void FixedUpdate() { }
+        public void FixedUpdate()
+        {
+        }
 
         public void Exit()
         {
@@ -51,7 +57,7 @@ namespace _Project.Scripts.Player
 
         private void OnAttackButtonPressedHandler()
         {
-            if (!_player.IsAttacking)
+            if (_comboCounter == MinCombo)
             {
                 StartCombo();
             }
@@ -63,21 +69,25 @@ namespace _Project.Scripts.Player
 
         private void StartCombo()
         {
-            _comboStep = 1;
+            _comboCounter = 1;
             _canQueueNextAttack = false;
             _comboExtended = false;
 
             _playerAnimatedState.OnAttack(true);
-            _playerAnimatedState.OnComboChanged(_comboStep);
+            _playerAnimatedState.OnComboChanged(_comboCounter);
         }
 
         private void QueueNextCombo()
         {
-            _comboStep++;
+            if (_comboCounter + ComboStep > MaxCombo)
+            {
+                _canQueueNextAttack = false;
+                return;
+            }
+
+            _comboCounter++;
             _canQueueNextAttack = false;
             _comboExtended = true;
-
-            _playerAnimatedState.OnComboChanged(_comboStep);
         }
 
         public void AllowCombo()
@@ -98,19 +108,25 @@ namespace _Project.Scripts.Player
         public void EndAttack()
         {
             if (_comboExtended)
+            {
                 _comboExtended = false;
+                _playerAnimatedState.OnAttack(true);
+                _playerAnimatedState.OnComboChanged(_comboCounter);
+            }
             else
+            {
                 ResetCombo();
+            }
         }
 
         private void ResetCombo()
         {
-            _comboStep = 0;
+            _comboCounter = MinCombo;
             _canQueueNextAttack = false;
             _comboExtended = false;
 
             _playerAnimatedState.OnAttack(false);
-            _playerAnimatedState.OnComboChanged(_comboStep);
+            _playerAnimatedState.OnComboChanged(_comboCounter);
         }
     }
 }

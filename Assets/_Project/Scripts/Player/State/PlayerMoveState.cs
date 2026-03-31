@@ -71,7 +71,7 @@ namespace _Project.Scripts.Player
         private void Move(Vector3 moveDirection)
         {
             Vector3 velocity = moveDirection * _player.PlayerCharacteristics.MoveSpeed;
-            velocity.y = _player.Rigidbody.velocity.y;
+            velocity.y = 0;
 
             _player.Rigidbody.velocity = velocity;
             

@@ -22,7 +22,6 @@ namespace _Project.Scripts.Player.Core
         public PlayerAnimatedState PlayerAnimatedState { get; private set; }
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
         public bool CanFollow { get; private set; }
-        public bool IsAttacking { get; private set; }
         public InputController InputController { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public PlayerAttackState PlayerAttackState { get; private set; }
