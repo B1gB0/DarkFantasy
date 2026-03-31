@@ -17,7 +17,7 @@ namespace _Project.Scripts.Player.Input
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
-        public bool IsAttackButtonPressed { get; private set; }
+        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.IsPressed();
 
         private void Awake()
         {
@@ -32,7 +32,6 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Move.canceled += OnMove;
             
             _inputSystem.PLayer.Attack.performed += OnAttack;
-            _inputSystem.PLayer.Attack.canceled += OnAttack;
         }
 
         private void OnDisable()
@@ -41,7 +40,6 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Move.canceled -= OnMove;
 
             _inputSystem.PLayer.Attack.performed -= OnAttack;
-            _inputSystem.PLayer.Attack.canceled -= OnAttack;
 
             _inputSystem.PLayer.Disable();
         }
@@ -88,12 +86,7 @@ namespace _Project.Scripts.Player.Input
         {
             if (context.performed)
             {
-                IsAttackButtonPressed = true;
                 OnAttackButtonPressed?.Invoke();
-            }
-            else if (context.canceled)
-            {
-                IsAttackButtonPressed = false;
             }
         }
     }

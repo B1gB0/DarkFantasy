@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Core;
 
@@ -12,6 +11,7 @@ namespace _Project.Scripts.Player
 
         private bool _canQueueNextAttack;
         private int _comboStep;
+        private bool _comboExtended;
 
         public PlayerAttackState(
             Core.Player player,
@@ -23,44 +23,50 @@ namespace _Project.Scripts.Player
             _playerAnimatedState = playerAnimatedState;
         }
 
-        public void Enter() { }
+        public void Enter()
+        {
+            _player.InputController.OnAttackButtonPressed += OnAttackButtonPressedHandler;
+        
+            if (_player.InputController.IsAttackButtonPressed)
+                OnAttackButtonPressedHandler();
+        }
 
         public void Update()
         {
-            if (!_player.InputController.IsAttackButtonPressed && _comboStep == 0)
+            if (!_player.IsAttacking && !_player.InputController.IsAttackButtonPressed && _comboStep == 0)
             {
                 if (_player.InputController.IsMoveInputPerformed)
                     _stateMachine.SwitchState<PlayerMoveState>();
                 else
                     _stateMachine.SwitchState<PlayerIdleState>();
-                
-                return;
             }
-            
-            OnAttackPerformed();
         }
 
         public void FixedUpdate() { }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            _player.InputController.OnAttackButtonPressed -= OnAttackButtonPressedHandler;
+        }
 
-        public void OnAttackPerformed()
+        private void OnAttackButtonPressedHandler()
         {
             if (!_player.IsAttacking)
             {
                 StartCombo();
-                return;
             }
-
-            if (_canQueueNextAttack)
+            else if (_canQueueNextAttack)
+            {
                 QueueNextCombo();
+            }
         }
 
         private void StartCombo()
         {
             _comboStep = 1;
             _canQueueNextAttack = false;
-            
+            _comboExtended = false;
+
             _playerAnimatedState.OnAttack(true);
             _playerAnimatedState.OnComboChanged(_comboStep);
         }
@@ -69,7 +75,8 @@ namespace _Project.Scripts.Player
         {
             _comboStep++;
             _canQueueNextAttack = false;
-            
+            _comboExtended = true;
+
             _playerAnimatedState.OnComboChanged(_comboStep);
         }
 
@@ -82,7 +89,7 @@ namespace _Project.Scripts.Player
         {
             _player.SwordHitbox.ActivateHitBox();
         }
-        
+
         public void EndDamageWindow()
         {
             _player.SwordHitbox.DeactivateHitBox();
@@ -90,14 +97,18 @@ namespace _Project.Scripts.Player
 
         public void EndAttack()
         {
-            ResetCombo();
+            if (_comboExtended)
+                _comboExtended = false;
+            else
+                ResetCombo();
         }
 
         private void ResetCombo()
         {
             _comboStep = 0;
             _canQueueNextAttack = false;
-            
+            _comboExtended = false;
+
             _playerAnimatedState.OnAttack(false);
             _playerAnimatedState.OnComboChanged(_comboStep);
         }
