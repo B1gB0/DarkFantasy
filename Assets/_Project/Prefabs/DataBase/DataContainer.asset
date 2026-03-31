@@ -27,8 +27,8 @@ MonoBehaviour:
     Players:
     - _type: 0
       _health: 100
-      _moveSpeed: 10
-      _rotationSpeed: 5
+      _moveSpeed: 6
+      _rotationSpeed: 7
       _armor: 2
       _damage: 0
     Enemies:

@@ -49,7 +49,7 @@ namespace _Project.Scripts.Player.Movement
             Vector3 moveDir = camForward * _moveInput.y + camRight * _moveInput.x;
 
             Move(moveDir);
-            // Rotate(moveDir);
+            Rotate(moveDir);
         }
 
         private void Move(Vector3 moveDir)
