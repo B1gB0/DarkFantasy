@@ -1,14 +1,25 @@
+using System;
 using _Project.Scripts.Player.Combat;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Player.Input
 {
     public class InputController : MonoBehaviour
     {
-        [SerializeField] private Movement _movement;
+        private const float MinMagnitude = 0f;
+        
+        [SerializeField] private Movement.Movement _movement;
         [SerializeField] private Attack _attack;
 
         private InputSystem _inputSystem;
+        private Joystick _joystick;
+        
+        public event Action OnMoveButtonsPressed;
+
+        public Vector2 MoveDirection { get; private set; }
+        public bool IsMoveInputPerformed { get; private set; }
 
         private void Awake()
         {
@@ -35,6 +46,16 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Attack.performed -= _attack.OnAttackPerformed;
 
             _inputSystem.PLayer.Disable();
+        }
+        
+        private void OnMove(InputAction.CallbackContext context)
+        {
+            MoveDirection = context.action.ReadValue<Vector2>();
+
+            IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
+
+            if (IsMoveInputPerformed)
+                OnMoveButtonsPressed?.Invoke();
         }
     }
 }

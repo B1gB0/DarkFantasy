@@ -3,7 +3,7 @@ using _Project.Scripts.Player.Combat;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody))]
     public class Movement : MonoBehaviour
@@ -49,7 +49,7 @@ namespace _Project.Scripts.Player
             Vector3 moveDir = camForward * _moveInput.y + camRight * _moveInput.x;
 
             Move(moveDir);
-            Rotate(moveDir);
+            // Rotate(moveDir);
         }
 
         private void Move(Vector3 moveDir)

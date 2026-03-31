@@ -1,7 +1,6 @@
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Player.Combat;
-using _Project.Scripts.Player.State;
 using _Project.Scripts.Services;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace _Project.Scripts.Player.Core
     {
         private ParticleEffectsService _particleEffectsService;
         private PlayerStateMachine _stateMachine;
-        private Movement _movement;
+        private Movement.Movement _movement;
         private Attack _attack;
 
         [field: SerializeField] public Health Health { get; private set; }
@@ -24,7 +23,7 @@ namespace _Project.Scripts.Player.Core
         private void Awake()
         {
             _stateMachine = GetComponent<PlayerStateMachine>();
-            _movement = GetComponent<Movement>();
+            _movement = GetComponent<Movement.Movement>();
             _attack = GetComponent<Attack>();
         }
 

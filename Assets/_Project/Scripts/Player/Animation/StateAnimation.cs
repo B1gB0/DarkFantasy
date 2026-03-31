@@ -10,13 +10,13 @@ namespace _Project.Scripts.Player.Animation
         private static readonly int ComboStep = Animator.StringToHash("ComboStep");
 
         [SerializeField] private Animator _animator;
-        [SerializeField] private Movement _movement;
+        [SerializeField] private Movement.Movement _movement;
         [SerializeField] private Attack _attack;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _movement = GetComponent<Movement>();
+            _movement = GetComponent<Movement.Movement>();
             _attack = GetComponent<Attack>();
         }
 

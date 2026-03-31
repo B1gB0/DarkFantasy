@@ -7,10 +7,10 @@ namespace _Project.Scripts.Player
     {
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
-        private readonly Movement _movement;
+        private readonly Movement.Movement _movement;
         private readonly Attack _attack;
 
-        public PlayerAttackState(Core.Player player, PlayerStateMachine stateMachine, Movement movement, Attack attack)
+        public PlayerAttackState(Core.Player player, PlayerStateMachine stateMachine, Movement.Movement movement, Attack attack)
         {
             _player = player;
             _stateMachine = stateMachine;
@@ -27,7 +27,7 @@ namespace _Project.Scripts.Player
                 if (_movement.CurrentSpeed > 0.1f)
                     _stateMachine.SetState(new PlayerMoveState(_player, _stateMachine, _movement, _attack));
                 else
-                    _stateMachine.SetState(new State.PlayerIdleState(_player, _stateMachine, _movement, _attack));
+                    _stateMachine.SetState(new PlayerIdleState(_player, _stateMachine, _movement, _attack));
             }
         }
 

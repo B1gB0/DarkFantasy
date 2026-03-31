@@ -2,7 +2,7 @@ using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using UnityEngine;
 using YG;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Player.Combat
 {
     public class SwordHitbox : MonoBehaviour
     {
