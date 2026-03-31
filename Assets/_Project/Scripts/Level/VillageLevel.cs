@@ -18,6 +18,7 @@ namespace _Project.Scripts.Level
             _shopTrigger.OnOpenShop -= HealthBar.Hide;
             _shopPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _shopPanel.OnBackToSceneButtonPressed -= _shopPanel.Hide;
+            _shopPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
         }
 
         public override async UniTask OnStartLevel()
@@ -34,6 +35,7 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             _shopTrigger.OnOpenShop += HealthBar.Hide;
+            _shopPanel.OnBackToSceneButtonPressed += HealthBar.Show;
         }
     }
 }

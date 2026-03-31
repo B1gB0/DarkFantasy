@@ -16,7 +16,6 @@ namespace _Project.Scripts
         [SerializeField] private Transform _hitPoint;
 
         private CancellationTokenSource _healthCts;
-        private float _currentHealth;
 
         public event Action Die;
         public event Action<Health> DieHealth;
@@ -31,6 +30,7 @@ namespace _Project.Scripts
 
         public float MaxHealth { get; private set; }
         public float TargetHealth { get; private set; }
+        public float CurrentHealth { get; private set; }
 
         public bool IsHitting { get; private set; }
 
@@ -38,7 +38,7 @@ namespace _Project.Scripts
 
         private void Start()
         {
-            HealthChanged?.Invoke(_currentHealth, MaxHealth, TargetHealth);
+            HealthChanged?.Invoke(CurrentHealth, MaxHealth, TargetHealth);
             TargetHealthChanged?.Invoke(TargetHealth);
         }
 
@@ -129,14 +129,14 @@ namespace _Project.Scripts
         private async UniTaskVoid ChangeHealthAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested &&
-                   Math.Abs(_currentHealth - TargetHealth) > Mathf.Epsilon)
+                   Math.Abs(CurrentHealth - TargetHealth) > Mathf.Epsilon)
             {
-                _currentHealth = Mathf.MoveTowards(
-                    _currentHealth,
+                CurrentHealth = Mathf.MoveTowards(
+                    CurrentHealth,
                     TargetHealth,
                     RecoveryRate * Time.unscaledDeltaTime);
 
-                HealthChanged?.Invoke(_currentHealth, MaxHealth, TargetHealth);
+                HealthChanged?.Invoke(CurrentHealth, MaxHealth, TargetHealth);
                 TargetHealthChanged?.Invoke(TargetHealth);
 
                 await UniTask.NextFrame(PlayerLoopTiming.Update, cancellationToken);

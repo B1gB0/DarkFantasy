@@ -2,14 +2,14 @@
   "Gold": 0,
   "AcumulatedScore": 0,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 4,
-  "DamageAttributeNumber": 1,
+  "HealthAttributeNumber": 9,
+  "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 110.0,
-    "TargetHealth": 110.0,
+    "MaxHealth": 145.0,
+    "TargetHealth": 145.0,
     "Armor": 2.0,
-    "Damage": 1.0
+    "Damage": 0.0
   },
   "stringKeys": [],
   "stringValues": [],
@@ -25,5 +25,5 @@
     false,
     false
   ],
-  "idSave": 5
+  "idSave": 9
 }

@@ -26,6 +26,12 @@ namespace _Project.Scripts.UI.View
             Hide();
         }
 
+        public override void Show()
+        {
+            base.Show();
+            OnChangedValues(_health.CurrentHealth, _health.MaxHealth, _health.TargetHealth);
+        }
+
         private void OnChangedValues(float currentHealth, float maxHealth, float targetHealth)
         {
             SetValues(currentHealth, maxHealth, targetHealth);
