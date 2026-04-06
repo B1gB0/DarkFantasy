@@ -30,7 +30,7 @@ MonoBehaviour:
       _moveSpeed: 6
       _rotationSpeed: 7
       _armor: 2
-      _damage: 0
+      _damage: 5
     Enemies:
     - _type: 0
       _health: 10
@@ -64,7 +64,7 @@ MonoBehaviour:
       _experience: 15
       _score: 20
       _stopDistance: 2
-      _armor: 7
+      _armor: 3
     - _type: 3
       _health: 20
       _speed: 4
@@ -75,7 +75,7 @@ MonoBehaviour:
       _experience: 10
       _score: 15
       _stopDistance: 2
-      _armor: 3
+      _armor: 2
     - _type: 4
       _health: 10
       _speed: 5

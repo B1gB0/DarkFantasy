@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ParticlesConfig
   m_EditorClassIdentifier: 
   Particles:
+  - ParticleName: BasicHit
   - ParticleName: RedBloodHit
   - ParticleName: ExplosionFireball
   _particleLabel: Particles

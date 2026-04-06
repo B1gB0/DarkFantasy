@@ -84,7 +84,7 @@ namespace _Project.Scripts.Enemy
         
         protected virtual void OnPlayHitEffect()
         {
-            ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
+            ParticleEffectsService.PlayEffect(ParticleType.BasicHit, Health.HitPoint.position);
         }
     }
 }

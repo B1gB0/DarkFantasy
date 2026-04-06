@@ -49,14 +49,15 @@ namespace _Project.Scripts
 
         public void TakeDamage(float damage, float armor = MinValue)
         {
+            IsDamaged?.Invoke();
+
+            damage -= armor;
+            
             IsSpawnedDamageText?.Invoke(damage.ToString(),
                 transform,
                 FloatingTextViewType.Damage,
                 Colors.GetColor(ColorName.DefaultWhiteTextColor));
-
-            IsDamaged?.Invoke();
-
-            damage -= armor;
+            
             TargetHealth -= damage;
 
             OnChangeHealth();

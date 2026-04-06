@@ -84,9 +84,9 @@ namespace _Project.Scripts.Level
 
         public virtual async UniTask OnStartLevel()
         {
-            InitSpawners(_enemyService);
-
             await CreatePlayer();
+            
+            InitSpawners(_enemyService);
         }
 
         protected async UniTask CreatePlayer()

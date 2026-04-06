@@ -13,16 +13,28 @@ MonoBehaviour:
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
   Sounds:
+  - ClipName: LightArmorHit
+    Clip: {fileID: 8300000, guid: 3f7526167d28ffe46a7762f95d306dc6, type: 3}
+    IsLoop: 0
+    Volume: 1
   - ClipName: PaperButton
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 96a649fc56cb99d4697328181731bca1, type: 3}
+    IsLoop: 0
+    Volume: 1
+  - ClipName: HeavyArmorHit
+    Clip: {fileID: 8300000, guid: b9e83ccd06bded1439abed16c3e90ce9, type: 3}
     IsLoop: 0
     Volume: 1
   - ClipName: UIButtonClick
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: f9bc6b20471484044b4743e8ab97b7c5, type: 3}
+    IsLoop: 0
+    Volume: 1
+  - ClipName: SkeletonHit
+    Clip: {fileID: 8300000, guid: fa80aaa58cec21d40af4f12cdb83db6d, type: 3}
     IsLoop: 0
     Volume: 1
   - ClipName: MainMenuMusic
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 090bb86a7910c324f9afdde3c0f6f9b7, type: 3}
     IsLoop: 1
     Volume: 1
   _soundLabel: Sound

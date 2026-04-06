@@ -28,10 +28,22 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f7526167d28ffe46a7762f95d306dc6
+    m_Address: LightArmorHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4bb320af82664234fb74c297726b5d5e
     m_Address: Graveyard
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 564c6c42da1a92843931dad242a37b1e
+    m_Address: BasicHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a9fdc7f7ca96ac46b38a976437ff71a
     m_Address: MainMenu
@@ -75,6 +87,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9e83ccd06bded1439abed16c3e90ce9
+    m_Address: HeavyArmorHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c319f9167c359c743be80b761939aa98
     m_Address: DataContainer
     m_ReadOnly: 0
@@ -93,6 +111,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f9bc6b20471484044b4743e8ab97b7c5
     m_Address: UIButtonClick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa80aaa58cec21d40af4f12cdb83db6d
+    m_Address: SkeletonHit
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sound

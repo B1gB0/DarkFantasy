@@ -1,5 +1,7 @@
-﻿using _Project.Scripts.Weapon;
+﻿using _Project.Scripts.Audio.Sounds;
+using _Project.Scripts.Weapon;
 using _Project.Scripts.Weapon.Enemy;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy
@@ -14,6 +16,12 @@ namespace _Project.Scripts.Enemy
         private void Awake()
         {
             Longbow = GetComponent<Longbow>();
+        }
+
+        protected override void OnPlayHitEffect()
+        {
+            AudioSoundsService.PlaySound(SoundsType.SkeletonHit).Forget();
+            base.OnPlayHitEffect();
         }
     }
 }
