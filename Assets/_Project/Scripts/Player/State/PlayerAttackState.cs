@@ -10,40 +10,30 @@ namespace _Project.Scripts.Player
         private const int ComboStep = 1;
 
         private readonly Core.Player _player;
-        private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
+        private readonly PlayerStateMachine _stateMachine;
 
         private bool _canQueueNextAttack;
-        private int _comboCounter;
         private bool _comboExtended;
+        private int _comboCounter;
 
-        public PlayerAttackState(
-            Core.Player player,
-            PlayerStateMachine stateMachine,
-            PlayerAnimatedState playerAnimatedState)
+        public PlayerAttackState(Core.Player player)
         {
             _player = player;
-            _stateMachine = stateMachine;
-            _playerAnimatedState = playerAnimatedState;
+            _playerAnimatedState = _player.PlayerAnimatedState;
+            _stateMachine = _player.StateMachine;
         }
+
+        public StateId IdState => StateId.Attack;
 
         public void Enter()
         {
-            _player.InputController.OnAttackButtonPressed += OnAttackButtonPressedHandler;
-
             if (_player.InputController.IsAttackButtonPressed)
-                OnAttackButtonPressedHandler();
+                OnAttackPressedHandler();
         }
 
         public void Update()
         {
-            if (!_player.InputController.IsAttackButtonPressed && _comboCounter == MinCombo)
-            {
-                if (_player.InputController.IsMoveInputPerformed)
-                    _stateMachine.SwitchState<PlayerMoveState>();
-                else
-                    _stateMachine.SwitchState<PlayerIdleState>();
-            }
         }
 
         public void FixedUpdate()
@@ -52,10 +42,10 @@ namespace _Project.Scripts.Player
 
         public void Exit()
         {
-            _player.InputController.OnAttackButtonPressed -= OnAttackButtonPressedHandler;
         }
 
-        private void OnAttackButtonPressedHandler()
+
+        private void OnAttackPressedHandler()
         {
             if (_comboCounter == MinCombo)
             {
@@ -116,6 +106,20 @@ namespace _Project.Scripts.Player
             else
             {
                 ResetCombo();
+
+                if (_player.InputController.IsRollInputPerformed)
+                {
+                    _stateMachine.SwitchState(StateId.Roll);
+                    return;
+                }
+
+                if (_player.InputController.IsMoveInputPerformed)
+                {
+                    _stateMachine.SwitchState(StateId.Move);
+                    return;
+                }
+
+                _stateMachine.SwitchState(StateId.Idle);
             }
         }
 

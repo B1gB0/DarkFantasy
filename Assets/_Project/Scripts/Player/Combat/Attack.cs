@@ -75,5 +75,25 @@ namespace _Project.Scripts.Player.Combat
             OnAttacked?.Invoke(false);
             OnComboChanged?.Invoke(0);
         }
+        
+        // public void AllowCombo()
+        // {
+        //     PlayerAttackState.AllowCombo();
+        // }
+        //
+        // public void StartDamageWindow()
+        // {
+        //     SwordHitbox.ActivateHitBox();
+        // }
+        //
+        // public void EndDamageWindow()
+        // {
+        //     SwordHitbox.DeactivateHitBox();
+        // }
+        //
+        // public void EndAttack()
+        // {
+        //     PlayerAttackState.EndAttack();
+        // }
     }
 }

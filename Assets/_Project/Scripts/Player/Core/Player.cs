@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Player.Animation;
@@ -9,38 +8,35 @@ using UnityEngine;
 
 namespace _Project.Scripts.Player.Core
 {
-    public class Player : MonoBehaviour 
+    public class Player : MonoBehaviour
     {
-        private ParticleEffectsService _particleEffectsService;
-        private PlayerStateMachine _stateMachine;
-
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
         [field: SerializeField] public SwordHitbox SwordHitbox { get; private set; }
 
-        public Animator Animator { get; private set; }
-        public PlayerAnimatedState PlayerAnimatedState { get; private set; }
+        private ParticleEffectsService _particleEffectsService;
+
+        private Animator _animator;
+        private Rigidbody _rigidbody;
+        private InputController _inputController;
+
+        private PlayerStateMachine _stateMachine;
+        private PlayerAnimatedState _playerAnimatedState;
+        
+        public Animator Animator => _animator;
+        public Rigidbody Rigidbody => _rigidbody;
+
+        public PlayerStateMachine StateMachine => _stateMachine;
+        public InputController InputController => _inputController;
+        public PlayerAnimatedState PlayerAnimatedState => _playerAnimatedState;
+
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
+
         public bool CanFollow { get; private set; }
-        public InputController InputController { get; private set; }
-        public Rigidbody Rigidbody { get; private set; }
-        public PlayerAttackState PlayerAttackState { get; private set; }
 
         private void Awake()
         {
-            Animator = GetComponent<Animator>();
-            InputController = GetComponent<InputController>();
-            Rigidbody = GetComponent<Rigidbody>();
-            
-            PlayerAnimatedState = new PlayerAnimatedState(Animator);
-            _stateMachine = GetComponent<PlayerStateMachine>();
-
-            PlayerAttackState = new PlayerAttackState(this, _stateMachine, PlayerAnimatedState);
-        }
-
-        private void Start()
-        {
-            _stateMachine.AddState(PlayerAttackState);
+            Initialize();
         }
 
         private void OnEnable()
@@ -67,34 +63,39 @@ namespace _Project.Scripts.Player.Core
             Health.TargetHealthChanged += PlayerCharacteristics.SaveTargetHealth;
         }
 
+        //Не совсем понятно для чего 
         public void ChangeFollowEnemyState(bool canFollow)
         {
             CanFollow = canFollow;
         }
 
-        public void AllowCombo()
-        {
-            PlayerAttackState.AllowCombo();
-        }
-
-        public void StartDamageWindow()
-        {
-            SwordHitbox.ActivateHitBox();
-        }
-        
-        public void EndDamageWindow()
-        {
-            SwordHitbox.DeactivateHitBox();
-        }
-
-        public void EndAttack()
-        {
-            PlayerAttackState.EndAttack();
-        }
-
         private void OnPlayHitEffect()
         {
             _particleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
+        }
+
+        private void Initialize()
+        {
+            _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
+            _inputController = GetComponent<InputController>();
+            _stateMachine = GetComponent<PlayerStateMachine>();
+            
+            _stateMachine.Initialize(this);
+
+            _playerAnimatedState = new PlayerAnimatedState(Animator);
+
+            PlayerIdleState playerIdleState = new PlayerIdleState(this);
+            PlayerAttackState playerAttackState = new PlayerAttackState(this);
+            PlayerMoveState playerMoveState = new PlayerMoveState(this);
+            PlayerRollState playerRollState = new PlayerRollState(this);
+
+            _stateMachine.AddState(playerIdleState);
+            _stateMachine.AddState(playerMoveState);
+            _stateMachine.AddState(playerRollState);
+            _stateMachine.AddState(playerAttackState);
+
+            _stateMachine.SwitchState(StateId.Idle);
         }
     }
 }

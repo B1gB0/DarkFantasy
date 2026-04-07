@@ -3150,6 +3150,7 @@ MonoBehaviour:
   SpawnWaveOfEnemyDelay: 10
   _enemyWaves: []
   _limitEnemies: 0
+  _shopTrigger: {fileID: 0}
 --- !u!1 &361372509576191919
 GameObject:
   m_ObjectHideFlags: 0
@@ -83084,7 +83085,6 @@ GameObject:
   - component: {fileID: 8011321804661460007}
   - component: {fileID: 7237804569821638021}
   - component: {fileID: 2428195608422506031}
-  - component: {fileID: 573080831841779268}
   m_Layer: 0
   m_Name: SM_Env_Road_Gravel_Straight_01 (8)
   m_TagString: Untagged
@@ -83157,28 +83157,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &573080831841779268
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9082314029978244884}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 902383459a27d1c47a2f404637f15bed, type: 3}
 --- !u!1 &9158579953618126024
 GameObject:
   m_ObjectHideFlags: 0
