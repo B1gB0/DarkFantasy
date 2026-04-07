@@ -13,7 +13,10 @@ namespace _Project.Scripts.DataBase
         
         [SpreadsheetPage("CharacteristicsLocalization")]
         public List<CharacteristicsLocalizationData> CharacteristicsLocalizationData;
-        
+
+        [SpreadsheetPage("GraveyardSceneLevels")] public List<SceneLevelData> GraveyardSceneLevels;
+        [SpreadsheetPage("MissionLocalization")] public List<MissionLocalizationData> MissionsLocalization;
+
         [SpreadsheetPage("PlayerAttributeLevelsData")] 
         public List<PlayerAttributeLevelData> PlayerAttributeLevelData;
     }

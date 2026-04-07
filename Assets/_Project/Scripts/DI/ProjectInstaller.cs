@@ -18,6 +18,7 @@ namespace _Project.Scripts.DI
         [SerializeField] private ParticleEffectsService _particleEffectsService;
         [SerializeField] private UIRootView _uiRootViewPrefab;
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
+        [SerializeField] private MissionService _missionServicePrefab;
         
         private void OnDestroy()
         {
@@ -55,6 +56,7 @@ namespace _Project.Scripts.DI
             CreateService(_particleEffectsService);
             CreateService(_uiRootViewPrefab);
             CreateService(_gameEntryPointPrefab);
+            CreateService(_missionServicePrefab);
         }
 
         private void CreateService<T>(T prefab)
