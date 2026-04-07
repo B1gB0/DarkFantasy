@@ -5,28 +5,32 @@ namespace _Project.Scripts.Player.Animation
     public class PlayerAnimatedState
     {
         protected readonly Animator Animator;
-        protected readonly PlayerAnimationNamesBase PlayerAnimationNamesBase;
-        
+        protected readonly PlayerAnimationId PlayerAnimationId;
+
         public PlayerAnimatedState(Animator animator)
         {
             Animator = animator;
-            PlayerAnimationNamesBase = new PlayerAnimationNamesBase();
+            PlayerAnimationId = new PlayerAnimationId();
         }
 
         public void OnMove(float speed)
         {
-            Animator.SetFloat(PlayerAnimationNamesBase.Run, speed);
+            Animator.SetFloat(PlayerAnimationId.Run, speed);
         }
 
         public void OnAttack(bool isAttacking)
         {
-            Debug.Log(isAttacking);
-            Animator.SetBool(PlayerAnimationNamesBase.Attack, isAttacking);
+            Animator.SetBool(PlayerAnimationId.Attack, isAttacking);
         }
 
         public void OnComboChanged(int step)
         {
-            Animator.SetInteger(PlayerAnimationNamesBase.ComboStep, step);
+            Animator.SetInteger(PlayerAnimationId.ComboStep, step);
+        }
+
+        public void OnRoll()
+        {
+            Animator.SetTrigger(PlayerAnimationId.Roll);
         }
     }
 }

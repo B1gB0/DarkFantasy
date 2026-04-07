@@ -9,44 +9,38 @@ namespace _Project.Scripts.Player
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
-        
+
         private float _currentSpeed => new Vector3(
-            _player.Rigidbody.velocity.x,
-            0,
-            _player.Rigidbody.velocity.z)
+                _player.Rigidbody.velocity.x,
+                0,
+                _player.Rigidbody.velocity.z)
             .magnitude;
 
-        public PlayerMoveState(
-            Core.Player player,
-            PlayerStateMachine stateMachine,
-            PlayerAnimatedState playerAnimatedState)
+        public PlayerMoveState(Core.Player player)
         {
             _player = player;
-            _stateMachine = stateMachine;
-            _playerAnimatedState = playerAnimatedState;
+            _stateMachine = _player.StateMachine;
+            _playerAnimatedState = _player.PlayerAnimatedState;
         }
 
-        public void Enter() { }
+        public StateId IdState => StateId.Move;
+
+        public void Enter()
+        {
+        }
 
         public void Update()
         {
-            
+            if (_player.InputController.IsAttackButtonPressed)
+                _stateMachine.SwitchState(StateId.Attack);
+            if (_player.InputController.IsRollInputPerformed)
+                _stateMachine.SwitchState(StateId.Roll);
+            if (_player.InputController.IsMoveInputPerformed == false)
+                _stateMachine.SwitchState(StateId.Idle);
         }
 
         public void FixedUpdate()
         {
-            if (_player.InputController.IsAttackButtonPressed)
-            {
-                _stateMachine.SwitchState<PlayerAttackState>();
-                return;
-            }
-
-            if (!_player.InputController.IsMoveInputPerformed)
-            {
-                _stateMachine.SwitchState<PlayerIdleState>();
-                return;
-            }
-            
             Vector3 camForward = UnityEngine.Camera.main.transform.forward;
             Vector3 camRight = UnityEngine.Camera.main.transform.right;
 
@@ -56,8 +50,9 @@ namespace _Project.Scripts.Player
             camForward.Normalize();
             camRight.Normalize();
 
-            Vector3 moveDirection = camForward * _player.InputController.MoveDirection.y
-                                    + camRight * _player.InputController.MoveDirection.x;
+            Vector3 moveDirection =
+                camForward * _player.InputController.MoveDirection.y
+                + camRight * _player.InputController.MoveDirection.x;
 
             Move(moveDirection);
             Rotate(moveDirection);
@@ -74,18 +69,12 @@ namespace _Project.Scripts.Player
             velocity.y = 0;
 
             _player.Rigidbody.velocity = velocity;
-            
+
             _playerAnimatedState.OnMove(_currentSpeed);
         }
 
         private void Rotate(Vector3 moveDirection)
         {
-            if (_player.InputController.IsAttackButtonPressed)
-                return;
-            
-            if (!_player.InputController.IsMoveInputPerformed)
-                return;
-
             if (moveDirection.sqrMagnitude > 0.01f)
             {
                 Quaternion target = Quaternion.LookRotation(moveDirection);
