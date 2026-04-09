@@ -50,6 +50,7 @@ namespace _Project.Scripts.Level
 
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
+        public event Action OnGoToNextScene;
 
         [Inject]
         private void Construct(
@@ -136,6 +137,11 @@ namespace _Project.Scripts.Level
                 return;
 
             _enemySpawner.SpawnWave(_enemyWaves[numberWave]);
+        }
+
+        protected void GoToNextScene()
+        {
+            OnGoToNextScene?.Invoke();
         }
 
         private void InitSpawners(IEnemyService enemyService)

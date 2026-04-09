@@ -1,5 +1,8 @@
-﻿using _Project.Scripts.Weapon;
+﻿using _Project.Scripts.Audio.Sounds;
+using _Project.Scripts.Effects;
+using _Project.Scripts.Weapon;
 using _Project.Scripts.Weapon.Enemy;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy
@@ -8,5 +11,11 @@ namespace _Project.Scripts.Enemy
     {
         [field: SerializeField] public UnityEngine.AI.NavMeshAgent NavMeshAgent { get; private set; }
         [field: SerializeField] public MagicSpellOfPriest MagicSpell { get; private set; }
+        
+        protected override void OnPlayHitEffect()
+        {
+            AudioSoundsService.PlaySound(SoundsType.SkeletonHit).Forget();
+            ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Player.transform.position);
+        }
     }
 }

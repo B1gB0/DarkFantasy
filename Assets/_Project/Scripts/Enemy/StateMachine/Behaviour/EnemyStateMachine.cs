@@ -30,9 +30,14 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
             };
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             _currentState?.Update();
+        }
+
+        private void FixedUpdate()
+        {
+            _currentState?.FixedUpdate();
         }
 
         public void InitializeAllStates()

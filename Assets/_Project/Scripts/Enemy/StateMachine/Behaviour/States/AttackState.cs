@@ -23,6 +23,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Update()
         {
+            
+        }
+
+        public override void FixedUpdate()
+        {
             if (Player == null
                 || !Player.CanFollow
                 || Player.Health.TargetHealth <= MinValue
@@ -98,7 +103,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 }
             }
         }
-        
+
         private void EnterAttackSubState(AttackSubState newSubState)
         {
             _currentSubState = newSubState;

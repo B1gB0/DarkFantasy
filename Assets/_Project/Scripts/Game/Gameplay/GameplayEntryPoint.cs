@@ -17,6 +17,9 @@ namespace _Project.Scripts.Game.Gameplay
 {
     public class GameplayEntryPoint : MonoBehaviour
     {
+        private const int MinCountValue = 0;
+        private const int NextOperationStep = 1;
+
         [SerializeField] private CinemachineFreeLook _freeLookCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private DataFactory _dataFactory;
@@ -35,6 +38,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IFloatingTextService _floatingTextService;
         private ParticleEffectsService _particleEffectsService;
         private AudioSoundsService _audioSoundsService;
+        private MissionService _missionService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -46,7 +50,8 @@ namespace _Project.Scripts.Game.Gameplay
             IPlayerService playerService,
             ParticleEffectsService particleEffectsService,
             AudioSoundsService audioSoundsService,
-            IFloatingTextService floatingTextService)
+            IFloatingTextService floatingTextService,
+            MissionService missionService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -54,6 +59,7 @@ namespace _Project.Scripts.Game.Gameplay
             _particleEffectsService = particleEffectsService;
             _audioSoundsService = audioSoundsService;
             _floatingTextService = floatingTextService;
+            _missionService = missionService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -71,7 +77,7 @@ namespace _Project.Scripts.Game.Gameplay
             _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
-            
+
             GameObjectInjector.InjectRecursive(uiRoot.gameObject, _container);
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine, _uiRoot.UIRootButtons);
@@ -87,7 +93,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _enemyService.Init();
             await _playerService.Init();
             await _audioSoundsService.Init();
-            
+
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 
             _level = FindObjectOfType<Level.Level>();
@@ -105,7 +111,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             FloatingTextView floatingTextView = await _viewFactory.CreateFloatingTextView();
             floatingTextView.Deactivate();
-            
+
             _floatingTextService.Init(floatingTextView);
 
             await _level.OnStartLevel();
@@ -123,6 +129,19 @@ namespace _Project.Scripts.Game.Gameplay
             _levelInitData = Instantiate(_levelInitData);
             _enemyInitData = await _dataFactory.CreateSkeletonInitData();
             _playerInitData = await _dataFactory.CreatePlayerInitData();
+        }
+
+        private void GetGameplayExitParameters()
+        {
+            _uiRoot.UIRootButtons.Deactivate();
+
+            int nextNumberLevel = _missionService.CurrentNumberLevel + NextOperationStep;
+
+            var sceneName = _missionService.GetSceneNameByNumber(nextNumberLevel);
+
+            var gameplayEnterParameters = new GameplayEnterParameters(sceneName, nextNumberLevel);
+
+            _exitParameters = new GameplayExitParameters(gameplayEnterParameters);
         }
     }
 }
