@@ -8,6 +8,7 @@ namespace _Project.Scripts.Level
     public class VillageLevel : Level
     {
         [SerializeField] private ShopTrigger _shopTrigger;
+        [SerializeField] private MissionChoosingTrigger _missionChoosingTrigger;
 
         private ShopPanel _shopPanel;
 

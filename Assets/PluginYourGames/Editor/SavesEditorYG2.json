@@ -1,0 +1,31 @@
+{
+  "Gold": 0,
+  "AcumulatedScore": 0,
+  "ExperiencePointsValue": 0,
+  "HealthAttributeNumber": 2,
+  "DamageAttributeNumber": 1,
+  "ArmorAttributeNumber": 0,
+  "PlayerCharacteristics": {
+    "MaxHealth": 103.0,
+    "TargetHealth": 103.0,
+    "Armor": 2.0,
+    "Damage": 6.0,
+    "MoveSpeed": 6.0,
+    "RotationSpeed": 7.0
+  },
+  "stringKeys": [],
+  "stringValues": [],
+  "floatKeys": [],
+  "floatValues": [],
+  "intKeys": [],
+  "intValues": [],
+  "intExample": 5,
+  "strExample": "Hello!",
+  "boolExample": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "idSave": 3
+}
