@@ -7,11 +7,13 @@ namespace _Project.Scripts.Player
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
 
-        public PlayerIdleState(Core.Player player, PlayerStateMachine stateMachine)
+        public PlayerIdleState(Core.Player player)
         {
             _player = player;
-            _stateMachine = stateMachine;
+            _stateMachine = _player.StateMachine;
         }
+
+        public StateId IdState => StateId.Idle;
 
         public void Enter() { }
 
@@ -19,13 +21,20 @@ namespace _Project.Scripts.Player
         {
             if (_player.InputController.IsAttackButtonPressed)
             {
-                _stateMachine.SwitchState<PlayerAttackState>();
+                _stateMachine.SwitchState(StateId.Attack);
+                return;
+            }
+
+            if (_player.InputController.IsRollInputPerformed)
+            {
+                _stateMachine.SwitchState(StateId.Roll);
                 return;
             }
 
             if (_player.InputController.IsMoveInputPerformed)
             {
-                _stateMachine.SwitchState<PlayerMoveState>();
+                _stateMachine.SwitchState(StateId.Move);
+                return;
             }
         }
 
@@ -34,5 +43,3 @@ namespace _Project.Scripts.Player
         public void Exit() { }
     }
 }
-
-

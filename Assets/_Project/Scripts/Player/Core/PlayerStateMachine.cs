@@ -1,67 +1,50 @@
-using System;
 using System.Collections.Generic;
+using _Project.Scripts.Player.Input;
 using UnityEngine;
 
 namespace _Project.Scripts.Player.Core
 {
     public class PlayerStateMachine : MonoBehaviour
     {
-        private IPlayerState _currentState;
+        private readonly Dictionary<StateId, IPlayerState> _states = new Dictionary<StateId, IPlayerState>();
+
         private Player _player;
-        private Dictionary<Type, IPlayerState> _states;
+        private InputController _inputController;
 
-        private void Awake()
+        private IPlayerState _currentState;
+
+        public void Initialize(Player player)
         {
-            _player = GetComponent<Player>();
-
-            _states = new Dictionary<Type, IPlayerState>
-            {
-                { typeof(PlayerIdleState), new PlayerIdleState(_player, this) },
-                { typeof(PlayerMoveState), new PlayerMoveState(_player, this, _player.PlayerAnimatedState) },
-            };
-        }
-
-        private void Start()
-        {
-            SwitchState<PlayerIdleState>();
+            _player = player;
+            _inputController = _player.InputController;
         }
 
         private void Update()
         {
             _currentState?.Update();
-            Debug.Log(_currentState);
         }
 
         private void FixedUpdate()
         {
             _currentState?.FixedUpdate();
-            Debug.Log(_currentState);
         }
-        
-        public void SwitchState<T>() where T : IPlayerState
+
+        public void SwitchState(StateId stateID)
         {
-            Type newStateType = typeof(T);
-            if (!_states.ContainsKey(newStateType))
-            {
-                Debug.LogError($"State {newStateType} not found!");
+            if (stateID == _currentState?.IdState)
                 return;
-            }
 
             _currentState?.Exit();
-            _currentState = _states[newStateType];
+            _currentState = _states[stateID];
             _currentState.Enter();
         }
-        
+
         public void AddState(IPlayerState state)
         {
-            var type = state.GetType();
-
-            if (_states.ContainsKey(type) == false)
+            if (_states.ContainsKey(state.IdState) == false)
             {
-                _states.TryAdd(type, state);
+                _states.TryAdd(state.IdState, state);
             }
         }
     }
 }
-
-
