@@ -13,6 +13,8 @@ namespace _Project.Scripts.Player.Core
 
         private IPlayerState _currentState;
 
+        public IPlayerState CurentState => _currentState;
+
         public void Initialize(Player player)
         {
             _player = player;
