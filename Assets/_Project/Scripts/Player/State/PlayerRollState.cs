@@ -26,18 +26,11 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _animationSystem.OnRoll();
-            _animator.applyRootMotion = true;
         }
 
         public void Update()
         {
-            if (_finished)
-            {
-                if (_player.InputController.IsMoveInputPerformed)
-                    _stateMachine.SwitchState(StateId.Move);
-                else
-                    _stateMachine.SwitchState(StateId.Idle);
-            }
+            _stateMachine.SwitchState(StateId.Idle);
         }
 
 
@@ -47,12 +40,6 @@ namespace _Project.Scripts.Player
 
         public void Exit()
         {
-            _animator.applyRootMotion = true;
-        }
-
-        public void OnRollEnd()
-        {
-            _finished = true;
         }
     }
 }

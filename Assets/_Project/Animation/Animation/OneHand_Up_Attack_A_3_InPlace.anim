@@ -63926,13 +63926,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.7666667
-    functionName: AnimationEvent_QueueNextCombo
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 2
     functionName: AnimationEvent_EndAttack
     data: 
