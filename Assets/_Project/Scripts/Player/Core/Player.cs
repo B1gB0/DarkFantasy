@@ -1,10 +1,10 @@
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Player.Animation;
-using _Project.Scripts.Player.Combat;
 using _Project.Scripts.Player.Input;
 using _Project.Scripts.Services;
 using UnityEngine;
+using Sword = _Project.Scripts.Player.Combat.Sword;
 
 namespace _Project.Scripts.Player.Core
 {
@@ -36,8 +36,9 @@ namespace _Project.Scripts.Player.Core
         public PlayerAnimatedState PlayerAnimatedState => _playerAnimatedState;
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
+        public PlayerAttackState PlayerAttackState { get; private set; }
 
-        public bool CanFollow { get; private set; }
+        public bool CanFollow { get; private set; } = true;
 
         private void Awake()
         {

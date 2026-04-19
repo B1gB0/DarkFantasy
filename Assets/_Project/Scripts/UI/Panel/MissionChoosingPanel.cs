@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.Characteristics;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using DG.Tweening;

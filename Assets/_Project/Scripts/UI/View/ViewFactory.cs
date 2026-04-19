@@ -20,7 +20,8 @@ namespace _Project.Scripts.UI.View
         private const string HealthBarPath = "HealthBar";
         private const string TextViewPath = "TextView";
         private const string ShopAttributePanelPath = "ShopAttributePanel";
-        
+        private const string MissionChoosingPanelPath = "MissionChoosingPanel";
+
         // private const string ProgressRadialBarPath = "ProgressRadialBar";
         // private const string LevelUpPanelPath = "LevelUpPanel";
         // private const string EndGamePanelPath = "EndGamePanel";
@@ -36,6 +37,7 @@ namespace _Project.Scripts.UI.View
         private Container _container;
         
         private ShopPanel _shopPanel;
+        private MissionChoosingPanel _missionChoosingPanel;
         
         [Inject]
         public void Construct(IResourceService resourceService, IPlayerService playerService)
@@ -119,6 +121,20 @@ namespace _Project.Scripts.UI.View
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
 
             return _shopPanel;
+        }
+        
+        public async UniTask<MissionChoosingPanel> CreateMissionChoosingPanel()
+        {
+            var missionPanelTemplate = await _resourceService.Load<GameObject>(MissionChoosingPanelPath);
+            missionPanelTemplate = Instantiate(missionPanelTemplate);
+
+            _missionChoosingPanel = missionPanelTemplate.GetComponent<MissionChoosingPanel>();
+            GameObjectInjector.InjectRecursive(_missionChoosingPanel.gameObject, _container);
+            _missionChoosingPanel.transform.SetParent(_uiScene.transform, false);
+            
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _missionChoosingPanel.OnChangeLanguage;
+
+            return _missionChoosingPanel;
         }
 
         // public async UniTask<LevelUpPanel> CreateLevelUpPanel()
