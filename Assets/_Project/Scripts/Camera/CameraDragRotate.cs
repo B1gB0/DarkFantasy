@@ -1,68 +1,71 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Camera
 {
     public class CameraDragRotate : MonoBehaviour
     {
         [SerializeField] private CinemachineFreeLook freeLookCamera;
-        [SerializeField] private float sensitivity = 0.2f;
+        [SerializeField] private float sensitivityX = 3f;
+        [SerializeField] private float sensitivityY = 2f;
+        [SerializeField] private float zoomSpeed = 2f;
+        [SerializeField] private float minZoom = 2f;
+        [SerializeField] private float maxZoom = 10f;
 
-        private bool isDragging = false;
-        private Vector2 lastPos;
+        private bool _isRotating;
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                isDragging = true;
-                lastPos = Input.mousePosition;
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                isDragging = false;
-            }
-            if (!Input.GetMouseButton(0))
-            {
-                isDragging = false;
-            }
-        
-            if (Input.touchCount > 0)
-            {
-                Touch t = Input.GetTouch(0);
-
-                if (t.phase == TouchPhase.Began)
-                {
-                    isDragging = true;
-                    lastPos = t.position;
-                }
-                else if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
-                {
-                    isDragging = false;
-                }
-            }
-
-            Rotate();
+            HandleRotation();
+            HandleZoom();
         }
 
-        private void Rotate()
+        private void HandleRotation()
         {
-            if (isDragging)
+            if (Mouse.current.middleButton.wasPressedThisFrame)
             {
-                Vector2 currentPos = Input.touchCount > 0 
-                    ? (Vector2)Input.GetTouch(0).position 
-                    : (Vector2)Input.mousePosition;
+                _isRotating = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
 
-                Vector2 delta = currentPos - lastPos;
-            
-                freeLookCamera.m_XAxis.Value += delta.x * sensitivity;
-            
-                // freeLookCamera.m_YAxis.Value = 0.5f;
+            if (Mouse.current.middleButton.wasReleasedThisFrame)
+            {
+                _isRotating = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
 
-                lastPos = currentPos;
+            if (_isRotating)
+            {
+                Vector2 delta = Mouse.current.delta.ReadValue();
+                freeLookCamera.m_XAxis.m_InputAxisValue = delta.x * sensitivityX;
+                freeLookCamera.m_YAxis.m_InputAxisValue = delta.y * sensitivityY;
+            }
+            else
+            {
+                freeLookCamera.m_XAxis.m_InputAxisValue = 0;
+                freeLookCamera.m_YAxis.m_InputAxisValue = 0;
+            }
+        }
+
+        private void HandleZoom()
+        {
+            float scroll = Mouse.current.scroll.ReadValue().y;
+
+            if (Mathf.Abs(scroll) > 0.01f)
+            {
+                float zoomDelta = scroll * zoomSpeed * Time.deltaTime;
+
+                // Меняем радиусы всех трёх орбит
+                for (int i = 0; i < 3; i++)
+                {
+                    var orbit = freeLookCamera.m_Orbits[i];
+                    orbit.m_Radius = Mathf.Clamp(orbit.m_Radius - zoomDelta, minZoom, maxZoom);
+                    freeLookCamera.m_Orbits[i] = orbit;
+                }
             }
         }
     }
 }
-
-
