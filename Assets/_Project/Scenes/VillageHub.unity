@@ -2871,6 +2871,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6923072638241832386, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: zoomSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_YAxis.Value
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_YAxis.m_InvertInput
       value: 1

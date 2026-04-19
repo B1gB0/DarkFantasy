@@ -45,7 +45,6 @@ namespace _Project.Scripts.Player
 
         public void Exit()
         {
-            
         }
     }
 }

@@ -10,6 +10,8 @@ namespace _Project.Scripts.Player.Input
 
         private InputSystem _inputSystem;
         private Joystick _joystick;
+        
+        public event Action OnAttackButtonPressed;
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
@@ -66,6 +68,12 @@ namespace _Project.Scripts.Player.Input
             {
                 MoveDirection = Vector2.zero;
             }
+        }
+        
+        private void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnAttackButtonPressed?.Invoke();
         }
     }
 }
