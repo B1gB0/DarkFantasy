@@ -4,15 +4,19 @@ using YG;
 
 namespace _Project.Scripts.Player.Combat
 {
-    public class SwordHitbox : MonoBehaviour
+    public class Sword : MonoBehaviour
     {
-        public bool CanDamage { get; private set; }
+        [SerializeField] private int _swordDamage = 10;
+
+        private Collider _collider;
+
+        private void Awake()
+        {
+            _collider = GetComponent<Collider>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!CanDamage)
-                return;
-
             if (other.TryGetComponent(out Enemy.Enemy enemy))
             {
                 enemy.EnemyStateMachine.SwitchState<HitState>();
@@ -20,14 +24,14 @@ namespace _Project.Scripts.Player.Combat
             }
         }
 
-        public void ActivateHitBox()
+        public void ActivateCollider()
         {
-            CanDamage = true;
+            _collider.enabled = true;
         }
-        
-        public void DeactivateHitBox()
+
+        public void DeactivateCollider()
         {
-            CanDamage = false;
+            _collider.enabled = false;
         }
     }
 }

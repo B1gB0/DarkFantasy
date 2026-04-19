@@ -12,7 +12,7 @@ namespace _Project.Scripts.Player.Core
     {
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
-        [field: SerializeField] public SwordHitbox SwordHitbox { get; private set; }
+        [field: SerializeField] public Sword Sword { get; private set; }
 
         private ParticleEffectsService _particleEffectsService;
 
@@ -22,7 +22,12 @@ namespace _Project.Scripts.Player.Core
 
         private PlayerStateMachine _stateMachine;
         private PlayerAnimatedState _playerAnimatedState;
-        
+
+        private PlayerIdleState _playerIdleState;
+        private PlayerAttackState _playerAttackState;
+        private PlayerMoveState _playerMoveState;
+        private PlayerRollState _playerRollState;
+
         public Animator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
 
@@ -41,17 +46,20 @@ namespace _Project.Scripts.Player.Core
 
         private void OnEnable()
         {
-            Health.IsDamaged += OnPlayHitEffect;
+            if (Health != null)
+                Health.IsDamaged += OnPlayHitEffect;
         }
 
         private void OnDisable()
         {
-            Health.IsDamaged -= OnPlayHitEffect;
+            if (Health != null)
+                Health.IsDamaged -= OnPlayHitEffect;
         }
 
         private void OnDestroy()
         {
-            Health.TargetHealthChanged -= PlayerCharacteristics.SaveTargetHealth;
+            if (PlayerCharacteristics != null && Health != null)
+                Health.TargetHealthChanged -= PlayerCharacteristics.SaveTargetHealth;
         }
 
         public void Construct(
@@ -60,10 +68,11 @@ namespace _Project.Scripts.Player.Core
         {
             PlayerCharacteristics = playerCharacteristics;
             _particleEffectsService = particleEffectsService;
-            Health.TargetHealthChanged += PlayerCharacteristics.SaveTargetHealth;
+
+            if (Health != null && PlayerCharacteristics != null)
+                Health.TargetHealthChanged += PlayerCharacteristics.SaveTargetHealth;
         }
 
-        //Не совсем понятно для чего 
         public void ChangeFollowEnemyState(bool canFollow)
         {
             CanFollow = canFollow;
@@ -71,7 +80,8 @@ namespace _Project.Scripts.Player.Core
 
         private void OnPlayHitEffect()
         {
-            _particleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
+            if (_particleEffectsService != null && Health != null && Health.HitPoint != null)
+                _particleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
         }
 
         private void Initialize()
@@ -80,22 +90,47 @@ namespace _Project.Scripts.Player.Core
             _rigidbody = GetComponent<Rigidbody>();
             _inputController = GetComponent<InputController>();
             _stateMachine = GetComponent<PlayerStateMachine>();
-            
+
             _stateMachine.Initialize(this);
 
             _playerAnimatedState = new PlayerAnimatedState(Animator);
 
-            PlayerIdleState playerIdleState = new PlayerIdleState(this);
-            PlayerAttackState playerAttackState = new PlayerAttackState(this);
-            PlayerMoveState playerMoveState = new PlayerMoveState(this);
-            PlayerRollState playerRollState = new PlayerRollState(this);
+            _playerIdleState = new PlayerIdleState(this);
+            _playerAttackState = new PlayerAttackState(this);
+            _playerMoveState = new PlayerMoveState(this);
+            _playerRollState = new PlayerRollState(this);
 
-            _stateMachine.AddState(playerIdleState);
-            _stateMachine.AddState(playerMoveState);
-            _stateMachine.AddState(playerRollState);
-            _stateMachine.AddState(playerAttackState);
+            _stateMachine.AddState(_playerIdleState);
+            _stateMachine.AddState(_playerMoveState);
+            _stateMachine.AddState(_playerRollState);
+            _stateMachine.AddState(_playerAttackState);
 
             _stateMachine.SwitchState(StateId.Idle);
+        }
+
+        public void AnimationEvent_AllowCombo()
+        {
+            _playerAttackState.AllowCombo();
+        }
+
+        public void AnimationEvent_QueueNextCombo()
+        {
+            _playerAttackState.QueueNextCombo();
+        }
+
+        public void AnimationEvent_StartDamage()
+        {
+            _playerAttackState.StartDamageWindow();
+        }
+
+        public void AnimationEvent_EndDamage()
+        {
+            _playerAttackState.EndDamageWindow();
+        }
+
+        public void AnimationEvent_EndAttack()
+        {
+            _playerAttackState.EndAttack();
         }
     }
 }
