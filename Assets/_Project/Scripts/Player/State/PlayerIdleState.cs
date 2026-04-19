@@ -15,7 +15,9 @@ namespace _Project.Scripts.Player
 
         public StateId IdState => StateId.Idle;
 
-        public void Enter() { }
+        public void Enter()
+        {
+        }
 
         public void Update()
         {
@@ -34,12 +36,16 @@ namespace _Project.Scripts.Player
             if (_player.InputController.IsMoveInputPerformed)
             {
                 _stateMachine.SwitchState(StateId.Move);
-                return;
             }
         }
 
-        public void FixedUpdate() { }
+        public void FixedUpdate()
+        {
+        }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            
+        }
     }
 }
