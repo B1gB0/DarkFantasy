@@ -1,5 +1,6 @@
 using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Core;
+using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Player
 {
@@ -13,7 +14,6 @@ namespace _Project.Scripts.Player
         private readonly PlayerStateMachine _stateMachine;
 
         private bool _canQueueNextAttack;
-        private bool _comboExtended;
         private int _comboCounter;
 
         public PlayerAttackState(Core.Player player)
@@ -30,9 +30,17 @@ namespace _Project.Scripts.Player
             StartCombo();
         }
 
-        public void Update() { }
+        public void Update()
+        {
+            if (Mouse.current.leftButton.isPressed)
+            {
+                QueueNextCombo();
+            }
+        }
 
-        public void FixedUpdate() { }
+        public void FixedUpdate()
+        {
+        }
 
         public void Exit()
         {
@@ -43,7 +51,6 @@ namespace _Project.Scripts.Player
         {
             _comboCounter = 1;
             _canQueueNextAttack = false;
-            _comboExtended = false;
 
             _anim.OnAttack(true);
             _anim.OnComboChanged(_comboCounter);
@@ -59,14 +66,13 @@ namespace _Project.Scripts.Player
             if (!_canQueueNextAttack)
                 return;
 
-            if (_comboCounter + 1 > MaxCombo)
+            if (_comboCounter > MaxCombo)
             {
                 _canQueueNextAttack = false;
                 return;
             }
 
             _comboCounter++;
-            _comboExtended = true;
             _canQueueNextAttack = false;
 
             _anim.OnComboChanged(_comboCounter);
@@ -84,14 +90,9 @@ namespace _Project.Scripts.Player
 
         public void EndAttack()
         {
-            if (_comboExtended)
-            {
-                _comboExtended = false;
-                _anim.OnAttack(true);
-                _anim.OnComboChanged(_comboCounter);
-                return;
-            }
-
+            _anim.OnAttack(true);
+            _anim.OnComboChanged(_comboCounter);
+            
             ResetCombo();
 
             if (_player.InputController.IsRollInputPerformed)
@@ -113,7 +114,6 @@ namespace _Project.Scripts.Player
         {
             _comboCounter = MinCombo;
             _canQueueNextAttack = false;
-            _comboExtended = false;
 
             _anim.OnAttack(false);
             _anim.OnComboChanged(_comboCounter);

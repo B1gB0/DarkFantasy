@@ -65,6 +65,7 @@ namespace _Project.Scripts.Player
 
         private void Move(Vector3 moveDirection)
         {
+            Debug.Log("Moving " + moveDirection);
             Vector3 velocity = moveDirection * _player.PlayerCharacteristics.MoveSpeed;
             velocity.y = 0;
 
