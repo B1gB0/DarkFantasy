@@ -1,9 +1,8 @@
-﻿using _Project.Scripts.Game.Gameplay.Root.View;
+﻿using _Project.Scripts.Game.Gameplay;
+using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
-using _Project.Scripts.UI.StateMachine;
-using _Project.Scripts.UI.StateMachine.States;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -33,11 +32,13 @@ namespace _Project.Scripts.UI.View
         private IPlayerService _playerService;
 
         private UIRootView _uiRoot;
-        private UIGameplayRootBinder _uiScene;
         private Container _container;
         
         private ShopPanel _shopPanel;
         private MissionChoosingPanel _missionChoosingPanel;
+        
+        public UIGameplayRootBinder UIScene { get; private set; }
+        public GameplayEntryPoint GameplayEntryPoint { get; private set; }
         
         [Inject]
         public void Construct(IResourceService resourceService, IPlayerService playerService)
@@ -56,13 +57,19 @@ namespace _Project.Scripts.UI.View
             //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _levelUpPanel.OnLanguageChanged;
         }
 
-        public void GetUIRootAndUIScene(UIRootView uiRoot, UIGameplayRootBinder uiScene, Container container)
+        public void GetEntities(
+            UIRootView uiRoot,
+            UIGameplayRootBinder uiScene,
+            Container container,
+            GameplayEntryPoint gameplayEntryPoint)
         {
             _uiRoot = uiRoot;
-            _uiScene = uiScene;
+            UIScene = uiScene;
             _container = container;
+            
+            GameplayEntryPoint = gameplayEntryPoint;
 
-            GameObjectInjector.InjectRecursive(_uiScene.gameObject, _container);
+            GameObjectInjector.InjectRecursive(UIScene.gameObject, _container);
         }
 
         // public async UniTask<Arrow> CreateArrow()
@@ -84,8 +91,8 @@ namespace _Project.Scripts.UI.View
             HealthBar healthBar = healthBarTemplate.GetComponent<HealthBar>();
             GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
-            healthBar.transform.SetParent(_uiScene.transform, false);
-            healthBar.GetPoints(_uiScene.ShowHealthPoint, _uiScene.HideHealthPoint, _uiScene.WeaponPoint);
+            healthBar.transform.SetParent(UIScene.transform, false);
+            healthBar.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
 
             return healthBar;
         }
@@ -116,7 +123,7 @@ namespace _Project.Scripts.UI.View
 
             _shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
             GameObjectInjector.InjectRecursive(_shopPanel.gameObject, _container);
-            _shopPanel.transform.SetParent(_uiScene.transform, false);
+            _shopPanel.transform.SetParent(UIScene.transform, false);
             
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
 
@@ -130,9 +137,7 @@ namespace _Project.Scripts.UI.View
 
             _missionChoosingPanel = missionPanelTemplate.GetComponent<MissionChoosingPanel>();
             GameObjectInjector.InjectRecursive(_missionChoosingPanel.gameObject, _container);
-            _missionChoosingPanel.transform.SetParent(_uiScene.transform, false);
-            
-            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _missionChoosingPanel.OnChangeLanguage;
+            _missionChoosingPanel.transform.SetParent(UIScene.transform, false);
 
             return _missionChoosingPanel;
         }

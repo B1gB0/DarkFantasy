@@ -6,11 +6,14 @@ namespace _Project.Scripts.Level
     public class CryptLevel : Level
     {
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
+        [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
             _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
+            EnemySpawner.OnPriestKilled += OnPriestKilled;
+            _nextLevelTrigger.OnGoToNextLevel += ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
         }
         
         private void FixedUpdate()
@@ -24,7 +27,9 @@ namespace _Project.Scripts.Level
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= SpawnCyclicWave;
+            EnemySpawner.OnPriestKilled -= OnPriestKilled;
+            _nextLevelTrigger.OnGoToNextLevel -= ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
         }
 
         private void SpawnStartWaves()
@@ -38,6 +43,12 @@ namespace _Project.Scripts.Level
         private void SpawnCyclicWave()
         {
             CreateWaveOfEnemyByTimer(FourthWaveEnemy);
+        }
+
+        private void OnPriestKilled()
+        {
+            _nextLevelTrigger.Activate();
+            _spawnCyclicWaveTrigger.OnOffEnemySpawn();
         }
     }
 }

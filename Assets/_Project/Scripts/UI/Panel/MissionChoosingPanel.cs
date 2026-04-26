@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Level;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using DG.Tweening;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.UI.Panel
         private ICurrencyService _currencyService;
         
         public event Action OnBackToSceneButtonPressed;
+        public event Action OnGoToMission;
         
         [Inject]
         private void Construct(
@@ -39,11 +41,21 @@ namespace _Project.Scripts.UI.Panel
         private void OnEnable()
         {
             _backSceneButton.onClick.AddListener(MoveBackToScene);
+
+            foreach (var missionView in _missionViews)
+            {
+                missionView.OnMissionChose += OnMoveToMission;
+            }
         }
 
         private void OnDisable()
         {
             _backSceneButton.onClick.RemoveListener(MoveBackToScene);
+
+            foreach (var missionView in _missionViews)
+            {
+                missionView.OnMissionChose -= OnMoveToMission;
+            }
         }
         
         private void OnDestroy()
@@ -53,7 +65,11 @@ namespace _Project.Scripts.UI.Panel
         
         public override void Show()
         {
-            SetMissionViews();
+            for (int i = 0; i < _missionService.Missions.Count; i++)
+            {
+                SetMission(_missionService.Missions[i], _missionViews[i]);
+            }
+            
             _tweenAnimationService.AnimateScale(transform);
         }
 
@@ -61,20 +77,21 @@ namespace _Project.Scripts.UI.Panel
         {
             _tweenAnimationService.AnimateScale(transform, true);
         }
-        
-        public void OnChangeLanguage()
-        {
-            SetMissionViews();
-        }
-        
+
         private void MoveBackToScene()
         {
             OnBackToSceneButtonPressed?.Invoke();
         }
 
-        private void SetMissionViews()
+        private void OnMoveToMission(Mission mission)
         {
-            
+            _missionService.SetCurrentMission(mission.Id);
+            OnGoToMission?.Invoke();
+        }
+
+        private void SetMission(Mission mission, MissionView missionView)
+        {
+            missionView.GetMission(mission);
         }
     }
 }

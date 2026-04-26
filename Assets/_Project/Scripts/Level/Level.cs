@@ -39,11 +39,12 @@ namespace _Project.Scripts.Level
 
         protected float LastSpawnTime;
 
+        protected EnemySpawner EnemySpawner;
+        
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
 
-        private EnemySpawner _enemySpawner;
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
@@ -136,7 +137,7 @@ namespace _Project.Scripts.Level
             if (_enemyWaves.Count == 0)
                 return;
 
-            _enemySpawner.SpawnWave(_enemyWaves[numberWave]);
+            EnemySpawner.SpawnWave(_enemyWaves[numberWave]);
         }
 
         protected void GoToNextScene()
@@ -148,7 +149,7 @@ namespace _Project.Scripts.Level
         {
             InitEnemyWaves();
 
-            _enemySpawner = new EnemySpawner(enemyService, _limitEnemies);
+            EnemySpawner = new EnemySpawner(enemyService, _limitEnemies);
 
             IsInitiatedSpawners?.Invoke();
         }

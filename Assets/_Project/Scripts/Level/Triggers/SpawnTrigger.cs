@@ -18,5 +18,10 @@ namespace _Project.Scripts.Level.Triggers
                 Deactivate();
             }
         }
+
+        public void OnOffEnemySpawn()
+        {
+            IsEnemySpawned = false;
+        }
     }
 }

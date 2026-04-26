@@ -17,8 +17,8 @@ namespace _Project.Scripts.Camera
 
         private void Update()
         {
-            HandleRotation();
-            HandleZoom();
+            // HandleRotation();
+            // HandleZoom();
         }
 
         private void HandleRotation()

@@ -28,6 +28,7 @@ namespace _Project.Scripts.Level
             _missionChoosingPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= _missionChoosingPanel.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
+            _missionChoosingPanel.OnGoToMission -= HandleMissionTransition;
         }
 
         public override async UniTask OnStartLevel()
@@ -46,6 +47,7 @@ namespace _Project.Scripts.Level
             _missionChoosingTrigger.OnOpenMissionPanel += UIRootView.UIRootButtons.Deactivate;
             _missionChoosingPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
             _missionChoosingPanel.OnBackToSceneButtonPressed += _missionChoosingPanel.Hide;
+            _missionChoosingPanel.OnGoToMission += HandleMissionTransition;
 
             await base.OnStartLevel();
             
@@ -53,6 +55,12 @@ namespace _Project.Scripts.Level
             _shopPanel.OnBackToSceneButtonPressed += HealthBar.Show;
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+        }
+
+        private void HandleMissionTransition()
+        {
+            ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
+            ViewFactory.UIScene.HandleGoToNextSceneButtonClick();
         }
     }
 }

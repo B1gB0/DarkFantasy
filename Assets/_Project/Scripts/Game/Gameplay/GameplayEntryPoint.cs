@@ -1,6 +1,7 @@
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
+using _Project.Scripts.Game.MainMenu;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using Cinemachine;
@@ -11,7 +12,6 @@ using Reflex.Core;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
-using YG;
 
 namespace _Project.Scripts.Game.Gameplay
 {
@@ -74,7 +74,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _uiScene = Instantiate(_sceneUIRootPrefab);
 
-            _viewFactory.GetUIRootAndUIScene(uiRoot, _uiScene, _container);
+            _viewFactory.GetEntities(uiRoot, _uiScene, _container, this);
 
             uiRoot.AttachSceneUI(_uiScene.gameObject);
 
@@ -85,14 +85,13 @@ namespace _Project.Scripts.Game.Gameplay
             // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
             //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
 
-            //Вот здесь можно писать код для механик и инициализации
-
             await InitData();
 
             await _dataBaseService.Init();
             await _enemyService.Init();
             await _playerService.Init();
             await _audioSoundsService.Init();
+            await _missionService.Init();
 
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 
@@ -113,7 +112,7 @@ namespace _Project.Scripts.Game.Gameplay
             floatingTextView.Deactivate();
 
             _floatingTextService.Init(floatingTextView);
-
+            
             await _level.OnStartLevel();
 
             var exitSceneSignalSubject = new Subject<Unit>();
@@ -124,24 +123,44 @@ namespace _Project.Scripts.Game.Gameplay
             return exitToSceneSignal;
         }
 
-        private async UniTask InitData()
-        {
-            _levelInitData = Instantiate(_levelInitData);
-            _enemyInitData = await _dataFactory.CreateSkeletonInitData();
-            _playerInitData = await _dataFactory.CreatePlayerInitData();
-        }
-
-        private void GetGameplayExitParameters()
+        public void GetGameplayExitParameters()
         {
             _uiRoot.UIRootButtons.Deactivate();
 
             int nextNumberLevel = _missionService.CurrentNumberLevel + NextOperationStep;
+            _missionService.SetCurrentNumberLevel(nextNumberLevel);
 
             var sceneName = _missionService.GetSceneNameByNumber(nextNumberLevel);
 
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName, nextNumberLevel);
 
             _exitParameters = new GameplayExitParameters(gameplayEnterParameters);
+        }
+
+        public void GetVillageHubExitParameters()
+        {
+            _missionService.SetCurrentNumberLevel(MinCountValue);
+            
+            var sceneName = Scenes.VillageHub;
+
+            var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
+
+            _exitParameters = new GameplayExitParameters(gameplayEnterParameters);
+        }
+
+        private void GetMainMenuExitParameters()
+        {
+            _uiRoot.UIRootButtons.Activate();
+
+            var mainMenuEnterParameters = new MainMenuEnterParameters();
+            _exitParameters = new GameplayExitParameters(mainMenuEnterParameters);
+        }
+
+        private async UniTask InitData()
+        {
+            _levelInitData = Instantiate(_levelInitData);
+            _enemyInitData = await _dataFactory.CreateSkeletonInitData();
+            _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
     }
 }

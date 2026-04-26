@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _Project.Scripts.Level;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
@@ -22,7 +23,7 @@ namespace _Project.Scripts.Services
 
         [field: SerializeField] public List<Mission> Missions { get; private set; } = new();
 
-        public Mission CurrentOperation { get; private set; }
+        public Mission CurrentMission { get; private set; }
         public int CurrentNumberLevel { get; private set; }
         public bool IsInitiated { get; private set; }
 
@@ -33,11 +34,11 @@ namespace _Project.Scripts.Services
 
             foreach (var mission in Missions)
             {
-                foreach (var operationData in _dataBaseService.Content.MissionsLocalization)
+                foreach (var missionData in _dataBaseService.Content.MissionsLocalization)
                 {
-                    if (mission.Id == operationData.Id)
+                    if (mission.Id == missionData.Id)
                     {
-                        mission.SetData(operationData);
+                        mission.SetData(missionData);
                     }
                 }
             }
@@ -52,9 +53,13 @@ namespace _Project.Scripts.Services
             return UniTask.CompletedTask;
         }
 
-        public void SetCurrentOperation(int index)
+        public void SetCurrentMission(string id)
         {
-            CurrentOperation = Missions[index];
+            foreach (var mission in Missions.Where(mission => id == mission.Id))
+            {
+                CurrentMission = mission;
+            }
+
             CurrentNumberLevel = DefaultNumberLevel;
         }
 
@@ -70,7 +75,7 @@ namespace _Project.Scripts.Services
 
         public string GetSceneNameByNumber(int number)
         {
-            return CurrentOperation.Id switch
+            return CurrentMission.Id switch
             {
                 Game.Constant.Missions.Graveyard => _graveyardSceneLevels[number],
                 _ => null

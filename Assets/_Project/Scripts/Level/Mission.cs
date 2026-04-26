@@ -18,6 +18,7 @@ namespace _Project.Scripts.Level
 
         public void SetData(MissionLocalizationData data)
         {
+            Id = data.Id;
             NameRu = data.NameRu;
             NameEn = data.NameEn;
             NameTr = data.NameTr;

@@ -8,6 +8,7 @@ using Reflex.Attributes;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Game.MainMenu
 {
@@ -60,6 +61,12 @@ namespace _Project.Scripts.Game.MainMenu
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
 
             _exitParameters = new MainMenuExitParameters(gameplayEnterParameters);
+        }
+        
+        private void OnDestroy()
+        {
+            YG2.SaveProgress();
+            _uiScene.OnGameplayStarted -= GetMainMenuExitParameters;
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Enemy;
 using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Services;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Level.Spawners
 {
@@ -17,6 +19,9 @@ namespace _Project.Scripts.Level.Spawners
 
         private int _enemyCounter;
         private int _limitEnemies;
+
+        public event Action OnPriestKilled;
+        public event Action OnAllEnemiesKilled;
 
         public EnemySpawner(IEnemyService enemyService, int limitEnemies)
         {
@@ -47,9 +52,9 @@ namespace _Project.Scripts.Level.Spawners
                 if (availableSpawnPoints.Count == MinValue)
                     break;
 
-                Vector3 candidatePoint = availableSpawnPoints[0];
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Skeleton enemy = SpawnSkeletonEnemy(candidatePoint, patrolPoints);
-                availableSpawnPoints.RemoveAt(0);
+                availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
@@ -59,9 +64,9 @@ namespace _Project.Scripts.Level.Spawners
                 if (availableSpawnPoints.Count == MinValue)
                     break;
 
-                Vector3 candidatePoint = availableSpawnPoints[0];
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 SkeletonHeavyArmor enemy = SpawnSkeletonHeavyArmorEnemy(candidatePoint, patrolPoints);
-                availableSpawnPoints.RemoveAt(0);
+                availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
@@ -71,9 +76,9 @@ namespace _Project.Scripts.Level.Spawners
                 if (availableSpawnPoints.Count == MinValue)
                     break;
 
-                Vector3 candidatePoint = availableSpawnPoints[0];
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 SkeletonRanger enemy = SpawnSkeletonRangerEnemy(candidatePoint, patrolPoints);
-                availableSpawnPoints.RemoveAt(0);
+                availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
@@ -83,9 +88,9 @@ namespace _Project.Scripts.Level.Spawners
                 if (availableSpawnPoints.Count == MinValue)
                     break;
 
-                Vector3 candidatePoint = availableSpawnPoints[0];
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
-                availableSpawnPoints.RemoveAt(0);
+                availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
@@ -178,7 +183,7 @@ namespace _Project.Scripts.Level.Spawners
 
             priest.NavMeshAgent.enabled = true;
 
-            priest.Die += OnKillSkeletonRanger;
+            priest.Die += OnKillPriest;
 
             priest.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
             priest.EnemyStateMachine.InitializeAllStates();
@@ -191,18 +196,39 @@ namespace _Project.Scripts.Level.Spawners
         {
             enemy.Die -= OnKillSkeleton;
             _enemyCounter--;
+            
+            CheckEnemiesCount();
         }
 
         private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
             enemy.Die -= OnKillSkeletonHeavyArmor;
             _enemyCounter--;
+            
+            CheckEnemiesCount();
         }
 
         private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
             enemy.Die -= OnKillSkeletonRanger;
             _enemyCounter--;
+            
+            CheckEnemiesCount();
+        }
+
+        private void OnKillPriest(Enemy.Enemy enemy)
+        {
+            enemy.Die -= OnKillPriest;
+            OnPriestKilled?.Invoke();
+            _enemyCounter--;
+            
+            CheckEnemiesCount();
+        }
+
+        private void CheckEnemiesCount()
+        {
+            if(_enemyCounter == MinValue)
+                OnAllEnemiesKilled?.Invoke();
         }
     }
 }
