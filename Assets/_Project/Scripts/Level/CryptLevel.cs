@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Level.Triggers;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Level
@@ -12,8 +13,6 @@ namespace _Project.Scripts.Level
         {
             IsInitiatedSpawners += SpawnStartWaves;
             _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
-            EnemySpawner.OnPriestKilled += OnPriestKilled;
-            _nextLevelTrigger.OnGoToNextLevel += ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
         }
         
         private void FixedUpdate()
@@ -28,8 +27,21 @@ namespace _Project.Scripts.Level
         {
             IsInitiatedSpawners -= SpawnStartWaves;
             _spawnCyclicWaveTrigger.OnSpawnEnemies -= SpawnCyclicWave;
+        }
+
+        private void OnDestroy()
+        {
             EnemySpawner.OnPriestKilled -= OnPriestKilled;
             _nextLevelTrigger.OnGoToNextLevel -= ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
+        }
+
+        public override async UniTask OnStartLevel()
+        {
+            await base.OnStartLevel();
+            
+            EnemySpawner.OnPriestKilled += OnPriestKilled;
+            
+            _nextLevelTrigger.OnGoToNextLevel += ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
         }
 
         private void SpawnStartWaves()

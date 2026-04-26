@@ -14,19 +14,18 @@ namespace _Project.Scripts.Level
         {
             IsInitiatedSpawners += SpawnStartWaves;
             _spawnLastWaveTrigger.OnSpawnEnemies += SpawnLastWave;
-            _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
             _spawnLastWaveTrigger.OnSpawnEnemies -= SpawnLastWave;
-            _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
         private void OnDestroy()
         {
             EnemySpawner.OnAllEnemiesKilled -= _nextLevelTrigger.Activate;
+            _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
         public override async UniTask OnStartLevel()
@@ -34,6 +33,8 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
+            
+            _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
         private void SpawnStartWaves()
