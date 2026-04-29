@@ -18,6 +18,7 @@ namespace _Project.Scripts.Projectile
         protected Transform Transform;
 
         protected ParticleEffectsService ParticleEffectsService;
+        protected AudioSoundsService AudioSoundsService;
 
         [field: SerializeField] public float LifeTime { get; private set; } = 4f;
 
@@ -66,9 +67,10 @@ namespace _Project.Scripts.Projectile
             ProjectileSpeed = bulletSpeed;
         }
 
-        public void GetServices(ParticleEffectsService particleEffectsService)
+        public void GetServices(ParticleEffectsService particleEffectsService, AudioSoundsService audioSoundsService)
         {
             ParticleEffectsService = particleEffectsService;
+            AudioSoundsService = audioSoundsService;
         }
 
         protected void CheckDefaultAndResourceLayer(Collider collision)

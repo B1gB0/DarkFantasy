@@ -45,6 +45,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Particles
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56e40c0b0a19da04bb5792da92c4f16c
+    m_Address: ExplosionFireballSound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a9fdc7f7ca96ac46b38a976437ff71a
     m_Address: MainMenu
     m_ReadOnly: 0
@@ -54,6 +60,12 @@ MonoBehaviour:
     m_Address: MissionChoosingPanel
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60dfdd5f3b522044d9dd0dd90f4c7195
+    m_Address: Fireball
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 640b5be3487905743af9da855935574a
     m_Address: ParticlesConfig

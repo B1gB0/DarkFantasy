@@ -4,10 +4,12 @@ namespace _Project.Scripts.Audio.Sounds
     {
         None = 0,
         LightArmorHit = 1,
-        PaperButton = 2,
-        HeavyArmorHit = 3,
-        UIButtonClick = 4,
-        SkeletonHit = 5,
-        MainMenuMusic = 6,
+        ExplosionFireballSound = 2,
+        Fireball = 3,
+        PaperButton = 4,
+        HeavyArmorHit = 5,
+        UIButtonClick = 6,
+        SkeletonHit = 7,
+        MainMenuMusic = 8,
     }
 }

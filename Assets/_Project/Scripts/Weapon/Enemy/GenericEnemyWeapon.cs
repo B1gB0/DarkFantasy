@@ -31,7 +31,7 @@ namespace _Project.Scripts.Weapon.Enemy
             _projectile.transform.position = _shootPoint.position;
             _projectile.SetCharacteristics(_damage, DefaultBulletSpeed);
             _projectile.SetDirection(_target.position);
-            _projectile.GetServices(ParticleEffectsService);
+            _projectile.GetServices(ParticleEffectsService, AudioSoundsService);
         }
 
         public virtual void SetData(Transform target, ObjectPool<T> projectilePool, float damage)
