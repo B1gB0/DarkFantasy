@@ -45,6 +45,7 @@ MonoBehaviour:
       _score: 7
       _stopDistance: 2
       _armor: 0
+      _speedProjectile: 0
     - _type: 1
       _health: 15
       _speed: 5
@@ -56,6 +57,7 @@ MonoBehaviour:
       _score: 7
       _stopDistance: 2
       _armor: 0
+      _speedProjectile: 0
     - _type: 2
       _health: 30
       _speed: 3
@@ -67,6 +69,7 @@ MonoBehaviour:
       _score: 20
       _stopDistance: 2
       _armor: 3
+      _speedProjectile: 0
     - _type: 3
       _health: 20
       _speed: 4
@@ -78,6 +81,7 @@ MonoBehaviour:
       _score: 15
       _stopDistance: 2
       _armor: 2
+      _speedProjectile: 0
     - _type: 4
       _health: 10
       _speed: 5
@@ -89,6 +93,7 @@ MonoBehaviour:
       _score: 10
       _stopDistance: 5
       _armor: 0
+      _speedProjectile: 10
     - _type: 5
       _health: 50
       _speed: 5
@@ -100,6 +105,7 @@ MonoBehaviour:
       _score: 25
       _stopDistance: 4
       _armor: 0
+      _speedProjectile: 7
     CharacteristicsLocalizationData:
     - _type: 0
       _nameRu: "\u0423\u0440\u043E\u043D"

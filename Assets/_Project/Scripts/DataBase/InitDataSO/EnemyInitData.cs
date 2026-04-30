@@ -14,6 +14,6 @@ namespace _Project.Scripts.DataBase.InitDataSO
         [field: SerializeField] public SkeletonHeavyArmor SkeletonHeavyArmorPrefab { get; private set; }
         [field: SerializeField] public Priest PriestPrefab { get; private set; }
         [field: SerializeField] public Arrow ArrowProjectilePrefab { get; private set; }
-        [field: SerializeField] public MagicBall MagicBallProjectilePrefab { get; private set; }
+        [field: SerializeField] public Fireball FireballProjectilePrefab { get; private set; }
     }
 }

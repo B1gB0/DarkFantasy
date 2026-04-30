@@ -1,8 +1,6 @@
-﻿using _Project.Scripts.Weapon.Enemy;
-
-namespace _Project.Scripts.Weapon.Player
+﻿namespace _Project.Scripts.Weapon.Player
 {
-    public class Sword : EnemyWeapon
+    public class Sword : Weapon
     {
         public override void Attack()
         {

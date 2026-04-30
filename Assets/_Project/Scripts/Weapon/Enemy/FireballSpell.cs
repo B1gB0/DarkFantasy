@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.Weapon.Enemy
 {
-    public class MagicSpellOfPriest : GenericEnemyWeapon<MagicBall>
+    public class FireballSpell : GenericWeapon<Fireball>
     {
         public override void Attack()
         {

@@ -51,7 +51,7 @@ namespace _Project.Editor
 
             EditorGUILayout.Space(10);
 
-            if (GUILayout.Button("Generate Sounds Enum", GUILayout.Height(30)))
+            if (GUILayout.Button("Generate Particles Enum", GUILayout.Height(30)))
             {
                 ParticlesEnumGenerator.Generate((ParticlesConfig)target);
             }

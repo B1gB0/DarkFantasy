@@ -34,6 +34,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44209a5af0e91d64a94fec6099f83a06
+    m_Address: ExplosionSoulSound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4bb320af82664234fb74c297726b5d5e
     m_Address: Graveyard
     m_ReadOnly: 0
@@ -72,10 +78,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7216cadd4cd6e8043ab6284a1adf750d
+    m_Address: SoulsElectricityCoil
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7643fe703cab67c47bc9fa7cae4862e1
     m_Address: Crypt
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a32874fb8979e24cb9800ed9fc6a374
+    m_Address: ExplosionSoulElecticitySound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89bc87b0ac4deae4f88c032303851fd1
+    m_Address: MagicExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 92221ef13f773d1489fb180cf9768fd3
     m_Address: PlayerInitData
@@ -93,6 +117,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 976fc7b967e8cb1448768255108a3c1a
+    m_Address: ShieldEffect
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9db5aa39effc85947bddf36c79a1fa7f
     m_Address: RedBloodHit
     m_ReadOnly: 0
@@ -103,6 +133,12 @@ MonoBehaviour:
     m_Address: TextView
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a98195e8fda6c03479668ff4ecb90a21
+    m_Address: ExplosionMagic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b51fae0fb753be7438ece33b15d99dc9
     m_Address: AudioConfig
@@ -119,6 +155,18 @@ MonoBehaviour:
     m_Address: DataContainer
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8705e7c8a5f1d1448afb93db42db5fe
+    m_Address: MagicChargeBlue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dfa66ed419e1131498d997a541ad45f0
+    m_Address: SoulCoil
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1871eaa3da924e498a54a74c28d628e
     m_Address: ExplosionFireball

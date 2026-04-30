@@ -2,5 +2,5 @@
 
 namespace _Project.Scripts.Weapon.Enemy
 {
-    public class Longbow : GenericEnemyWeapon<Arrow> { }
+    public class Longbow : GenericWeapon<Arrow> { }
 }

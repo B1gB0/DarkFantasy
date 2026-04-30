@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.Projectile
 {
-    public class MagicBall : EnemyProjectile
+    public class Fireball : EnemyProjectile
     {
         protected override void OnDisable()
         {

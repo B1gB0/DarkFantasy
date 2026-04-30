@@ -37,7 +37,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<SkeletonRanger> _skeletonRangerPool;
         private ObjectPool<Priest> _priestPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
-        private ObjectPool<MagicBall> _magicBallProjectilePool;
+        private ObjectPool<Fireball> _magicBallProjectilePool;
 
         public bool IsInitiated { get; private set; }
 
@@ -128,8 +128,9 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService);
-            
-            skeletonRanger.Longbow.SetData(_playerService.Player.transform, _arrowProjectilePool, data.Damage);
+
+            skeletonRanger.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
+            skeletonRanger.Longbow.SetData(_playerService.Player.transform, data.Damage);
 
             if (skeletonRanger.Health.TargetHealth <= MinValue)
             {
@@ -153,8 +154,15 @@ namespace _Project.Scripts.Services
                 _particleEffectsService,
                 _audioSoundsService);
 
-            priest.MagicSpell.GetServices(_audioSoundsService, _particleEffectsService);
-            priest.MagicSpell.SetData(_playerService.Player.transform, _magicBallProjectilePool, data.Damage);
+            priest.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
+            priest.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
+            priest.FireballSpell.SetData(_playerService.Player.transform, data.Damage);
+            
+            priest.Coil.SetData(_playerService.Player.transform, data.Damage);
+            priest.Coil.GetServices(_audioSoundsService, _particleEffectsService);
+            
+            priest.Omni.SetData(_playerService.Player.transform, data.Damage);
+            priest.Omni.GetServices(_audioSoundsService, _particleEffectsService);
 
             if (priest.Health.TargetHealth <= MinValue)
             {
@@ -237,8 +245,8 @@ namespace _Project.Scripts.Services
                 AutoExpand = IsAutoExpand,
             };
 
-            _magicBallProjectilePool = new ObjectPool<MagicBall>(
-                _enemyInitData.MagicBallProjectilePrefab,
+            _magicBallProjectilePool = new ObjectPool<Fireball>(
+                _enemyInitData.FireballProjectilePrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(MagicBallProjectilePool).transform)
             {

@@ -1,11 +1,12 @@
-﻿using _Project.Scripts.Enemy.StateMachine.Animation;
-using _Project.Scripts.Enemy.StateMachine.Animation.States;
+﻿using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public class AttackState : EnemyState
     {
+        private const float OmniRange = 2f;
+        
         private float _attackRange;
         
         private float _reloadDuration = 2f;
@@ -66,26 +67,22 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Aiming);
                             break;
                         case AttackSubState.Aiming:
+                            Enemy.OnReactState(false);
                             EnterAttackSubState(AttackSubState.Attack);
                             break;
                         case AttackSubState.Attack:
+                            Enemy.OnReactState(true);
                             EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
                 }
                 else if (Enemy.Type == EnemyType.Priest)
                 {
-                    switch (_currentSubState)
+                    if(Agent.stoppingDistance <= OmniRange)
+                        EnterInOmniAttack();
+                    else
                     {
-                        case AttackSubState.Reloading:
-                            EnterAttackSubState(AttackSubState.Aiming);
-                            break;
-                        case AttackSubState.Idle:
-                            EnterAttackSubState(AttackSubState.Attack);
-                            break;
-                        case AttackSubState.Attack:
-                            EnterAttackSubState(AttackSubState.Idle);
-                            break;
+                        EnterInCoilAttack();
                     }
                 }
                 else
@@ -124,6 +121,56 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 case AttackSubState.Idle:
                     AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
                     _subStateTimer = _aimDuration;
+                    break;
+                case AttackSubState.Coil:
+                    AnimStateMachine.EnterIn<CoilEnemyAnimatedState>();
+                    _subStateTimer = _attackDuration;
+                    break;
+                case AttackSubState.Omni:
+                    AnimStateMachine.EnterIn<OmniEnemyAnimatedState>();
+                    _subStateTimer = _attackDuration;
+                    break;
+            }
+        }
+
+        private void EnterInFireballAttack()
+        {
+            switch (_currentSubState)
+            {
+                case AttackSubState.Idle:
+                    EnterAttackSubState(AttackSubState.Attack);
+                    break;
+                case AttackSubState.Attack:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    break;
+            }
+        }
+
+        private void EnterInCoilAttack()
+        {
+            switch (_currentSubState)
+            {
+                case AttackSubState.Idle:
+                    EnterAttackSubState(AttackSubState.Coil);
+                    break;
+                case AttackSubState.Coil:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    break;
+            }
+        }
+
+        private void EnterInOmniAttack()
+        {
+            switch (_currentSubState)
+            {
+                case AttackSubState.Idle:
+                    EnterAttackSubState(AttackSubState.Aiming);
+                    break;
+                case AttackSubState.Aiming:
+                    EnterAttackSubState(AttackSubState.Omni);
+                    break;
+                case AttackSubState.Omni:
+                    EnterAttackSubState(AttackSubState.Idle);
                     break;
             }
         }

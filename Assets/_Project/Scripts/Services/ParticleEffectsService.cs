@@ -11,37 +11,39 @@ namespace _Project.Scripts.Services
     {
         private const string ParticlesConfigPath = "ParticlesConfig";
         private const string ParticleEffects = nameof(ParticleEffects);
-        
+
         private readonly Dictionary<ParticleType, ParticleSystem> _particles = new();
-        
+
         private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
-        
+        private Dictionary<ParticleType, HashSet<ParticleSystem>> _activeParticles;
+
         private IResourceService _resourceService;
         private Transform _particleParent;
-        
+
         public bool IsInitiated { get; private set; }
-        
+
         [Inject]
         private void Construct(IResourceService resourceService)
         {
             _resourceService = resourceService;
         }
-        
+
         public async UniTask Init()
         {
             if (IsInitiated)
                 return;
-            
+
             _particleParent = new GameObject(ParticleEffects).transform;
             _particleParent.SetParent(transform);
 
             _particlePool = new Dictionary<ParticleType, Queue<ParticleSystem>>();
-            
+            _activeParticles = new Dictionary<ParticleType, HashSet<ParticleSystem>>();
+
             await LoadParticles();
-            
+
             IsInitiated = true;
         }
-        
+
         private async UniTask LoadParticles()
         {
             ParticlesConfig config = await _resourceService.Load<ParticlesConfig>(ParticlesConfigPath);
@@ -58,7 +60,7 @@ namespace _Project.Scripts.Services
                     Debug.LogWarning($"Particle effect {effect.ParticleName} has no key, skipping.");
                     continue;
                 }
-                
+
                 GameObject prefab = await _resourceService.Load<GameObject>(effect.ParticleName);
                 if (prefab == null)
                 {
@@ -69,7 +71,8 @@ namespace _Project.Scripts.Services
                 ParticleSystem particle = prefab.GetComponent<ParticleSystem>();
                 if (particle == null)
                 {
-                    Debug.LogError($"Loaded GameObject for key {effect.ParticleName} does not have ParticleSystem component.");
+                    Debug.LogError(
+                        $"Loaded GameObject for key {effect.ParticleName} does not have ParticleSystem component.");
                     continue;
                 }
 
@@ -78,11 +81,11 @@ namespace _Project.Scripts.Services
                     Debug.LogWarning($"Could not parse ParticleType from {effect.ParticleName}, skipping.");
                     continue;
                 }
-                
+
                 _particles[type] = particle;
             }
         }
-        
+
         public void PlayEffect(ParticleType effectType, Vector3 position)
         {
             if (!IsInitiated)
@@ -105,15 +108,27 @@ namespace _Project.Scripts.Services
 
             await WaitForParticleSystem(particleEffect);
 
-            ReturnParticleSystemToPool(effectType, particleEffect);
+            if (particleEffect != null && particleEffect.gameObject.activeSelf)
+                ReturnParticleSystemToPool(effectType, particleEffect);
+        }
+        
+        public void StopEffect(ParticleType effectType)
+        {
+            if (!_activeParticles.TryGetValue(effectType, out var activeSet))
+                return;
+            
+            var toStop = new List<ParticleSystem>(activeSet);
+            foreach (var particleEffect in toStop)
+            {
+                if (particleEffect != null)
+                    ReturnParticleSystemToPool(effectType, particleEffect);
+            }
         }
 
         private ParticleSystem GetOrCreateParticleSystem(ParticleType effectType)
         {
             if (!_particlePool.ContainsKey(effectType))
-            {
                 _particlePool[effectType] = new Queue<ParticleSystem>();
-            }
 
             var pool = _particlePool[effectType];
 
@@ -125,6 +140,9 @@ namespace _Project.Scripts.Services
                     continue;
 
                 particleEffect.gameObject.SetActive(true);
+
+                RegisterActive(effectType, particleEffect);
+
                 return particleEffect;
             }
 
@@ -139,13 +157,26 @@ namespace _Project.Scripts.Services
             var prefab = _particles[effectType];
             var particleEffect = Instantiate(prefab, _particleParent);
 
+            RegisterActive(effectType, particleEffect);
+
             return particleEffect;
+        }
+
+        private void RegisterActive(ParticleType type, ParticleSystem ps)
+        {
+            if (!_activeParticles.ContainsKey(type))
+                _activeParticles[type] = new HashSet<ParticleSystem>();
+
+            _activeParticles[type].Add(ps);
         }
 
         private void ReturnParticleSystemToPool(ParticleType effectType, ParticleSystem particleSystem)
         {
             if (particleSystem == null)
                 return;
+
+            if (_activeParticles.TryGetValue(effectType, out var activeSet))
+                activeSet.Remove(particleSystem);
 
             particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             particleSystem.gameObject.SetActive(false);
@@ -167,19 +198,25 @@ namespace _Project.Scripts.Services
 
         private void OnDestroy()
         {
-            if (_particlePool == null)
-                return;
-
-            foreach (var pool in _particlePool.Values)
+            if (_activeParticles != null)
             {
-                foreach (var particleSystem in pool)
+                foreach (var set in _activeParticles.Values)
                 {
-                    if (particleSystem != null)
-                        Destroy(particleSystem.gameObject);
+                    foreach (var particleEffect in set)
+                        if (particleEffect != null) Destroy(particleEffect.gameObject);
                 }
+                _activeParticles.Clear();
             }
 
-            _particlePool.Clear();
+            if (_particlePool != null)
+            {
+                foreach (var pool in _particlePool.Values)
+                {
+                    foreach (var particleEffect in pool)
+                        if (particleEffect != null) Destroy(particleEffect.gameObject);
+                }
+                _particlePool.Clear();
+            }
         }
     }
 }

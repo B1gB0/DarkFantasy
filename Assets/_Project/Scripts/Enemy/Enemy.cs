@@ -71,6 +71,8 @@ namespace _Project.Scripts.Enemy
             CanFollow = canFollow;
         }
 
+        public virtual void OnReactState(bool isEnteredToState) { }
+
         protected virtual void OnDie()
         {
             // ResetModifiers();
