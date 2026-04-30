@@ -12,7 +12,7 @@ namespace _Project.Scripts.Projectile
                 gameObject.SetActive(false);
             }
 
-            CheckDefaultAndResourceLayer(collision);
+            CheckBordersLayers(collision);
         }
     }
 }

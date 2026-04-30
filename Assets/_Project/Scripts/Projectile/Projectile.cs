@@ -8,7 +8,7 @@ namespace _Project.Scripts.Projectile
     {
         private const float DefaultDirectionY = 0f;
         private const string Ground = nameof(Ground);
-        private const string Resources = nameof(Resources);
+        private const string Borders = nameof(Borders);
         private const string HighGround = nameof(HighGround);
 
         protected float Damage;
@@ -39,7 +39,7 @@ namespace _Project.Scripts.Projectile
 
         protected virtual void OnTriggerEnter(Collider collision)
         {
-            CheckDefaultAndResourceLayer(collision);
+            CheckBordersLayers(collision);
 
             if (collision.gameObject.TryGetComponent(out Enemy.Enemy enemy))
             {
@@ -73,10 +73,10 @@ namespace _Project.Scripts.Projectile
             AudioSoundsService = audioSoundsService;
         }
 
-        protected void CheckDefaultAndResourceLayer(Collider collision)
+        protected void CheckBordersLayers(Collider collision)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Ground)
-                || collision.gameObject.layer == LayerMask.NameToLayer(Resources)
+                || collision.gameObject.layer == LayerMask.NameToLayer(Borders)
                 || collision.gameObject.layer == LayerMask.NameToLayer(HighGround))
             {
                 gameObject.SetActive(false);
