@@ -1,19 +1,23 @@
-﻿using _Project.Scripts.Enemy.StateMachine.Animation.States;
+﻿using _Project.Scripts.Effects;
+using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public class AttackState : EnemyState
     {
-        private const float OmniRange = 2f;
-        
+        private const float OmniRange = 3f;
+        private const float OffsetHeight = 0.7f;
+        private const float AttackChance = 0.5f;
+
         private float _attackRange;
-        
+
         private float _reloadDuration = 2f;
         private float _aimDuration = 2f;
         private float _attackDuration = 2f;
-        
+
         private AttackSubState _currentSubState;
+        private PriestAttackState _lastPriestRangedAttack = PriestAttackState.None;
         private float _subStateTimer;
 
         public override void Enter()
@@ -24,7 +28,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Update()
         {
-            
         }
 
         public override void FixedUpdate()
@@ -56,7 +59,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 MinValue);
 
             _subStateTimer -= Time.fixedDeltaTime;
-            
+
             if (_subStateTimer <= MinValue)
             {
                 if (Enemy.Type == EnemyType.SkeletonRanger)
@@ -78,11 +81,19 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 }
                 else if (Enemy.Type == EnemyType.Priest)
                 {
-                    if(Agent.stoppingDistance <= OmniRange)
+                    float distance = Vector3.Distance(Enemy.transform.position, Player.transform.position);
+
+                    if (distance <= OmniRange)
+                    {
                         EnterInOmniAttack();
+                    }
                     else
                     {
-                        EnterInCoilAttack();
+                        PriestAttackState nextAttack = GetNextRangedAttack();
+                        if (nextAttack == PriestAttackState.Fireball)
+                            EnterInFireballAttack();
+                        else
+                            EnterInCoilAttack();
                     }
                 }
                 else
@@ -98,7 +109,15 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                     }
                 }
+
+                Debug.Log(_currentSubState);
             }
+        }
+        
+        private PriestAttackState GetNextRangedAttack()
+        {
+            _lastPriestRangedAttack = Random.value > AttackChance ? PriestAttackState.Fireball : PriestAttackState.Coil;
+            return _lastPriestRangedAttack;
         }
 
         private void EnterAttackSubState(AttackSubState newSubState)
@@ -143,6 +162,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 case AttackSubState.Attack:
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
+                default:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
+                    break;
             }
         }
 
@@ -156,6 +180,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 case AttackSubState.Coil:
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
+                default:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
+                    break;
             }
         }
 
@@ -164,13 +193,24 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             switch (_currentSubState)
             {
                 case AttackSubState.Idle:
+                    var position = Enemy.transform.position;
+                    position.y += OffsetHeight;
+                    ParticleEffectsService.PlayEffect(ParticleType.ShieldEffect, position);
+                    ParticleEffectsService.PlayEffect(ParticleType.MagicChargeBlue, position);
                     EnterAttackSubState(AttackSubState.Aiming);
                     break;
                 case AttackSubState.Aiming:
+                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
                     EnterAttackSubState(AttackSubState.Omni);
                     break;
                 case AttackSubState.Omni:
                     EnterAttackSubState(AttackSubState.Idle);
+                    break;
+                default:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
                     break;
             }
         }

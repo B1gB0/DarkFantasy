@@ -32,7 +32,7 @@ namespace _Project.Scripts.Level
         private void OnDestroy()
         {
             EnemySpawner.OnPriestKilled -= OnPriestKilled;
-            _nextLevelTrigger.OnGoToNextLevel -= ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
+            _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
         public override async UniTask OnStartLevel()
@@ -41,7 +41,7 @@ namespace _Project.Scripts.Level
             
             EnemySpawner.OnPriestKilled += OnPriestKilled;
             
-            _nextLevelTrigger.OnGoToNextLevel += ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters;
+            _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
         private void SpawnStartWaves()
@@ -61,6 +61,12 @@ namespace _Project.Scripts.Level
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
+        }
+        
+        private void HandleMissionTransition()
+        {
+            ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
+            ViewFactory.UIScene.HandleGoToNextSceneButtonClick();
         }
     }
 }

@@ -44,6 +44,7 @@ namespace _Project.Scripts.Level
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
 
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
@@ -58,12 +59,14 @@ namespace _Project.Scripts.Level
             IEnemyService enemyService,
             IPlayerService playerService,
             ParticleEffectsService particleEffectsService,
-            IShopService shopService)
+            IShopService shopService,
+            AudioSoundsService audioSoundsService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
             ShopService = shopService;
+            _audioSoundsService = audioSoundsService;
         }
 
         public void GetDependencies(
@@ -149,7 +152,7 @@ namespace _Project.Scripts.Level
         {
             InitEnemyWaves();
 
-            EnemySpawner = new EnemySpawner(enemyService, _limitEnemies);
+            EnemySpawner = new EnemySpawner(enemyService, _limitEnemies, _audioSoundsService, _particleEffectsService);
 
             IsInitiatedSpawners?.Invoke();
         }

@@ -16,6 +16,8 @@ namespace _Project.Scripts.Level.Spawners
         private const float OffsetYPolygonEnemies = 0.5f;
 
         private readonly IEnemyService _enemyService;
+        private readonly AudioSoundsService _audioSoundsService;
+        private readonly ParticleEffectsService _particleEffectsService;
 
         private int _enemyCounter;
         private int _limitEnemies;
@@ -23,17 +25,23 @@ namespace _Project.Scripts.Level.Spawners
         public event Action OnPriestKilled;
         public event Action OnAllEnemiesKilled;
 
-        public EnemySpawner(IEnemyService enemyService, int limitEnemies)
+        public EnemySpawner(
+            IEnemyService enemyService,
+            int limitEnemies,
+            AudioSoundsService audioSoundsService,
+            ParticleEffectsService particleEffectsService)
         {
             _enemyService = enemyService;
             _limitEnemies = limitEnemies;
+            _audioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
         }
 
         public void SpawnWave(EnemyWave wave)
         {
-            if(_enemyCounter > _limitEnemies - CorrectCountFactor)
+            if (_enemyCounter > _limitEnemies - CorrectCountFactor)
                 return;
-            
+
             List<Vector3> spawnPoints = wave.WaveSpawnPoints;
             List<Vector3> patrolPoints = wave.PatrolPoints;
 
@@ -58,7 +66,7 @@ namespace _Project.Scripts.Level.Spawners
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < heavyToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -70,7 +78,7 @@ namespace _Project.Scripts.Level.Spawners
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < rangersToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -82,7 +90,7 @@ namespace _Project.Scripts.Level.Spawners
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < priestToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -114,6 +122,7 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.Die += OnKillSkeleton;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
 
@@ -138,6 +147,7 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.Die += OnKillSkeletonHeavyArmor;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
 
@@ -162,12 +172,13 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.Die += OnKillSkeletonRanger;
 
             skeleton.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            skeleton.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
             skeleton.EnemyStateMachine.InitializeAllStates();
             skeleton.EnemyStateMachine.SwitchState<PatrolState>();
 
             return skeleton;
         }
-        
+
         private Priest SpawnPriest(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             Priest priest = _enemyService.CreatePriest();
@@ -186,6 +197,7 @@ namespace _Project.Scripts.Level.Spawners
             priest.Die += OnKillPriest;
 
             priest.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            priest.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
             priest.EnemyStateMachine.InitializeAllStates();
             priest.EnemyStateMachine.SwitchState<PatrolState>();
 
@@ -196,7 +208,7 @@ namespace _Project.Scripts.Level.Spawners
         {
             enemy.Die -= OnKillSkeleton;
             _enemyCounter--;
-            
+
             CheckEnemiesCount();
         }
 
@@ -204,7 +216,7 @@ namespace _Project.Scripts.Level.Spawners
         {
             enemy.Die -= OnKillSkeletonHeavyArmor;
             _enemyCounter--;
-            
+
             CheckEnemiesCount();
         }
 
@@ -212,7 +224,7 @@ namespace _Project.Scripts.Level.Spawners
         {
             enemy.Die -= OnKillSkeletonRanger;
             _enemyCounter--;
-            
+
             CheckEnemiesCount();
         }
 
@@ -221,13 +233,13 @@ namespace _Project.Scripts.Level.Spawners
             enemy.Die -= OnKillPriest;
             OnPriestKilled?.Invoke();
             _enemyCounter--;
-            
+
             CheckEnemiesCount();
         }
 
         private void CheckEnemiesCount()
         {
-            if(_enemyCounter == MinValue)
+            if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }
     }

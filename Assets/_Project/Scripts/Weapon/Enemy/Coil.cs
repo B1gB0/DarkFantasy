@@ -8,6 +8,7 @@ namespace _Project.Scripts.Weapon.Enemy
     public class Coil : Weapon
     {
         private const float Radius = 4f;
+        private const float OffsetHeight = 0.3f;
 
         [SerializeField] private LayerMask _playerLayerMask;
         
@@ -15,11 +16,13 @@ namespace _Project.Scripts.Weapon.Enemy
         
         public override void Attack()
         {
-            PerformSphereDamageNonAlloc(Target.position, Radius, _playerLayerMask, Damage);
-            ParticleEffectsService.PlayEffect(ParticleType.SoulCoil, Target.position);
+            var position = Target.position;
+            position.y += OffsetHeight;
+            PerformSphereDamageNonAlloc(position, Radius, _playerLayerMask, Damage);
+            ParticleEffectsService.PlayEffect(ParticleType.SoulCoil, position);
             AudioSoundsService.PlaySound(SoundsType.ExplosionSoulSound).Forget();
         }
-        
+
         private void PerformSphereDamageNonAlloc(Vector3 center, float radius, LayerMask playerLayer, float damage)
         {
             int count = Physics.OverlapSphereNonAlloc(center, radius, _results, playerLayer);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
+using _Project.Scripts.Services;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +16,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
 
         private EnemyState _currentState;
         private Dictionary<Type, EnemyState> _states;
+
+        private AudioSoundsService _audioSoundsService;
+        private ParticleEffectsService _particleEffectsService;
 
         private void Awake()
         {
@@ -44,7 +48,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
         {
             foreach (var state in _states.Values)
             {
-                state.Initialize(_enemy, _agent);
+                state.Initialize(_enemy, _agent, _particleEffectsService, _audioSoundsService);
             }
         }
 
@@ -70,6 +74,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
             _currentState?.Exit();
             _currentState = _states[newStateType];
             _currentState.Enter();
+        }
+        
+        public void GetServices(AudioSoundsService audioSoundsService, ParticleEffectsService particleEffectsService)
+        {
+            _audioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
         }
     }
 }
