@@ -113,7 +113,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Exit()
         {
-            
+            ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+            ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
         }
 
         private PriestAttackState GetNextRangedAttack()
