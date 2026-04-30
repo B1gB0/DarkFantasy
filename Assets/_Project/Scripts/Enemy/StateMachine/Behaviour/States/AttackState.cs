@@ -7,7 +7,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
     public class AttackState : EnemyState
     {
         private const float OmniRange = 3f;
-        private const float OffsetHeight = 0.7f;
+        private const float OffsetHeight = 1f;
         private const float AttackChance = 0.5f;
 
         private float _attackRange;
@@ -105,15 +105,17 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                         case AttackSubState.Idle:
                             EnterAttackSubState(AttackSubState.Attack);
-                            Player.Health.TakeDamage(Enemy.Data.Damage, Player.PlayerCharacteristics.Armor);
                             break;
                     }
                 }
-
-                Debug.Log(_currentSubState);
             }
         }
-        
+
+        public override void Exit()
+        {
+            
+        }
+
         private PriestAttackState GetNextRangedAttack()
         {
             _lastPriestRangedAttack = Random.value > AttackChance ? PriestAttackState.Fireball : PriestAttackState.Coil;

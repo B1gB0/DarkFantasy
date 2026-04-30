@@ -84,6 +84,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService);
+            
+            skeleton.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
             if (skeleton.Health.TargetHealth <= MinValue)
             {
@@ -106,6 +108,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService);
+            
+            skeletonHeavyArmor.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
             if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
             {

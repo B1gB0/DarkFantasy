@@ -29,7 +29,7 @@ namespace _Project.Scripts.DataBase.Data
         public float RangeAttack => _rangeAttack;
         public int Experience => _experience;
         public int Score => _score;
-        public int StopDistance => _stopDistance;
+        public float StopDistance => _stopDistance;
         public float Armor => _armor;
         public float SpeedProjectile => _speedProjectile;
     }

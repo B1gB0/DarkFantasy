@@ -40,10 +40,10 @@ MonoBehaviour:
       _rotationSpeed: 250
       _damage: 3
       _fireRate: 0
-      _rangeAttack: 5
+      _rangeAttack: 2
       _experience: 8
       _score: 7
-      _stopDistance: 2
+      _stopDistance: 1
       _armor: 0
       _speedProjectile: 0
     - _type: 1
@@ -64,11 +64,11 @@ MonoBehaviour:
       _rotationSpeed: 250
       _damage: 8
       _fireRate: 0
-      _rangeAttack: 3
+      _rangeAttack: 2
       _experience: 15
       _score: 20
-      _stopDistance: 2
-      _armor: 3
+      _stopDistance: 1
+      _armor: 2
       _speedProjectile: 0
     - _type: 3
       _health: 20
@@ -103,7 +103,7 @@ MonoBehaviour:
       _rangeAttack: 5
       _experience: 20
       _score: 25
-      _stopDistance: 4
+      _stopDistance: 5
       _armor: 0
       _speedProjectile: 7
     CharacteristicsLocalizationData:
