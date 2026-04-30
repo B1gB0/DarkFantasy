@@ -14,7 +14,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         private float _reloadDuration = 2f;
         private float _aimDuration = 2f;
+        private float _idleDuration = 1f;
         private float _attackDuration = 2f;
+        private float _priestAimDuration = 1f;
 
         private AttackSubState _currentSubState;
         private PriestAttackState _lastPriestRangedAttack = PriestAttackState.None;
@@ -142,7 +144,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     break;
                 case AttackSubState.Idle:
                     AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
-                    _subStateTimer = _aimDuration;
+                    _subStateTimer = _idleDuration;
                     break;
                 case AttackSubState.Coil:
                     AnimStateMachine.EnterIn<CoilEnemyAnimatedState>();
@@ -203,11 +205,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     EnterAttackSubState(AttackSubState.Aiming);
                     break;
                 case AttackSubState.Aiming:
-                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
-                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
+                    _subStateTimer = _priestAimDuration;
                     EnterAttackSubState(AttackSubState.Omni);
                     break;
                 case AttackSubState.Omni:
+                    ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
+                    ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
                 default:

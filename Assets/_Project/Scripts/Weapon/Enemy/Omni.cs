@@ -8,7 +8,7 @@ namespace _Project.Scripts.Weapon.Enemy
     public class Omni : Weapon
     {
         private const float Radius = 6f;
-        private const float Force = 200f;
+        private const float Force = 150f;
         private const float OffsetHeight = 1f;
         
         [SerializeField] private LayerMask _playerLayerMask;
@@ -34,7 +34,7 @@ namespace _Project.Scripts.Weapon.Enemy
                     {
                         Vector3 direction = (player.transform.position - position).normalized;
                         direction.y = 0f;
-                        player.Rigidbody.AddForce(direction * Force, ForceMode.Impulse);
+                        player.Rigidbody.AddForce(direction * Force, ForceMode.Acceleration);
                     }
                 }
             }
