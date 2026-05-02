@@ -65,12 +65,26 @@ namespace _Project.Scripts.Player
 
         private void Move(Vector3 moveDirection)
         {
-            Debug.Log("Moving " + moveDirection);
             Vector3 velocity = moveDirection * _player.PlayerCharacteristics.MoveSpeed;
-            velocity.y = 0;
+            
+            float rayLength = 0.5f; 
+            Vector3 rayStart = _player.transform.position + Vector3.up * 0.1f;
+
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
+            {
+                velocity = Vector3.ProjectOnPlane(velocity, hit.normal);
+                
+                if (velocity.y < 0)
+                {
+                    velocity.y -= 2f;
+                }
+            }
+            else
+            {
+                velocity.y = _player.Rigidbody.velocity.y;
+            }
 
             _player.Rigidbody.velocity = velocity;
-
             _playerAnimatedState.OnMove(_currentSpeed);
         }
 
