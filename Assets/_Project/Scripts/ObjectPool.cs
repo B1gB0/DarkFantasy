@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -35,15 +36,12 @@ namespace _Project.Scripts
 
         private bool HasFreeElement(out T element)
         {
-            foreach (var objects in _pool)
+            foreach (var objects in _pool.Where(objects => objects != null && !objects.gameObject.activeInHierarchy))
             {
-                if (!objects.gameObject.activeInHierarchy)
-                {
-                    element = objects;
-                    objects.gameObject.SetActive(true);
+                element = objects;
+                objects.gameObject.SetActive(true);
 
-                    return true;
-                }
+                return true;
             }
 
             element = null;
