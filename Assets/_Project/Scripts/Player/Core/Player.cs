@@ -36,7 +36,7 @@ namespace _Project.Scripts.Player.Core
         public PlayerAnimatedState PlayerAnimatedState => _playerAnimatedState;
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
-        public PlayerAttackState PlayerAttackState { get; private set; }
+        public PlayerAttackState PlayerAttackState => _playerAttackState; 
 
         public bool CanFollow { get; private set; } = true;
 
@@ -112,11 +112,6 @@ namespace _Project.Scripts.Player.Core
         public void AnimationEvent_AllowCombo()
         {
             _playerAttackState.AllowCombo();
-        }
-
-        public void AnimationEvent_QueueNextCombo()
-        {
-            _playerAttackState.QueueNextCombo();
         }
 
         public void AnimationEvent_StartDamage()

@@ -15,8 +15,9 @@ namespace _Project.Scripts.Player.Input
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
-        public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.IsPressed();
-        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.IsPressed();
+        
+        public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.WasPressedThisFrame();
+        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame();
 
         private void Awake()
         {
@@ -29,12 +30,16 @@ namespace _Project.Scripts.Player.Input
 
             _inputSystem.PLayer.Move.performed += OnMove;
             _inputSystem.PLayer.Move.canceled += OnMove;
+            
+            _inputSystem.PLayer.Attack.performed += OnAttack;
         }
 
         private void OnDisable()
         {
             _inputSystem.PLayer.Move.performed -= OnMove;
             _inputSystem.PLayer.Move.canceled -= OnMove;
+            
+            _inputSystem.PLayer.Attack.performed -= OnAttack;
 
             _inputSystem.PLayer.Disable();
         }
@@ -53,7 +58,6 @@ namespace _Project.Scripts.Player.Input
         private void OnMoveWithJoystick()
         {
             MoveDirection = _joystick.Direction;
-
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
         }
 
@@ -67,6 +71,7 @@ namespace _Project.Scripts.Player.Input
             else if (context.canceled)
             {
                 MoveDirection = Vector2.zero;
+                IsMoveInputPerformed = false;
             }
         }
         

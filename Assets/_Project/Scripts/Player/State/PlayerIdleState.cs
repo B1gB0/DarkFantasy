@@ -17,6 +17,7 @@ namespace _Project.Scripts.Player
 
         public void Enter()
         {
+            _player.PlayerAnimatedState.OnMove(0f);
         }
 
         public void Update()

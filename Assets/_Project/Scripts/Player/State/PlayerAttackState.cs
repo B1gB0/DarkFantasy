@@ -5,17 +5,14 @@ namespace _Project.Scripts.Player
 {
     public class PlayerAttackState : IPlayerState
     {
-        private const int MinCombo = 0;
-        private const int FirstStrike = 1;
         private const int MaxCombo = 3;
 
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _anim;
         private readonly PlayerStateMachine _stateMachine;
 
-        private bool _canQueueNextAttack;
-        private bool _nextAttackQueued;
-        private bool _attackBuffered;        // ← буфер нажатия
+        private bool _isComboWindowOpen; 
+        private bool _isAttackBuffered;  
         private int _comboCounter;
 
         public PlayerAttackState(Core.Player player)
@@ -30,9 +27,7 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
-            
-            if (_comboCounter == MinCombo)
-                StartCombo();
+            StartCombo();
         }
 
         public void Update() { }
@@ -46,53 +41,54 @@ namespace _Project.Scripts.Player
 
         private void StartCombo()
         {
-            _comboCounter = FirstStrike;
-            _canQueueNextAttack = false;
-            _nextAttackQueued = false;
-            _attackBuffered = false;          // сбрасываем буфер
+            _comboCounter = 1;
+            _isComboWindowOpen = false;
+            _isAttackBuffered = false;
+            
             _anim.OnAttack(true);
             _anim.OnComboChanged(_comboCounter);
         }
-
-        // Вызывается из анимации, когда можно прервать текущий удар следующим
+        
         public void AllowCombo()
         {
-            _canQueueNextAttack = true;
+            _isComboWindowOpen = true;
 
-            // Если нажатие ждало в буфере — сразу обрабатываем
-            if (_attackBuffered)
+            if (_isAttackBuffered)
             {
-                _attackBuffered = false;
-                TryContinueCombo();
+                ContinueCombo();
             }
         }
 
-        public void QueueNextCombo()
+        private void OnAttackButtonPressed()
         {
-            if (_comboCounter > MaxCombo)
-            {
-                _canQueueNextAttack = false;
-                return;
-            }
+            if (_comboCounter >= MaxCombo) 
+                return; 
 
+            if (_isComboWindowOpen)
+            {
+                ContinueCombo(); 
+            }
+            else
+            {
+                _isAttackBuffered = true; 
+            }
+        }
+
+        private void ContinueCombo()
+        {
+            _isAttackBuffered = false;
+            _isComboWindowOpen = false; 
+            
             _comboCounter++;
-            _canQueueNextAttack = false;
+            _anim.OnComboChanged(_comboCounter);
         }
 
         public void StartDamageWindow() => _player.Sword.ActivateCollider();
         public void EndDamageWindow()   => _player.Sword.DeactivateCollider();
 
+
         public void EndAttack()
         {
-            if (_nextAttackQueued)
-            {
-                _nextAttackQueued = false;
-                _canQueueNextAttack = false;
-                _attackBuffered = false;
-                _anim.OnAttack(true);
-                return;
-            }
-
             ResetCombo();
 
             if (_player.InputController.IsRollInputPerformed)
@@ -105,36 +101,10 @@ namespace _Project.Scripts.Player
 
         private void ResetCombo()
         {
-            _comboCounter = MinCombo;
-            _canQueueNextAttack = false;
-            _attackBuffered = false;
-            _nextAttackQueued = false;
+            _comboCounter = 0;
+            _isComboWindowOpen = false;
+            _isAttackBuffered = false;
             _anim.OnAttack(false);
-            _anim.OnComboChanged(_comboCounter);
-        }
-
-        private void OnAttackButtonPressed()
-        {
-            // Если окно открыто и комбо ещё не закончено – выполняем немедленно
-            if (_canQueueNextAttack && _comboCounter < MaxCombo)
-            {
-                TryContinueCombo();
-            }
-            else
-            {
-                // Иначе кладём нажатие в буфер (даже если окно закрыто или комбо достигло максимума)
-                _attackBuffered = true;
-            }
-        }
-
-        private void TryContinueCombo()
-        {
-            if (!_canQueueNextAttack || _comboCounter >= MaxCombo)
-                return;
-
-            _comboCounter++;
-            _canQueueNextAttack = false;
-            _nextAttackQueued = true;
             _anim.OnComboChanged(_comboCounter);
         }
     }
