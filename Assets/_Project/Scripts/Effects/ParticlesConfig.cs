@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+#endif 
 using UnityEngine;
 
 namespace _Project.Scripts.Effects

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Audio.Sounds;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+#endif
 using UnityEngine;
 
 namespace _Project.Scripts.Audio
