@@ -961,6 +961,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4068145252175207151, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 42.8893
+      objectReference: {fileID: 0}
+    - target: {fileID: 4068145252175207151, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 17.1107
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -178038262655079599, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_characterSpacing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828146642099613477, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4974800715139726277, guid: 588d81659f71eb74d8cc80e902c670d3, type: 3}
       propertyPath: m_Name
       value: MissionView

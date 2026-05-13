@@ -4,6 +4,7 @@ using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Game.MainMenu;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.StateMachine.States;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -118,6 +119,8 @@ namespace _Project.Scripts.Game.Gameplay
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);
+            
+            uiRoot.UIStateMachine.EnterIn<GameplayState>();
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 

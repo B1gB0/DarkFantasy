@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.UI.Panel;
+using _Project.Scripts.UI.StateMachine.States;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
