@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 512391555351ef44380a87b7e2844db9
   m_SerializeEntries:
+  - m_GUID: 040bf1a9f4cbd684ead9ae7289cc1742
+    m_Address: ActionMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Music
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 090bb86a7910c324f9afdde3c0f6f9b7
     m_Address: MainMenuMusic
     m_ReadOnly: 0
@@ -44,6 +50,12 @@ MonoBehaviour:
     m_Address: Graveyard
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bc4aa1a0e0b9c7468357dca21631080
+    m_Address: VillageMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Music
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 564c6c42da1a92843931dad242a37b1e
     m_Address: BasicHit

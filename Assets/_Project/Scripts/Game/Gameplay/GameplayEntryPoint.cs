@@ -1,3 +1,4 @@
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
@@ -125,6 +126,8 @@ namespace _Project.Scripts.Game.Gameplay
 
         public void GetGameplayExitParameters()
         {
+            _audioSoundsService.PlayMusic(SoundsType.ActionMusic);
+            
             _uiRoot.UIRootButtons.Deactivate();
 
             int nextNumberLevel = _missionService.CurrentNumberLevel + NextOperationStep;
@@ -139,6 +142,8 @@ namespace _Project.Scripts.Game.Gameplay
 
         public void GetVillageHubExitParameters()
         {
+            _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
+            
             _missionService.SetCurrentNumberLevel(MinCountValue);
             
             var sceneName = Scenes.VillageHub;

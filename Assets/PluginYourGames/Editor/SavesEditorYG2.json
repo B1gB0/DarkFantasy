@@ -3,13 +3,13 @@
   "AcumulatedScore": 0,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 4,
-  "DamageAttributeNumber": 3,
+  "DamageAttributeNumber": 4,
   "ArmorAttributeNumber": 1,
   "PlayerCharacteristics": {
     "MaxHealth": 110.0,
-    "TargetHealth": 110.0,
+    "TargetHealth": 75.0,
     "Armor": 3.0,
-    "Damage": 8.0,
+    "Damage": 9.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0
   },
@@ -27,5 +27,5 @@
     false,
     false
   ],
-  "idSave": 10
+  "idSave": 13
 }

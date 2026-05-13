@@ -56,6 +56,8 @@ namespace _Project.Scripts.Game.MainMenu
 
         private void GetMainMenuExitParameters()
         {
+            _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
+            
             var sceneName = Scenes.VillageHub;
 
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
