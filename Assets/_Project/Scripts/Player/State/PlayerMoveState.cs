@@ -61,6 +61,8 @@ namespace _Project.Scripts.Player
         public void Exit()
         {
             _player.Rigidbody.velocity = Vector3.zero;
+            
+            _playerAnimatedState.OnMove(0f); 
         }
 
         private void Move(Vector3 moveDirection)
