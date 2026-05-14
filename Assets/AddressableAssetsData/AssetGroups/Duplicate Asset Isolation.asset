@@ -1,0 +1,564 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Duplicate Asset Isolation
+  m_EditorClassIdentifier: 
+  m_GroupName: Duplicate Asset Isolation
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b77669c455ec97e4794a719cc992d063
+  m_SerializeEntries:
+  - m_GUID: 005f66ab100af934fb2385f4113da041
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/SM_Chr_Attach_Skeleton_HeavyArmor_Helmet_01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06e7a45b7b714ce4daa203114e55d6b6
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Textures/Emissive/PolygonDarkFantasy_Emissive_01_A.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0dcad412e4df7364880958fbda1ede6b
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/Characters.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f69fd4f4ad106447896fb775199ed37
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f88d9f6b3ab59549b9ca29527095481
+    m_Address: Assets/_Project/Sources/Weapon/Ventuar/RPGWeaponsPack - DEMO/FileAssets/Models/MetalSword.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1067eff693e77f143bc9982fef2aa0a1
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_BackwardRight.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11a045f441002b5459a5c56866b3f305
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect1H01_R.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11d5093c8a733f64099488183b5e3f9a
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_BackwardRight.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1be7191fb79d4cc4e913b1a6eb742136
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle01-Idle04.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ee3692ad357102419809ccbcace4969
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_Left.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f15e0650d22c9d48befae3bb44bc43d
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_BackwardLeft.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 227f1376ce7f33d47aefa549f14deea9
+    m_Address: Assets/_Project/Animation/Mixamo/Controllers/Priest/PriestController.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23b44d1e6bff44e45bb420ba5d7bbdb0
+    m_Address: Assets/_Project/Animation/RollForward.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 244e77a7e908f804a893608632af5936
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/HumanF@CastingIdle01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 245c79e92cc471e429174ceadfdbeea1
+    m_Address: Assets/_Project/Sources/Weapon/Blink/Art/Weapons/LowPoly/FreeSwords/Sword15/Sword15_Material_Lava.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24b1b054ed689e44ba553f9841ebca06
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle02.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25694435ea1b9ea429f4504b64e52084
+    m_Address: Assets/_Project/Animation/Mixamo/zombie/SM_Chr_Ghoul_01 Variant.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 262e1ff343fdb404388bd8a03d3f81d3
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword Idle.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28d2e6e12d10cb447965c9be57bc8475
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle04.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d87094962c8b48478651fa8fe1f7a5a
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_Forward.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2de05214307d17e4a8276713c0e65894
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Textures/Misc/PolygonDarkFantasy_Texture_01_Normals.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34ced3481cc3833478728f31579a88c9
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle03.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38a45c96315321348952eec2abacbd04
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/HumanF@CastingEnter01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d3a9488617ac804c814daed13070d19
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/SM_Chr_Ghoul_01 Variant@Run
+      With Sword.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e059326bb875b240a56b90440e80af5
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Textures/Alts/PolygonDarkFantasy_Texture_01_A.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 403eee8fa6e19784697f553f40f05bdb
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle03-Idle01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40786e67f3ceb094b9c00543f295cb5f
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_Forward.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40f31d56dc7516649865eed46b83988c
+    m_Address: Assets/DoubleL/Demo/Anim/Hit_F_2_InPlace.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 416aa3d63d96c524797418e7eb5e423d
+    m_Address: Assets/_Project/Sources/Weapon/Ventuar/RPGWeaponsPack - DEMO/FileAssets/Materials/RPGWeaponsPackMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41d46bdcd89372d4cbebcae1722e8bdc
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/SM_Chr_Attach_Hunter_Hat_Male_01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 435a4728904deaf41a2ea8928e6c2c35
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_Left.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 465b5065a5f4b7b459b45aecc7d6af85
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/SM_Chr_Ghoul_01 Variant@Two
+      Handed Sword Death.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48f7cba4cf4954c4c911dff9bf354e7b
+    m_Address: Assets/DoubleL/Demo/Anim/Hit_F_2.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d9cf7b9311d8cc47a342ef873790660
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Call/HumanF@MagicAttackCall1H01_L
+      - Load.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 507ad7dd923b35e4eb751a70f2be753a
+    m_Address: Assets/_Project/Sources/Weapon/Blink/Art/Weapons/LowPoly/FreeSwords/Sword15/Textures/Sword15_Emission_Lava.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5088dccb2ba6bc8478f1dc0919d3e8cd
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_ForwardRight.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 523edb3deb197a847a5b61065756cd58
+    m_Address: Assets/DoubleL/Demo/Anim/Hit_F_1_InPlace.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54b773f2a8f5b53448efd5850de88d34
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword High Spin Attack.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55e78b6730ed230459cbed420ce79209
+    m_Address: Assets/_Project/Sources/Weapon/Blink/Art/Weapons/LowPoly/FreeSwords/Sword15/Textures/Sword15_Normal_Lava.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 563d841b0fc8f364387e92a6c882ce39
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/SM_Chr_Ghoul_01 Variant@Stable
+      Sword Outward Slash.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5694ab536c5e48a45873f22b86e57688
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_Backward.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56cba0ea1d76d384693d18057e1b7af8
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Textures/Misc/PolygonDarkFantasy_Metallic_01.tga
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59ef54daad9fd294fac0d79b9b118ce0
+    m_Address: Assets/_Project/Animation/Animation/OneHand_Up_Attack_A_1_InPlace.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 630ae93700a03ba44840c92655035d3e
+    m_Address: Assets/_Project/Sources/Weapon/Ventuar/RPGWeaponsPack - DEMO/FileAssets/Textures/RPGWeaponsPackTextureAtlas.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67f25c2074ce59a47b3cd1815158ed73
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/SM_Chr_Attach_Priest_Fangs_01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dec26bdc2e9f594d81e1193ba4f34b0
+    m_Address: Assets/_Project/Sources/Weapon/Blink/Art/Weapons/LowPoly/FreeSwords/Sword15/Textures/Sword15_Albedo_Lava.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f0cd71258e8e8848a2d466b17b008fb
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword Slash.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6fdb1182b412d014e8f6c12f3296fd26
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Omnidirectional/HumanF@MagicAttackOmni01
+      - Load.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70a2ad9ea5ea5cb49ab388ad93a00d27
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_Right.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72b86c822a91b5c4da93cfdd8382c30e
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect2H01
+      - Cast.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75c822b01a637d547abc69e6f1f590b4
+    m_Address: Assets/_Project/Sources/Effects/Epic Toon FX/Textures/glow1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77673eecac9076048b4b09f89e0c3d02
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_ForwardLeft.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79cdddc1602686641a39ff115c631faa
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/HumanF@CastingDamage01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7faee80661832404fb70bfd08f587fe0
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/SM_Chr_Attach_Priest_Hat_01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 808b2b7b5472cf14fb0aa0dc0a47f74a
+    m_Address: Assets/_Project/Animation/Animation/OneHand_Up_Attack_A_2_InPlace.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80cfde52f90d3ae4893fe9397c7538d6
+    m_Address: Assets/_Project/Animation/Animation/OneHand_Up_Attack_A_3_InPlace.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e77bc614e777934eb1106b82e6a0bc5
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Call/HumanF@MagicAttackCall1H01_L
+      - Cast.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ec8ddc87a6707b42acc9ddd8745a2a0
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/Capes.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 906ef530be502594abbfffe31c329eaf
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/SM_Chr_Ghoul_01 Variant@Standing
+      Idle.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90b04780ad824924888cc4db3e548a8c
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/Standing Melee Attack Downward.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 960e31fac3987274ca92225d1774a808
+    m_Address: Assets/_Project/Sources/Weapon/Blink/Art/Weapons/LowPoly/FreeSwords/Sword15/Textures/Sword15_Metallic_Lava.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d67aee64dada5e44bed4a0249943485
+    m_Address: Assets/DoubleL/Demo/Anim/Hit_F_1.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5abdb50516a8914a845ecf44753d514
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Omnidirectional/HumanF@MagicAttackOmni01
+      - Cast.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a82fb70254a844243a7fe7e02b1ff809
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_ForwardRight.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a90082ab14257bd4ab06ddd731487303
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Models/SM_Chr_Attach_Hunter_Hair_Male_01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9a94d827f7df1244b309db5dae9cebb
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle01-Idle03.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab2ab8d996350a44e9bd9e5d76f70e8c
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/Great Sword Slash
+      (1).anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aee6e53bac94cf340afd69e71388de0c
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect2H01
+      - Load.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afc0d7b05fc184d49a7e863d9eec0f9e
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect2H01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1fe2464c22dc994ca6fd84e711e5fa2
+    m_Address: Assets/_Project/Sources/Weapon/Ventuar/RPGWeaponsPack - DEMO/FileAssets/Models/MetalBroadsword.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3b7631decc86f04bb15e95e6e0c6a0c
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/HumanF@CastingExit01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b67fd4a8898bf2f4988f794fffa9571f
+    m_Address: Assets/_Project/Animation/Mixamo/Controllers/SkeletonHeavyArmor/SM_Chr_Skeleton_HeavyArmor_01
+      Variant.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7ff898919f115a4095d79af0129756f
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_Backward.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b85322a461675da47a0a6adef68e8d9c
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Call/HumanF@MagicAttackCall1H01_L.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8885549427338747849450925b4d084
+    m_Address: Assets/DoubleL/One Hand Up/Movement/Run/Base/OneHand_Up_Run_F.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc299d160c23aa24db759359ad96a148
+    m_Address: Assets/_Project/Animation/Mixamo/Sword/SM_Chr_Ghoul_01 Variant@Standing
+      Melee Attack Horizontal.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdb2264de10c42b4799822b736b5de9c
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_ForwardLeft.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2b59314a9398b04eaab661554f89a87
+    m_Address: Assets/DoubleL/One Hand Up/Movement/Idle/Idle/OneHand_Up_Stand_Idle_A_2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d476cbbd31cb2bd4cbac86893bc312e5
+    m_Address: Assets/_Project/Animation/Mixamo/Controllers/Skeleton/SM_Chr_Skeleton_01
+      Variant.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d93d8ba850c08294694201eba8d453b1
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword Idle (2).fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da2ed2e1aae1da34684fe894590efa54
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle02-Idle01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: daf6bb02eddf35e4e8cfcb493de60917
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Walk/HumanF@Walk01_BackwardLeft.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc69765f854e383489d49d9832b0a265
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect1H01_R
+      - Load.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e20e79b93409bbf4d848255c88e74bd0
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Directional/HumanF@MagicAttackDirect1H01_R
+      - Cast.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4554e344c29aeb4087271d927e625f2
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Movement/Run/HumanF@Run01_Right.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e653836c30661fe419b8992e230ca189
+    m_Address: Assets/_Project/Sources/Effects/Epic Toon FX/Materials/Basics/glow1_ADD.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8d5590101a1c1c4982ff068fa732baa
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword Walk.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9e43f7f18e02bb40a6993e7f1cf4a53
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/POLYGON SYNTY/PolygonDarkFantasy/Materials/Alts/PolygonDarkFantasy_Mat_01_A.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3894581926850a43be23e43d5465af5
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle01-Idle02.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f54dbcdc3660d5e439c13b9267774092
+    m_Address: Assets/_Project/Animation/Mixamo/Controllers/Player/SM_Chr_Hunter_Male_01.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f93ee15cf869aee4d828618c15ad9c15
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Idles/HumanF@Idle04-Idle01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd7fc9de10eccf84fb27a0ee9cb21b90
+    m_Address: Assets/_Project/Animation/Mixamo/Two-Handed Sword/SM_Chr_Ghoul_01
+      Variant@Great Sword Run.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe8a8266cb489a74fb5d6d3751e9ab0e
+    m_Address: Assets/_Project/Sources/Characters and Envitoimnet/Kevin Iglesias/Human
+      Animations/Animations/Female/Combat/Spellcasting/MagicAttacks/Omnidirectional/HumanF@MagicAttackOmni01.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: fd9fc6533fdc9384cb6d1e16da437289, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ed2bf72ab9f868e4a86f66f23c1f4d11, type: 2}
+    - {fileID: 11400000, guid: 4607bad6fe24d52428b844d96f0c7bda, type: 2}
