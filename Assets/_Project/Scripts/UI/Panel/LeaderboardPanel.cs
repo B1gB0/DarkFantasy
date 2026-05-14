@@ -27,7 +27,7 @@ namespace _Project.Scripts.UI.Panel
         {
             _leaderboardYg.SetLeaderboard(YG2.saves.AcumulatedScore);
             _leaderboardYg.UpdateLB();
-
+            
             _backToSceneButton.onClick.AddListener(MoveBackToScene);
             _leaderboardButton.gameObject.SetActive(false);
         }
