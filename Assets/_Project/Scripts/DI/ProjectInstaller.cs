@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Project.Scripts.Experience;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
 using Reflex.Core;
@@ -40,11 +41,11 @@ namespace _Project.Scripts.DI
         {
             builder.AddSingleton(typeof(ResourceService), typeof(IResourceService));
             builder.AddSingleton(typeof(DataBaseService), typeof(IDataBaseService));
+            builder.AddSingleton(typeof(ExperiencePoints), typeof(IExperiencePoints));
             builder.AddSingleton(typeof(EnemyService), typeof(IEnemyService));
             builder.AddSingleton(typeof(PauseService), typeof(IPauseService));
             builder.AddSingleton(typeof(FloatingTextService), typeof(IFloatingTextService));
             builder.AddSingleton(typeof(ShopService), typeof(IShopService));
-
             builder.AddSingleton(typeof(CurrencyService), typeof(ICurrencyService));
             builder.AddSingleton(typeof(TweenAnimationService), typeof(ITweenAnimationService));
         }

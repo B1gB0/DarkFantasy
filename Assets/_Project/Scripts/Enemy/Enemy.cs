@@ -3,25 +3,31 @@ using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour;
+using _Project.Scripts.Experience;
 using _Project.Scripts.Services;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy
 {
     [RequireComponent(typeof(Animator))]
-    public abstract class Enemy : MonoBehaviour
+    public abstract class Enemy : MonoBehaviour, IAcceptable, IExperienceScoreActor
     {
         [SerializeField] private Animator _animator;
 
         protected IFloatingTextService FloatingTextService;
         protected AudioSoundsService AudioSoundsService;
         protected ParticleEffectsService ParticleEffectsService;
-        
+        protected IExperiencePoints ExperiencePoints;
+
         public event Action<Enemy> Die;
 
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
-        
+
+        public int Experience { get; private set; }
+        public int Score { get; private set; }
+        public bool IsEnemy { get; private set; }
+
         public EnemyData Data { get; private set; }
         public Player.Core.Player Player { get; private set; }
         public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
@@ -33,7 +39,7 @@ namespace _Project.Scripts.Enemy
         {
             AnimatedStateMachine = new EnemyAnimatedStateMachine(_animator);
         }
-        
+
         private void OnEnable()
         {
             Health.Die += OnDie;
@@ -51,7 +57,8 @@ namespace _Project.Scripts.Enemy
             EnemyData enemyData,
             IFloatingTextService floatingTextService,
             ParticleEffectsService particleEffectsService,
-            AudioSoundsService audioSoundsService)
+            AudioSoundsService audioSoundsService,
+            IExperiencePoints experiencePoints)
         {
             Player = player;
             Data = enemyData;
@@ -60,9 +67,10 @@ namespace _Project.Scripts.Enemy
             FloatingTextService = floatingTextService;
             ParticleEffectsService = particleEffectsService;
             AudioSoundsService = audioSoundsService;
+            ExperiencePoints = experiencePoints;
 
             Armor = Data.Armor;
-            
+
             Health.IsSpawnedDamageText += FloatingTextService.OnSpawnFloatingText;
         }
 
@@ -70,20 +78,27 @@ namespace _Project.Scripts.Enemy
         {
             CanFollow = canFollow;
         }
+        
+        public void AcceptScore(IScoreActorVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
 
-        public virtual void OnReactState(bool isEnteredToState) { }
+        public virtual void OnReactState(bool isEnteredToState)
+        {
+        }
 
         protected virtual void OnDie()
         {
             // ResetModifiers();
             Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
             // OnChangeSpeed -= UpdateCurrentSpeed;
-            
+
             Die?.Invoke(this);
-            
+
             gameObject.SetActive(false);
         }
-        
+
         protected virtual void OnPlayHitEffect()
         {
             ParticleEffectsService.PlayEffect(ParticleType.BasicHit, Health.HitPoint.position);

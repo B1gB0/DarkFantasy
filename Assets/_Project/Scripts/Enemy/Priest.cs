@@ -18,5 +18,11 @@ namespace _Project.Scripts.Enemy
             AudioSoundsService.PlaySound(SoundsType.SkeletonHit).Forget();
             ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Player.transform.position);
         }
+
+        protected override void OnDie()
+        {
+            ExperiencePoints.OnKill(this);
+            base.OnDie();
+        }
     }
 }
