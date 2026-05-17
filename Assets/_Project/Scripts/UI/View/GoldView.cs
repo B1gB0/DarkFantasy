@@ -1,0 +1,55 @@
+using _Project.Scripts.Services;
+using DG.Tweening;
+using Reflex.Attributes;
+using TMPro;
+using UnityEngine;
+
+namespace _Project.Scripts.UI.View
+{
+    public class GoldView : MonoBehaviour
+    {
+        [SerializeField] private TMP_Text _text;
+        [SerializeField] private Transform _showPoint;
+        [SerializeField] private Transform _hidePoint;
+
+        private ICurrencyService _currencyService;
+        private ITweenAnimationService _tweenAnimationService;
+
+        [Inject]
+        private void Construct(ICurrencyService currencyService, ITweenAnimationService tweenAnimationService)
+        {
+            _currencyService = currencyService;
+            _tweenAnimationService = tweenAnimationService;
+
+            _text.text = _currencyService.Gold.ToString();
+            _currencyService.OnGoldValueChanged += SetValue;
+        }
+
+        private void OnDestroy()
+        {
+            _currencyService.OnGoldValueChanged -= SetValue;
+            transform.DOKill();
+        }
+
+        public void GetPoints(Transform showPoint, Transform hidePoint)
+        {
+            _showPoint = showPoint;
+            _hidePoint = hidePoint;
+        }
+
+        public void Show()
+        {
+            _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
+        }
+
+        public void Hide()
+        {
+            _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint, true);
+        }
+
+        private void SetValue(int value)
+        {
+            _text.text = _currencyService.Gold.ToString();
+        }
+    }
+}

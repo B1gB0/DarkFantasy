@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine.States;
+using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -51,7 +52,7 @@ namespace _Project.Scripts.Level
             _missionChoosingPanel.OnGoToMission += HandleMissionTransition;
 
             await base.OnStartLevel();
-            
+
             _shopTrigger.OnOpenShop += HealthBar.Hide;
             _shopPanel.OnBackToSceneButtonPressed += HealthBar.Show;
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;

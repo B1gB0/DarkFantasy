@@ -21,6 +21,7 @@ namespace _Project.Scripts.Game.GameRoot
         [SerializeField] private SettingsPanel _settingsPanel;
         [SerializeField] private LeaderboardPanel _leaderboardPanel;
         [SerializeField] private LocalizationLanguageSwitcher _localizationLanguageSwitcher;
+        [SerializeField] private GoldView _goldView;
         
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _leaderboardButton;
@@ -30,6 +31,7 @@ namespace _Project.Scripts.Game.GameRoot
 
         public UIStateMachine UIStateMachine { get; private set; }
         public UIRootButtons UIRootButtons => _uiRootButtons;
+        public GoldView GoldView => _goldView;
         public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
 
         [Inject]

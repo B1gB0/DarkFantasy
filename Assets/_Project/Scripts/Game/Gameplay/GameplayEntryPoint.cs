@@ -121,6 +121,7 @@ namespace _Project.Scripts.Game.Gameplay
             _uiScene.Bind(exitSceneSignalSubject);
             
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
+            uiRoot.GoldView.Show();
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 
