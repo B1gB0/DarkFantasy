@@ -37,14 +37,8 @@ namespace _Project.Scripts.Level
         {
             CreateWaveOfEnemies(FirstWaveEnemy);
             CreateWaveOfEnemies(SecondWaveEnemy);
-            CreateWaveOfEnemies(ThirdWaveEnemy);
         }
 
-        private void SpawnLastWave()
-        {
-            CreateWaveOfEnemies(FourthWaveEnemy);
-        }
-        
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
