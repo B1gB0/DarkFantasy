@@ -16,6 +16,7 @@ namespace _Project.Scripts.Services
         private const string SkeletonHeavyArmorPool = nameof(SkeletonHeavyArmorPool);
         private const string SkeletonRangerPool = nameof(SkeletonRangerPool);
         private const string PriestPool = nameof(PriestPool);
+        private const string BanditPool = nameof(BanditPool);
         private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
         private const string MagicBallProjectilePool = nameof(MagicBallProjectilePool);
 
@@ -38,6 +39,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
         private ObjectPool<SkeletonRanger> _skeletonRangerPool;
         private ObjectPool<Priest> _priestPool;
+        private ObjectPool<Bandit> _banditPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
         private ObjectPool<Fireball> _magicBallProjectilePool;
 
@@ -183,6 +185,31 @@ namespace _Project.Scripts.Services
 
             return priest;
         }
+        
+        public Bandit CreateBandit()
+        {
+            CreateEnemyBanditPool();
+
+            var data = _enemiesData[EnemyType.BanditMelee];
+            var bandit = _banditPool.GetFreeElement();
+
+            bandit.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService,
+                _experiencePoints);
+            
+            bandit.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+
+            if (bandit.Health.TargetHealth <= MinValue)
+            {
+                bandit.Health.SetHealthValue(data.Health);
+            }
+
+            return bandit;
+        }
 
         public void GetData(EnemyInitData enemyInitData)
         {
@@ -261,6 +288,20 @@ namespace _Project.Scripts.Services
                 _enemyInitData.FireballProjectilePrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(MagicBallProjectilePool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+        }
+        
+        private void CreateEnemyBanditPool()
+        {
+            if (_banditPool != null)
+                return;
+
+            _banditPool = new ObjectPool<Bandit>(
+                _enemyInitData.BanditPrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(BanditPool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };

@@ -30,7 +30,7 @@ namespace _Project.Scripts.Game.MainMenu
         private async void Start()
         {
             await _audioSoundsService.Init();
-            
+
             _audioSoundsService.PlayMusic(SoundsType.MainMenuMusic);
         }
 
@@ -39,7 +39,14 @@ namespace _Project.Scripts.Game.MainMenu
             _uiScene = Instantiate(_sceneUIRootPrefab);
             uiRoot.AttachSceneUI(_uiScene.gameObject);
 
-            _uiScene.OnGameplayStarted += GetMainMenuExitParameters;
+            if (YG2.saves.IsFirstLaunch)
+            {
+                _uiScene.OnGameplayStarted += GetPrologueParameters;
+            }
+            else if (!YG2.saves.IsFirstLaunch)
+            {
+                _uiScene.OnGameplayStarted += GetVillageHubParameters;
+            }
 
             var container = gameObject.scene.GetSceneContainer();
             GameObjectInjector.InjectRecursive(uiRoot.gameObject, container);
@@ -54,21 +61,35 @@ namespace _Project.Scripts.Game.MainMenu
             return exitToGameplaySceneSignal;
         }
 
-        private void GetMainMenuExitParameters()
+        private void GetVillageHubParameters()
         {
             _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
-            
+
             var sceneName = Scenes.VillageHub;
 
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
 
             _exitParameters = new MainMenuExitParameters(gameplayEnterParameters);
         }
-        
+
+        private void GetPrologueParameters()
+        {
+            _audioSoundsService.PlayMusic(SoundsType.ActionMusic);
+
+            var sceneName = Scenes.Prologue;
+
+            var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
+
+            _exitParameters = new MainMenuExitParameters(gameplayEnterParameters);
+
+            YG2.saves.IsFirstLaunch = false;
+        }
+
         private void OnDestroy()
         {
             YG2.SaveProgress();
-            _uiScene.OnGameplayStarted -= GetMainMenuExitParameters;
+            _uiScene.OnGameplayStarted -= GetVillageHubParameters;
+            _uiScene.OnGameplayStarted -= GetPrologueParameters;
         }
     }
 }

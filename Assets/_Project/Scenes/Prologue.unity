@@ -1841,7 +1841,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2128383471}
   - component: {fileID: 2128383470}
-  - component: {fileID: 2128383469}
   - component: {fileID: 2128383472}
   m_Layer: 0
   m_Name: Main Camera
@@ -1850,14 +1849,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2128383469
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128383468}
-  m_Enabled: 1
 --- !u!20 &2128383470
 Camera:
   m_ObjectHideFlags: 0
@@ -2038,6 +2029,22 @@ PrefabInstance:
       propertyPath: _enemyWaves.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 05063dfce62e40f409c8cf5bc7febb15, type: 2}
+    - target: {fileID: 4659305304125069010, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: m_Size.y
+      value: 1.7595575
+      objectReference: {fileID: 0}
+    - target: {fileID: 4659305304125069010, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: m_Center.x
+      value: -0.3614591
+      objectReference: {fileID: 0}
+    - target: {fileID: 4659305304125069010, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: m_Center.y
+      value: 0.37977874
+      objectReference: {fileID: 0}
+    - target: {fileID: 4659305304125069010, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: m_Center.z
+      value: -0.83180237
+      objectReference: {fileID: 0}
     - target: {fileID: 7045996144480693203, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: m_Name
       value: PrologueLevel

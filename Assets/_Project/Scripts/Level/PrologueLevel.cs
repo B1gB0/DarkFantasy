@@ -29,7 +29,6 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
-            
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 

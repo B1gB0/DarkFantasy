@@ -13,6 +13,7 @@ namespace _Project.Scripts.DataBase.InitDataSO
         [field: SerializeField] public SkeletonLightArmor SkeletonLightArmorPrefab { get; private set; }
         [field: SerializeField] public SkeletonHeavyArmor SkeletonHeavyArmorPrefab { get; private set; }
         [field: SerializeField] public Priest PriestPrefab { get; private set; }
+        [field: SerializeField] public Bandit BanditPrefab { get; private set; }
         [field: SerializeField] public Arrow ArrowProjectilePrefab { get; private set; }
         [field: SerializeField] public Fireball FireballProjectilePrefab { get; private set; }
     }

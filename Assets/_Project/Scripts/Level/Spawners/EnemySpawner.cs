@@ -12,7 +12,7 @@ namespace _Project.Scripts.Level.Spawners
     {
         private const int MinValue = 0;
         private const int CorrectCountFactor = 1;
-        private const float RandomPositionFactor = 2f;
+        private const float RandomPositionFactor = 1f;
         private const float OffsetYPolygonEnemies = 0.5f;
 
         private readonly IEnemyService _enemyService;
@@ -54,6 +54,7 @@ namespace _Project.Scripts.Level.Spawners
             int heavyToSpawn = wave.SkeletonHeavyArmorCount;
             int rangersToSpawn = wave.SkeletonRangerCount;
             int priestToSpawn = wave.PriestCount;
+            int banditsToSpawn = wave.BanditCount;
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
@@ -98,6 +99,18 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(MinValue);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < banditsToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
+                Bandit enemy = SpawnBanditEnemy(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -203,6 +216,31 @@ namespace _Project.Scripts.Level.Spawners
 
             return priest;
         }
+        
+        private Bandit SpawnBanditEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            Bandit bandit = _enemyService.CreateBandit();
+
+            bandit.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            bandit.transform.position = enemySpawnPosition;
+
+            bandit.NavMeshAgent.enabled = true;
+
+            bandit.Die += OnKillBandit;
+
+            bandit.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            bandit.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
+            bandit.EnemyStateMachine.InitializeAllStates();
+            bandit.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return bandit;
+        }
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {
@@ -232,6 +270,14 @@ namespace _Project.Scripts.Level.Spawners
         {
             enemy.Die -= OnKillPriest;
             OnPriestKilled?.Invoke();
+            _enemyCounter--;
+
+            CheckEnemiesCount();
+        }
+        
+        private void OnKillBandit(Enemy.Enemy enemy)
+        {
+            enemy.Die -= OnKillBandit;
             _enemyCounter--;
 
             CheckEnemiesCount();

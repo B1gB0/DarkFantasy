@@ -106,6 +106,18 @@ MonoBehaviour:
       _stopDistance: 5
       _armor: 0
       _speedProjectile: 7
+    - _type: 6
+      _health: 20
+      _speed: 5
+      _rotationSpeed: 250
+      _damage: 5
+      _fireRate: 0
+      _rangeAttack: 2
+      _experience: 10
+      _score: 12
+      _stopDistance: 1
+      _armor: 0
+      _speedProjectile: 0
     CharacteristicsLocalizationData:
     - _type: 0
       _nameRu: "\u0423\u0440\u043E\u043D"
@@ -140,6 +152,10 @@ MonoBehaviour:
       _nameRu: "\u041A\u043B\u0430\u0434\u0431\u0438\u0449\u0435"
       _nameEn: Graveyard
       _nameTr: "Mezarl\u0131k"
+    - _id: prologue
+      _nameRu: "\u041F\u0440\u043E\u043B\u043E\u0433"
+      _nameEn: Prologue
+      _nameTr: "\xD6ns\xF6z"
     PlayerAttributeLevelData:
     - _id: damage_1
       _type: 0

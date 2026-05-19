@@ -64,7 +64,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (_subStateTimer <= MinValue)
             {
-                if (Enemy.Type == EnemyType.SkeletonRanger)
+                if (Enemy.Type == EnemyType.SkeletonRanger || Enemy.Type == EnemyType.BanditRanger)
                 {
                     switch (_currentSubState)
                     {

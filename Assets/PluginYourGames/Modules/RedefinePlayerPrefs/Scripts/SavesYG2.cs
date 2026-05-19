@@ -13,6 +13,8 @@ namespace YG
         public int HealthAttributeNumber;
         public int DamageAttributeNumber;
         public int ArmorAttributeNumber;
+
+        public bool IsFirstLaunch = true;
         
         public PlayerCharacteristics PlayerCharacteristics;
         

@@ -8,5 +8,7 @@ namespace _Project.Scripts.Enemy
         SkeletonLightArmor = 3,
         SkeletonRanger = 4,
         Priest = 5,
+        BanditMelee = 6,
+        BanditRanger = 7,
     }
 }
