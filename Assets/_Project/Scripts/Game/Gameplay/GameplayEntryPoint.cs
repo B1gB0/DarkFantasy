@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
@@ -124,10 +125,23 @@ namespace _Project.Scripts.Game.Gameplay
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
             uiRoot.GoldView.Show();
             OnShowJoystickWithAttackButton();
+            
+            _playerService.Player.Health.Die += _uiScene.ResetCountdownTutorialPointer;
+            _playerService.Player.InputController.OnMoveButtonsPressed +=
+                _uiScene.ResetCountdownTutorialPointer;
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
+            
+            _uiScene.ResetCountdownTutorialPointer();
 
             return exitToSceneSignal;
+        }
+
+        private void OnDestroy()
+        {
+            _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
+            _playerService.Player.InputController.OnMoveButtonsPressed -=
+                _uiScene.ResetCountdownTutorialPointer;
         }
 
         public void GetGameplayExitParameters()

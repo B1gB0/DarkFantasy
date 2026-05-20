@@ -14,6 +14,7 @@ namespace _Project.Scripts.Player.Input
         private Button _attackButton;
 
         public event Action OnAttackButtonPressed;
+        public event Action OnMoveButtonsPressed;
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
@@ -64,6 +65,9 @@ namespace _Project.Scripts.Player.Input
         {
             MoveDirection = _joystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
+            
+            if (IsMoveInputPerformed)
+                OnMoveButtonsPressed?.Invoke();
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -78,6 +82,9 @@ namespace _Project.Scripts.Player.Input
                 MoveDirection = Vector2.zero;
                 IsMoveInputPerformed = false;
             }
+            
+            if (IsMoveInputPerformed)
+                OnMoveButtonsPressed?.Invoke();
         }
 
         private void OnAttackByButton()
