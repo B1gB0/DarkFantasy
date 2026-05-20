@@ -14,6 +14,7 @@ using Reflex.Core;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Game.Gameplay
 {
@@ -122,6 +123,7 @@ namespace _Project.Scripts.Game.Gameplay
             
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
             uiRoot.GoldView.Show();
+            OnShowJoystickWithAttackButton();
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 
@@ -170,6 +172,13 @@ namespace _Project.Scripts.Game.Gameplay
             _levelInitData = Instantiate(_levelInitData);
             _enemyInitData = await _dataFactory.CreateSkeletonInitData();
             _playerInitData = await _dataFactory.CreatePlayerInitData();
+        }
+        
+        private void OnShowJoystickWithAttackButton()
+        {
+            _playerService.GetJoystickWithAttackButton(_uiScene.Joystick, _uiScene.AttackButton);
+            _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
+            _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
         }
     }
 }

@@ -8,6 +8,7 @@ using Reflex.Attributes;
 using Reflex.Core;
 using Reflex.Injectors;
 using UnityEngine;
+using UnityEngine.UI;
 using YG;
 
 namespace _Project.Scripts.Services
@@ -83,6 +84,11 @@ namespace _Project.Scripts.Services
         {
             _container = container;
             FreeLookCamera = freeLookCamera;
+        }
+        
+        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton)
+        {
+            Player.InputController.GetJoystickWithAttackButton(joystick, attackButton);
         }
     }
 }

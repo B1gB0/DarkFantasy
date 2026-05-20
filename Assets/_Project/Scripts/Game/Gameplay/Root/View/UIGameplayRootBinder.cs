@@ -3,6 +3,7 @@ using _Project.Scripts.UI.StateMachine.States;
 using _Project.Scripts.UI.View;
 using R3;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Game.Gameplay.Root.View
 {
@@ -15,6 +16,8 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Transform ShowHealthPoint { get; private set; }
         [field: SerializeField] public Transform HideHealthPoint { get; private set; }
         [field: SerializeField] public Transform WeaponPoint { get; private set; }
+        [field: SerializeField] public Joystick Joystick { get; private set; }
+        [field: SerializeField] public Button AttackButton { get; private set; }
         
         public void GetUIStateMachine(UIStateMachine uiStateMachine, UIRootButtons uiRootButtons)
         {

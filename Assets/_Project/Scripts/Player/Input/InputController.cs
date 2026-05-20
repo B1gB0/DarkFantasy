@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Player.Input
 {
@@ -10,12 +11,13 @@ namespace _Project.Scripts.Player.Input
 
         private InputSystem _inputSystem;
         private Joystick _joystick;
-        
+        private Button _attackButton;
+
         public event Action OnAttackButtonPressed;
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
-        
+
         public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.WasPressedThisFrame();
         public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame();
 
@@ -30,7 +32,7 @@ namespace _Project.Scripts.Player.Input
 
             _inputSystem.PLayer.Move.performed += OnMove;
             _inputSystem.PLayer.Move.canceled += OnMove;
-            
+
             _inputSystem.PLayer.Attack.performed += OnAttack;
         }
 
@@ -38,7 +40,7 @@ namespace _Project.Scripts.Player.Input
         {
             _inputSystem.PLayer.Move.performed -= OnMove;
             _inputSystem.PLayer.Move.canceled -= OnMove;
-            
+
             _inputSystem.PLayer.Attack.performed -= OnAttack;
 
             _inputSystem.PLayer.Disable();
@@ -46,13 +48,16 @@ namespace _Project.Scripts.Player.Input
 
         private void OnDestroy()
         {
-            // _joystick.OnInputHandled -= OnMoveWithJoystick;
+            _joystick.OnInputHandled -= OnMoveWithJoystick;
+            _attackButton.onClick.RemoveListener(OnAttackByButton);
         }
 
-        public void GetJoystick(Joystick joystick)
+        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton)
         {
-            // _joystick = joystick;
-            // _joystick.OnInputHandled += OnMoveWithJoystick;
+            _joystick = joystick;
+            _joystick.OnInputHandled += OnMoveWithJoystick;
+            _attackButton = attackButton;
+            _attackButton.onClick.AddListener(OnAttackByButton);
         }
 
         private void OnMoveWithJoystick()
@@ -61,7 +66,7 @@ namespace _Project.Scripts.Player.Input
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
         }
 
-        private void OnMove(InputAction.CallbackContext context) 
+        private void OnMove(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
@@ -74,7 +79,12 @@ namespace _Project.Scripts.Player.Input
                 IsMoveInputPerformed = false;
             }
         }
-        
+
+        private void OnAttackByButton()
+        {
+            OnAttackButtonPressed?.Invoke();
+        }
+
         private void OnAttack(InputAction.CallbackContext context)
         {
             if (context.performed)
