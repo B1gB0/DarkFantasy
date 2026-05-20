@@ -118,6 +118,18 @@ MonoBehaviour:
       _stopDistance: 1
       _armor: 0
       _speedProjectile: 0
+    - _type: 7
+      _health: 10
+      _speed: 5
+      _rotationSpeed: 250
+      _damage: 5
+      _fireRate: 1.5
+      _rangeAttack: 5
+      _experience: 8
+      _score: 10
+      _stopDistance: 5
+      _armor: 0
+      _speedProjectile: 10
     CharacteristicsLocalizationData:
     - _type: 0
       _nameRu: "\u0423\u0440\u043E\u043D"

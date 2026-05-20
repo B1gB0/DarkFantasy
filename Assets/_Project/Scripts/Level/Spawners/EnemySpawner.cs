@@ -14,6 +14,7 @@ namespace _Project.Scripts.Level.Spawners
         private const int CorrectCountFactor = 1;
         private const float RandomPositionFactor = 1f;
         private const float OffsetYPolygonEnemies = 0.5f;
+        private const float HatChance = 0.5f;
 
         private readonly IEnemyService _enemyService;
         private readonly AudioSoundsService _audioSoundsService;
@@ -55,6 +56,7 @@ namespace _Project.Scripts.Level.Spawners
             int rangersToSpawn = wave.SkeletonRangerCount;
             int priestToSpawn = wave.PriestCount;
             int banditsToSpawn = wave.BanditCount;
+            int banditsRangersToSpawn = wave.BanditRangerCount;
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
@@ -111,6 +113,20 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Bandit enemy = SpawnBanditEnemy(candidatePoint, patrolPoints);
+                enemy.Hat.gameObject.SetActive(Random.value < HatChance);
+                availableSpawnPoints.RemoveAt(MinValue);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < banditsRangersToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
+                BanditRanger enemy = SpawnBanditRangerEnemy(candidatePoint, patrolPoints);
+                enemy.Hat.gameObject.SetActive(Random.value < HatChance);
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -220,6 +236,31 @@ namespace _Project.Scripts.Level.Spawners
         private Bandit SpawnBanditEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             Bandit bandit = _enemyService.CreateBandit();
+
+            bandit.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            bandit.transform.position = enemySpawnPosition;
+
+            bandit.NavMeshAgent.enabled = true;
+
+            bandit.Die += OnKillBandit;
+
+            bandit.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            bandit.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
+            bandit.EnemyStateMachine.InitializeAllStates();
+            bandit.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return bandit;
+        }
+        
+        private BanditRanger SpawnBanditRangerEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            BanditRanger bandit = _enemyService.CreateBanditRanger();
 
             bandit.NavMeshAgent.enabled = false;
 

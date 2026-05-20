@@ -12,7 +12,7 @@ namespace _Project.Scripts.Services
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor();
         public SkeletonRanger CreateSkeletonRanger();
         public Priest CreatePriest();
-
         public Bandit CreateBandit();
+        public BanditRanger CreateBanditRanger();
     }
 }

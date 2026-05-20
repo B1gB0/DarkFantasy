@@ -17,6 +17,7 @@ namespace _Project.Scripts.Services
         private const string SkeletonRangerPool = nameof(SkeletonRangerPool);
         private const string PriestPool = nameof(PriestPool);
         private const string BanditPool = nameof(BanditPool);
+        private const string BanditRangerPool = nameof(BanditRangerPool);
         private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
         private const string MagicBallProjectilePool = nameof(MagicBallProjectilePool);
 
@@ -40,6 +41,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<SkeletonRanger> _skeletonRangerPool;
         private ObjectPool<Priest> _priestPool;
         private ObjectPool<Bandit> _banditPool;
+        private ObjectPool<BanditRanger> _banditRangerPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
         private ObjectPool<Fireball> _magicBallProjectilePool;
 
@@ -210,6 +212,32 @@ namespace _Project.Scripts.Services
 
             return bandit;
         }
+        
+        public BanditRanger CreateBanditRanger()
+        {
+            CreateEnemyBanditRangerPool();
+
+            var data = _enemiesData[EnemyType.BanditRanger];
+            var bandit = _banditRangerPool.GetFreeElement();
+
+            bandit.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService,
+                _experiencePoints);
+            
+            bandit.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
+            bandit.Longbow.SetData(_playerService.Player.transform, data.Damage);
+
+            if (bandit.Health.TargetHealth <= MinValue)
+            {
+                bandit.Health.SetHealthValue(data.Health);
+            }
+
+            return bandit;
+        }
 
         public void GetData(EnemyInitData enemyInitData)
         {
@@ -261,14 +289,8 @@ namespace _Project.Scripts.Services
             {
                 AutoExpand = IsAutoExpand,
             };
-
-            _arrowProjectilePool = new ObjectPool<Arrow>(
-                _enemyInitData.ArrowProjectilePrefab,
-                DefaultCountObjectsInPool,
-                new GameObject(ArrowProjectilePool).transform)
-            {
-                AutoExpand = IsAutoExpand,
-            };
+            
+            CreateArrowPool();
         }
 
         private void CreatePriestPool()
@@ -302,6 +324,36 @@ namespace _Project.Scripts.Services
                 _enemyInitData.BanditPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(BanditPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+        }
+        
+        private void CreateEnemyBanditRangerPool()
+        {
+            if (_banditRangerPool != null)
+                return;
+
+            _banditRangerPool = new ObjectPool<BanditRanger>(
+                _enemyInitData.BanditRangerPrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(BanditRangerPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+            
+            CreateArrowPool();
+        }
+
+        private void CreateArrowPool()
+        {
+            if(_arrowProjectilePool != null)
+                return;
+
+            _arrowProjectilePool = new ObjectPool<Arrow>(
+                _enemyInitData.ArrowProjectilePrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(ArrowProjectilePool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };

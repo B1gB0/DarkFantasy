@@ -5,17 +5,10 @@ using UnityEngine;
 
 namespace _Project.Scripts.Enemy
 {
-    public class Bandit : EnemyMelee
+    public class BanditRanger : EnemyRanger
     {
-        [SerializeField, Range(0f, 1f)] private float _hatChance = 0.5f;
-        
         [field: SerializeField] public GameObject Hat { get; private set; }
 
-        private void Awake()
-        {
-            Hat.gameObject.SetActive(Random.value < _hatChance);
-        }
-        
         protected override void OnPlayHitEffect()
         {
             AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();
