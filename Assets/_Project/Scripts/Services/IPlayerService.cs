@@ -16,6 +16,6 @@ namespace _Project.Scripts.Services
         public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint);
         public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data);
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
-        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton);
+        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton);
     }
 }

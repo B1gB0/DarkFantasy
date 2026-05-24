@@ -12,6 +12,10 @@ namespace _Project.Scripts.Player.Input
         private InputSystem _inputSystem;
         private Joystick _joystick;
         private Button _attackButton;
+        private Button _rollButton;
+
+        private bool _uiAttackPressed;
+        private bool _uiRollPressed;
 
         public event Action OnAttackButtonPressed;
         public event Action OnMoveButtonsPressed;
@@ -19,8 +23,8 @@ namespace _Project.Scripts.Player.Input
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
 
-        public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.WasPressedThisFrame();
-        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame();
+        public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.WasPressedThisFrame() || _uiRollPressed;
+        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame() || _uiAttackPressed;
 
         private void Awake()
         {
@@ -37,6 +41,12 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Attack.performed += OnAttack;
         }
 
+        private void LateUpdate()
+        {
+            _uiAttackPressed = false;
+            _uiRollPressed = false;
+        }
+
         private void OnDisable()
         {
             _inputSystem.PLayer.Move.performed -= OnMove;
@@ -51,21 +61,24 @@ namespace _Project.Scripts.Player.Input
         {
             _joystick.OnInputHandled -= OnMoveWithJoystick;
             _attackButton.onClick.RemoveListener(OnAttackByButton);
+            _rollButton.onClick.RemoveListener(OnRollByButton);
         }
 
-        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton)
+        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton)
         {
             _joystick = joystick;
             _joystick.OnInputHandled += OnMoveWithJoystick;
             _attackButton = attackButton;
             _attackButton.onClick.AddListener(OnAttackByButton);
+            _rollButton = rollButton;
+            _rollButton.onClick.AddListener(OnRollByButton);
         }
 
         private void OnMoveWithJoystick()
         {
             MoveDirection = _joystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
-            
+
             if (IsMoveInputPerformed)
                 OnMoveButtonsPressed?.Invoke();
         }
@@ -82,14 +95,20 @@ namespace _Project.Scripts.Player.Input
                 MoveDirection = Vector2.zero;
                 IsMoveInputPerformed = false;
             }
-            
+
             if (IsMoveInputPerformed)
                 OnMoveButtonsPressed?.Invoke();
         }
 
         private void OnAttackByButton()
         {
+            _uiAttackPressed = true;
             OnAttackButtonPressed?.Invoke();
+        }
+
+        private void OnRollByButton()
+        {
+            _uiRollPressed = true;
         }
 
         private void OnAttack(InputAction.CallbackContext context)

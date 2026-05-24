@@ -207,9 +207,9 @@ MonoBehaviour:
   _animator: {fileID: 3910657797846128420}
   <Health>k__BackingField: {fileID: 4597146208703341206}
   <EnemyStateMachine>k__BackingField: {fileID: 884744937229373600}
-  _hatChance: 0.5
   <NavMeshAgent>k__BackingField: {fileID: 3438870356886635798}
   <MeleeWeapon>k__BackingField: {fileID: 5921897084948368119}
+  _hatChance: 0.5
   <Hat>k__BackingField: {fileID: 7777310786738202301}
 --- !u!195 &3438870356886635798
 NavMeshAgent:
@@ -278,8 +278,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5667559, y: 1.9630147, z: 0.35729182}
-  m_Center: {x: 0.07055402, y: 0.8532235, z: -0.014581837}
+  m_Size: {x: 0.7204746, y: 1.9630147, z: 0.7289449}
+  m_Center: {x: -0.006305337, y: 0.8532235, z: -0.010580659}
 --- !u!54 &7627270150306969471
 Rigidbody:
   m_ObjectHideFlags: 0

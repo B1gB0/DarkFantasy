@@ -35,6 +35,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public TutorialPointer TutorialPointer { get; private set; }
         [field: SerializeField] public KeyboardTutorialView KeyboardTutorialView { get; private set; }
         [field: SerializeField] public Button AttackButton { get; private set; }
+        [field: SerializeField] public Button RollButton { get; private set; }
         
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)
@@ -62,6 +63,9 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         
         private void ShowTutorialPointer()
         {
+            if(TutorialPointer == null)
+                return;
+            
             JoystickIcon.gameObject.SetActive(true);
             TutorialPointer.Activate();
             TutorialPointer.transform.position = PointerPoint.transform.position;
@@ -70,6 +74,9 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 
         private void ShowTutorialKeyboardView()
         {
+            if(KeyboardTutorialView == null)
+                return;
+            
             KeyboardTutorialView.Activate();
 
             _tweenAnimationService.AnimateMove(

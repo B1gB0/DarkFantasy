@@ -190,9 +190,10 @@ namespace _Project.Scripts.Game.Gameplay
         
         private void OnShowJoystickWithAttackButton()
         {
-            _playerService.GetJoystickWithAttackButton(_uiScene.Joystick, _uiScene.AttackButton);
+            _playerService.GetJoystickWithAttackButton(_uiScene.Joystick, _uiScene.AttackButton, _uiScene.RollButton);
             _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
+            _uiScene.RollButton.gameObject.SetActive(!YG2.envir.isDesktop);
         }
     }
 }

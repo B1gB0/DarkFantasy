@@ -86,9 +86,9 @@ namespace _Project.Scripts.Services
             FreeLookCamera = freeLookCamera;
         }
         
-        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton)
+        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton)
         {
-            Player.InputController.GetJoystickWithAttackButton(joystick, attackButton);
+            Player.InputController.GetJoystickWithAttackButton(joystick, attackButton, rollButton);
         }
     }
 }
