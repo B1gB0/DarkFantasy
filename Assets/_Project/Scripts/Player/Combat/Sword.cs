@@ -7,12 +7,11 @@ namespace _Project.Scripts.Player.Combat
     public class Sword : MonoBehaviour
     {
         [SerializeField] private int _swordDamage = 10;
+        [SerializeField] private Collider _collider;
 
-        private Collider _collider;
-
-        private void Awake()
+        private void Start()
         {
-            _collider = GetComponent<Collider>();
+            DeactivateCollider();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -22,6 +21,11 @@ namespace _Project.Scripts.Player.Combat
                 enemy.EnemyStateMachine.SwitchState<HitState>();
                 enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, enemy.Armor);
             }
+        }
+
+        private void Update()
+        {
+            Debug.Log(_collider.enabled);
         }
 
         public void ActivateCollider()

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7491372287368381132}
   - component: {fileID: 7424380016530795260}
   - component: {fileID: 7338495321699086787}
-  - component: {fileID: 6621614874939928535}
   m_Layer: 10
   m_Name: Metal Broadsword
   m_TagString: Untagged
@@ -120,27 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _swordDamage: 10
---- !u!65 &6621614874939928535
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270327062174251412}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.6139991, y: 11.956363, z: 0.6734566}
-  m_Center: {x: -0.0044064852, y: 4.7771626, z: 0.0104936855}
+  _collider: {fileID: 7424380016530795260}
 --- !u!1 &3377939940947086566
 GameObject:
   m_ObjectHideFlags: 0

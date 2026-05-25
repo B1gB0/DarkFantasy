@@ -116,11 +116,13 @@ namespace _Project.Scripts.Player.Core
 
         public void AnimationEvent_StartDamage()
         {
+            Debug.Log("Start Damage Window");
             _playerAttackState.StartDamageWindow();
         }
 
         public void AnimationEvent_EndDamage()
         {
+            Debug.Log("End Damage Window");
             _playerAttackState.EndDamageWindow();
         }
 
