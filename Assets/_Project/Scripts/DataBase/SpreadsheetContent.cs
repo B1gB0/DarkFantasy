@@ -19,5 +19,7 @@ namespace _Project.Scripts.DataBase
 
         [SpreadsheetPage("PlayerAttributeLevelsData")] 
         public List<PlayerAttributeLevelData> PlayerAttributeLevelData;
+        
+        [SpreadsheetPage("UILocalization")] public List<UILocalizationData> UILocalizationData;
     }
 }

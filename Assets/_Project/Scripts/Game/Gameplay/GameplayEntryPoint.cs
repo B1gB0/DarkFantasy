@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
@@ -43,6 +42,7 @@ namespace _Project.Scripts.Game.Gameplay
         private ParticleEffectsService _particleEffectsService;
         private AudioSoundsService _audioSoundsService;
         private MissionService _missionService;
+        private IUILocalizationService _uiLocalizationService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -55,7 +55,8 @@ namespace _Project.Scripts.Game.Gameplay
             ParticleEffectsService particleEffectsService,
             AudioSoundsService audioSoundsService,
             IFloatingTextService floatingTextService,
-            MissionService missionService)
+            MissionService missionService,
+            IUILocalizationService uiLocalizationService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -64,6 +65,7 @@ namespace _Project.Scripts.Game.Gameplay
             _audioSoundsService = audioSoundsService;
             _floatingTextService = floatingTextService;
             _missionService = missionService;
+            _uiLocalizationService = uiLocalizationService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -96,6 +98,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _playerService.Init();
             await _audioSoundsService.Init();
             await _missionService.Init();
+            await _uiLocalizationService.Init();
 
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 

@@ -6,6 +6,7 @@ using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -17,10 +18,10 @@ namespace _Project.Scripts.UI.Panel
         private const int CountCorrectFactor = 1;
         private const string RewardAdRebornId = "RebornPlayer";
 
-        [SerializeField] private Text _labelText;
-        [SerializeField] private Text _accumulatedKillsText;
-        [SerializeField] private Text _accumulatedGoldText;
-        [SerializeField] private Text _accumulatedScoreText;
+        [SerializeField] private TMP_Text _labelText;
+        [SerializeField] private TMP_Text _accumulatedKillsText;
+        [SerializeField] private TMP_Text _accumulatedGoldText;
+        [SerializeField] private TMP_Text _accumulatedScoreText;
 
         [SerializeField] private Button _goToMainMenuButton;
         [SerializeField] private Button _rebornPlayerButton;
