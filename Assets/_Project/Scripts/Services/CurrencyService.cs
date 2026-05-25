@@ -15,6 +15,7 @@ namespace _Project.Scripts.Services
         public event Action OnAllAlienCocoonsCollected;
 
         public int Gold { get; private set; }
+        public int AccumulatedGold { get; private set; }
         public bool IsInitiated { get; private set; }
 
         public UniTask Init()
@@ -40,6 +41,7 @@ namespace _Project.Scripts.Services
         public void AddGold(int gold)
         {
             Gold += gold;
+            AccumulatedGold += gold;
             OnGoldValueChanged?.Invoke(Gold);
             SaveGold();
         }
@@ -49,6 +51,11 @@ namespace _Project.Scripts.Services
             Gold -= gold;
             OnGoldValueChanged?.Invoke(Gold);
             SaveGold();
+        }
+        
+        public void ResetAccumulatedGold()
+        {
+            AccumulatedGold = MinValue;
         }
 
         private void SaveGold()

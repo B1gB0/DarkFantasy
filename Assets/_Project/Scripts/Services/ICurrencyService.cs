@@ -9,8 +9,10 @@ namespace _Project.Scripts.Services
         public event Action OnAllAlienCocoonsCollected;
 
         public int Gold { get; }
+        public int AccumulatedGold { get; }
 
         public void AddGold(int gold);
         public void SpendGold(int gold);
+        public void ResetAccumulatedGold();
     }
 }

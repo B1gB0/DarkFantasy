@@ -15,6 +15,8 @@ namespace YG
         public int ArmorAttributeNumber;
 
         public bool IsFirstLaunch = true;
+        public bool IsBanditVillageUnlock;
+        public bool IsCastleUnlock;
         
         public PlayerCharacteristics PlayerCharacteristics;
         
