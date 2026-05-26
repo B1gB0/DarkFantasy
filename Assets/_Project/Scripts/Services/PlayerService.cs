@@ -15,6 +15,8 @@ namespace _Project.Scripts.Services
 {
     public class PlayerService : MonoBehaviour, IPlayerService
     {
+        private const float MinValue = 0f;
+        
         private readonly Dictionary<PlayerType, PlayerData> _playersData = new ();
         
         private IDataBaseService _dataBaseService;
@@ -78,6 +80,16 @@ namespace _Project.Scripts.Services
             GameObjectInjector.InjectObject(Player.gameObject, _container);
 
             return Player;
+        }
+        
+        public void SpawnPlayer()
+        {
+            Player.gameObject.SetActive(true);
+
+            if (Player.Health.TargetHealth <= MinValue)
+            {
+                Player.Health.SetHealthValue(Player.Health.MaxHealth);
+            }
         }
 
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera)

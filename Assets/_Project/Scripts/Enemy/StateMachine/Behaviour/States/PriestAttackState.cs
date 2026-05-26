@@ -2,8 +2,9 @@
 {
     public enum PriestAttackState
     {
-        None,
-        Fireball,
-        Coil
+        None = 0,
+        Fireball = 1,
+        Coil = 2,
+        Omni = 3,
     }
 }

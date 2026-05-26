@@ -4,6 +4,7 @@ using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Game.MainMenu;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine.States;
 using _Project.Scripts.UI.View;
 using Cinemachine;
@@ -14,6 +15,7 @@ using Reflex.Core;
 using Reflex.Extensions;
 using Reflex.Injectors;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using YG;
 
 namespace _Project.Scripts.Game.Gameplay
@@ -43,9 +45,12 @@ namespace _Project.Scripts.Game.Gameplay
         private AudioSoundsService _audioSoundsService;
         private MissionService _missionService;
         private IUILocalizationService _uiLocalizationService;
+        private IPauseService _pauseService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
+
+        private EndGamePanel _endGamePanel;
 
         [Inject]
         private void Construct(
@@ -56,7 +61,8 @@ namespace _Project.Scripts.Game.Gameplay
             AudioSoundsService audioSoundsService,
             IFloatingTextService floatingTextService,
             MissionService missionService,
-            IUILocalizationService uiLocalizationService)
+            IUILocalizationService uiLocalizationService,
+            IPauseService pauseService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -66,6 +72,7 @@ namespace _Project.Scripts.Game.Gameplay
             _floatingTextService = floatingTextService;
             _missionService = missionService;
             _uiLocalizationService = uiLocalizationService;
+            _pauseService = pauseService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -119,22 +126,33 @@ namespace _Project.Scripts.Game.Gameplay
             floatingTextView.Deactivate();
 
             _floatingTextService.Init(floatingTextView);
-            
+
             await _level.OnStartLevel();
 
             var exitSceneSignalSubject = new Subject<Unit>();
             _uiScene.Bind(exitSceneSignalSubject);
-            
+
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
             uiRoot.GoldView.Show();
             OnShowJoystickWithAttackButton();
-            
+
+            var scene = SceneManager.GetActiveScene();
+
+            if (scene.name != Scenes.VillageHub)
+            {
+                _endGamePanel = await _viewFactory.CreateEndGamePanel();
+                _endGamePanel.GoToVillageButton.onClick.AddListener(GetVillageHubExitParameters);
+                _playerService.Player.Health.Die += _endGamePanel.Show;
+                _playerService.Player.Health.Die += _endGamePanel.SetDefeatPanel;
+                _playerService.Player.Health.Die += _pauseService.OnStopGameWithoutMusic;
+                uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _endGamePanel.SetLabelText;
+            }
+
             _playerService.Player.Health.Die += _uiScene.ResetCountdownTutorialPointer;
-            _playerService.Player.InputController.OnMoveButtonsPressed +=
-                _uiScene.ResetCountdownTutorialPointer;
+            _playerService.Player.InputController.OnMoveButtonsPressed += _uiScene.ResetCountdownTutorialPointer;
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
-            
+
             _uiScene.ResetCountdownTutorialPointer();
 
             return exitToSceneSignal;
@@ -142,15 +160,19 @@ namespace _Project.Scripts.Game.Gameplay
 
         private void OnDestroy()
         {
+            _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
             _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
-            _playerService.Player.InputController.OnMoveButtonsPressed -=
-                _uiScene.ResetCountdownTutorialPointer;
+            _playerService.Player.Health.Die -= _endGamePanel.Show;
+            _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
+            _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
+            _playerService.Player.InputController.OnMoveButtonsPressed -= _uiScene.ResetCountdownTutorialPointer;
         }
 
         public void GetGameplayExitParameters()
         {
             _audioSoundsService.PlayMusic(SoundsType.ActionMusic);
-            
+
             _uiRoot.UIRootButtons.Deactivate();
 
             int nextNumberLevel = _missionService.CurrentNumberLevel + NextOperationStep;
@@ -166,9 +188,9 @@ namespace _Project.Scripts.Game.Gameplay
         public void GetVillageHubExitParameters()
         {
             _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
-            
+
             _missionService.SetCurrentNumberLevel(MinCountValue);
-            
+
             var sceneName = Scenes.VillageHub;
 
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
@@ -190,7 +212,7 @@ namespace _Project.Scripts.Game.Gameplay
             _enemyInitData = await _dataFactory.CreateSkeletonInitData();
             _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
-        
+
         private void OnShowJoystickWithAttackButton()
         {
             _playerService.GetJoystickWithAttackButton(_uiScene.Joystick, _uiScene.AttackButton, _uiScene.RollButton);

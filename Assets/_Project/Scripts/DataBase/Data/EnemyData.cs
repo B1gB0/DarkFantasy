@@ -19,6 +19,7 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private int _stopDistance;
         [SerializeField] private float _armor;
         [SerializeField] private float _speedProjectile;
+        [SerializeField] private int _gold;
         
         public EnemyType Type => _type;
         public float Health => _health;
@@ -32,5 +33,6 @@ namespace _Project.Scripts.DataBase.Data
         public float StopDistance => _stopDistance;
         public float Armor => _armor;
         public float SpeedProjectile => _speedProjectile;
+        public int Gold => _gold;
     }
 }

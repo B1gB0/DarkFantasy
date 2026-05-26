@@ -20,6 +20,7 @@ namespace _Project.Scripts.UI.View
         private const string TextViewPath = "TextView";
         private const string ShopAttributePanelPath = "ShopAttributePanel";
         private const string MissionChoosingPanelPath = "MissionChoosingPanel";
+        private const string EndGamePanelPath = "EndGamePanel";
 
         // private const string ProgressRadialBarPath = "ProgressRadialBar";
         // private const string LevelUpPanelPath = "LevelUpPanel";
@@ -36,6 +37,7 @@ namespace _Project.Scripts.UI.View
         
         private ShopPanel _shopPanel;
         private MissionChoosingPanel _missionChoosingPanel;
+        private EndGamePanel _endGamePanel;
         
         public UIGameplayRootBinder UIScene { get; private set; }
         public GameplayEntryPoint GameplayEntryPoint { get; private set; }
@@ -140,6 +142,19 @@ namespace _Project.Scripts.UI.View
             _missionChoosingPanel.transform.SetParent(UIScene.transform, false);
 
             return _missionChoosingPanel;
+        }
+        
+        public async UniTask<EndGamePanel> CreateEndGamePanel()
+        {
+            var endGamePanelTemplate = await _resourceService.Load<GameObject>(EndGamePanelPath);
+            endGamePanelTemplate = Instantiate(endGamePanelTemplate);
+
+            _endGamePanel = endGamePanelTemplate.GetComponent<EndGamePanel>();
+            GameObjectInjector.InjectObject(_endGamePanel.gameObject, _container);
+            _endGamePanel.transform.SetParent(UIScene.transform, false);
+            _endGamePanel.Hide();
+
+            return _endGamePanel;
         }
 
         // public async UniTask<LevelUpPanel> CreateLevelUpPanel()

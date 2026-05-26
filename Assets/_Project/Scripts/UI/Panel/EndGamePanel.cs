@@ -23,9 +23,9 @@ namespace _Project.Scripts.UI.Panel
         [SerializeField] private TMP_Text _accumulatedGoldText;
         [SerializeField] private TMP_Text _accumulatedScoreText;
 
-        [SerializeField] private Button _goToMainMenuButton;
+        [SerializeField] private Button _goToVillageButton;
         [SerializeField] private Button _rebornPlayerButton;
-        [SerializeField] private Button _nextLevelButton;
+        // [SerializeField] private Button _nextLevelButton;
 
         [SerializeField] private List<Image> _images;
         [SerializeField] private GameObject _rootWindow;
@@ -35,15 +35,17 @@ namespace _Project.Scripts.UI.Panel
         private ICurrencyService _currencyService;
         private IUILocalizationService _uiLocalizationService;
         private ITweenAnimationService _tweenAnimationService;
-        private ExperiencePoints _experiencePoints;
+        private IPlayerService _playerService;
+        private IExperiencePoints _experiencePoints;
+        
         // private WeaponPanel _weaponPanel;
         private UILocalizationData _uiLocalizationData;
 
         public event Action OnRewardAdSuccessShowed;
         public event Action OnSpawnPlayer;
 
-        public Button GoToMainMenuButton => _goToMainMenuButton;
-        public Button NextLevelButton => _nextLevelButton;
+        public Button GoToVillageButton => _goToVillageButton;
+        // public Button NextLevelButton => _nextLevelButton;
 
         [Inject]
         public void Construct(
@@ -51,13 +53,17 @@ namespace _Project.Scripts.UI.Panel
             MissionService missionService,
             ICurrencyService currencyService,
             IUILocalizationService uiLocalizationService,
-            ITweenAnimationService tweenAnimationService)
+            ITweenAnimationService tweenAnimationService,
+            IPlayerService playerService,
+            IExperiencePoints experiencePoints)
         {
             _pauseService = pauseService;
             _missionService = missionService;
             _currencyService = currencyService;
             _uiLocalizationService = uiLocalizationService;
             _tweenAnimationService = tweenAnimationService;
+            _playerService = playerService;
+            _experiencePoints = experiencePoints;
         }
 
         private void OnEnable()
@@ -65,11 +71,11 @@ namespace _Project.Scripts.UI.Panel
             YG2.onShowWindowGame -= _pauseService.OnPlayGame;
             YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
 
-            _goToMainMenuButton.onClick.AddListener(Hide);
+            _goToVillageButton.onClick.AddListener(Hide);
             _rebornPlayerButton.onClick.AddListener(OnShowRewardAd);
 
-            _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
-            _goToMainMenuButton.onClick.AddListener(_pauseService.OnPlayGame);
+            // _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
+            _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
 
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.AddListener(Hide);
@@ -88,11 +94,11 @@ namespace _Project.Scripts.UI.Panel
             YG2.onShowWindowGame += _pauseService.OnPlayGame;
             YG2.onHideWindowGame += _pauseService.OnStopGameWithMusic;
 
-            _goToMainMenuButton.onClick.RemoveListener(Hide);
+            _goToVillageButton.onClick.RemoveListener(Hide);
             _rebornPlayerButton.onClick.RemoveListener(OnShowRewardAd);
 
-            _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
-            _goToMainMenuButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+            // _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+            _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
 
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.RemoveListener(Hide);
@@ -112,7 +118,7 @@ namespace _Project.Scripts.UI.Panel
             if (_missionService.CurrentNumberLevel ==
                 _missionService.CurrentMission.Maps.Count - CountCorrectFactor)
             {
-                _nextLevelButton.gameObject.SetActive(false);
+                // _nextLevelButton.gameObject.SetActive(false);
 
                 switch (_missionService.CurrentMission.Id)
                 {
@@ -128,7 +134,7 @@ namespace _Project.Scripts.UI.Panel
             }
             else
             {
-                _nextLevelButton.gameObject.SetActive(true);
+                // _nextLevelButton.gameObject.SetActive(true);
             }
 
             _rebornPlayerButton.gameObject.SetActive(false);
@@ -141,7 +147,7 @@ namespace _Project.Scripts.UI.Panel
         public void SetDefeatPanel()
         {
             _rebornPlayerButton.gameObject.SetActive(true);
-            _nextLevelButton.gameObject.SetActive(false);
+            // _nextLevelButton.gameObject.SetActive(false);
 
             SetLocalizationData(UITextType.DefeatPanelTitle);
 
@@ -205,6 +211,7 @@ namespace _Project.Scripts.UI.Panel
 #if UNITY_EDITOR
         private void OnReborn()
         {
+            _playerService.SpawnPlayer();
             OnRewardAdSuccessShowed?.Invoke();
         }
 #endif
@@ -214,6 +221,7 @@ namespace _Project.Scripts.UI.Panel
             Hide();
             _pauseService.OnPlayGame();
             _pauseService.EnableEventSystem();
+            _playerService.SpawnPlayer();
             OnSpawnPlayer?.Invoke();
         }
 

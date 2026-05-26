@@ -33,6 +33,7 @@ namespace _Project.Scripts.Services
         private AudioSoundsService _audioSoundsService;
         private ParticleEffectsService _particleEffectsService;
         private IExperiencePoints _experiencePoints;
+        private ICurrencyService _currencyService;
 
         private EnemyInitData _enemyInitData;
 
@@ -54,7 +55,8 @@ namespace _Project.Scripts.Services
             AudioSoundsService audioSoundsService,
             ParticleEffectsService particleEffectsService,
             IFloatingTextService floatingTextService,
-            IExperiencePoints experiencePoints)
+            IExperiencePoints experiencePoints,
+            ICurrencyService currencyService)
         {
             _dataBaseService = dataBaseService;
             _playerService = playerService;
@@ -62,6 +64,7 @@ namespace _Project.Scripts.Services
             _particleEffectsService = particleEffectsService;
             _floatingTextService = floatingTextService;
             _experiencePoints = experiencePoints;
+            _currencyService = currencyService;
         }
 
         public UniTask Init()
@@ -92,7 +95,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
             
             skeleton.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
@@ -117,7 +121,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
             
             skeletonHeavyArmor.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
@@ -142,7 +147,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
 
             skeletonRanger.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
             skeletonRanger.Longbow.SetData(_playerService.Player.transform, data.Damage);
@@ -168,7 +174,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
 
             priest.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
             priest.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
@@ -201,7 +208,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
             
             bandit.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
@@ -226,7 +234,8 @@ namespace _Project.Scripts.Services
                 _floatingTextService,
                 _particleEffectsService,
                 _audioSoundsService,
-                _experiencePoints);
+                _experiencePoints,
+                _currencyService);
             
             bandit.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
             bandit.Longbow.SetData(_playerService.Player.transform, data.Damage);

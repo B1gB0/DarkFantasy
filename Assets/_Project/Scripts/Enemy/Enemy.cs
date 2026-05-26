@@ -18,6 +18,7 @@ namespace _Project.Scripts.Enemy
         protected AudioSoundsService AudioSoundsService;
         protected ParticleEffectsService ParticleEffectsService;
         protected IExperiencePoints ExperiencePoints;
+        protected ICurrencyService CurrencyService;
 
         public event Action<Enemy> Die;
 
@@ -58,7 +59,8 @@ namespace _Project.Scripts.Enemy
             IFloatingTextService floatingTextService,
             ParticleEffectsService particleEffectsService,
             AudioSoundsService audioSoundsService,
-            IExperiencePoints experiencePoints)
+            IExperiencePoints experiencePoints,
+            ICurrencyService currencyService)
         {
             Player = player;
             Data = enemyData;
@@ -68,6 +70,7 @@ namespace _Project.Scripts.Enemy
             ParticleEffectsService = particleEffectsService;
             AudioSoundsService = audioSoundsService;
             ExperiencePoints = experiencePoints;
+            CurrencyService = currencyService;
 
             Armor = Data.Armor;
 
@@ -82,6 +85,7 @@ namespace _Project.Scripts.Enemy
         public void AcceptScore(IScoreActorVisitor visitor)
         {
             visitor.Visit(this);
+            CurrencyService.AddGold(Data.Gold);
         }
 
         public virtual void OnReactState(bool isEnteredToState)

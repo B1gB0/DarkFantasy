@@ -36,7 +36,7 @@ namespace _Project.Scripts.Player.Core
         public PlayerAnimatedState PlayerAnimatedState => _playerAnimatedState;
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
-        public PlayerAttackState PlayerAttackState => _playerAttackState; 
+        public PlayerAttackState PlayerAttackState => _playerAttackState;
 
         public bool CanFollow { get; private set; } = true;
 
@@ -47,14 +47,20 @@ namespace _Project.Scripts.Player.Core
 
         private void OnEnable()
         {
-            if (Health != null)
-                Health.IsDamaged += OnPlayHitEffect;
+            if (Health == null)
+                return;
+            
+            Health.Die += Die;
+            Health.IsDamaged += OnPlayHitEffect;
         }
 
         private void OnDisable()
         {
-            if (Health != null)
-                Health.IsDamaged -= OnPlayHitEffect;
+            if (Health == null)
+                return;
+            
+            Health.Die -= Die;
+            Health.IsDamaged -= OnPlayHitEffect;
         }
 
         private void OnDestroy()
@@ -77,6 +83,26 @@ namespace _Project.Scripts.Player.Core
         public void ChangeFollowEnemyState(bool canFollow)
         {
             CanFollow = canFollow;
+        }
+
+        public void AnimationEvent_AllowCombo()
+        {
+            _playerAttackState.AllowCombo();
+        }
+
+        public void AnimationEvent_StartDamage()
+        {
+            _playerAttackState.StartDamageWindow();
+        }
+
+        public void AnimationEvent_EndDamage()
+        {
+            _playerAttackState.EndDamageWindow();
+        }
+
+        public void AnimationEvent_EndAttack()
+        {
+            _playerAttackState.EndAttack();
         }
 
         private void OnPlayHitEffect()
@@ -109,26 +135,9 @@ namespace _Project.Scripts.Player.Core
             _stateMachine.SwitchState(StateId.Idle);
         }
 
-        public void AnimationEvent_AllowCombo()
+        private void Die()
         {
-            _playerAttackState.AllowCombo();
-        }
-
-        public void AnimationEvent_StartDamage()
-        {
-            Debug.Log("Start Damage Window");
-            _playerAttackState.StartDamageWindow();
-        }
-
-        public void AnimationEvent_EndDamage()
-        {
-            Debug.Log("End Damage Window");
-            _playerAttackState.EndDamageWindow();
-        }
-
-        public void AnimationEvent_EndAttack()
-        {
-            _playerAttackState.EndAttack();
+            gameObject.SetActive(false);
         }
     }
 }
