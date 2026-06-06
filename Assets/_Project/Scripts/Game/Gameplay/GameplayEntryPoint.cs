@@ -46,6 +46,7 @@ namespace _Project.Scripts.Game.Gameplay
         private MissionService _missionService;
         private IUILocalizationService _uiLocalizationService;
         private IPauseService _pauseService;
+        private ICurrencyService _currencyService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -62,7 +63,8 @@ namespace _Project.Scripts.Game.Gameplay
             IFloatingTextService floatingTextService,
             MissionService missionService,
             IUILocalizationService uiLocalizationService,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            ICurrencyService currencyService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -73,6 +75,7 @@ namespace _Project.Scripts.Game.Gameplay
             _missionService = missionService;
             _uiLocalizationService = uiLocalizationService;
             _pauseService = pauseService;
+            _currencyService = currencyService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -106,6 +109,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _audioSoundsService.Init();
             await _missionService.Init();
             await _uiLocalizationService.Init();
+            await _currencyService.Init();
 
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 

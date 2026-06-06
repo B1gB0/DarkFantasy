@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
@@ -20,7 +21,10 @@ namespace _Project.Scripts.UI.View
         {
             _currencyService = currencyService;
             _tweenAnimationService = tweenAnimationService;
+        }
 
+        private void Start()
+        {
             _text.text = _currencyService.Gold.ToString();
             _currencyService.OnGoldValueChanged += SetValue;
         }
