@@ -66,6 +66,10 @@ namespace _Project.Scripts.Enemy
             Data = enemyData;
             Type = Data.Type;
 
+            Score = Data.Score;
+            Experience = Data.Experience;
+            IsEnemy = true;
+
             FloatingTextService = floatingTextService;
             ParticleEffectsService = particleEffectsService;
             AudioSoundsService = audioSoundsService;

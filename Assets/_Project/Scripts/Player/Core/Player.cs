@@ -4,6 +4,7 @@ using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Input;
 using _Project.Scripts.Services;
 using UnityEngine;
+using YG;
 using Sword = _Project.Scripts.Player.Combat.Sword;
 
 namespace _Project.Scripts.Player.Core
@@ -137,6 +138,7 @@ namespace _Project.Scripts.Player.Core
 
         private void Die()
         {
+            YG2.SaveProgress();
             gameObject.SetActive(false);
         }
     }

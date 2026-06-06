@@ -117,6 +117,8 @@ namespace _Project.Scripts.Level
             PlayerIsSpawned?.Invoke();
 
             _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
+            
+            _playerService.SpawnPlayer();
         }
 
         protected void CreateWaveOfEnemyByTimer(int numberWaveEnemy)

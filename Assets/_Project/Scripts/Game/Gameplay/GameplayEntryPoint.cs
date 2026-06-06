@@ -146,6 +146,7 @@ namespace _Project.Scripts.Game.Gameplay
             {
                 _endGamePanel = await _viewFactory.CreateEndGamePanel();
                 _endGamePanel.GoToVillageButton.onClick.AddListener(GetVillageHubExitParameters);
+                _endGamePanel.GoToVillageButton.onClick.AddListener(_uiScene.HandleGoToNextScene);
                 _playerService.Player.Health.Die += _endGamePanel.Show;
                 _playerService.Player.Health.Die += _endGamePanel.SetDefeatPanel;
                 _playerService.Player.Health.Die += _pauseService.OnStopGameWithoutMusic;
@@ -170,6 +171,7 @@ namespace _Project.Scripts.Game.Gameplay
             if (scene.name != Scenes.VillageHub)
             {
                 _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
+                _endGamePanel.GoToVillageButton.onClick.RemoveListener(_uiScene.HandleGoToNextScene);
                 _playerService.Player.Health.Die -= _endGamePanel.Show;
                 _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
                 _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;

@@ -108,6 +108,9 @@ namespace _Project.Scripts.UI.Panel
             YG2.onShowWindowGame += _pauseService.OnPlayGame;
             YG2.onHideWindowGame += _pauseService.OnStopGameWithMusic;
             
+            _experiencePoints.ResetAccumulatedValues();
+            _currencyService.ResetAccumulatedGold();
+            
             // _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             
@@ -172,9 +175,6 @@ namespace _Project.Scripts.UI.Panel
 
         public void Hide()
         {
-            _currencyService.ResetAccumulatedGold();
-            _experiencePoints.ResetAccumulatedValues();
-
             _tweenAnimationService.AnimateScale(transform, true);
             // _weaponPanel.Show();
         }

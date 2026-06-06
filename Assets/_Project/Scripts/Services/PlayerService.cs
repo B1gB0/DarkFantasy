@@ -89,6 +89,7 @@ namespace _Project.Scripts.Services
             if (Player.Health.TargetHealth <= MinValue)
             {
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);
+                YG2.SaveProgress();
             }
             
             Player.StateMachine.SwitchState(StateId.Idle);

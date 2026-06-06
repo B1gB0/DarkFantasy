@@ -52,7 +52,7 @@ namespace _Project.Scripts.Level
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
-            ViewFactory.UIScene.HandleGoToNextSceneButtonClick();
+            ViewFactory.UIScene.HandleGoToNextScene();
         }
     }
 }

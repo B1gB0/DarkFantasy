@@ -55,7 +55,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
             _exitSceneSignalSubject = exitSceneSignalSubject;
         }
         
-        public void HandleGoToNextSceneButtonClick()
+        public void HandleGoToNextScene()
         {
             // AudioSoundsService.PlaySound(SoundsType.Button).Forget();
             _exitSceneSignalSubject?.OnNext(Unit.Default);
