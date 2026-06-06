@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _swordDamage: 10
   _collider: {fileID: 7424380016530795260}
+  _hitChance: 0.3
 --- !u!1 &3377939940947086566
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4834f2eb0422aa24ea16a68fe72ffab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rollCooldownDuration: 0.85
 --- !u!114 &6950887898748460312
 MonoBehaviour:
   m_ObjectHideFlags: 0

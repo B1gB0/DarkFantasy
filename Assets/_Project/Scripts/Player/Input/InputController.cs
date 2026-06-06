@@ -8,6 +8,9 @@ namespace _Project.Scripts.Player.Input
     public class InputController : MonoBehaviour
     {
         private const float MinMagnitude = 0.01f;
+        private const float MinValue = 0f;
+
+        [SerializeField] private float _rollCooldownDuration = 0.7f;
 
         private InputSystem _inputSystem;
         private Joystick _joystick;
@@ -15,7 +18,9 @@ namespace _Project.Scripts.Player.Input
         private Button _rollButton;
 
         private bool _uiAttackPressed;
-        private bool _uiRollPressed;
+
+        private float _rollCooldownTimer;
+        private bool _rollRequested;
 
         public event Action OnAttackButtonPressed;
         public event Action OnMoveButtonsPressed;
@@ -23,7 +28,8 @@ namespace _Project.Scripts.Player.Input
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
 
-        public bool IsRollInputPerformed => _inputSystem.PLayer.Roll.WasPressedThisFrame() || _uiRollPressed;
+        public bool IsRollInputPerformed => _rollRequested;
+
         public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame() || _uiAttackPressed;
 
         private void Awake()
@@ -39,12 +45,19 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Move.canceled += OnMove;
 
             _inputSystem.PLayer.Attack.performed += OnAttack;
+            _inputSystem.PLayer.Roll.performed += OnRollPerformed;
+        }
+
+        private void Update()
+        {
+            if (_rollCooldownTimer > MinValue)
+                _rollCooldownTimer -= Time.deltaTime;
         }
 
         private void LateUpdate()
         {
             _uiAttackPressed = false;
-            _uiRollPressed = false;
+            _rollRequested = false;
         }
 
         private void OnDisable()
@@ -53,15 +66,16 @@ namespace _Project.Scripts.Player.Input
             _inputSystem.PLayer.Move.canceled -= OnMove;
 
             _inputSystem.PLayer.Attack.performed -= OnAttack;
+            _inputSystem.PLayer.Roll.performed -= OnRollPerformed;
 
             _inputSystem.PLayer.Disable();
         }
 
         private void OnDestroy()
         {
-            _joystick.OnInputHandled -= OnMoveWithJoystick;
-            _attackButton.onClick.RemoveListener(OnAttackByButton);
-            _rollButton.onClick.RemoveListener(OnRollByButton);
+            if (_joystick != null) _joystick.OnInputHandled -= OnMoveWithJoystick;
+            if (_attackButton != null) _attackButton.onClick.RemoveListener(OnAttackByButton);
+            if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
         }
 
         public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton)
@@ -78,9 +92,7 @@ namespace _Project.Scripts.Player.Input
         {
             MoveDirection = _joystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
-
-            if (IsMoveInputPerformed)
-                OnMoveButtonsPressed?.Invoke();
+            if (IsMoveInputPerformed) OnMoveButtonsPressed?.Invoke();
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -96,8 +108,25 @@ namespace _Project.Scripts.Player.Input
                 IsMoveInputPerformed = false;
             }
 
-            if (IsMoveInputPerformed)
-                OnMoveButtonsPressed?.Invoke();
+            if (IsMoveInputPerformed) OnMoveButtonsPressed?.Invoke();
+        }
+
+        private void OnRollPerformed(InputAction.CallbackContext context)
+        {
+            if (_rollCooldownTimer > MinValue)
+                return;
+
+            _rollRequested = true;
+            _rollCooldownTimer = _rollCooldownDuration;
+        }
+
+        private void OnRollByButton()
+        {
+            if (_rollCooldownTimer > MinValue)
+                return;
+
+            _rollRequested = true;
+            _rollCooldownTimer = _rollCooldownDuration;
         }
 
         private void OnAttackByButton()
@@ -106,15 +135,9 @@ namespace _Project.Scripts.Player.Input
             OnAttackButtonPressed?.Invoke();
         }
 
-        private void OnRollByButton()
-        {
-            _uiRollPressed = true;
-        }
-
         private void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed)
-                OnAttackButtonPressed?.Invoke();
+            if (context.performed) OnAttackButtonPressed?.Invoke();
         }
     }
 }
