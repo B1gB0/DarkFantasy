@@ -150,6 +150,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerService.Player.Health.Die += _endGamePanel.SetDefeatPanel;
                 _playerService.Player.Health.Die += _pauseService.OnStopGameWithoutMusic;
                 uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _endGamePanel.SetLabelText;
+                _endGamePanel.OnSpawnPlayer += _level.HealthBar.Show;
             }
 
             _playerService.Player.Health.Die += _uiScene.ResetCountdownTutorialPointer;
@@ -164,12 +165,19 @@ namespace _Project.Scripts.Game.Gameplay
 
         private void OnDestroy()
         {
-            _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
+            var scene = SceneManager.GetActiveScene();
+            
+            if (scene.name != Scenes.VillageHub)
+            {
+                _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
+                _playerService.Player.Health.Die -= _endGamePanel.Show;
+                _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
+                _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
+                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
+                _endGamePanel.OnSpawnPlayer -= _level.HealthBar.Show;
+            }
+
             _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
-            _playerService.Player.Health.Die -= _endGamePanel.Show;
-            _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
-            _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
-            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
             _playerService.Player.InputController.OnMoveButtonsPressed -= _uiScene.ResetCountdownTutorialPointer;
         }
 

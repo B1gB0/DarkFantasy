@@ -68,18 +68,11 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnEnable()
         {
-            YG2.onShowWindowGame -= _pauseService.OnPlayGame;
-            YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
-
             _goToVillageButton.onClick.AddListener(Hide);
             _rebornPlayerButton.onClick.AddListener(OnShowRewardAd);
 
-            // _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
-            _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
-
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.AddListener(Hide);
-            _rebornPlayerButton.onClick.AddListener(_pauseService.OnPlayGame);
             _rebornPlayerButton.onClick.AddListener(OnReborn);
 #endif
         }
@@ -87,28 +80,41 @@ namespace _Project.Scripts.UI.Panel
         private void Start()
         {
             OnRewardAdSuccessShowed += OnRewardSuccess;
+            
+            YG2.onShowWindowGame -= _pauseService.OnPlayGame;
+            YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
+            
+            // _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
+            _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
+            
+#if UNITY_EDITOR
+            _rebornPlayerButton.onClick.AddListener(_pauseService.OnPlayGame);
+#endif
         }
 
         private void OnDisable()
         {
-            YG2.onShowWindowGame += _pauseService.OnPlayGame;
-            YG2.onHideWindowGame += _pauseService.OnStopGameWithMusic;
-
             _goToVillageButton.onClick.RemoveListener(Hide);
             _rebornPlayerButton.onClick.RemoveListener(OnShowRewardAd);
 
-            // _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
-            _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
-
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.RemoveListener(Hide);
-            _rebornPlayerButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             _rebornPlayerButton.onClick.RemoveListener(OnReborn);
 #endif
         }
 
         private void OnDestroy()
         {
+            YG2.onShowWindowGame += _pauseService.OnPlayGame;
+            YG2.onHideWindowGame += _pauseService.OnStopGameWithMusic;
+            
+            // _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+            _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+            
+#if UNITY_EDITOR
+            _rebornPlayerButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+#endif
+            
             OnRewardAdSuccessShowed -= OnRewardSuccess;
             _rootWindow.transform.DOKill();
         }

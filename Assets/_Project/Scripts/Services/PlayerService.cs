@@ -90,6 +90,8 @@ namespace _Project.Scripts.Services
             {
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);
             }
+            
+            Player.StateMachine.SwitchState(StateId.Idle);
         }
 
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera)

@@ -33,14 +33,13 @@ namespace _Project.Scripts.Level
         protected ViewFactory ViewFactory;
         protected UIStateMachine UIStateMachine;
         protected UIRootView UIRootView;
-        protected HealthBar HealthBar;
 
         protected IShopService ShopService;
 
         protected float LastSpawnTime;
 
         protected EnemySpawner EnemySpawner;
-        
+
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
         private ParticleEffectsService _particleEffectsService;
@@ -49,10 +48,12 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
-
+        
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
         public event Action OnGoToNextScene;
+
+        public HealthBar HealthBar { get; private set; }
 
         [Inject]
         private void Construct(
@@ -81,7 +82,7 @@ namespace _Project.Scripts.Level
             _levelInitData = levelInitData;
             _playerInitData = playerInitData;
             _cinemachineFreeLook = cinemachineFreeLook;
-            
+
             ViewFactory = viewFactory;
             UIStateMachine = uiStateMachine;
             UIRootView = uiRootView;
@@ -90,7 +91,7 @@ namespace _Project.Scripts.Level
         public virtual async UniTask OnStartLevel()
         {
             await CreatePlayer();
-            
+
             InitSpawners(_enemyService);
         }
 
