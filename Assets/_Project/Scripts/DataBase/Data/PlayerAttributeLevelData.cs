@@ -10,11 +10,11 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private string _id;
         [SerializeField] private CharacteristicType _type;
         [SerializeField] private float _value;
-        [SerializeField] private float _price;
+        [SerializeField] private int _price;
 
         public string Id => _id;
         public CharacteristicType Type => _type;
         public float Value => _value;
-        public float Price => _price;
+        public int Price => _price;
     }
 }

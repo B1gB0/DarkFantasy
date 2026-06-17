@@ -34,6 +34,14 @@ namespace _Project.Scripts.UI.View
             _attributeButton.onClick.RemoveListener(OnButtonClick);
         }
 
+        public void SetCurrencyColor(int gold)
+        {
+            if(_currentData.Price > gold)
+                _price.color = Colors.GetColor(ColorName.RedCurrencyColor);
+            else
+                _price.color = Colors.GetColor(ColorName.BlackUIColor);
+        }
+
         public void Set(CharacteristicsLocalizationData localizationData, PlayerAttributeLevelData attributeData)
         {
             switch (localizationData.Type)

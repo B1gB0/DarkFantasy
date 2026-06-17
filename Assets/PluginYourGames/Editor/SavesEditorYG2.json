@@ -1,18 +1,18 @@
 {
-  "Gold": 680,
+  "Gold": 0,
   "AcumulatedScore": 362,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 0,
-  "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 0,
+  "HealthAttributeNumber": 9,
+  "DamageAttributeNumber": 3,
+  "ArmorAttributeNumber": 3,
   "IsFirstLaunch": false,
   "IsBanditVillageUnlock": false,
   "IsCastleUnlock": false,
   "PlayerCharacteristics": {
-    "MaxHealth": 100.0,
-    "TargetHealth": 98.0,
-    "Armor": 2.0,
-    "Damage": 5.0,
+    "MaxHealth": 145.0,
+    "TargetHealth": 142.1,
+    "Armor": 5.0,
+    "Damage": 8.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0
   },
@@ -30,5 +30,5 @@
     false,
     false
   ],
-  "idSave": 136
+  "idSave": 162
 }
