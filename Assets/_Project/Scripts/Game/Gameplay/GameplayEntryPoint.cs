@@ -30,6 +30,7 @@ namespace _Project.Scripts.Game.Gameplay
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
         [SerializeField] private ViewFactory _viewFactory;
+        
 
         private Level.Level _level;
         private UIRootView _uiRoot;
