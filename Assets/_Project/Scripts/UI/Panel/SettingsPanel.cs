@@ -70,14 +70,15 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Show()
         {
-            _playerService.Player.InputController.LockPlayerMovement();
             _tweenAnimationService.AnimateScale(transform);
         }
 
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
-            _playerService.Player.InputController.UnlockPlayerMovement();
+            
+            if(_playerService.Player != null)
+                _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
         private void SetValuesVolume()

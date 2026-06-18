@@ -31,6 +31,8 @@ namespace _Project.Scripts.Game.GameRoot
 
         public UIStateMachine UIStateMachine { get; private set; }
         public UIRootButtons UIRootButtons => _uiRootButtons;
+        public Button SettingsButton => _settingsButton;
+        public Button LeaderboardButton => _leaderboardButton;
         public GoldView GoldView => _goldView;
         public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
 

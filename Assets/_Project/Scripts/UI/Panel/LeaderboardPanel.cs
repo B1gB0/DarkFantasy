@@ -14,13 +14,15 @@ namespace _Project.Scripts.UI.Panel
         [SerializeField] private Button _backToSceneButton;
         
         private ITweenAnimationService _tweenAnimationService;
+        private IPlayerService _playerService;
 
         public event Action OnBackToSceneButtonPressed;
         
         [Inject]
-        private void Construct(ITweenAnimationService tweenAnimationService)
+        private void Construct(ITweenAnimationService tweenAnimationService, IPlayerService playerService)
         {
             _tweenAnimationService = tweenAnimationService;
+            _playerService = playerService;
         }
 
         private void OnEnable()
@@ -46,6 +48,9 @@ namespace _Project.Scripts.UI.Panel
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
+            
+            if(_playerService.Player != null)
+                _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
         private void MoveBackToScene()

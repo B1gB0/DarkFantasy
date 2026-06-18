@@ -68,6 +68,8 @@ namespace _Project.Scripts.Player.Core
         {
             if (PlayerCharacteristics != null && Health != null)
                 Health.TargetHealthChanged -= PlayerCharacteristics.SaveTargetHealth;
+            
+            _inputController.OnUnlockController -= OnUnlockController;
         }
 
         public void Construct(
@@ -133,6 +135,13 @@ namespace _Project.Scripts.Player.Core
             _stateMachine.AddState(_playerRollState);
             _stateMachine.AddState(_playerAttackState);
 
+            _stateMachine.SwitchState(StateId.Idle);
+
+            _inputController.OnUnlockController += OnUnlockController;
+        }
+
+        private void OnUnlockController()
+        {
             _stateMachine.SwitchState(StateId.Idle);
         }
 

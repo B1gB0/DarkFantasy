@@ -29,6 +29,7 @@ namespace _Project.Scripts.Player.Input
 
         public event Action OnAttackButtonPressed;
         public event Action OnMoveButtonsPressed;
+        public event Action OnUnlockController;
 
         public Vector2 MoveDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
@@ -96,6 +97,7 @@ namespace _Project.Scripts.Player.Input
 
         public void LockPlayerMovement()
         {
+            Debug.Log("LockPlayerMovement");
             _isMovementLocked = true;
             _isAttackLocked = true;
             _isRollLocked = true;
@@ -103,9 +105,12 @@ namespace _Project.Scripts.Player.Input
         
         public void UnlockPlayerMovement()
         {
+            Debug.Log("UnlockPlayerMovement");
             _isMovementLocked = false;
             _isAttackLocked = false;
             _isRollLocked = false;
+            
+            OnUnlockController?.Invoke();
         }
 
         private void OnMoveWithJoystick()
@@ -168,10 +173,6 @@ namespace _Project.Scripts.Player.Input
         private void OnAttack(InputAction.CallbackContext context)
         {
             if(_isAttackLocked)
-                return;
-            
-            if (UnityEngine.EventSystems.EventSystem.current != null &&
-                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 return;
             
             if (context.performed) OnAttackButtonPressed?.Invoke();

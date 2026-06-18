@@ -157,6 +157,8 @@ namespace _Project.Scripts.Game.Gameplay
 
             _playerService.Player.Health.Die += _uiScene.ResetCountdownTutorialPointer;
             _playerService.Player.InputController.OnMoveButtonsPressed += _uiScene.ResetCountdownTutorialPointer;
+            uiRoot.SettingsButton.onClick.AddListener(_playerService.Player.InputController.LockPlayerMovement);
+            uiRoot.LeaderboardButton.onClick.AddListener(_playerService.Player.InputController.LockPlayerMovement);
 
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 
@@ -183,6 +185,8 @@ namespace _Project.Scripts.Game.Gameplay
 
             _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
             _playerService.Player.InputController.OnMoveButtonsPressed -= _uiScene.ResetCountdownTutorialPointer;
+            _uiRoot.SettingsButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
+            _uiRoot.LeaderboardButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
         }
 
         public void GetGameplayExitParameters()
