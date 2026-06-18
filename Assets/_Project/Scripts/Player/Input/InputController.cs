@@ -35,7 +35,8 @@ namespace _Project.Scripts.Player.Input
 
         public bool IsRollInputPerformed => _rollRequested;
 
-        public bool IsAttackButtonPressed => _inputSystem.PLayer.Attack.WasPressedThisFrame() || _uiAttackPressed;
+        public bool IsAttackButtonPressed => !_isAttackLocked &&
+            (_inputSystem.PLayer.Attack.WasPressedThisFrame() || _uiAttackPressed);
 
         private void Awake()
         {
@@ -109,8 +110,12 @@ namespace _Project.Scripts.Player.Input
 
         private void OnMoveWithJoystick()
         {
-            if(_isMovementLocked)
+            if (_isMovementLocked)
+            {
+                MoveDirection = Vector2.zero;
+                IsMoveInputPerformed = false;
                 return;
+            }
             
             MoveDirection = _joystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
@@ -119,15 +124,12 @@ namespace _Project.Scripts.Player.Input
 
         private void OnMove(InputAction.CallbackContext context)
         {
-            if(_isMovementLocked)
-                return;
-            
             if (context.performed)
             {
                 MoveDirection = context.ReadValue<Vector2>();
                 IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
             }
-            else if (context.canceled)
+            else if (context.canceled || _isMovementLocked)
             {
                 MoveDirection = Vector2.zero;
                 IsMoveInputPerformed = false;
@@ -138,7 +140,7 @@ namespace _Project.Scripts.Player.Input
 
         private void OnRollPerformed(InputAction.CallbackContext context)
         {
-            if (_rollCooldownTimer > MinValue && _isRollLocked)
+            if (_rollCooldownTimer > MinValue || _isRollLocked)
                 return;
 
             _rollRequested = true;
@@ -147,7 +149,7 @@ namespace _Project.Scripts.Player.Input
 
         private void OnRollByButton()
         {
-            if (_rollCooldownTimer > MinValue && _isRollLocked)
+            if (_rollCooldownTimer > MinValue || _isRollLocked)
                 return;
 
             _rollRequested = true;
@@ -166,6 +168,10 @@ namespace _Project.Scripts.Player.Input
         private void OnAttack(InputAction.CallbackContext context)
         {
             if(_isAttackLocked)
+                return;
+            
+            if (UnityEngine.EventSystems.EventSystem.current != null &&
+                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 return;
             
             if (context.performed) OnAttackButtonPressed?.Invoke();

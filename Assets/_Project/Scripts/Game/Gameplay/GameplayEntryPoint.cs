@@ -161,6 +161,7 @@ namespace _Project.Scripts.Game.Gameplay
             var exitToSceneSignal = exitSceneSignalSubject.Select(_ => _exitParameters);
 
             _uiScene.ResetCountdownTutorialPointer();
+            _uiScene.HandlePCTutorialButtons();
 
             return exitToSceneSignal;
         }

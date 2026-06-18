@@ -76,8 +76,8 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Hide()
         {
-            _playerService.Player.InputController.UnlockPlayerMovement();
             _tweenAnimationService.AnimateScale(transform, true);
+            _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
         private void SetValuesVolume()

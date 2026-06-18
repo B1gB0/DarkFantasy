@@ -52,7 +52,6 @@ namespace _Project.Scripts.UI.Panel
             foreach (var attributeView in _attributeViews)
             {
                 _currencyService.OnGoldValueChanged += attributeView.SetCurrencyColor;
-                attributeView.SetCurrencyColor(_currencyService.Gold);
             }
         }
 
@@ -88,13 +87,19 @@ namespace _Project.Scripts.UI.Panel
         {
             _playerService.Player.InputController.LockPlayerMovement();
             SetAttributeViews();
+            
+            foreach (var attributeView in _attributeViews)
+            {
+                attributeView.SetCurrencyColor(_currencyService.Gold);
+            }
+            
             _tweenAnimationService.AnimateScale(transform);
         }
 
         public override void Hide()
         {
-            _playerService.Player.InputController.UnlockPlayerMovement();
             _tweenAnimationService.AnimateScale(transform, true);
+            _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
         public void OnChangeLanguage()
@@ -127,8 +132,6 @@ namespace _Project.Scripts.UI.Panel
             if (data.Price > _currencyService.Gold)
                 return;
             
-            _currencyService.SpendGold(data.Price);
-            
             List<PlayerAttributeLevelData> attributeList = data.Type switch
             {
                 CharacteristicType.Health => _healthAttributes,
@@ -139,6 +142,8 @@ namespace _Project.Scripts.UI.Panel
             
             if (attributeList == null || attributeList.IndexOf(data) == attributeList.Count - 1)
                 return;
+            
+            _currencyService.SpendGold(data.Price);
             
             YG2.saves.PlayerCharacteristics.ApplyImprovement(data.Type, data.Value);
             

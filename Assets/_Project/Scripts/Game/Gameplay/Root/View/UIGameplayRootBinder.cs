@@ -34,6 +34,8 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public GameObject JoystickIcon { get; private set; }
         [field: SerializeField] public TutorialPointer TutorialPointer { get; private set; }
         [field: SerializeField] public KeyboardTutorialView KeyboardTutorialView { get; private set; }
+        [field: SerializeField] public GameObject MouseTutorialView { get; private set; }
+        [field: SerializeField] public GameObject SpaceTutorialView { get; private set; }
         [field: SerializeField] public Button AttackButton { get; private set; }
         [field: SerializeField] public Button RollButton { get; private set; }
         
@@ -61,6 +63,39 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
             _exitSceneSignalSubject?.OnNext(Unit.Default);
         }
         
+        public void ResetCountdownTutorialPointer()
+        {
+            if (YG2.envir.isDesktop)
+            {
+                _tweenAnimationService.AnimateMove(
+                    KeyboardTutorialView.transform,
+                    ShowKeyboardTutorialPoint,
+                    HideKeyboardTutorialPoint,
+                    true);
+            }
+            else
+            {
+                JoystickIcon.SetActive(false);
+                TutorialPointer.Deactivate();
+            }
+
+            CountdownToShowStoryButtonFoot().Forget();
+        }
+
+        public void HandlePCTutorialButtons()
+        {
+            if (YG2.envir.isDesktop)
+            {
+                MouseTutorialView.SetActive(true);
+                SpaceTutorialView.SetActive(true);
+            }
+            else
+            {
+                MouseTutorialView.SetActive(false);
+                SpaceTutorialView.SetActive(false);
+            }
+        }
+        
         private void ShowTutorialPointer()
         {
             if(TutorialPointer == null)
@@ -83,25 +118,6 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 KeyboardTutorialView.transform,
                 ShowKeyboardTutorialPoint,
                 HideKeyboardTutorialPoint);
-        }
-
-        public void ResetCountdownTutorialPointer()
-        {
-            if (YG2.envir.isDesktop)
-            {
-                _tweenAnimationService.AnimateMove(
-                    KeyboardTutorialView.transform,
-                    ShowKeyboardTutorialPoint,
-                    HideKeyboardTutorialPoint,
-                    true);
-            }
-            else
-            {
-                JoystickIcon.SetActive(false);
-                TutorialPointer.Deactivate();
-            }
-
-            CountdownToShowStoryButtonFoot().Forget();
         }
 
         private async UniTaskVoid CountdownToShowStoryButtonFoot()
