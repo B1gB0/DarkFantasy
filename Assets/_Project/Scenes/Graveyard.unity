@@ -1644,6 +1644,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4844639926406441848, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_YDamping
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4844639926406441848, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_ZDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4844639926406441848, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_BindingMode
       value: 5
       objectReference: {fileID: 0}
@@ -1891,6 +1899,22 @@ PrefabInstance:
     - target: {fileID: 7600580675716538127, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816677160799369340, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: m_Size.x
+      value: 1.8207572
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816677160799369340, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: m_Size.z
+      value: 1.7903017
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816677160799369340, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: m_Center.x
+      value: -0.011028502
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816677160799369340, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      propertyPath: m_Center.z
+      value: -0.10322517
       objectReference: {fileID: 0}
     - target: {fileID: 8246716064597278815, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       propertyPath: m_LocalPosition.x
