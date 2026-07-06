@@ -12,5 +12,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
         public readonly int Hit = Animator.StringToHash(nameof(Hit));
         public readonly int Coil = Animator.StringToHash(nameof(Coil));
         public readonly int Omni = Animator.StringToHash(nameof(Omni));
+        public readonly int Death = Animator.StringToHash(nameof(Death));
     }
 }

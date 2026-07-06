@@ -41,8 +41,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             if (Player == null
                 || !Player.CanFollow
-                || Player.Health.TargetHealth <= MinValue
-                || Enemy.Health.TargetHealth <= MinValue)
+                || Player.Health.TargetHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
                 return;

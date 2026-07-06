@@ -11,13 +11,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Enter()
         {
-            // Пример случайного выбора одной из двух hit-анимаций
-            // int randomHit = Random.Range(0, 2);
-            // if (randomHit == 0)
-            //     AnimStateMachine.EnterIn<Hit1AnimatedState>();
-            // else
-            //     AnimStateMachine.EnterIn<Hit2AnimatedState>();
-
             AnimStateMachine.EnterIn<HitEnemyAnimatedState>();
 
             _timer = HitDuration;

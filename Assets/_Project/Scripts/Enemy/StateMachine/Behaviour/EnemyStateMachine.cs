@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Services;
 using UnityEngine;
@@ -31,6 +30,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour
                 { typeof(FollowState), new FollowState() },
                 { typeof(AttackState), new AttackState() },
                 { typeof(HitState), new HitState() },
+                { typeof(DeathState), new DeathState() },
             };
         }
 

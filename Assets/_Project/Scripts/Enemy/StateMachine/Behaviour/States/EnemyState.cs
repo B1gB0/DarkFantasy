@@ -8,7 +8,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
     public abstract class EnemyState
     {
         protected const int MinValue = 0;
-        
+
         protected NavMeshAgent Agent;
         protected Enemy Enemy;
         protected ParticleEffectsService ParticleEffectsService;
@@ -31,9 +31,22 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             AudioSoundsService = audioSoundsService;
         }
 
-        public virtual void Enter() { }
-        public virtual void Exit() { }
-        public virtual void Update() { }
-        public virtual void FixedUpdate() { }
+        public virtual void Enter()
+        {
+        }
+
+        public virtual void Exit()
+        {
+        }
+
+        public virtual void Update()
+        {
+        }
+
+        public virtual void FixedUpdate()
+        {
+            if (Enemy.Health.TargetHealth <= MinValue)
+                EnemyStateMachine.SwitchState<DeathState>();
+        }
     }
 }
