@@ -13,8 +13,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const float CoilChance = 0.66f;
 
         private float _attackRange;
-        private float _reloadDuration = 2f;
-        private float _aimDuration = 2f;
+        private float _reloadDuration = 1f;
+        private float _aimDuration = 1f;
         private float _idleDuration = 1f;
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;
@@ -26,7 +26,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Enter()
         {
-            _currentSubState = Enemy.Type == EnemyType.SkeletonRanger ? AttackSubState.Aiming : AttackSubState.Idle;
+            _currentSubState = Enemy.Type is EnemyType.BanditRanger
+                or EnemyType.SkeletonRanger ? AttackSubState.Aiming : AttackSubState.Idle;
+
             _attackRange = Data.RangeAttack;
             _activePriestAttack = PriestAttackState.None;
         }
@@ -67,7 +69,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (_subStateTimer <= MinValue)
             {
-                if (Enemy.Type == EnemyType.SkeletonRanger)
+                if (Enemy.Type == EnemyType.SkeletonRanger || Enemy.Type == EnemyType.BanditRanger)
                 {
                     switch (_currentSubState)
                     {
