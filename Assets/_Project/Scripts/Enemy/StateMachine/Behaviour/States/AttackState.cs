@@ -13,8 +13,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const float CoilChance = 0.66f;
 
         private float _attackRange;
-        private float _reloadDuration = 1f;
-        private float _aimDuration = 1f;
+        private float _reloadDuration = 0.4f;
+        private float _aimDuration = 0.85f;
         private float _idleDuration = 1f;
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;

@@ -152,7 +152,7 @@ namespace _Project.Scripts.UI.View
             _endGamePanel = endGamePanelTemplate.GetComponent<EndGamePanel>();
             GameObjectInjector.InjectObject(_endGamePanel.gameObject, _container);
             _endGamePanel.transform.SetParent(UIScene.transform, false);
-            _endGamePanel.Hide();
+            _endGamePanel.gameObject.SetActive(false);
 
             return _endGamePanel;
         }
