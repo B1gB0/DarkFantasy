@@ -35,7 +35,6 @@ namespace _Project.Scripts.Services
         {
             Gold = gold;
             OnGoldValueChanged?.Invoke(Gold);
-            SaveGold();
         }
 
         public void AddGold(int gold)
@@ -43,14 +42,12 @@ namespace _Project.Scripts.Services
             Gold += gold;
             AccumulatedGold += gold;
             OnGoldValueChanged?.Invoke(Gold);
-            SaveGold();
         }
 
         public void SpendGold(int gold)
         {
             Gold -= gold;
             OnGoldValueChanged?.Invoke(Gold);
-            SaveGold();
         }
         
         public void ResetAccumulatedGold()
@@ -58,7 +55,7 @@ namespace _Project.Scripts.Services
             AccumulatedGold = MinValue;
         }
 
-        private void SaveGold()
+        public void SaveGold()
         {
             YG2.saves.Gold = Gold;
             YG2.SaveProgress();

@@ -87,7 +87,6 @@ namespace _Project.Scripts.Game.MainMenu
 
         private void OnDestroy()
         {
-            YG2.SaveProgress();
             _uiScene.OnGameplayStarted -= GetVillageHubParameters;
             _uiScene.OnGameplayStarted -= GetPrologueParameters;
         }

@@ -167,6 +167,7 @@ namespace _Project.Scripts.UI.Panel
                 newAttributeData);
             
             YG2.SaveProgress();
+            _currencyService.SaveGold();
         }
     }
 }

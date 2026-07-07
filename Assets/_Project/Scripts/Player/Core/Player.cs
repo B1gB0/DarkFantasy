@@ -147,7 +147,6 @@ namespace _Project.Scripts.Player.Core
 
         private void Die()
         {
-            YG2.SaveProgress();
             gameObject.SetActive(false);
         }
     }

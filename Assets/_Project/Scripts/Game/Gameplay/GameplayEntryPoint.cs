@@ -154,6 +154,11 @@ namespace _Project.Scripts.Game.Gameplay
                 uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _endGamePanel.SetLabelText;
                 _endGamePanel.OnSpawnPlayer += _level.HealthBar.Show;
             }
+            else
+            {
+                YG2.SaveProgress();
+                _currencyService.SaveGold();
+            }
 
             _playerService.Player.Health.Die += _uiScene.ResetCountdownTutorialPointer;
             _playerService.Player.InputController.OnMoveButtonsPressed += _uiScene.ResetCountdownTutorialPointer;
