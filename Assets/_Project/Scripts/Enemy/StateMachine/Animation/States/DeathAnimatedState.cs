@@ -13,7 +13,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         {
             base.Enter();
             Animator.StopPlayback();
-            Animator.CrossFade(EnemyAnimationBase.Coil, Duration);
+            Animator.CrossFade(EnemyAnimationBase.Death, Duration);
         }
 
         public override void Exit()
