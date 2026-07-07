@@ -1,5 +1,4 @@
-﻿using _Project.Scripts.Effects;
-using _Project.Scripts.Enemy.StateMachine.Animation.States;
+﻿using _Project.Scripts.Enemy.StateMachine.Animation.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
@@ -7,7 +6,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
     public class DeathState : EnemyState
     {
         // Длительность состояния смерти (можно брать из анимации или настроить)
-        private const float DeathDuration = 2f;
+        private const float DeathDuration = 5f;
         private float _timer;
         private bool _deathProcessed;
 
@@ -15,12 +14,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             _timer = DeathDuration;
             _deathProcessed = false;
-
-            // Останавливаем навигацию
+            
             if (Agent != null && Agent.isOnNavMesh)
             {
                 Agent.isStopped = true;
-                Agent.ResetPath();
+                Agent.enabled = false;
             }
             
             foreach (var col in Enemy.GetComponentsInChildren<Collider>())

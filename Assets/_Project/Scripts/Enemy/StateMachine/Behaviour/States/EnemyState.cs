@@ -45,8 +45,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public virtual void FixedUpdate()
         {
-            if (Enemy.Health.TargetHealth <= MinValue)
-                EnemyStateMachine.SwitchState<DeathState>();
         }
     }
 }

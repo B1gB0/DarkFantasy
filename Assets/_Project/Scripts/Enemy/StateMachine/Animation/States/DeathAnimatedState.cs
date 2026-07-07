@@ -12,6 +12,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         public override void Enter()
         {
             base.Enter();
+            Animator.applyRootMotion = true;
             Animator.StopPlayback();
             Animator.CrossFade(EnemyAnimationBase.Death, Duration);
         }
@@ -20,6 +21,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         {
             base.Exit();
             Animator.StopPlayback();
+            Animator.applyRootMotion = false;
         }
     }
 }

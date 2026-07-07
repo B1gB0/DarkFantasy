@@ -23,6 +23,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
             AddState(new HitEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new CoilEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new OmniEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new DeathAnimatedState(animator, enemyAnimationBase));
         }
 
         public void EnterIn<T>()

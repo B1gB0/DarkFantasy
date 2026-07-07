@@ -3,6 +3,7 @@ using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour;
+using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Experience;
 using _Project.Scripts.Services;
 using UnityEngine;
@@ -104,7 +105,8 @@ namespace _Project.Scripts.Enemy
 
             Die?.Invoke(this);
 
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
+            EnemyStateMachine.SwitchState<DeathState>();
         }
 
         protected virtual void OnPlayHitEffect()

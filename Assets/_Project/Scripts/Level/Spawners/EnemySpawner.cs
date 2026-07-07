@@ -147,6 +147,8 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.transform.position = enemySpawnPosition;
 
             skeleton.NavMeshAgent.enabled = true;
+            skeleton.NavMeshAgent.isStopped = false;
+            skeleton.NavMeshAgent.ResetPath();
 
             skeleton.Die += OnKillSkeleton;
 
@@ -172,6 +174,8 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.transform.position = enemySpawnPosition;
 
             skeleton.NavMeshAgent.enabled = true;
+            skeleton.NavMeshAgent.isStopped = false;
+            skeleton.NavMeshAgent.ResetPath();
 
             skeleton.Die += OnKillSkeletonHeavyArmor;
 
@@ -197,6 +201,8 @@ namespace _Project.Scripts.Level.Spawners
             skeleton.transform.position = enemySpawnPosition;
 
             skeleton.NavMeshAgent.enabled = true;
+            skeleton.NavMeshAgent.isStopped = false;
+            skeleton.NavMeshAgent.ResetPath();
 
             skeleton.Die += OnKillSkeletonRanger;
 
@@ -222,6 +228,8 @@ namespace _Project.Scripts.Level.Spawners
             priest.transform.position = enemySpawnPosition;
 
             priest.NavMeshAgent.enabled = true;
+            priest.NavMeshAgent.isStopped = false;
+            priest.NavMeshAgent.ResetPath();
 
             priest.Die += OnKillPriest;
 
@@ -247,6 +255,8 @@ namespace _Project.Scripts.Level.Spawners
             bandit.transform.position = enemySpawnPosition;
 
             bandit.NavMeshAgent.enabled = true;
+            bandit.NavMeshAgent.isStopped = false;
+            bandit.NavMeshAgent.ResetPath();
 
             bandit.Die += OnKillBandit;
 
@@ -272,6 +282,8 @@ namespace _Project.Scripts.Level.Spawners
             bandit.transform.position = enemySpawnPosition;
 
             bandit.NavMeshAgent.enabled = true;
+            bandit.NavMeshAgent.isStopped = false;
+            bandit.NavMeshAgent.ResetPath();
 
             bandit.Die += OnKillBandit;
 
