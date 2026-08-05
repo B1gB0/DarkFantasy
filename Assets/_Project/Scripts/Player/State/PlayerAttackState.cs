@@ -7,14 +7,16 @@ namespace _Project.Scripts.Player
     public class PlayerAttackState : IPlayerState
     {
         private const int MaxCombo = 3;
+        private const float FallbackEndThreshold = 0.95f; // 95% анимации
 
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _anim;
         private readonly PlayerStateMachine _stateMachine;
 
-        private bool _isComboWindowOpen; 
-        private bool _isAttackBuffered;  
+        private bool _isComboWindowOpen;
+        private bool _isAttackBuffered;
         private int _comboCounter;
+        private bool _fallbackEndInvoked; // защита от повторного вызова EndAttack
 
         public PlayerAttackState(Core.Player player)
         {
@@ -29,9 +31,20 @@ namespace _Project.Scripts.Player
         {
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
             StartCombo();
+            _fallbackEndInvoked = false;
         }
 
-        public void Update() { }
+        public void Update()
+        {
+            // Страховка: если анимация почти завершена, а EndAttack ещё не был вызван
+            AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
+            {
+                _fallbackEndInvoked = true;
+                EndAttack();
+            }
+        }
+
         public void FixedUpdate() { }
 
         public void Exit()
@@ -40,53 +53,8 @@ namespace _Project.Scripts.Player
             ResetCombo();
         }
 
-        private void StartCombo()
-        {
-            _comboCounter = 1;
-            _isComboWindowOpen = false;
-            _isAttackBuffered = false;
-            
-            _anim.OnAttack(true);
-            _anim.OnComboChanged(_comboCounter);
-        }
-        
-        public void AllowCombo()
-        {
-            _isComboWindowOpen = true;
-
-            if (_isAttackBuffered)
-            {
-                ContinueCombo();
-            }
-        }
-
-        private void OnAttackButtonPressed()
-        {
-            if (_comboCounter >= MaxCombo) 
-                return; 
-
-            if (_isComboWindowOpen)
-            {
-                ContinueCombo(); 
-            }
-            else
-            {
-                _isAttackBuffered = true; 
-            }
-        }
-
-        private void ContinueCombo()
-        {
-            _isAttackBuffered = false;
-            _isComboWindowOpen = false; 
-            
-            _comboCounter++;
-            _anim.OnComboChanged(_comboCounter);
-        }
-
         public void StartDamageWindow() => _player.Sword.ActivateCollider();
         public void EndDamageWindow()   => _player.Sword.DeactivateCollider();
-
 
         public void EndAttack()
         {
@@ -98,6 +66,52 @@ namespace _Project.Scripts.Player
                 _stateMachine.SwitchState(StateId.Move);
             else
                 _stateMachine.SwitchState(StateId.Idle);
+        }
+
+        public void AllowCombo()
+        {
+            _isComboWindowOpen = true;
+
+            if (_isAttackBuffered)
+            {
+                ContinueCombo();
+            }
+        }
+
+        private void StartCombo()
+        {
+            _comboCounter = 1;
+            _isComboWindowOpen = false;
+            _isAttackBuffered = false;
+            _fallbackEndInvoked = false;
+
+            _anim.OnAttack(true);
+            _anim.OnComboChanged(_comboCounter);
+        }
+
+        private void OnAttackButtonPressed()
+        {
+            if (_comboCounter >= MaxCombo)
+                return;
+
+            if (_isComboWindowOpen)
+            {
+                ContinueCombo();
+            }
+            else
+            {
+                _isAttackBuffered = true;
+            }
+        }
+
+        private void ContinueCombo()
+        {
+            _isAttackBuffered = false;
+            _isComboWindowOpen = false;
+            _fallbackEndInvoked = false;      // Сбрасываем флаг, так как начинается новая анимация
+
+            _comboCounter++;
+            _anim.OnComboChanged(_comboCounter);
         }
 
         private void ResetCombo()
