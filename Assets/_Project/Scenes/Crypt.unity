@@ -678,7 +678,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000
+  far clip plane: 40
   field of view: 40
   orthographic: 0
   orthographic size: 10
@@ -797,6 +797,10 @@ PrefabInstance:
     - target: {fileID: 4212883452062109388, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_Lens.FarClipPlane
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_Orbits.Array.data[1].m_Height
@@ -2034,6 +2038,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4451269354048727791, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.61
+      objectReference: {fileID: 0}
     - target: {fileID: 4466383554557490364, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -2366,6 +2374,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6438765801648860842, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 33ffed7d5e1ca1f4f91605878db7c2c4, type: 2}
     - target: {fileID: 6442050467471027319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
       propertyPath: m_Layer
       value: 7
