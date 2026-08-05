@@ -6,7 +6,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
     public class DeathState : EnemyState
     {
         // Длительность состояния смерти (можно брать из анимации или настроить)
-        private const float DeathDuration = 5f;
+        private const float DeathDuration = 10f;
         private float _timer;
         private bool _deathProcessed;
 
@@ -25,10 +25,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             {
                 col.enabled = false;
             }
-            
-            var rb = Enemy.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.isKinematic = true;
 
             // Проигрываем анимацию смерти (убедитесь, что состояние DeathEnemyAnimatedState существует)
             AnimStateMachine.EnterIn<DeathAnimatedState>();

@@ -235,6 +235,8 @@ MonoBehaviour:
   _animator: {fileID: 7618116559500613158}
   <Health>k__BackingField: {fileID: 3350875041654478630}
   <EnemyStateMachine>k__BackingField: {fileID: -4037433533464414506}
+  <Rigidbody>k__BackingField: {fileID: 6681415003844840349}
+  <Collider>k__BackingField: {fileID: 3626917138267769434}
   <NavMeshAgent>k__BackingField: {fileID: 6222718641175835822}
   <MeleeWeapon>k__BackingField: {fileID: 2244456093554437938}
 --- !u!114 &3350875041654478630
@@ -329,7 +331,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0

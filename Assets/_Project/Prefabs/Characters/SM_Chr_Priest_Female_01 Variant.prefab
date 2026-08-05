@@ -870,6 +870,8 @@ MonoBehaviour:
   _animator: {fileID: 8528561160830379696}
   <Health>k__BackingField: {fileID: 6100124291561030069}
   <EnemyStateMachine>k__BackingField: {fileID: 680310522410919581}
+  <Rigidbody>k__BackingField: {fileID: 933098077329645207}
+  <Collider>k__BackingField: {fileID: 4235927839074585317}
   <NavMeshAgent>k__BackingField: {fileID: 532622652546455069}
   <FireballSpell>k__BackingField: {fileID: 3500357806521229406}
   <Coil>k__BackingField: {fileID: 2656559376696164104}

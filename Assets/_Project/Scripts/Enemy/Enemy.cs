@@ -3,7 +3,6 @@ using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Enemy.StateMachine.Animation;
 using _Project.Scripts.Enemy.StateMachine.Behaviour;
-using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using _Project.Scripts.Experience;
 using _Project.Scripts.Services;
 using UnityEngine;
@@ -11,6 +10,8 @@ using UnityEngine;
 namespace _Project.Scripts.Enemy
 {
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider))]
     public abstract class Enemy : MonoBehaviour, IAcceptable, IExperienceScoreActor
     {
         [SerializeField] private Animator _animator;
@@ -25,6 +26,8 @@ namespace _Project.Scripts.Enemy
 
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
+        [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
+        [field: SerializeField] public Collider Collider { get; private set; }
 
         public int Experience { get; private set; }
         public int Score { get; private set; }
@@ -106,7 +109,6 @@ namespace _Project.Scripts.Enemy
             Die?.Invoke(this);
 
             // gameObject.SetActive(false);
-            EnemyStateMachine.SwitchState<DeathState>();
         }
 
         protected virtual void OnPlayHitEffect()

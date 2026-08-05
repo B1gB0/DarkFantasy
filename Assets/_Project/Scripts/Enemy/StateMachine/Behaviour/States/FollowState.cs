@@ -21,6 +21,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Update()
         {
+            if(Enemy.Health.CurrentHealth <= MinValue)
+            {
+                EnemyStateMachine.SwitchState<DeathState>();
+                return;
+            }
+            
             if (Player == null || !Player.CanFollow || !Enemy.CanFollow)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();

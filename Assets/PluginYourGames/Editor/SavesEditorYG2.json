@@ -1,6 +1,6 @@
 {
-  "Gold": 30,
-  "AcumulatedScore": 34,
+  "Gold": 300,
+  "AcumulatedScore": 356,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -10,7 +10,7 @@
   "IsCastleUnlock": false,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 82.0,
+    "TargetHealth": 19.0,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -30,5 +30,5 @@
     false,
     false
   ],
-  "idSave": 6
+  "idSave": 20
 }

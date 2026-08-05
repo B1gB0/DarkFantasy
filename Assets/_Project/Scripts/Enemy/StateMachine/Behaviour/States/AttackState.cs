@@ -39,6 +39,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void FixedUpdate()
         {
+            if(Enemy.Health.CurrentHealth <= MinValue)
+            {
+                EnemyStateMachine.SwitchState<DeathState>();
+                return;
+            }
+            
             if (Player == null
                 || !Player.CanFollow
                 || Player.Health.TargetHealth <= MinValue)

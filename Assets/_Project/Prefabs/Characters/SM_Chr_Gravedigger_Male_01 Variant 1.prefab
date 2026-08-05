@@ -419,6 +419,8 @@ MonoBehaviour:
   _animator: {fileID: 3910657797846128420}
   <Health>k__BackingField: {fileID: 4597146208703341206}
   <EnemyStateMachine>k__BackingField: {fileID: 884744937229373600}
+  <Rigidbody>k__BackingField: {fileID: 7627270150306969471}
+  <Collider>k__BackingField: {fileID: 1071574553628919584}
   <NavMeshAgent>k__BackingField: {fileID: 3438870356886635798}
   <FakeArrow>k__BackingField: {fileID: 523026898256947009}
   <Hat>k__BackingField: {fileID: 7777310786738202301}

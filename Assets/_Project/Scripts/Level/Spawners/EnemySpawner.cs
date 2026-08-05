@@ -145,6 +145,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
+            
+            skeleton.Rigidbody.isKinematic = true;
+            skeleton.Collider.enabled = true;
 
             skeleton.NavMeshAgent.enabled = true;
             skeleton.NavMeshAgent.isStopped = false;
@@ -172,6 +175,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
+            
+            skeleton.Rigidbody.isKinematic = true;
+            skeleton.Collider.enabled = true;
 
             skeleton.NavMeshAgent.enabled = true;
             skeleton.NavMeshAgent.isStopped = false;
@@ -199,6 +205,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
+            
+            skeleton.Rigidbody.isKinematic = true;
+            skeleton.Collider.enabled = true;
 
             skeleton.NavMeshAgent.enabled = true;
             skeleton.NavMeshAgent.isStopped = false;
@@ -226,6 +235,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             priest.transform.position = enemySpawnPosition;
+            
+            priest.Rigidbody.isKinematic = true;
+            priest.Collider.enabled = true;
 
             priest.NavMeshAgent.enabled = true;
             priest.NavMeshAgent.isStopped = false;
@@ -253,6 +265,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             bandit.transform.position = enemySpawnPosition;
+            
+            bandit.Rigidbody.isKinematic = true;
+            bandit.Collider.enabled = true;
 
             bandit.NavMeshAgent.enabled = true;
             bandit.NavMeshAgent.isStopped = false;
@@ -280,6 +295,9 @@ namespace _Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             bandit.transform.position = enemySpawnPosition;
+            
+            bandit.Rigidbody.isKinematic = true;
+            bandit.Collider.enabled = true;
 
             bandit.NavMeshAgent.enabled = true;
             bandit.NavMeshAgent.isStopped = false;
