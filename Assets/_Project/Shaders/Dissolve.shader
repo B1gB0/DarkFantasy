@@ -44,8 +44,7 @@ Shader "Custom/DissolveSurface"
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
             o.Alpha = c.a;
-
-            // Подсветка края только при активном растворении
+            
             if (_DissolveAmount > 0.001 && dissolve < _EdgeWidth)
             {
                 o.Emission = _EdgeColor.rgb * (1.0 - dissolve / _EdgeWidth);
