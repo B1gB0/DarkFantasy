@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190ab10044104f8e9a3d627b796a2cf8, type: 3}
   m_Name: SecondEnemyWave
   m_EditorClassIdentifier: 
-  <SkeletonEnemyCount>k__BackingField: 2
-  <SkeletonHeavyArmorCount>k__BackingField: 2
+  <SkeletonEnemyCount>k__BackingField: 0
+  <SkeletonHeavyArmorCount>k__BackingField: 0
   <SkeletonRangerCount>k__BackingField: 0
+  <PriestCount>k__BackingField: 0
+  <BanditCount>k__BackingField: 3
+  <BanditRangerCount>k__BackingField: 1

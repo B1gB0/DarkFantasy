@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Level
 {
-    public class GraveyardLevel : Level
+    public class BanditCampLevel : Level
     {
         [SerializeField] private SpawnTrigger _spawnLastWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;

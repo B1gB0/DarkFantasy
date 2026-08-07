@@ -4,26 +4,34 @@ using UnityEngine;
 
 namespace _Project.Scripts.Level
 {
-    public class GraveyardLevel : Level
+    public class BanditFortLevel : Level
     {
-        [SerializeField] private SpawnTrigger _spawnLastWaveTrigger;
+        [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
-            _spawnLastWaveTrigger.OnSpawnEnemies += SpawnLastWave;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
+        }
+        
+        private void FixedUpdate()
+        {
+            if (_spawnCyclicWaveTrigger.IsEnemySpawned)
+            {
+                SpawnCyclicWave();
+            }
         }
 
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
-            _spawnLastWaveTrigger.OnSpawnEnemies -= SpawnLastWave;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= SpawnCyclicWave;
         }
 
         private void OnDestroy()
         {
-            EnemySpawner.OnAllEnemiesKilled -= _nextLevelTrigger.Activate;
+            EnemySpawner.OnPriestKilled -= OnPriestKilled;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
@@ -31,7 +39,7 @@ namespace _Project.Scripts.Level
         {
             await base.OnStartLevel();
             
-            EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
+            EnemySpawner.OnPriestKilled += OnPriestKilled;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -41,16 +49,23 @@ namespace _Project.Scripts.Level
             CreateWaveOfEnemies(FirstWaveEnemy);
             CreateWaveOfEnemies(SecondWaveEnemy);
             CreateWaveOfEnemies(ThirdWaveEnemy);
+            CreateWaveOfEnemies(FifthWaveNumber);
         }
 
-        private void SpawnLastWave()
+        private void SpawnCyclicWave()
         {
-            CreateWaveOfEnemies(FourthWaveEnemy);
+            CreateWaveOfEnemyByTimer(FourthWaveEnemy);
+        }
+
+        private void OnPriestKilled()
+        {
+            _nextLevelTrigger.Activate();
+            _spawnCyclicWaveTrigger.OnOffEnemySpawn();
         }
         
         private void HandleMissionTransition()
         {
-            ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
+            ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
     }
