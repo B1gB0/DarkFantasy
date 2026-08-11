@@ -102,7 +102,7 @@ namespace _Project.Scripts.Services
 
             if (skeleton.Health.TargetHealth <= MinValue)
             {
-                skeleton.Health.SetHealthValue(data.Health);
+                skeleton.Health.LoadHealth(data.Health, data.Health);
             }
 
             return skeleton;
@@ -128,7 +128,7 @@ namespace _Project.Scripts.Services
 
             if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
             {
-                skeletonHeavyArmor.Health.SetHealthValue(data.Health);
+                skeletonHeavyArmor.Health.LoadHealth(data.Health, data.Health);
             }
 
             return skeletonHeavyArmor;
@@ -155,7 +155,7 @@ namespace _Project.Scripts.Services
 
             if (skeletonRanger.Health.TargetHealth <= MinValue)
             {
-                skeletonRanger.Health.SetHealthValue(data.Health);
+                skeletonRanger.Health.LoadHealth(data.Health, data.Health);
             }
 
             return skeletonRanger;
@@ -189,7 +189,7 @@ namespace _Project.Scripts.Services
 
             if (priest.Health.TargetHealth <= MinValue)
             {
-                priest.Health.SetHealthValue(data.Health);
+                priest.Health.LoadHealth(data.Health, data.Health);
             }
 
             return priest;
@@ -215,7 +215,7 @@ namespace _Project.Scripts.Services
 
             if (bandit.Health.TargetHealth <= MinValue)
             {
-                bandit.Health.SetHealthValue(data.Health);
+                bandit.Health.LoadHealth(data.Health, data.Health);
             }
 
             return bandit;
@@ -242,7 +242,7 @@ namespace _Project.Scripts.Services
 
             if (bandit.Health.TargetHealth <= MinValue)
             {
-                bandit.Health.SetHealthValue(data.Health);
+                bandit.Health.LoadHealth(data.Health, data.Health);
             }
 
             return bandit;

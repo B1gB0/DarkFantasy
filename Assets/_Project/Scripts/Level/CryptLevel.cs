@@ -8,11 +8,11 @@ namespace _Project.Scripts.Level
     {
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
+        [SerializeField] private GameObject[] _portals;
         
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
         }
         
         private void FixedUpdate()
@@ -26,7 +26,6 @@ namespace _Project.Scripts.Level
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies -= SpawnCyclicWave;
         }
 
         private void OnDestroy()
@@ -61,6 +60,16 @@ namespace _Project.Scripts.Level
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
+
+            EnemyWaves[FirstWaveEnemy].KillEnemies();
+            EnemyWaves[SecondWaveEnemy].KillEnemies();
+            EnemyWaves[ThirdWaveEnemy].KillEnemies();
+            EnemyWaves[FourthWaveEnemy].KillEnemies();
+            
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(false);
+            }
         }
         
         private void HandleMissionTransition()

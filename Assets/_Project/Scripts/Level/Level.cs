@@ -54,6 +54,7 @@ namespace _Project.Scripts.Level
         public event Action OnGoToNextScene;
 
         public HealthBar HealthBar { get; private set; }
+        public List<EnemyWave> EnemyWaves => _enemyWaves;
 
         [Inject]
         private void Construct(

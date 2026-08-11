@@ -21,6 +21,8 @@ namespace _Project.Scripts.Enemy
         protected ParticleEffectsService ParticleEffectsService;
         protected IExperiencePoints ExperiencePoints;
         protected ICurrencyService CurrencyService;
+        
+        private bool _isDead;
 
         public event Action<Enemy> Die;
 
@@ -89,7 +91,7 @@ namespace _Project.Scripts.Enemy
         {
             CanFollow = canFollow;
         }
-        
+
         public void AcceptScore(IScoreActorVisitor visitor)
         {
             visitor.Visit(this);
@@ -100,8 +102,21 @@ namespace _Project.Scripts.Enemy
         {
         }
 
+        public void ForceKill()
+        {
+            if (_isDead || Health == null) return;
+
+            if (Health.TargetHealth > 0f)
+                Health.TakeDamage(Health.MaxHealth);
+            else
+                OnDie();
+        }
+
         protected virtual void OnDie()
         {
+            if (_isDead) return;
+            _isDead = true;
+            
             // ResetModifiers();
             Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
             // OnChangeSpeed -= UpdateCurrentSpeed;

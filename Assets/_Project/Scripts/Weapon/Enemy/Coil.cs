@@ -30,7 +30,7 @@ namespace _Project.Scripts.Weapon.Enemy
             {
                 if (_results[i].TryGetComponent<Scripts.Player.Core.Player>(out var player))
                 {
-                    player.Health.TakeDamage(damage, player.PlayerCharacteristics.Armor);
+                    player.Health.TakeDamage(damage, false, player.PlayerCharacteristics.Armor);
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace _Project.Scripts.Weapon
 
             foreach (Scripts.Enemy.Enemy explosiveObject in GetEnemies())
             {
-                explosiveObject.Health.TakeDamage(Damage);
+                explosiveObject.Health.TakeDamage(Damage, true, explosiveObject.Armor);
             }
 
             gameObject.SetActive(false);

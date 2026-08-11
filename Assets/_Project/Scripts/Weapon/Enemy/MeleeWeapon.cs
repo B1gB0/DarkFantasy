@@ -29,7 +29,7 @@ namespace _Project.Scripts.Weapon.Enemy
 
         private void HandleAttack(Scripts.Player.Core.Player player)
         {
-            player.Health.TakeDamage(Damage, player.PlayerCharacteristics.Armor);
+            player.Health.TakeDamage(Damage, false, player.PlayerCharacteristics.Armor);
             EndAttack();
         }
     }

@@ -28,7 +28,7 @@ namespace _Project.Scripts.Weapon.Enemy
             {
                 if (_results[i].TryGetComponent<Scripts.Player.Core.Player>(out var player))
                 {
-                    player.Health.TakeDamage(Damage, player.PlayerCharacteristics.Armor);
+                    player.Health.TakeDamage(Damage, false, player.PlayerCharacteristics.Armor);
                     
                     if (player.Rigidbody != null)
                     {

@@ -30,7 +30,18 @@ namespace _Project.Scripts.Level.Spawners
             Enemies.Add(enemy);
             enemy.Die += RemoveEnemy;
         }
-        
+
+        public void KillEnemies()
+        {
+            var snapshot = new List<Enemy.Enemy>(Enemies);
+            foreach (var enemy in snapshot)
+            {
+                enemy.ForceKill();
+            }
+
+            Enemies.Clear();
+        }
+
         private void RemoveEnemy(Enemy.Enemy enemy)
         {
             Enemies.Remove(enemy);

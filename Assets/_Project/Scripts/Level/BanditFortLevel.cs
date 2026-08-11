@@ -12,7 +12,7 @@ namespace _Project.Scripts.Level
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies += SpawnCyclicWave;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies += CreateFifthWave;
         }
         
         private void FixedUpdate()
@@ -26,7 +26,7 @@ namespace _Project.Scripts.Level
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies -= SpawnCyclicWave;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= CreateFifthWave;
         }
 
         private void OnDestroy()
@@ -49,12 +49,16 @@ namespace _Project.Scripts.Level
             CreateWaveOfEnemies(FirstWaveEnemy);
             CreateWaveOfEnemies(SecondWaveEnemy);
             CreateWaveOfEnemies(ThirdWaveEnemy);
-            CreateWaveOfEnemies(FifthWaveNumber);
         }
 
         private void SpawnCyclicWave()
         {
             CreateWaveOfEnemyByTimer(FourthWaveEnemy);
+        }
+
+        private void CreateFifthWave()
+        {
+            CreateWaveOfEnemies(FifthWaveNumber);
         }
 
         private void OnPriestKilled()

@@ -47,8 +47,11 @@ namespace _Project.Scripts
             _healthCts?.Cancel();
         }
 
-        public void TakeDamage(float damage, float armor = MinValue)
+        public void TakeDamage(float damage, bool isShowTextDamage = false, float armor = MinValue)
         {
+            if(TargetHealth == MinValue)
+                return;
+                
             IsDamaged?.Invoke();
 
             damage -= armor;

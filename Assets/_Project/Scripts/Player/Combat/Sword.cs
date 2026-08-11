@@ -21,7 +21,7 @@ namespace _Project.Scripts.Player.Combat
             if (!other.TryGetComponent(out Enemy.Enemy enemy))
                 return;
 
-            enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, enemy.Armor);
+            enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, true, enemy.Armor);
 
             if (Random.value < _hitChance)
             {
