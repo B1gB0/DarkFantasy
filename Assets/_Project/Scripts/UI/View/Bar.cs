@@ -27,6 +27,11 @@ namespace _Project.Scripts.UI.View
         {
             _tweenAnimationService = tweenAnimationService;
         }
+        
+        private void Start()
+        {
+            TextValue.gameObject.SetActive(_isShowTextValue);
+        }
 
         private void OnDestroy()
         {
@@ -67,7 +72,6 @@ namespace _Project.Scripts.UI.View
             Slider.value = targetValue / maxValue;
 
             if (!_isShowTextValue) return;
-            TextValue.gameObject.SetActive(true);
             TextValue.text = (int)targetValue + "/" + (int)maxValue;
         }
     }

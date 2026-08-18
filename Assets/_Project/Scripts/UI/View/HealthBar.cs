@@ -1,9 +1,11 @@
+using System;
+
 namespace _Project.Scripts.UI.View
 {
     public class HealthBar : Bar
     {
         private Health _health;
-
+        
         private void OnEnable()
         {
             _health.Die += OnDie;
