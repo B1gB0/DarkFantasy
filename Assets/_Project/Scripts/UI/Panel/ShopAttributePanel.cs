@@ -12,7 +12,7 @@ using YG;
 
 namespace _Project.Scripts.UI.Panel
 {
-    public class ShopPanel : View.View
+    public class ShopAttributePanel : View.View
     {
         [SerializeField] private List<AttributeView> _attributeViews;
         [SerializeField] private Button _backSceneButton;

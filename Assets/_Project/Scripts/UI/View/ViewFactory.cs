@@ -19,6 +19,7 @@ namespace _Project.Scripts.UI.View
         private const string HealthBarPath = "HealthBar";
         private const string TextViewPath = "TextView";
         private const string ShopAttributePanelPath = "ShopAttributePanel";
+        private const string ShopItemsPanelPath = "ShopItemsPanel";
         private const string MissionChoosingPanelPath = "MissionChoosingPanel";
         private const string EndGamePanelPath = "EndGamePanel";
 
@@ -35,7 +36,8 @@ namespace _Project.Scripts.UI.View
         private UIRootView _uiRoot;
         private Container _container;
         
-        private ShopPanel _shopPanel;
+        private ShopAttributePanel _shopAttributePanel;
+        private ShopItemsPanel _shopItemsPanel;
         private MissionChoosingPanel _missionChoosingPanel;
         private EndGamePanel _endGamePanel;
         
@@ -51,8 +53,8 @@ namespace _Project.Scripts.UI.View
 
         private void OnDestroy()
         {
-            if (_shopPanel != null)
-                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopPanel.OnChangeLanguage;
+            if (_shopAttributePanel != null)
+                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopAttributePanel.OnChangeLanguage;
             // if (_objectiveTextView != null)
             //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _objectiveTextView.SetText;
             // if (_levelUpPanel != null)
@@ -118,18 +120,32 @@ namespace _Project.Scripts.UI.View
             return textView;
         }
 
-        public async UniTask<ShopPanel> CreateShopPanel()
+        public async UniTask<ShopAttributePanel> CreateShopAttributePanel()
         {
             var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopAttributePanelPath);
             shopPanelTemplate = Instantiate(shopPanelTemplate);
 
-            _shopPanel = shopPanelTemplate.GetComponent<ShopPanel>();
-            GameObjectInjector.InjectRecursive(_shopPanel.gameObject, _container);
-            _shopPanel.transform.SetParent(UIScene.transform, false);
+            _shopAttributePanel = shopPanelTemplate.GetComponent<ShopAttributePanel>();
+            GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
+            _shopAttributePanel.transform.SetParent(UIScene.transform, false);
             
-            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopPanel.OnChangeLanguage;
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopAttributePanel.OnChangeLanguage;
 
-            return _shopPanel;
+            return _shopAttributePanel;
+        }
+        
+        public async UniTask<ShopItemsPanel> CreateShopItemsPanel()
+        {
+            var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopItemsPanelPath);
+            shopPanelTemplate = Instantiate(shopPanelTemplate);
+
+            _shopAttributePanel = shopPanelTemplate.GetComponent<ShopAttributePanel>();
+            GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
+            _shopAttributePanel.transform.SetParent(UIScene.transform, false);
+            
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopAttributePanel.OnChangeLanguage;
+
+            return _shopItemsPanel;
         }
         
         public async UniTask<MissionChoosingPanel> CreateMissionChoosingPanel()
