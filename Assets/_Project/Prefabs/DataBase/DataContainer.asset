@@ -177,6 +177,10 @@ MonoBehaviour:
       _nameRu: "\u041F\u0440\u043E\u043B\u043E\u0433"
       _nameEn: Prologue
       _nameTr: "\xD6ns\xF6z"
+    - _id: banditCamp
+      _nameRu: "\u0424\u043E\u0440\u0442 \u0431\u0430\u043D\u0434\u0438\u0442\u043E\u0432"
+      _nameEn: Bandit Fort
+      _nameTr: "Haydutlar\u0131n kalesi"
     PlayerAttributeLevelData:
     - _id: damage_1
       _type: 0

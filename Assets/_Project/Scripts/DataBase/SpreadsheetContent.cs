@@ -15,6 +15,8 @@ namespace _Project.Scripts.DataBase
         public List<CharacteristicsLocalizationData> CharacteristicsLocalizationData;
 
         [SpreadsheetPage("GraveyardSceneLevels")] public List<SceneLevelData> GraveyardSceneLevels;
+        [SpreadsheetPage("BanditCampSceneLevels")] public List<SceneLevelData> BanditCampSceneLevels;
+        [SpreadsheetPage("CastleSceneLevels")] public List<SceneLevelData> CastleSceneLevels;
         [SpreadsheetPage("MissionLocalization")] public List<MissionLocalizationData> MissionsLocalization;
 
         [SpreadsheetPage("PlayerAttributeLevelsData")] 
