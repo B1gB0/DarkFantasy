@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Game.Gameplay;
+﻿using _Project.Scripts.Experience;
+using _Project.Scripts.Game.Gameplay;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
@@ -17,18 +18,12 @@ namespace _Project.Scripts.UI.View
         private const string CheatPanelPath = "CheatPanel";
 #endif
         private const string HealthBarPath = "HealthBar";
+        private const string BossHealthBarPath = "BossHealthBar";
         private const string TextViewPath = "TextView";
         private const string ShopAttributePanelPath = "ShopAttributePanel";
         private const string ShopItemsPanelPath = "ShopItemsPanel";
         private const string MissionChoosingPanelPath = "MissionChoosingPanel";
         private const string EndGamePanelPath = "EndGamePanel";
-
-        // private const string ProgressRadialBarPath = "ProgressRadialBar";
-        // private const string LevelUpPanelPath = "LevelUpPanel";
-        // private const string EndGamePanelPath = "EndGamePanel";
-        // private const string TimerPath = "Timer";
-        // private const string AdviserMessagePanelPath = "AdviserMessagePanel";
-        // private const string GoldViewPath = "GoldView";
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
@@ -55,10 +50,6 @@ namespace _Project.Scripts.UI.View
         {
             if (_shopAttributePanel != null)
                 _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopAttributePanel.OnChangeLanguage;
-            // if (_objectiveTextView != null)
-            //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _objectiveTextView.SetText;
-            // if (_levelUpPanel != null)
-            //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _levelUpPanel.OnLanguageChanged;
         }
 
         public void GetEntities(
@@ -76,17 +67,6 @@ namespace _Project.Scripts.UI.View
             GameObjectInjector.InjectRecursive(UIScene.gameObject, _container);
         }
 
-        // public async UniTask<Arrow> CreateArrow()
-        // {
-        //     var arrowTemplate = await _resourceService.Load<GameObject>(ArrowPath);
-        //     arrowTemplate = Instantiate(arrowTemplate);
-        //
-        //     Arrow arrow = arrowTemplate.GetComponent<Arrow>();
-        //     arrow.Construct(_playerService.PlayerActor.transform);
-        //
-        //     return arrow;
-        // }
-
         public async UniTask<HealthBar> CreateHealthBar(Health health)
         {
             var healthBarTemplate = await _resourceService.Load<GameObject>(HealthBarPath);
@@ -100,16 +80,20 @@ namespace _Project.Scripts.UI.View
 
             return healthBar;
         }
+        
+        public async UniTask<BossHealthBar> CreateBossHealthBar(Health health)
+        {
+            var healthBarTemplate = await _resourceService.Load<GameObject>(BossHealthBarPath);
+            healthBarTemplate = Instantiate(healthBarTemplate);
 
-        // public async UniTask<ProgressRadialBar> CreateProgressBar(ExperiencePoints experiencePoints, Transform target)
-        // {
-        //     var progressRadialBarPlaneTemplate = await _resourceService.Load<GameObject>(ProgressRadialBarPath);
-        //     progressRadialBarPlaneTemplate = Instantiate(progressRadialBarPlaneTemplate);
-        //
-        //     ProgressRadialBar progressRadialBar = progressRadialBarPlaneTemplate.GetComponent<ProgressRadialBar>();
-        //     progressRadialBar.Construct(experiencePoints, target);
-        //     return progressRadialBar;
-        // }
+            BossHealthBar healthBar = healthBarTemplate.GetComponent<BossHealthBar>();
+            GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
+            healthBar.Construct(health);
+            healthBar.transform.SetParent(UIScene.transform, false);
+            healthBar.GetPoints(UIScene.ShowBossHealthPoint, UIScene.HideBossHealthPoint, UIScene.WeaponPoint);
+
+            return healthBar;
+        }
         
         public async UniTask<FloatingTextView> CreateFloatingTextView()
         {
@@ -173,117 +157,18 @@ namespace _Project.Scripts.UI.View
             return _endGamePanel;
         }
 
-        // public async UniTask<LevelUpPanel> CreateLevelUpPanel()
-        // {
-        //     var levelUpPanelTemplate = await _resourceService.Load<GameObject>(LevelUpPanelPath);
-        //     levelUpPanelTemplate = Instantiate(levelUpPanelTemplate);
-        //
-        //     _levelUpPanel = levelUpPanelTemplate.GetComponent<LevelUpPanel>();
-        //     GameObjectInjector.InjectRecursive(_levelUpPanel.gameObject, _container);
-        //     _levelUpPanel.transform.SetParent(_uiScene.transform);
-        //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _levelUpPanel.OnLanguageChanged;
-        //
-        //     return _levelUpPanel;
-        // }
-        //
-        // public async UniTask<EndGamePanel> CreateEndGamePanel()
-        // {
-        //     var endGamePanelTemplate = await _resourceService.Load<GameObject>(EndGamePanelPath);
-        //     endGamePanelTemplate = Instantiate(endGamePanelTemplate);
-        //
-        //     EndGamePanel endGamePanel = endGamePanelTemplate.GetComponent<EndGamePanel>();
-        //     GameObjectInjector.InjectObject(endGamePanel.gameObject, _container);
-        //     endGamePanel.transform.SetParent(_uiScene.transform);
-        //     return endGamePanel;
-        // }
-        //
-        // public async UniTask<Timer> CreateTimer()
-        // {
-        //     var timerTemplate = await _resourceService.Load<GameObject>(TimerPath);
-        //     timerTemplate = Instantiate(timerTemplate);
-        //
-        //     Timer timer = timerTemplate.GetComponent<Timer>();
-        //     GameObjectInjector.InjectObject(timer.gameObject, _container);
-        //     timer.transform.SetParent(_uiScene.transform, false);
-        //     timer.GetPoints(_uiScene.ShowTimerPoint, _uiScene.HideTimerPoint);
-        //     return timer;
-        // }
-        //
-        // public async UniTask<DialoguePanel> CreateDialoguePanel()
-        // {
-        //     var adviserMessagePanelTemplate = await _resourceService.Load<GameObject>(AdviserMessagePanelPath);
-        //     adviserMessagePanelTemplate = Instantiate(adviserMessagePanelTemplate);
-        //
-        //     DialoguePanel dialoguePanel = adviserMessagePanelTemplate.GetComponent<DialoguePanel>();
-        //     GameObjectInjector.InjectObject(dialoguePanel.gameObject, _container);
-        //     dialoguePanel.transform.SetParent(_uiScene.transform, false);
-        //     return dialoguePanel;
-        // }
-        //
-        // public async UniTask<GoldView> CreateGoldView()
-        // {
-        //     var goldViewTemplate = await _resourceService.Load<GameObject>(GoldViewPath);
-        //     goldViewTemplate = Instantiate(goldViewTemplate);
-        //
-        //     GoldView goldView = goldViewTemplate.GetComponent<GoldView>();
-        //     GameObjectInjector.InjectObject(goldView.gameObject, _container);
-        //     goldView.transform.SetParent(_uiScene.transform);
-        //     goldView.GetPoints(_uiScene.ShowGoldPoint, _uiScene.HideGoldPoint);
-        //
-        //     return goldView;
-        // }
-        //
-        // public async UniTask<AlienCocoonView> CreateAlienCocoonView()
-        // {
-        //     var alienCocoonViewTemplate = await _resourceService.Load<GameObject>(AlienCocoonViewPath);
-        //     alienCocoonViewTemplate = Instantiate(alienCocoonViewTemplate);
-        //
-        //     _alienCocoonView = alienCocoonViewTemplate.GetComponent<AlienCocoonView>();
-        //     GameObjectInjector.InjectObject(_alienCocoonView.gameObject, _container);
-        //     _alienCocoonView.transform.SetParent(_uiScene.transform, false);
-        //     _alienCocoonView.GetPoints(_uiScene.ShowAlienCocoonPoint, _uiScene.HideAlienCocoonPoint);
-        //
-        //     return _alienCocoonView;
-        // }
-        //
-        // public async UniTask<MissionProgressBar> CreateMissionProgressBar()
-        // {
-        //     var missionBarTemplate = await _resourceService.Load<GameObject>(MissionProgressBarPath);
-        //     missionBarTemplate = Instantiate(missionBarTemplate);
-        //
-        //     _missionProgressBar = missionBarTemplate.GetComponent<MissionProgressBar>();
-        //     GameObjectInjector.InjectObject(_missionProgressBar.gameObject, _container);
-        //     _missionProgressBar.transform.SetParent(_uiScene.transform, false);
-        //     _missionProgressBar.GetPoints(_uiScene.ShowMissionProgressPoint, _uiScene.HideMissionProgressPoint);
-        //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _missionProgressBar.SetText;
-        //     return _missionProgressBar;
-        // }
-        //
-        // public async UniTask<ObjectiveTextView> CreateObjectiveText()
-        // {
-        //     var objectiveTextTemplate = await _resourceService.Load<GameObject>(ObjectiveTextViewPath);
-        //     objectiveTextTemplate = Instantiate(objectiveTextTemplate);
-        //
-        //     _objectiveTextView = objectiveTextTemplate.GetComponent<ObjectiveTextView>();
-        //     GameObjectInjector.InjectObject(_objectiveTextView.gameObject, _container);
-        //     _objectiveTextView.transform.SetParent(_uiScene.transform, false);
-        //     _objectiveTextView.GetPoints(_uiScene.ShowTimerPoint, _uiScene.HideTimerPoint);
-        //     _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _objectiveTextView.SetText;
-        //     return _objectiveTextView;
-        // }
+#if UNITY_EDITOR
+        public async UniTask<CheatPanel> CreateCheatPanel(ExperiencePoints experiencePoints)
+        {
+            var cheatPanelTemplate = await _resourceService.Load<GameObject>(CheatPanelPath);
+            cheatPanelTemplate = Instantiate(cheatPanelTemplate);
 
-// #if UNITY_EDITOR
-//         public async UniTask<CheatPanel> CreateCheatPanel(ExperiencePoints experiencePoints)
-//         {
-//             var cheatPanelTemplate = await _resourceService.Load<GameObject>(CheatPanelPath);
-//             cheatPanelTemplate = Instantiate(cheatPanelTemplate);
-//
-//             CheatPanel cheatPanel = cheatPanelTemplate.GetComponent<CheatPanel>();
-//             GameObjectInjector.InjectObject(cheatPanel.gameObject, _container);
-//             cheatPanel.GetServices(experiencePoints);
-//             cheatPanel.transform.SetParent(_uiScene.transform);
-//             return cheatPanel;
-//         }
-// #endif
+            CheatPanel cheatPanel = cheatPanelTemplate.GetComponent<CheatPanel>();
+            GameObjectInjector.InjectObject(cheatPanel.gameObject, _container);
+            cheatPanel.GetServices(experiencePoints);
+            cheatPanel.transform.SetParent(UIScene.transform);
+            return cheatPanel;
+        }
+#endif
     }
 }

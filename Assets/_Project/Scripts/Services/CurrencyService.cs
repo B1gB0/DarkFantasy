@@ -2,8 +2,6 @@ using System;
 using Cysharp.Threading.Tasks;
 using YG;
 
-// using YG;
-
 namespace _Project.Scripts.Services
 {
     public class CurrencyService : ICurrencyService
@@ -11,8 +9,6 @@ namespace _Project.Scripts.Services
         private const int MinValue = 0;
 
         public event Action<int> OnGoldValueChanged;
-        public event Action<int> OnAlienCocoonValueChanged;
-        public event Action OnAllAlienCocoonsCollected;
 
         public int Gold { get; private set; }
         public int AccumulatedGold { get; private set; }

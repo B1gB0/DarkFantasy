@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using _Project.Scripts.Experience;
 using _Project.Scripts.Services;
 using Reflex.Attributes;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace _Project.Scripts.UI.Panel
 {
-    public class CheatPanel : View.View
+    public class CheatPanel : View.View, IAcceptable
     {
         private const int _goldValue = 50;
         private const int _healthValue = 60;
@@ -20,7 +21,7 @@ namespace _Project.Scripts.UI.Panel
 
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
-        // private ExperiencePoints _experiencePoints;
+        private ExperiencePoints _experiencePoints;
 
         public int ExpValue => _expValue;
 
@@ -33,44 +34,44 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnEnable()
         {
-            // _addGold.onClick.AddListener(OnAddGoldButtonClicked);
+            _addGold.onClick.AddListener(OnAddGoldButtonClicked);
             _addHealth.onClick.AddListener(OnAddHealthButtonClicked);
-            // _addExp.onClick.AddListener(OnAddExpButtonClicked);
+            _addExp.onClick.AddListener(OnAddExpButtonClicked);
             _exitButton.onClick.AddListener(Deactivate);
         }
 
         private void OnDisable()
         {
-            // _addGold.onClick.RemoveListener(OnAddGoldButtonClicked);
+            _addGold.onClick.RemoveListener(OnAddGoldButtonClicked);
             _addHealth.onClick.RemoveListener(OnAddHealthButtonClicked);
-            // _addExp.onClick.RemoveListener(OnAddExpButtonClicked);
+            _addExp.onClick.RemoveListener(OnAddExpButtonClicked);
             _exitButton.onClick.RemoveListener(Deactivate);
         }
 
-        // public void GetServices(ExperiencePoints experiencePoints)
-        // {
-        //     _experiencePoints = experiencePoints;
-        // }
-        //
-        // public void AcceptScore(IScoreActorVisitor visitor)
-        // {
-        //     visitor.Visit(this);
-        // }
+        public void GetServices(ExperiencePoints experiencePoints)
+        {
+            _experiencePoints = experiencePoints;
+        }
+        
+        public void AcceptScore(IScoreActorVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
 
-        // private void OnAddGoldButtonClicked()
-        // {
-        //     _currencyService.AddGold(_goldValue);
-        // }
+        private void OnAddGoldButtonClicked()
+        {
+            _currencyService.AddGold(_goldValue);
+        }
 
         private void OnAddHealthButtonClicked()
         {
             _playerService.Player.Health.AddHealth(_healthValue);
         }
 
-        // private void OnAddExpButtonClicked()
-        // {
-        //     _experiencePoints.OnKill(this);
-        // }
+        private void OnAddExpButtonClicked()
+        {
+            _experiencePoints.OnKill(this);
+        }
     }
 }
 #endif
