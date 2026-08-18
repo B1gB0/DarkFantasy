@@ -295,6 +295,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58674112}
   m_Mesh: {fileID: 4300000, guid: 14f83dd86b275224a8054024ea1e919e, type: 3}
+--- !u!1 &61343185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3218755151800903140, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+  m_PrefabInstance: {fileID: 6885978586469822541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &61343186
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61343185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3252795793029987067, guid: 8dc02333ed05404499bcdc2761f46cae, type: 3}
 --- !u!1 &113117247
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +735,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070670304287849117, guid: 5c93c808e1c8a6445924e912ddf5e34c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970355220854284519, guid: 5c93c808e1c8a6445924e912ddf5e34c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fc18c14da2428bc45871dd4fde859dcd, type: 2}
+    - target: {fileID: 8970355220854284519, guid: 5c93c808e1c8a6445924e912ddf5e34c, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4128,16 +4163,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95028224193373430, guid: 154bce708e4314442a97dabf7b05dce5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e38c9bc4f47486542aea4bb8e5ce8831, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1655752512265382, guid: 154bce708e4314442a97dabf7b05dce5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1561477841}
   m_SourcePrefab: {fileID: 100100000, guid: 154bce708e4314442a97dabf7b05dce5, type: 3}
 --- !u!4 &1561477839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994667407041388, guid: 154bce708e4314442a97dabf7b05dce5, type: 3}
   m_PrefabInstance: {fileID: 1561477838}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1561477840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1655752512265382, guid: 154bce708e4314442a97dabf7b05dce5, type: 3}
+  m_PrefabInstance: {fileID: 1561477838}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1561477841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561477840}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.2813532, z: 0.8591344}
+  m_Center: {x: -0.000000008381479, y: 0.6406768, z: 0.070432834}
 --- !u!1 &1583795175
 GameObject:
   m_ObjectHideFlags: 0
@@ -11678,6 +11746,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3195706585286969513, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 157247568}
+    - targetCorrespondingSourceObject: {fileID: 3218755151800903140, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 61343186}
     - targetCorrespondingSourceObject: {fileID: 3922599861868224684, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 589770127}
