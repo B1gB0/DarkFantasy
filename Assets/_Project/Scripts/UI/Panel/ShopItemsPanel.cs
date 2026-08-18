@@ -14,7 +14,7 @@ namespace _Project.Scripts.UI.Panel
 {
     public class ShopItemsPanel : View.View
     {
-        // [SerializeField] private List<AttributeView> _attributeViews;
+        [SerializeField] private ShopItemView _shopItemViewPrefab;
         [SerializeField] private Button _backSceneButton;
         
         private ITweenAnimationService _tweenAnimationService;
