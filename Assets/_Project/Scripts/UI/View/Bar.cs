@@ -12,7 +12,9 @@ namespace _Project.Scripts.UI.View
         [SerializeField] protected Slider SmoothSlider;
         [SerializeField] protected Slider Slider;
 
-        [SerializeField] protected TMP_Text Text;
+        [SerializeField] protected TMP_Text TextValue;
+
+        [SerializeField] private bool _isShowTextValue;
 
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
@@ -64,7 +66,9 @@ namespace _Project.Scripts.UI.View
 
             Slider.value = targetValue / maxValue;
 
-            Text.text = (int)targetValue + "/" + (int)maxValue;
+            if (!_isShowTextValue) return;
+            TextValue.gameObject.SetActive(true);
+            TextValue.text = (int)targetValue + "/" + (int)maxValue;
         }
     }
 }

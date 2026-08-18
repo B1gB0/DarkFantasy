@@ -141,7 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SmoothSlider: {fileID: 1307878932289104527}
   Slider: {fileID: 3763862485438495459}
-  Text: {fileID: 4668441061715619293}
+  TextValue: {fileID: 4668441061715619293}
+  _isShowTextValue: 1
   _showPoint: {fileID: 0}
   _hidePoint: {fileID: 0}
   _weaponPanelPoint: {fileID: 0}
