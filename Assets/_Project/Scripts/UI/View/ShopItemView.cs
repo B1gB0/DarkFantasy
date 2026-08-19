@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
+using _Project.Scripts.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,39 +42,39 @@ namespace _Project.Scripts.UI.View
                 _price.color = Colors.GetColor(ColorName.BlackUIColor);
         }
 
-        public void Set(CharacteristicsLocalizationData localizationData, ItemData attributeData)
+        public void Set(ItemData itemData)
         {
-            switch (localizationData.Type)
+            _currentData = itemData;
+            
+            switch (_currentData.Type)
             {
-                case CharacteristicType.Health:
+                case ItemType.HealthPotion:
                     _iconAttribute.sprite = _icons[0];
-                    SetLocalization(localizationData);
+                    SetLocalization();
                     break;
-                case CharacteristicType.Damage:
+                case ItemType.SpeedPotion:
                     _iconAttribute.sprite = _icons[1];
-                    SetLocalization(localizationData);
+                    SetLocalization();
                     break;
-                case CharacteristicType.Armor:
+                case ItemType.Meat:
                     _iconAttribute.sprite = _icons[2];
-                    SetLocalization(localizationData);
+                    SetLocalization();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            _currentData = attributeData;
-
-            _value.text = attributeData.Value.ToString();
-            _price.text = attributeData.Price.ToString();
+            _value.text = itemData.Value.ToString();
+            _price.text = itemData.Price.ToString();
         }
 
-        private void SetLocalization(CharacteristicsLocalizationData data)
+        private void SetLocalization()
         {
             _title.text = YG2.lang switch
             {
-                LocalizationCode.Ru => data.NameRu,
-                LocalizationCode.En => data.NameEn,
-                LocalizationCode.Tr => data.NameTr,
+                LocalizationCode.Ru => _currentData.NameRu,
+                LocalizationCode.En => _currentData.NameEn,
+                LocalizationCode.Tr => _currentData.NameTr,
                 _ => _title.text
             };
         }

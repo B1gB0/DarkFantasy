@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 
@@ -9,8 +11,11 @@ namespace _Project.Scripts.Services
     public class ShopService : IShopService
     {
         private readonly Dictionary<string, PlayerAttributeLevelData> _attributesData = new();
+
         private readonly Dictionary<CharacteristicType, CharacteristicsLocalizationData>
             _characteristicsLocalizationData = new();
+
+        private readonly Dictionary<ItemType, ItemData> _itemsData = new();
 
         private IDataBaseService _dataBaseService;
 
@@ -37,6 +42,11 @@ namespace _Project.Scripts.Services
                 _characteristicsLocalizationData.TryAdd(localizationData.Type, localizationData);
             }
 
+            foreach (var itemData in _dataBaseService.Content.ItemsData)
+            {
+                _itemsData.TryAdd(itemData.Type, itemData);
+            }
+
             IsInitiated = true;
 
             return UniTask.CompletedTask;
@@ -48,7 +58,7 @@ namespace _Project.Scripts.Services
 
             foreach (var attributeData in _attributesData)
             {
-                if(attributeData.Value.Type == type)
+                if (attributeData.Value.Type == type)
                     attributesData.Add(attributeData.Value);
             }
 
@@ -58,6 +68,11 @@ namespace _Project.Scripts.Services
         public CharacteristicsLocalizationData GetLocalizationDataByType(CharacteristicType type)
         {
             return _characteristicsLocalizationData[type];
+        }
+
+        public List<ItemData> GetItemsData()
+        {
+            return _itemsData.Select(itemData => itemData.Value).ToList();
         }
     }
 }

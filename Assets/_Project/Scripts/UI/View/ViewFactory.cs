@@ -24,6 +24,7 @@ namespace _Project.Scripts.UI.View
         private const string ShopItemsPanelPath = "ShopItemsPanel";
         private const string MissionChoosingPanelPath = "MissionChoosingPanel";
         private const string EndGamePanelPath = "EndGamePanel";
+        private const string ShopItemViewPath = "ShopItemView";
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
@@ -130,6 +131,18 @@ namespace _Project.Scripts.UI.View
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopAttributePanel.OnChangeLanguage;
 
             return _shopItemsPanel;
+        }
+        
+        public async UniTask<ShopItemView> CreateShopItemView()
+        {
+            var shopItemViewTemplate = await _resourceService.Load<GameObject>(ShopItemViewPath);
+            shopItemViewTemplate = Instantiate(shopItemViewTemplate);
+
+            ShopItemView shopItemView = shopItemViewTemplate.GetComponent<ShopItemView>();
+            GameObjectInjector.InjectRecursive(shopItemView.gameObject, _container);
+            shopItemView.transform.SetParent(_shopItemsPanel.transform, false);
+
+            return shopItemView;
         }
         
         public async UniTask<MissionChoosingPanel> CreateMissionChoosingPanel()

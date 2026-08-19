@@ -21,10 +21,8 @@ namespace _Project.Scripts.UI.Panel
         private IShopService _shopService;
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
-
-        private List<PlayerAttributeLevelData> _healthAttributes;
-        private List<PlayerAttributeLevelData> _damageAttributes;
-        private List<PlayerAttributeLevelData> _armorAttributes;
+        
+        private List<ItemData> _itemsData;
 
         public event Action OnBackToSceneButtonPressed;
 
@@ -45,11 +43,9 @@ namespace _Project.Scripts.UI.Panel
         {
             Deactivate();
             
-            _healthAttributes = _shopService.GetAttributesByType(CharacteristicType.Health);
-            _damageAttributes = _shopService.GetAttributesByType(CharacteristicType.Damage);
-            _armorAttributes = _shopService.GetAttributesByType(CharacteristicType.Armor);
+            _itemsData = _shopService.GetItemsData();
             
-            // foreach (var attributeView in _attributeViews)
+            // foreach (var itemData in _itemsData)
             // {
             //     _currencyService.OnGoldValueChanged += attributeView.SetCurrencyColor;
             // }
