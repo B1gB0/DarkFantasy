@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
+using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 using _Project.Scripts.Player;
 
 namespace YG
@@ -17,8 +19,11 @@ namespace YG
         public bool IsFirstLaunch = true;
         public bool IsBanditVillageUnlock;
         public bool IsCastleUnlock;
+
+        public ItemType EquippedItemType;
         
         public PlayerCharacteristics PlayerCharacteristics;
+        public Dictionary<ItemType, int> InventoryItems = new ();
         
         public List<string> stringKeys = new List<string>();
         public List<string> stringValues = new List<string>();

@@ -69,6 +69,11 @@ namespace _Project.Scripts.Services
         {
             return _characteristicsLocalizationData[type];
         }
+        
+        public ItemData GetItemDataByType(ItemType type)
+        {
+            return _itemsData[type];
+        }
 
         public List<ItemData> GetItemsData()
         {

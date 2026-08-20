@@ -538,7 +538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000048491172}
+  m_AnchoredPosition: {x: 0, y: 0.0007943511}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2408096540222436135
@@ -847,7 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3b2e3751ec46279788321b4e829e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopItemViewPrefab: {fileID: 0}
+  <ItemContent>k__BackingField: {fileID: 0}
   _backSceneButton: {fileID: 9018022938915747079}
 --- !u!1 &7124557960594880980
 GameObject:
@@ -1201,6 +1201,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2664257783205821004, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664257783205821004, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664257783205821004, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 557.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664257783205821004, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 3125885443918241466, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1235,6 +1251,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4354683989332243490, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627016967070871387, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6268189542686596983, guid: 05f1dd0b0a8c7914388467d965c4d4f1, type: 3}

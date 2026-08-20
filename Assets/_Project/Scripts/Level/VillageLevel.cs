@@ -45,6 +45,7 @@ namespace _Project.Scripts.Level
         public override async UniTask OnStartLevel()
         {
             await ShopService.Init();
+            await InventoryService.Init();
 
             _shopAttributePanel = await ViewFactory.CreateShopAttributePanel();
             _shopItemsPanel = await ViewFactory.CreateShopItemsPanel();

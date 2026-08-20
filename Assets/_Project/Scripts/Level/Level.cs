@@ -35,6 +35,7 @@ namespace _Project.Scripts.Level
         protected UIRootView UIRootView;
 
         protected IShopService ShopService;
+        protected IInventoryService InventoryService;
 
         protected float LastSpawnTime;
 
@@ -62,12 +63,14 @@ namespace _Project.Scripts.Level
             IPlayerService playerService,
             ParticleEffectsService particleEffectsService,
             IShopService shopService,
+            IInventoryService inventoryService,
             AudioSoundsService audioSoundsService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
             ShopService = shopService;
+            InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
         }
 

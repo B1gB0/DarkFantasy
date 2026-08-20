@@ -108,6 +108,22 @@ namespace _Project.Scripts
             if (TargetHealth > MaxHealth)
                 TargetHealth = MaxHealth;
         }
+        
+        public async UniTaskVoid AddHealthOverTime(float totalAmount, float duration)
+        {
+            float healPerSecond = totalAmount / duration;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                float deltaTime = Time.deltaTime;
+                float healThisFrame = healPerSecond * deltaTime;
+                AddHealth(healThisFrame);
+
+                elapsed += deltaTime;
+                await UniTask.NextFrame(); // ждём следующий кадр
+            }
+        }
 
         public void SetHealthValue(float healthValue)
         {

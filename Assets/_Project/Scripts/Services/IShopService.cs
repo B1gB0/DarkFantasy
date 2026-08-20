@@ -10,5 +10,6 @@ namespace _Project.Scripts.Services
         public List<PlayerAttributeLevelData> GetAttributesByType(CharacteristicType type);
         public CharacteristicsLocalizationData GetLocalizationDataByType(CharacteristicType type);
         public List<ItemData> GetItemsData();
+        public ItemData GetItemDataByType(ItemType type);
     }
 }
