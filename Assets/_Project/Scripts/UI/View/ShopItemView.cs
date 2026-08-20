@@ -12,11 +12,11 @@ namespace _Project.Scripts.UI.View
 {
     public class ShopItemView : View
     {
-        [SerializeField] private Button _attributeButton;
+        [SerializeField] private Button _buyButton;
         [SerializeField] private List<Sprite> _icons;
-        [SerializeField] private Image _iconAttribute;
+        [SerializeField] private Image _iconItem;
         
-        [SerializeField] private TMP_Text _title;
+        [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _value;
         [SerializeField] private TMP_Text _price;
 
@@ -26,12 +26,12 @@ namespace _Project.Scripts.UI.View
         
         private void OnEnable()
         {
-            _attributeButton.onClick.AddListener(OnButtonClick);
+            _buyButton.onClick.AddListener(OnButtonClick);
         }
 
         private void OnDisable()
         {
-            _attributeButton.onClick.RemoveListener(OnButtonClick);
+            _buyButton.onClick.RemoveListener(OnButtonClick);
         }
 
         public void SetCurrencyColor(int gold)
@@ -39,7 +39,7 @@ namespace _Project.Scripts.UI.View
             if(_currentData.Price > gold)
                 _price.color = Colors.GetColor(ColorName.RedCurrencyColor);
             else
-                _price.color = Colors.GetColor(ColorName.BlackUIColor);
+                _price.color = Colors.GetColor(ColorName.DefaultWhiteTextColor);
         }
 
         public void Set(ItemData itemData)
@@ -49,33 +49,39 @@ namespace _Project.Scripts.UI.View
             switch (_currentData.Type)
             {
                 case ItemType.HealthPotion:
-                    _iconAttribute.sprite = _icons[0];
-                    SetLocalization();
+                    _iconItem.sprite = _icons[0];
                     break;
                 case ItemType.SpeedPotion:
-                    _iconAttribute.sprite = _icons[1];
-                    SetLocalization();
+                    _iconItem.sprite = _icons[1];
                     break;
                 case ItemType.Meat:
-                    _iconAttribute.sprite = _icons[2];
-                    SetLocalization();
+                    _iconItem.sprite = _icons[2];
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            _value.text = itemData.Value.ToString();
+            SetLocalization();
+            
             _price.text = itemData.Price.ToString();
         }
 
-        private void SetLocalization()
+        public void SetLocalization()
         {
-            _title.text = YG2.lang switch
+            _name.text = YG2.lang switch
             {
                 LocalizationCode.Ru => _currentData.NameRu,
                 LocalizationCode.En => _currentData.NameEn,
                 LocalizationCode.Tr => _currentData.NameTr,
-                _ => _title.text
+                _ => _name.text
+            };
+            
+            _value.text = YG2.lang switch
+            {
+                LocalizationCode.Ru => "+" + _currentData.Value + "ОЗ",
+                LocalizationCode.En => "+" + _currentData.Value + "HP",
+                LocalizationCode.Tr => "+" + _currentData.Value + "CP",
+                _ => _name.text
             };
         }
 

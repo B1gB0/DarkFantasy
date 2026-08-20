@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using YG;
 
 namespace _Project.Scripts.Characteristics
@@ -9,8 +11,6 @@ namespace _Project.Scripts.Characteristics
     [Serializable]
     public class PlayerCharacteristics
     {
-        private const float MoveSpeedFactor = 1f;
-        
         public float MaxHealth;
         public float TargetHealth;
         public float Armor;
@@ -18,10 +18,12 @@ namespace _Project.Scripts.Characteristics
         public float MoveSpeed;
         public float RotationSpeed;
 
-        private IPlayerService _playerService;
-        
-        private float _moveSpeed;
+        [NonSerialized] 
+        private List<SpeedModifier> _speedModifiers = new();
+        [NonSerialized] 
         private float _baseMoveSpeed;
+
+        private IPlayerService _playerService;
 
         public void SetStartingData(PlayerData data)
         {
@@ -32,7 +34,6 @@ namespace _Project.Scripts.Characteristics
             Armor = data.Armor;
             Damage = data.Damage;
 
-            _moveSpeed = data.MoveSpeed;
             _baseMoveSpeed = data.MoveSpeed;
         }
 
@@ -40,6 +41,7 @@ namespace _Project.Scripts.Characteristics
         {
             _playerService = playerService;
             _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
+            _speedModifiers?.Clear();
         }
 
         public void SaveTargetHealth(float targetHealth)
@@ -63,44 +65,44 @@ namespace _Project.Scripts.Characteristics
                     YG2.saves.DamageAttributeNumber++;
                     IncreaseDamage(factor);
                     break;
-                // case CharacteristicType.DiggingSpeed:
-                //     IncreaseDiggingSpeedFactor(factor);
-                //     break;
-                // case CharacteristicType.MoveSpeed:
-                //     IncreaseMoveSpeed(factor);
-                //     break;
             }
         }
-
-        public void UpdateCurrentSpeed()
+        
+        public void AddSpeedModifier(float value, float duration, bool isMultiplier = false)
         {
-            // _moveSpeed = _baseMoveSpeed * (MoveSpeedFactor + _playerService.Player.GetCurrentModifier());
-            // ChangeMovableComponentSpeed(_moveSpeed);
+            var modifier = new SpeedModifier(value, isMultiplier, duration);
+            _speedModifiers.Add(modifier);
+            RemoveSpeedModifierAfterDelay(modifier, duration).Forget();
+        }
+        
+        public void ClearSpeedModifiers()
+        {
+            _speedModifiers?.Clear();
+        }
+        
+        public float GetCurrentMoveSpeed()
+        {
+            float result = _baseMoveSpeed;
+            
+            foreach (var mod in _speedModifiers)
+            {
+                if (!mod.IsMultiplier)
+                    result += mod.Value;
+            }
+            
+            foreach (var mod in _speedModifiers)
+            {
+                if (mod.IsMultiplier)
+                    result *= mod.Value;
+            }
+
+            return result;
         }
 
-        private void SetDiggingSpeed(float diggingSpeedFactor)
+        private async UniTaskVoid RemoveSpeedModifierAfterDelay(SpeedModifier modifier, float delay)
         {
-            // PlayerData data = _playerService.GetPlayerDataByType(PlayerActorType.CommonStardiver);
-            //
-            // float newDiggingSpeed = data.DiggingSpeed - (data.DiggingSpeed * diggingSpeedFactor);
-            // _diggingSpeed = newDiggingSpeed;
-            //
-            // _playerService.PlayerActor.MiningToolActor.ChangeDiggingSpeed(newDiggingSpeed);
-        }
-
-        private void SetMoveSpeed(float moveSpeedFactor)
-        {
-            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-
-            _baseMoveSpeed = data.MoveSpeed + (data.MoveSpeed * moveSpeedFactor);
-
-            UpdateCurrentSpeed();
-        }
-
-        private void ChangeMovableComponentSpeed(float newMoveSpeed)
-        {
-            _moveSpeed = newMoveSpeed;
-            // _playerService.ChangeMoveSpeed(_moveSpeed);
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            _speedModifiers.Remove(modifier);
         }
 
         private void IncreaseHealth(float healthValue)
@@ -112,25 +114,13 @@ namespace _Project.Scripts.Characteristics
         private void IncreaseArmor(float armorValue)
         {
             PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-
             Armor = data.Armor + armorValue;
         }
 
         private void IncreaseDamage(float damageValue)
         {
             PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-
             Damage = data.Damage + damageValue;
-        }
-
-        private void IncreaseDiggingSpeedFactor(float diggingSpeedFactor)
-        {
-            SetDiggingSpeed(diggingSpeedFactor);
-        }
-
-        private void IncreaseMoveSpeed(float moveSpeedFactor)
-        {
-            SetMoveSpeed(moveSpeedFactor);
         }
     }
 }

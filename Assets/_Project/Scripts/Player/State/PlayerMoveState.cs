@@ -67,7 +67,7 @@ namespace _Project.Scripts.Player
 
         private void Move(Vector3 moveDirection)
         {
-            Vector3 velocity = moveDirection * _player.PlayerCharacteristics.MoveSpeed;
+            Vector3 velocity = moveDirection * _player.PlayerCharacteristics.GetCurrentMoveSpeed();
             
             float rayLength = 0.5f; 
             Vector3 rayStart = _player.transform.position + Vector3.up * 0.1f;

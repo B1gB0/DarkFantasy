@@ -1,4 +1,7 @@
-﻿using _Project.Scripts.Experience;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Experience;
 using _Project.Scripts.Game.Gameplay;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
@@ -28,6 +31,8 @@ namespace _Project.Scripts.UI.View
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
+        private ICurrencyService _currencyService;
+        private IShopService _shopService;
 
         private UIRootView _uiRoot;
         private Container _container;
@@ -37,20 +42,35 @@ namespace _Project.Scripts.UI.View
         private MissionChoosingPanel _missionChoosingPanel;
         private EndGamePanel _endGamePanel;
         
+        private List<ShopItemView> _shopItemViews;
+        private List<ItemData> _itemsData;
+        
         public UIGameplayRootBinder UIScene { get; private set; }
         public GameplayEntryPoint GameplayEntryPoint { get; private set; }
         
         [Inject]
-        public void Construct(IResourceService resourceService, IPlayerService playerService)
+        public void Construct(
+            IResourceService resourceService,
+            IPlayerService playerService,
+            ICurrencyService currencyService)
         {
             _resourceService = resourceService;
             _playerService = playerService;
+            _currencyService = currencyService;
         }
 
         private void OnDestroy()
         {
             if (_shopAttributePanel != null)
                 _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopAttributePanel.OnChangeLanguage;
+            
+            if (_shopItemsPanel != null)
+                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopItemsPanel.OnChangeLanguage;
+
+            foreach (var shopItemView in _shopItemViews.Where(shopItemView => shopItemView != null))
+            {
+                _currencyService.OnGoldValueChanged -= shopItemView.SetCurrencyColor;
+            }
         }
 
         public void GetEntities(
@@ -124,25 +144,23 @@ namespace _Project.Scripts.UI.View
             var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopItemsPanelPath);
             shopPanelTemplate = Instantiate(shopPanelTemplate);
 
-            _shopAttributePanel = shopPanelTemplate.GetComponent<ShopAttributePanel>();
+            _shopItemsPanel = shopPanelTemplate.GetComponent<ShopItemsPanel>();
             GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
-            _shopAttributePanel.transform.SetParent(UIScene.transform, false);
+            _shopItemsPanel.transform.SetParent(UIScene.transform, false);
             
-            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopAttributePanel.OnChangeLanguage;
+            _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopItemsPanel.OnChangeLanguage;
+
+            _itemsData = _shopService.GetItemsData();
+            
+            foreach (var itemData in _itemsData)
+            {
+                ShopItemView itemView = await CreateShopItemView(_shopItemsPanel.ItemContent);
+                itemView.Set(itemData);
+            }
+            
+            _shopItemsPanel.GetItemViews(_shopItemViews);
 
             return _shopItemsPanel;
-        }
-        
-        public async UniTask<ShopItemView> CreateShopItemView()
-        {
-            var shopItemViewTemplate = await _resourceService.Load<GameObject>(ShopItemViewPath);
-            shopItemViewTemplate = Instantiate(shopItemViewTemplate);
-
-            ShopItemView shopItemView = shopItemViewTemplate.GetComponent<ShopItemView>();
-            GameObjectInjector.InjectRecursive(shopItemView.gameObject, _container);
-            shopItemView.transform.SetParent(_shopItemsPanel.transform, false);
-
-            return shopItemView;
         }
         
         public async UniTask<MissionChoosingPanel> CreateMissionChoosingPanel()
@@ -183,5 +201,21 @@ namespace _Project.Scripts.UI.View
             return cheatPanel;
         }
 #endif
+        
+        private async UniTask<ShopItemView> CreateShopItemView(Transform content)
+        {
+            var shopItemViewTemplate = await _resourceService.Load<GameObject>(ShopItemViewPath);
+            shopItemViewTemplate = Instantiate(shopItemViewTemplate);
+
+            ShopItemView shopItemView = shopItemViewTemplate.GetComponent<ShopItemView>();
+            GameObjectInjector.InjectRecursive(shopItemView.gameObject, _container);
+            shopItemView.transform.SetParent(content, false);
+            
+            _currencyService.OnGoldValueChanged += shopItemView.SetCurrencyColor;
+            
+            _shopItemViews.Add(shopItemView);
+
+            return shopItemView;
+        }
     }
 }

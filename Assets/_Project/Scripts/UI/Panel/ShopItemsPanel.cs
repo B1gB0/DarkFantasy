@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
 using DG.Tweening;
@@ -14,7 +14,8 @@ namespace _Project.Scripts.UI.Panel
 {
     public class ShopItemsPanel : View.View
     {
-        [SerializeField] private ShopItemView _shopItemViewPrefab;
+        [field: SerializeField] public Transform ItemContent { get; private set; }
+        
         [SerializeField] private Button _backSceneButton;
         
         private ITweenAnimationService _tweenAnimationService;
@@ -22,7 +23,7 @@ namespace _Project.Scripts.UI.Panel
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
         
-        private List<ItemData> _itemsData;
+        private List<ShopItemView> _itemViews;
 
         public event Action OnBackToSceneButtonPressed;
 
@@ -42,52 +43,31 @@ namespace _Project.Scripts.UI.Panel
         private void Start()
         {
             Deactivate();
-            
-            _itemsData = _shopService.GetItemsData();
-            
-            // foreach (var itemData in _itemsData)
-            // {
-            //     _currencyService.OnGoldValueChanged += attributeView.SetCurrencyColor;
-            // }
         }
 
         private void OnEnable()
         {
             _backSceneButton.onClick.AddListener(MoveBackToScene);
-            
-            // _attributeViews[0].OnButtonClicked += ApplyPurchase;
-            // _attributeViews[1].OnButtonClicked += ApplyPurchase;
-            // _attributeViews[2].OnButtonClicked += ApplyPurchase;
         }
 
         private void OnDisable()
         {
             _backSceneButton.onClick.RemoveListener(MoveBackToScene);
-            
-            // _attributeViews[0].OnButtonClicked -= ApplyPurchase;
-            // _attributeViews[1].OnButtonClicked -= ApplyPurchase;
-            // _attributeViews[2].OnButtonClicked -= ApplyPurchase;
         }
 
         private void OnDestroy()
         {
-            // foreach (var attributeView in _attributeViews)
-            // {
-            //     _currencyService.OnGoldValueChanged -= attributeView.SetCurrencyColor;
-            // }
-            
             transform.DOKill();
         }
         
         public override void Show()
         {
-            _playerService.Player.InputController.LockPlayerMovement();
-            SetAttributeViews();
+            foreach (var itemView in _itemViews)
+            {
+                itemView.OnButtonClicked += ApplyPurchase;
+            }
             
-            // foreach (var attributeView in _attributeViews)
-            // {
-            //     attributeView.SetCurrencyColor(_currencyService.Gold);
-            // }
+            _playerService.Player.InputController.LockPlayerMovement();
             
             _tweenAnimationService.AnimateScale(transform);
         }
@@ -98,9 +78,17 @@ namespace _Project.Scripts.UI.Panel
             _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
+        public void GetItemViews(List<ShopItemView> itemViews)
+        {
+            _itemViews = itemViews;
+        }
+
         public void OnChangeLanguage()
         {
-            SetAttributeViews();
+            foreach (ShopItemView itemView in _itemViews)
+            {
+                itemView.SetLocalization();
+            }
         }
         
         private void MoveBackToScene()
@@ -108,62 +96,30 @@ namespace _Project.Scripts.UI.Panel
             OnBackToSceneButtonPressed?.Invoke();
         }
 
-        private void SetAttributeViews()
+        private void ApplyPurchase(ItemData itemData,  ShopItemView itemView)
         {
-            // _attributeViews[0].Set(
-            //     _shopService.GetLocalizationDataByType(CharacteristicType.Health),
-            //     _healthAttributes[YG2.saves.HealthAttributeNumber]);
-            //
-            // _attributeViews[1].Set(
-            //     _shopService.GetLocalizationDataByType(CharacteristicType.Damage),
-            //     _damageAttributes[YG2.saves.DamageAttributeNumber]);
-            //
-            // _attributeViews[2].Set(
-            //     _shopService.GetLocalizationDataByType(CharacteristicType.Armor),
-            //     _armorAttributes[YG2.saves.ArmorAttributeNumber]);
-        }
-
-        private void ApplyPurchase(PlayerAttributeLevelData data, AttributeView attributeView)
-        {
-            // if (data.Price > _currencyService.Gold)
-            //     return;
-            //
-            // List<PlayerAttributeLevelData> attributeList = data.Type switch
-            // {
-            //     CharacteristicType.Health => _healthAttributes,
-            //     CharacteristicType.Damage => _damageAttributes,
-            //     CharacteristicType.Armor => _armorAttributes,
-            //     _ => null
-            // };
-            //
-            // if (attributeList == null || attributeList.IndexOf(data) == attributeList.Count - 1)
-            //     return;
-            //
-            // _currencyService.SpendGold(data.Price);
-            //
-            // YG2.saves.PlayerCharacteristics.ApplyImprovement(data.Type, data.Value);
-            //
-            // PlayerAttributeLevelData newAttributeData = null;
-            //
-            // switch (data.Type)
-            // {
-            //     case CharacteristicType.Health:
-            //         newAttributeData = _healthAttributes[YG2.saves.HealthAttributeNumber];
-            //         break;
-            //     case CharacteristicType.Damage:
-            //         newAttributeData = _damageAttributes[YG2.saves.DamageAttributeNumber];
-            //         break;
-            //     case CharacteristicType.Armor:
-            //         newAttributeData = _armorAttributes[YG2.saves.ArmorAttributeNumber];
-            //         break;
-            // }
-            //
-            // attributeView.Set(
-            //     _shopService.GetLocalizationDataByType(data.Type),
-            //     newAttributeData);
-            //
-            // YG2.SaveProgress();
-            // _currencyService.SaveGold();
+            if (itemData.Price > _currencyService.Gold)
+                return;
+            
+            _currencyService.SpendGold(itemData.Price);
+            
+            switch (itemData.Type)
+            {
+                case ItemType.HealthPotion:
+                    // newAttributeData = _healthAttributes[YG2.saves.HealthAttributeNumber];
+                    break;
+                case ItemType.SpeedPotion:
+                    // newAttributeData = _damageAttributes[YG2.saves.DamageAttributeNumber];
+                    break;
+                case ItemType.Meat:
+                    // newAttributeData = _armorAttributes[YG2.saves.ArmorAttributeNumber];
+                    break;
+            }
+            
+            itemView.Set(itemData);
+            
+            YG2.SaveProgress();
+            _currencyService.SaveGold();
         }
     }
 }

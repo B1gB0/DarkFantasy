@@ -48,19 +48,18 @@ namespace _Project.Scripts.UI.View
             {
                 case CharacteristicType.Health:
                     _iconAttribute.sprite = _icons[0];
-                    SetLocalization(localizationData);
                     break;
                 case CharacteristicType.Damage:
                     _iconAttribute.sprite = _icons[1];
-                    SetLocalization(localizationData);
                     break;
                 case CharacteristicType.Armor:
                     _iconAttribute.sprite = _icons[2];
-                    SetLocalization(localizationData);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            SetLocalization(localizationData);
 
             _currentData = attributeData;
 
