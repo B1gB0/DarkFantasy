@@ -16,6 +16,9 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private string _nameRu;
         [SerializeField] private string _nameEn;
         [SerializeField] private string _nameTr;
+        [SerializeField] private string _descriptionRu;
+        [SerializeField] private string _descriptionEn;
+        [SerializeField] private string _descriptionTr;
 
         public string Id => _id;
         public ItemType Type => _type;
@@ -26,5 +29,8 @@ namespace _Project.Scripts.DataBase.Data
         public string NameRu => _nameRu;
         public string NameEn => _nameEn;
         public string NameTr => _nameTr;
+        public string DescriptionRu => _descriptionRu;
+        public string DescriptionEn => _descriptionEn;
+        public string DescriptionTr => _descriptionTr;
     }
 }

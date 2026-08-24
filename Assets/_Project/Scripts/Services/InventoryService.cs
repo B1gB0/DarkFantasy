@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
+using Reflex.Attributes;
 using YG;
 
 namespace _Project.Scripts.Services
 {
     public class InventoryService : IInventoryService
     {
-        private Dictionary<ItemType, int> _items = new ();
+        private Dictionary<ItemType, int> _items = new();
+
         private ItemType _equippedItemType;
+        private IShopService _shopService;
 
         public bool IsInitiated { get; private set; }
+
+        public event Action<ItemData, int> OnEquippedItem;
+        public event Action OnUnEquippedItem;
+
+        [Inject]
+        private void Construct(IShopService shopService)
+        {
+            _shopService = shopService;
+        }
 
         public void Init()
         {
             if (IsInitiated) return;
-            
+
             if (YG2.saves.InventoryItems != null)
             {
                 _items = YG2.saves.InventoryItems.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -27,7 +39,7 @@ namespace _Project.Scripts.Services
                 _items = new Dictionary<ItemType, int>();
                 YG2.saves.InventoryItems = _items;
             }
-            
+
             _equippedItemType = YG2.saves.EquippedItemType;
 
             IsInitiated = true;
@@ -68,36 +80,41 @@ namespace _Project.Scripts.Services
         {
             return _items.ContainsKey(itemType) && _items[itemType] > 0;
         }
-        
+
         public bool EquipItem(ItemType itemType)
         {
             if (!HasItem(itemType))
+            {
+                UnequipItem();
                 return false;
+            }
 
             _equippedItemType = itemType;
+            
+            ItemData data = GetEquippedItemData();
+            int count = GetItemCount(itemType);
+            OnEquippedItem?.Invoke(data, count);
+
             Save();
             return true;
         }
 
-        // Снять предмет с ячейки
-        // public void UnequipItem()
-        // {
-        //     _equippedItemType = null;
-        //     Save();
-        // }
+        public void UnequipItem()
+        {
+            _equippedItemType = ItemType.None;
+            OnUnEquippedItem?.Invoke();
+            Save();
+        }
 
-        // public string GetEquippedItemId()
-        // {
-        //     return _equippedItemType;
-        // }
+        public ItemType GetEquippedItemType()
+        {
+            return _equippedItemType;
+        }
 
-        // public ItemData GetEquippedItemData()
-        // {
-        //     if (string.IsNullOrEmpty(_equippedItemType))
-        //         return null;
-        //     // Получить ItemData из базы данных (через IDataBaseService)
-        //     return _dataBaseService.Content.Items.FirstOrDefault(i => i.Id == _equippedItemType);
-        // }
+        public ItemData GetEquippedItemData()
+        {
+            return _shopService.GetItemDataByType(_equippedItemType);
+        }
 
         private void Save()
         {

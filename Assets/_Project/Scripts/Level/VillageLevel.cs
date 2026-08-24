@@ -69,8 +69,8 @@ namespace _Project.Scripts.Level
 
             await base.OnStartLevel();
 
-            _shopItemsPanelTrigger.OnOpenShop += HealthBar.Hide;
-            _shopItemsPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+            _shopAttributePanelTrigger.OnOpenShop += HealthBar.Hide;
+            _shopAttributePanel.OnBackToSceneButtonPressed += HealthBar.Show;
             
             _shopItemsPanelTrigger.OnOpenShop += HealthBar.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed += HealthBar.Show;

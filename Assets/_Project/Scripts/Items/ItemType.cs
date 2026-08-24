@@ -2,8 +2,9 @@
 {
     public enum ItemType
     {
-        HealthPotion = 0,
-        SpeedPotion = 1,
-        Meat = 2,
+        None = 0,
+        HealthPotion = 1,
+        SpeedPotion = 2,
+        Meat = 3,
     }
 }

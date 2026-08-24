@@ -1,4 +1,6 @@
-﻿using _Project.Scripts.Items;
+﻿using System;
+using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 
 namespace _Project.Scripts.Services
 {
@@ -7,5 +9,7 @@ namespace _Project.Scripts.Services
         public void AddItem(ItemType itemType, int amount = 1);
         public bool RemoveItem(ItemType itemType, int amount = 1);
         public bool HasItem(ItemType itemType);
+        public event Action<ItemData, int> OnEquippedItem;
+        public event Action OnUnEquippedItem;
     }
 }

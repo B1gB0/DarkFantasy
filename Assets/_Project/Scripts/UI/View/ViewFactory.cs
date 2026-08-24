@@ -28,6 +28,7 @@ namespace _Project.Scripts.UI.View
         private const string MissionChoosingPanelPath = "MissionChoosingPanel";
         private const string EndGamePanelPath = "EndGamePanel";
         private const string ShopItemViewPath = "ShopItemView";
+        private const string InventoryPanelPath = "InventoryPanel";
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
@@ -41,6 +42,7 @@ namespace _Project.Scripts.UI.View
         private ShopItemsPanel _shopItemsPanel;
         private MissionChoosingPanel _missionChoosingPanel;
         private EndGamePanel _endGamePanel;
+        private InventoryPanel _inventoryPanel;
         
         private List<ShopItemView> _shopItemViews;
         private List<ItemData> _itemsData;
@@ -186,6 +188,19 @@ namespace _Project.Scripts.UI.View
             _endGamePanel.gameObject.SetActive(false);
 
             return _endGamePanel;
+        }
+        
+        public async UniTask<InventoryPanel> CreateInventoryPanel()
+        {
+            var inventoryPanelTemplate = await _resourceService.Load<GameObject>(InventoryPanelPath);
+            inventoryPanelTemplate = Instantiate(inventoryPanelTemplate);
+
+            _inventoryPanel = inventoryPanelTemplate.GetComponent<InventoryPanel>();
+            GameObjectInjector.InjectObject(_inventoryPanel.gameObject, _container);
+            _inventoryPanel.transform.SetParent(UIScene.transform, false);
+            _inventoryPanel.gameObject.SetActive(false);
+
+            return _inventoryPanel;
         }
 
 #if UNITY_EDITOR

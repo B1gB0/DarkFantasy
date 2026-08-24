@@ -40,6 +40,9 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public GameObject SpaceTutorialView { get; private set; }
         [field: SerializeField] public Button AttackButton { get; private set; }
         [field: SerializeField] public Button RollButton { get; private set; }
+        [field: SerializeField] public Button InventoryButton { get; private set; }
+        [field: SerializeField] public Button EquippedItemButton { get; private set; }
+        [field: SerializeField] public EquippedItemView EquippedItemView { get; private set; }
         
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)

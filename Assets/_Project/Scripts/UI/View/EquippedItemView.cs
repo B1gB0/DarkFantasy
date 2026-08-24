@@ -1,39 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
-using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 namespace _Project.Scripts.UI.View
 {
-    public class InventoryItemView : View
+    public class EquippedItemView : View
     {
         [SerializeField] private Image _iconImage;
-        [SerializeField] private Image _hoverImage;
         [SerializeField] private TMP_Text _count;
-        [SerializeField] private Button _button;
         [SerializeField] private List<Sprite> _icons;
-
-        private ItemData _itemData;
         
-        public event Action<ItemType, InventoryItemView> OnSelectButtonPressed;
-
-        private void Start()
-        {
-            _button.onClick.AddListener(OnSelectItem);
-        }
-
-        private void OnDestroy()
-        {
-            _button.onClick.RemoveListener(OnSelectItem);
-        }
+        private ItemData _itemData;
 
         public void Set(ItemData itemData, int count)
         {
+            _iconImage.gameObject.SetActive(true);
+            _count.gameObject.SetActive(true);
+            
             _itemData = itemData;
             _count.text = count.ToString();
             
@@ -52,20 +39,11 @@ namespace _Project.Scripts.UI.View
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public void ShowHover()
-        {
-            _hoverImage.gameObject.SetActive(true);
-        }
         
-        public void HideHover()
+        public void UnSet()
         {
-            _hoverImage.gameObject.SetActive(false);
-        }
-
-        private void OnSelectItem()
-        {
-            OnSelectButtonPressed?.Invoke(_itemData.Type, this);
+            _iconImage.gameObject.SetActive(false);
+            _count.gameObject.SetActive(false);
         }
     }
 }

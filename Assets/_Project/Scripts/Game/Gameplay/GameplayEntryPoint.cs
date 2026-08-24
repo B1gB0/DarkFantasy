@@ -30,7 +30,6 @@ namespace _Project.Scripts.Game.Gameplay
         [SerializeField] private DataFactory _dataFactory;
         [SerializeField] private LevelInitData _levelInitData;
         [SerializeField] private ViewFactory _viewFactory;
-        
 
         private Level.Level _level;
         private UIRootView _uiRoot;
@@ -48,11 +47,13 @@ namespace _Project.Scripts.Game.Gameplay
         private IUILocalizationService _uiLocalizationService;
         private IPauseService _pauseService;
         private ICurrencyService _currencyService;
+        private IInventoryService _inventoryService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
 
         private EndGamePanel _endGamePanel;
+        private InventoryPanel _inventoryPanel;
 
         [Inject]
         private void Construct(
@@ -65,7 +66,8 @@ namespace _Project.Scripts.Game.Gameplay
             MissionService missionService,
             IUILocalizationService uiLocalizationService,
             IPauseService pauseService,
-            ICurrencyService currencyService)
+            ICurrencyService currencyService,
+            IInventoryService inventoryService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -77,6 +79,7 @@ namespace _Project.Scripts.Game.Gameplay
             _uiLocalizationService = uiLocalizationService;
             _pauseService = pauseService;
             _currencyService = currencyService;
+            _inventoryService = inventoryService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -142,6 +145,18 @@ namespace _Project.Scripts.Game.Gameplay
             OnShowJoystickWithAttackButton();
 
             var scene = SceneManager.GetActiveScene();
+            
+            _inventoryPanel = await _viewFactory.CreateInventoryPanel();
+
+            _playerService.Player.InputController.OnInventoryButtonPressed += _inventoryPanel.Show;
+            _playerService.Player.InputController.OnInventoryButtonPressed += uiRoot.UIRootButtons.Deactivate;
+            _playerService.Player.InputController.OnInventoryButtonPressed += _level.HealthBar.Hide;
+            _inventoryPanel.OnBackToSceneButtonPressed += _inventoryPanel.Hide;
+            _inventoryPanel.OnBackToSceneButtonPressed += uiRoot.UIRootButtons.Activate;
+            _inventoryPanel.OnBackToSceneButtonPressed += _level.HealthBar.Show;
+
+            _inventoryService.OnEquippedItem += _uiScene.EquippedItemView.Set;
+            _inventoryService.OnUnEquippedItem += _uiScene.EquippedItemView.UnSet;
 
             if (scene.name != Scenes.VillageHub)
             {
@@ -177,6 +192,16 @@ namespace _Project.Scripts.Game.Gameplay
         private void OnDestroy()
         {
             var scene = SceneManager.GetActiveScene();
+            
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _inventoryPanel.Show;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _uiRoot.UIRootButtons.Deactivate;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.HealthBar.Hide;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _inventoryPanel.Hide;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _uiRoot.UIRootButtons.Activate;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _level.HealthBar.Show;
+            
+            _inventoryService.OnEquippedItem -= _uiScene.EquippedItemView.Set;
+            _inventoryService.OnUnEquippedItem -= _uiScene.EquippedItemView.UnSet;
             
             if (scene.name != Scenes.VillageHub)
             {
@@ -242,7 +267,13 @@ namespace _Project.Scripts.Game.Gameplay
 
         private void OnShowJoystickWithAttackButton()
         {
-            _playerService.GetJoystickWithAttackButton(_uiScene.Joystick, _uiScene.AttackButton, _uiScene.RollButton);
+            _playerService.GetButtons(
+                _uiScene.Joystick,
+                _uiScene.AttackButton,
+                _uiScene.RollButton,
+                _uiScene.InventoryButton,
+                _uiScene.EquippedItemButton);
+            
             _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.RollButton.gameObject.SetActive(!YG2.envir.isDesktop);

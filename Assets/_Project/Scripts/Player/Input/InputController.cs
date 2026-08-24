@@ -21,12 +21,16 @@ namespace _Project.Scripts.Player.Input
         private Joystick _joystick;
         private Button _attackButton;
         private Button _rollButton;
+        private Button _inventoryButton;
+        private Button _equippedItemButton;
 
         private bool _uiAttackPressed;
 
         private float _rollCooldownTimer;
         private bool _rollRequested;
 
+        public event Action OnEquippedItemButtonPressed;
+        public event Action OnInventoryButtonPressed;
         public event Action OnAttackButtonPressed;
         public event Action OnMoveButtonsPressed;
         public event Action OnUnlockController;
@@ -83,9 +87,16 @@ namespace _Project.Scripts.Player.Input
             if (_joystick != null) _joystick.OnInputHandled -= OnMoveWithJoystick;
             if (_attackButton != null) _attackButton.onClick.RemoveListener(OnAttackByButton);
             if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
+            if (_inventoryButton != null) _inventoryButton.onClick.RemoveListener(OnInventoryButtonClicked);
+            if (_equippedItemButton != null) _equippedItemButton.onClick.RemoveListener(OnEquippedItemButtonClicked);
         }
 
-        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton)
+        public void GetButtons(
+            Joystick joystick,
+            Button attackButton,
+            Button rollButton,
+            Button inventoryButton,
+            Button equippedItemButton)
         {
             _joystick = joystick;
             _joystick.OnInputHandled += OnMoveWithJoystick;
@@ -93,6 +104,10 @@ namespace _Project.Scripts.Player.Input
             _attackButton.onClick.AddListener(OnAttackByButton);
             _rollButton = rollButton;
             _rollButton.onClick.AddListener(OnRollByButton);
+            _inventoryButton =  inventoryButton;
+            _inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
+            _equippedItemButton = equippedItemButton;
+            _equippedItemButton.onClick.AddListener(OnEquippedItemButtonClicked);
         }
 
         public void LockPlayerMovement()
@@ -176,6 +191,16 @@ namespace _Project.Scripts.Player.Input
                 return;
             
             if (context.performed) OnAttackButtonPressed?.Invoke();
+        }
+
+        private void OnInventoryButtonClicked()
+        {
+            OnInventoryButtonPressed?.Invoke();
+        }
+        
+        private void OnEquippedItemButtonClicked()
+        {
+            OnEquippedItemButtonPressed?.Invoke();
         }
     }
 }

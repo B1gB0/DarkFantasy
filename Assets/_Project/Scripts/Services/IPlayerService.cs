@@ -17,6 +17,11 @@ namespace _Project.Scripts.Services
         public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data);
         public void SpawnPlayer();
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
-        public void GetJoystickWithAttackButton(Joystick joystick, Button attackButton, Button rollButton);
+        public void GetButtons(
+            Joystick joystick,
+            Button attackButton,
+            Button rollButton,
+            Button inventoryButton,
+            Button equippedItemButton);
     }
 }
