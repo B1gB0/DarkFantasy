@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
+using _Project.Scripts.Services;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +17,23 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private List<Sprite> _icons;
         
         private ItemData _itemData;
+        private IPlayerService _playerService;
+        private IInventoryService _inventoryService;
+
+        [Inject]
+        private void Construct(IPlayerService playerService,  IInventoryService inventoryService)
+        {
+            _playerService = playerService;
+            _inventoryService = inventoryService;
+        }
+
+        private void Start()
+        {
+            if (_itemData != null) return;
+            
+            _iconImage.gameObject.SetActive(false);
+            _count.gameObject.SetActive(false);
+        }
 
         public void Set(ItemData itemData, int count)
         {
@@ -44,6 +63,31 @@ namespace _Project.Scripts.UI.View
         {
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
+        }
+        
+        public void ApplyItemEffect()
+        {
+            if (_itemData == null) return;
+            var characteristics = _playerService.Player.PlayerCharacteristics;
+
+            switch (_itemData.Type)
+            {
+                case ItemType.SpeedPotion:
+                    characteristics.AddSpeedModifier(_itemData.Value, _itemData.Duration, _itemData.IsMultiplier);
+                    break;
+                case ItemType.HealthPotion:
+                    _playerService.Player.Health.AddHealth(_itemData.Value);
+                    break;
+                case ItemType.Meat:
+                    _playerService.Player.Health.AddHealthOverTime(
+                        _itemData.Value,
+                        _itemData.Duration)
+                        .Forget();
+                    break;
+            }
+            
+            _inventoryService.RemoveItem(_itemData.Type);
+            Set(_itemData, _inventoryService.GetItemCount(_itemData.Type));
         }
     }
 }

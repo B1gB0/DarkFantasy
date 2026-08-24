@@ -16,13 +16,13 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
     public class UIGameplayRootBinder : MonoBehaviour
     {
         private const int DelayToShowTutorial = 5;
-        
+
         private Subject<Unit> _exitSceneSignalSubject;
         private UIStateMachine _uiStateMachine;
         private CancellationTokenSource _tutorialCancellationToken;
-        
+
         private ITweenAnimationService _tweenAnimationService;
-        
+
         [field: SerializeField] public GameplayElements UIScene { get; private set; }
         [field: SerializeField] public Transform PointerPoint { get; private set; }
         [field: SerializeField] public Transform ShowKeyboardTutorialPoint { get; private set; }
@@ -41,33 +41,36 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Button AttackButton { get; private set; }
         [field: SerializeField] public Button RollButton { get; private set; }
         [field: SerializeField] public Button InventoryButton { get; private set; }
+#if UNITY_EDITOR
+        [field: SerializeField] public Button CheatButton { get; private set; }
+#endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }
         [field: SerializeField] public EquippedItemView EquippedItemView { get; private set; }
-        
+
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)
         {
             _tweenAnimationService = tweenAnimationService;
         }
-        
+
         public void GetUIStateMachine(UIStateMachine uiStateMachine, UIRootButtons uiRootButtons)
         {
             _uiStateMachine = uiStateMachine;
             _uiStateMachine.RemoveState<GameplayState>();
             _uiStateMachine.AddState(new GameplayState(UIScene, uiRootButtons));
         }
-        
+
         public void Bind(Subject<Unit> exitSceneSignalSubject)
         {
             _exitSceneSignalSubject = exitSceneSignalSubject;
         }
-        
+
         public void HandleGoToNextScene()
         {
             // AudioSoundsService.PlaySound(SoundsType.Button).Forget();
             _exitSceneSignalSubject?.OnNext(Unit.Default);
         }
-        
+
         public void ResetCountdownTutorialPointer()
         {
             if (YG2.envir.isDesktop)
@@ -100,12 +103,12 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 SpaceTutorialView.SetActive(false);
             }
         }
-        
+
         private void ShowTutorialPointer()
         {
-            if(TutorialPointer == null)
+            if (TutorialPointer == null)
                 return;
-            
+
             JoystickIcon.gameObject.SetActive(true);
             TutorialPointer.Activate();
             TutorialPointer.transform.position = PointerPoint.transform.position;
@@ -114,9 +117,9 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 
         private void ShowTutorialKeyboardView()
         {
-            if(KeyboardTutorialView == null)
+            if (KeyboardTutorialView == null)
                 return;
-            
+
             KeyboardTutorialView.Activate();
 
             _tweenAnimationService.AnimateMove(
@@ -146,7 +149,9 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                         ShowTutorialPointer();
                 }
             }
-            catch (OperationCanceledException) { }
+            catch (OperationCanceledException)
+            {
+            }
         }
     }
 }

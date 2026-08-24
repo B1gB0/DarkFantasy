@@ -32,10 +32,14 @@ namespace _Project.Scripts.UI.View
             _button.onClick.RemoveListener(OnSelectItem);
         }
 
-        public void Set(ItemData itemData, int count)
+        public void Set(ItemData itemData = null, int count = 0)
         {
             _itemData = itemData;
             _count.text = count.ToString();
+            
+            _hoverImage.gameObject.SetActive(false);
+            _iconImage.gameObject.SetActive(true);
+            _count.gameObject.SetActive(true);
             
             switch (_itemData.Type)
             {
@@ -48,8 +52,14 @@ namespace _Project.Scripts.UI.View
                 case ItemType.Meat:
                     _iconImage.sprite = _icons[2];
                     break;
+                case ItemType.None:
+                    _iconImage.gameObject.SetActive(false);
+                    _count.gameObject.SetActive(false);
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    _iconImage.gameObject.SetActive(false);
+                    _count.gameObject.SetActive(false);
+                    break;
             }
         }
 
@@ -65,7 +75,8 @@ namespace _Project.Scripts.UI.View
 
         private void OnSelectItem()
         {
-            OnSelectButtonPressed?.Invoke(_itemData.Type, this);
+            if(_itemData != null)
+                OnSelectButtonPressed?.Invoke(_itemData.Type, this);
         }
     }
 }

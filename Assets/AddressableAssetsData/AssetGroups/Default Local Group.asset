@@ -29,6 +29,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05f1dd0b0a8c7914388467d965c4d4f1
+    m_Address: ShopItemView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 090bb86a7910c324f9afdde3c0f6f9b7
     m_Address: MainMenuMusic
     m_ReadOnly: 0
@@ -134,6 +139,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7643fe703cab67c47bc9fa7cae4862e1
     m_Address: Crypt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 779568867240bc34b8dca2a2c4f78c8e
+    m_Address: CheatPanel
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using YG;
 
@@ -26,9 +27,9 @@ namespace _Project.Scripts.Services
             _shopService = shopService;
         }
 
-        public void Init()
+        public UniTask Init()
         {
-            if (IsInitiated) return;
+            if (IsInitiated) return UniTask.CompletedTask;
 
             if (YG2.saves.InventoryItems != null)
             {
@@ -43,6 +44,8 @@ namespace _Project.Scripts.Services
             _equippedItemType = YG2.saves.EquippedItemType;
 
             IsInitiated = true;
+            
+            return UniTask.CompletedTask;
         }
 
         public void AddItem(ItemType itemType, int amount = 1)

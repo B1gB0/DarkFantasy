@@ -36,6 +36,7 @@ namespace _Project.Scripts.UI.View
 
         public void SetCurrencyColor(int gold)
         {
+            if(_currentData == null) return;
             if(_currentData.Price > gold)
                 _price.color = Colors.GetColor(ColorName.RedCurrencyColor);
             else

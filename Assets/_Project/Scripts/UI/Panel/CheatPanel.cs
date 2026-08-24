@@ -21,7 +21,7 @@ namespace _Project.Scripts.UI.Panel
 
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
-        private ExperiencePoints _experiencePoints;
+        // private ExperiencePoints _experiencePoints;
 
         public int ExpValue => _expValue;
 
@@ -50,7 +50,7 @@ namespace _Project.Scripts.UI.Panel
 
         public void GetServices(ExperiencePoints experiencePoints)
         {
-            _experiencePoints = experiencePoints;
+            // _experiencePoints = experiencePoints;
         }
         
         public void AcceptScore(IScoreActorVisitor visitor)
@@ -70,7 +70,7 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnAddExpButtonClicked()
         {
-            _experiencePoints.OnKill(this);
+            // _experiencePoints.OnKill(this);
         }
     }
 }

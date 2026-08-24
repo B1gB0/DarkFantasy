@@ -4,6 +4,7 @@ using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using YG;
 
 namespace _Project.Scripts.Characteristics
@@ -42,6 +43,7 @@ namespace _Project.Scripts.Characteristics
             _playerService = playerService;
             _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
             _speedModifiers?.Clear();
+            _baseMoveSpeed = MoveSpeed;
         }
 
         public void SaveTargetHealth(float targetHealth)

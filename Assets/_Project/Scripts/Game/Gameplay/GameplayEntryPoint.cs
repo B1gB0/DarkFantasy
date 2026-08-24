@@ -55,6 +55,10 @@ namespace _Project.Scripts.Game.Gameplay
         private EndGamePanel _endGamePanel;
         private InventoryPanel _inventoryPanel;
 
+#if UNITY_EDITOR
+        private CheatPanel _cheatPanel;
+#endif
+
         [Inject]
         private void Construct(
             IEnemyService enemyService,
@@ -145,8 +149,13 @@ namespace _Project.Scripts.Game.Gameplay
             OnShowJoystickWithAttackButton();
 
             var scene = SceneManager.GetActiveScene();
-            
+
             _inventoryPanel = await _viewFactory.CreateInventoryPanel();
+
+#if UNITY_EDITOR
+            _cheatPanel = await _viewFactory.CreateCheatPanel();
+            _uiScene.CheatButton.onClick.AddListener(_cheatPanel.Show);
+#endif
 
             _playerService.Player.InputController.OnInventoryButtonPressed += _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed += uiRoot.UIRootButtons.Deactivate;
@@ -157,6 +166,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryService.OnEquippedItem += _uiScene.EquippedItemView.Set;
             _inventoryService.OnUnEquippedItem += _uiScene.EquippedItemView.UnSet;
+            _uiScene.EquippedItemButton.onClick.AddListener(_uiScene.EquippedItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
             {
@@ -191,18 +201,24 @@ namespace _Project.Scripts.Game.Gameplay
 
         private void OnDestroy()
         {
-            var scene = SceneManager.GetActiveScene();
             
+#if UNITY_EDITOR
+            _uiScene.CheatButton.onClick.RemoveListener(_cheatPanel.Show);
+#endif
+            
+            var scene = SceneManager.GetActiveScene();
+
             _playerService.Player.InputController.OnInventoryButtonPressed -= _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed -= _uiRoot.UIRootButtons.Deactivate;
             _playerService.Player.InputController.OnInventoryButtonPressed -= _level.HealthBar.Hide;
             _inventoryPanel.OnBackToSceneButtonPressed -= _inventoryPanel.Hide;
             _inventoryPanel.OnBackToSceneButtonPressed -= _uiRoot.UIRootButtons.Activate;
             _inventoryPanel.OnBackToSceneButtonPressed -= _level.HealthBar.Show;
-            
+
             _inventoryService.OnEquippedItem -= _uiScene.EquippedItemView.Set;
             _inventoryService.OnUnEquippedItem -= _uiScene.EquippedItemView.UnSet;
-            
+            _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedItemView.ApplyItemEffect);
+
             if (scene.name != Scenes.VillageHub)
             {
                 _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
@@ -273,7 +289,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _uiScene.RollButton,
                 _uiScene.InventoryButton,
                 _uiScene.EquippedItemButton);
-            
+
             _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.RollButton.gameObject.SetActive(!YG2.envir.isDesktop);

@@ -44,8 +44,8 @@ namespace _Project.Scripts.UI.View
         private EndGamePanel _endGamePanel;
         private InventoryPanel _inventoryPanel;
         
-        private List<ShopItemView> _shopItemViews;
-        private List<ItemData> _itemsData;
+        private List<ShopItemView> _shopItemViews = new ();
+        private List<ItemData> _itemsData = new ();
         
         public UIGameplayRootBinder UIScene { get; private set; }
         public GameplayEntryPoint GameplayEntryPoint { get; private set; }
@@ -54,11 +54,13 @@ namespace _Project.Scripts.UI.View
         public void Construct(
             IResourceService resourceService,
             IPlayerService playerService,
-            ICurrencyService currencyService)
+            ICurrencyService currencyService,
+            IShopService shopService)
         {
             _resourceService = resourceService;
             _playerService = playerService;
             _currencyService = currencyService;
+            _shopService = shopService;
         }
 
         private void OnDestroy()
@@ -147,7 +149,7 @@ namespace _Project.Scripts.UI.View
             shopPanelTemplate = Instantiate(shopPanelTemplate);
 
             _shopItemsPanel = shopPanelTemplate.GetComponent<ShopItemsPanel>();
-            GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
+            GameObjectInjector.InjectRecursive(_shopItemsPanel.gameObject, _container);
             _shopItemsPanel.transform.SetParent(UIScene.transform, false);
             
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopItemsPanel.OnChangeLanguage;
@@ -204,15 +206,15 @@ namespace _Project.Scripts.UI.View
         }
 
 #if UNITY_EDITOR
-        public async UniTask<CheatPanel> CreateCheatPanel(ExperiencePoints experiencePoints)
+        public async UniTask<CheatPanel> CreateCheatPanel()
         {
             var cheatPanelTemplate = await _resourceService.Load<GameObject>(CheatPanelPath);
             cheatPanelTemplate = Instantiate(cheatPanelTemplate);
 
             CheatPanel cheatPanel = cheatPanelTemplate.GetComponent<CheatPanel>();
             GameObjectInjector.InjectObject(cheatPanel.gameObject, _container);
-            cheatPanel.GetServices(experiencePoints);
-            cheatPanel.transform.SetParent(UIScene.transform);
+            // cheatPanel.GetServices(experiencePoints);
+            cheatPanel.transform.SetParent(UIScene.transform, false);
             return cheatPanel;
         }
 #endif

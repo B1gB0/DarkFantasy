@@ -16,6 +16,8 @@ namespace _Project.Scripts.UI.Panel
 {
     public class InventoryPanel : View.View
     {
+        private const int MinValue = 0;
+        
         [SerializeField] private Button _backSceneButton;
         [SerializeField] private Button _equipButton;
         
@@ -29,8 +31,9 @@ namespace _Project.Scripts.UI.Panel
         private IInventoryService _inventoryService;
         private IShopService _shopService;
         
+        private ItemData _equippedItem;
+        
         public event Action OnBackToSceneButtonPressed;
-        public event Action<ItemType> OnEquipButtonPressed;
         
         [Inject]
         private void Construct(
@@ -54,6 +57,10 @@ namespace _Project.Scripts.UI.Panel
                 itemView.OnSelectButtonPressed += SelectItem;
             }
             
+            _equipButton.onClick.AddListener(OnEquippedButtonClicked);
+            
+            SetDescription();
+            
             Deactivate();
         }
 
@@ -74,12 +81,34 @@ namespace _Project.Scripts.UI.Panel
                 itemView.OnSelectButtonPressed -= SelectItem;
             }
             
+            _equipButton.onClick.RemoveListener(OnEquippedButtonClicked);
+            
             transform.DOKill();
         }
         
         public override void Show()
         {
             _playerService.Player.InputController.LockPlayerMovement();
+
+            ResetSelection();
+            
+            int index = MinValue;
+            foreach (var item in YG2.saves.InventoryItems)
+            {
+                if (index >= _itemViews.Count)
+                    break;
+
+                ItemType type = item.Key;
+                int count = item.Value;
+
+                ItemData itemData = GetItemDataByType(type);
+                if (itemData == null || count <= MinValue)
+                    continue;
+                
+                _itemViews[index].gameObject.SetActive(true);
+                _itemViews[index].Set(itemData, count);
+                index++;
+            }
             
             _tweenAnimationService.AnimateScale(transform);
         }
@@ -93,6 +122,11 @@ namespace _Project.Scripts.UI.Panel
         private void MoveBackToScene()
         {
             OnBackToSceneButtonPressed?.Invoke();
+        }
+
+        private void OnEquippedButtonClicked()
+        {
+            _inventoryService.EquipItem(_equippedItem.Type);
         }
 
         private void SelectItem(ItemType type, InventoryItemView  selectedItemView)
@@ -110,21 +144,34 @@ namespace _Project.Scripts.UI.Panel
             SetDescription(itemData);
             selectedItemView.ShowHover();
             _equipButton.interactable = true;
-
-            // Применяем эффект
-            // ApplyItemEffect(itemData);
-
-            // Уменьшаем количество
-            // _inventoryService.RemoveItem(itemData.Type);
-
-            // Обновить UI
-            // RefreshInventoryUI();
+            
+            _equippedItem = itemData;
+        }
+        
+        private void ResetSelection()
+        {
+            _equipButton.interactable = false;
+            
+            foreach (var itemView in _itemViews)
+                itemView.HideHover();
+            
+            SetDescription();
         }
 
-        private void SetDescription(ItemData data)
+        private void SetDescription(ItemData data = null)
         {
             if (data != null)
             {
+                _name.gameObject.SetActive(true);
+                
+                _name.text = YG2.lang switch
+                {
+                    LocalizationCode.Ru => data.NameRu,
+                    LocalizationCode.En => data.NameEn,
+                    LocalizationCode.Tr => data.NameTr,
+                    _ => _name.text
+                };
+                
                 _descriptionText.text = YG2.lang switch
                 {
                     LocalizationCode.Ru => data.DescriptionRu,
@@ -135,6 +182,8 @@ namespace _Project.Scripts.UI.Panel
             }
             else
             {
+                _name.gameObject.SetActive(false);
+                
                 _descriptionText.text = YG2.lang switch
                 {
                     LocalizationCode.Ru => "Предмет не выбран",
@@ -142,24 +191,6 @@ namespace _Project.Scripts.UI.Panel
                     LocalizationCode.Tr => "Öğe seçilmedi",
                     _ => _descriptionText.text
                 };
-            }
-        }
-
-        private void ApplyItemEffect(ItemData item)
-        {
-            var characteristics = _playerService.Player.PlayerCharacteristics;
-
-            switch (item.Type)
-            {
-                case ItemType.SpeedPotion:
-                    characteristics.AddSpeedModifier(item.Value, item.Duration, item.IsMultiplier);
-                    break;
-                case ItemType.HealthPotion:
-                    _playerService.Player.Health.AddHealth(item.Value);
-                    break;
-                case ItemType.Meat:
-                    _playerService.Player.Health.AddHealthOverTime(item.Value, item.Duration).Forget();
-                    break;
             }
         }
 
