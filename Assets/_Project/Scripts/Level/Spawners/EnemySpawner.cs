@@ -24,6 +24,8 @@ namespace _Project.Scripts.Level.Spawners
         private int _limitEnemies;
 
         public event Action OnPriestKilled;
+        public event Action OnBanditLeaderKilled;
+        public event Action OnDarkLordKilled;
         public event Action OnAllEnemiesKilled;
 
         public EnemySpawner(
@@ -312,6 +314,36 @@ namespace _Project.Scripts.Level.Spawners
 
             return bandit;
         }
+        
+        private BanditLeader SpawnBanditLeader(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            BanditLeader banditLeader = _enemyService.CreateBanditLeader();
+
+            banditLeader.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            banditLeader.transform.position = enemySpawnPosition;
+            
+            banditLeader.Rigidbody.isKinematic = true;
+            banditLeader.Collider.enabled = true;
+
+            banditLeader.NavMeshAgent.enabled = true;
+            banditLeader.NavMeshAgent.isStopped = false;
+            banditLeader.NavMeshAgent.ResetPath();
+
+            banditLeader.Die += OnKillBanditLeader;
+
+            banditLeader.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            banditLeader.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
+            banditLeader.EnemyStateMachine.InitializeAllStates();
+            banditLeader.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return banditLeader;
+        }
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {
@@ -349,6 +381,15 @@ namespace _Project.Scripts.Level.Spawners
         private void OnKillBandit(Enemy.Enemy enemy)
         {
             enemy.Die -= OnKillBandit;
+            _enemyCounter--;
+
+            CheckEnemiesCount();
+        }
+        
+        private void OnKillBanditLeader(Enemy.Enemy enemy)
+        {
+            enemy.Die -= OnKillPriest;
+            OnBanditLeaderKilled?.Invoke();
             _enemyCounter--;
 
             CheckEnemiesCount();

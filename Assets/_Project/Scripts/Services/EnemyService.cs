@@ -18,6 +18,7 @@ namespace _Project.Scripts.Services
         private const string PriestPool = nameof(PriestPool);
         private const string BanditPool = nameof(BanditPool);
         private const string BanditRangerPool = nameof(BanditRangerPool);
+        private const string BanditLeaderPool = nameof(BanditLeaderPool);
         private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
         private const string MagicBallProjectilePool = nameof(MagicBallProjectilePool);
 
@@ -43,6 +44,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<Priest> _priestPool;
         private ObjectPool<Bandit> _banditPool;
         private ObjectPool<BanditRanger> _banditRangerPool;
+        private ObjectPool<BanditLeader> _banditLeaderPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
         private ObjectPool<Fireball> _magicBallProjectilePool;
 
@@ -247,6 +249,32 @@ namespace _Project.Scripts.Services
 
             return bandit;
         }
+        
+        public BanditLeader CreateBanditLeader()
+        {
+            CreateEnemyBanditPool();
+
+            var data = _enemiesData[EnemyType.BanditLeader];
+            var banditLeader = _banditLeaderPool.GetFreeElement();
+
+            banditLeader.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService,
+                _experiencePoints,
+                _currencyService);
+            
+            banditLeader.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+
+            if (banditLeader.Health.TargetHealth <= MinValue)
+            {
+                banditLeader.Health.LoadHealth(data.Health, data.Health);
+            }
+
+            return banditLeader;
+        }
 
         public void GetData(EnemyInitData enemyInitData)
         {
@@ -352,6 +380,20 @@ namespace _Project.Scripts.Services
             };
             
             CreateArrowPool();
+        }
+        
+        private void CreateEnemyBanditLeaderPool()
+        {
+            if (_banditLeaderPool != null)
+                return;
+
+            _banditLeaderPool = new ObjectPool<BanditLeader>(
+                _enemyInitData.BanditLeaderPrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(BanditLeaderPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
         }
 
         private void CreateArrowPool()

@@ -14,5 +14,6 @@ namespace _Project.Scripts.Services
         public Priest CreatePriest();
         public Bandit CreateBandit();
         public BanditRanger CreateBanditRanger();
+        public BanditLeader CreateBanditLeader();
     }
 }

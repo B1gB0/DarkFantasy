@@ -10,5 +10,6 @@ namespace _Project.Scripts.Enemy
         Priest = 5,
         BanditMelee = 6,
         BanditRanger = 7,
+        BanditLeader = 8,
     }
 }

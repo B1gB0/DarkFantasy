@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -70,6 +71,9 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
+
+            YG2.saves.IsBanditCampUnlock = true;
+            YG2.SaveProgress();
         }
         
         private void HandleMissionTransition()

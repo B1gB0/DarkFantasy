@@ -17,7 +17,7 @@ namespace YG
         public int ArmorAttributeNumber;
 
         public bool IsFirstLaunch = true;
-        public bool IsBanditVillageUnlock;
+        public bool IsBanditCampUnlock;
         public bool IsCastleUnlock;
 
         public ItemType EquippedItemType;

@@ -13,7 +13,7 @@ namespace _Project.Scripts.UI.Panel
     public class MissionChoosingPanel : View.View
     {
         [SerializeField] private Button _backSceneButton;
-        [SerializeField] private List<MissionView> _missionViews;
+        [SerializeField] private List<NewMissionView> _missionViews;
 
         private ITweenAnimationService _tweenAnimationService;
         private MissionService _missionService;
@@ -89,7 +89,7 @@ namespace _Project.Scripts.UI.Panel
             OnGoToMission?.Invoke();
         }
 
-        private void SetMission(Mission mission, MissionView missionView)
+        private void SetMission(Mission mission, NewMissionView missionView)
         {
             missionView.GetMission(mission);
         }

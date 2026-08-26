@@ -12,6 +12,8 @@ namespace _Project.Scripts.Services
         private const int DefaultNumberLevel = 0;
 
         private readonly Dictionary<int, string> _graveyardSceneLevels = new();
+        private readonly Dictionary<int, string> _banditCampSceneLevels = new();
+        private readonly Dictionary<int, string> _castleSceneLevels = new();
 
         private IDataBaseService _dataBaseService;
 
@@ -46,6 +48,16 @@ namespace _Project.Scripts.Services
             foreach (var graveyardSceneLevel in _dataBaseService.Content.GraveyardSceneLevels)
             {
                 _graveyardSceneLevels.Add(graveyardSceneLevel.Number, graveyardSceneLevel.SceneName);
+            }
+            
+            foreach (var banditCampSceneLevel in _dataBaseService.Content.BanditCampSceneLevels)
+            {
+                _banditCampSceneLevels.Add(banditCampSceneLevel.Number, banditCampSceneLevel.SceneName);
+            }
+            
+            foreach (var castleSceneLevel in _dataBaseService.Content.CastleSceneLevels)
+            {
+                _castleSceneLevels.Add(castleSceneLevel.Number, castleSceneLevel.SceneName);
             }
 
             IsInitiated = true;

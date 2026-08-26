@@ -31,7 +31,7 @@ namespace _Project.Scripts.Level
 
         private void OnDestroy()
         {
-            EnemySpawner.OnPriestKilled -= OnPriestKilled;
+            EnemySpawner.OnPriestKilled -= OnBanditLeaderKilled;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
@@ -39,7 +39,7 @@ namespace _Project.Scripts.Level
         {
             await base.OnStartLevel();
             
-            EnemySpawner.OnPriestKilled += OnPriestKilled;
+            EnemySpawner.OnBanditLeaderKilled += OnBanditLeaderKilled;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -61,7 +61,7 @@ namespace _Project.Scripts.Level
             CreateWaveOfEnemies(FifthWaveNumber);
         }
 
-        private void OnPriestKilled()
+        private void OnBanditLeaderKilled()
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
