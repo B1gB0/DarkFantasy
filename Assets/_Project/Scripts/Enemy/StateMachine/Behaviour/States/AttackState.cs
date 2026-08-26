@@ -211,7 +211,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
                     ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
                     EnterAttackSubState(AttackSubState.Idle);
-                    _activePriestAttack = PriestAttackState.None; // атака завершена
+                    _activePriestAttack = PriestAttackState.None;
                     break;
                 default:
                     ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
