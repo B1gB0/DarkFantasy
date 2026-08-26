@@ -19,6 +19,22 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;
 
+        private int _comboLength;
+        private int _currentComboIndex;
+        private bool _comboInProgress;
+        private bool _canDodge;
+
+        private float _comboChance1 = 0.3f;
+        private float _comboChance2 = 0.4f;
+        private float _comboChance3 = 0.3f;
+        private float _dodgeChance = 0.2f;
+        private float _attack1Duration = 0.8f;
+        private float _attack2Duration = 1.0f;
+        private float _attack3Duration = 1.2f;
+        private float _dodgeDuration = 0.6f;
+        private float _dodgeDistance = 3f;
+        private float _dodgeSpeed = 6f;
+
         private AttackSubState _currentSubState;
         private PriestAttackState _lastPriestRangedAttack = PriestAttackState.None;
         private PriestAttackState _activePriestAttack = PriestAttackState.None;
@@ -27,7 +43,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         public override void Enter()
         {
             _currentSubState = Enemy.Type is EnemyType.BanditRanger
-                or EnemyType.SkeletonRanger ? AttackSubState.Aiming : AttackSubState.Idle;
+                or EnemyType.SkeletonRanger
+                ? AttackSubState.Aiming
+                : AttackSubState.Idle;
 
             _attackRange = Data.RangeAttack;
             _activePriestAttack = PriestAttackState.None;
@@ -39,12 +57,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void FixedUpdate()
         {
-            if(Enemy.Health.CurrentHealth <= MinValue)
+            if (Enemy.Health.CurrentHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<DeathState>();
                 return;
             }
-            
+
             if (Player == null
                 || !Player.CanFollow
                 || Player.Health.TargetHealth <= MinValue)
@@ -72,10 +90,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             _subStateTimer -= Time.fixedDeltaTime;
 
-            if (_subStateTimer <= MinValue)
+            if (!(_subStateTimer <= MinValue)) return;
+
+            switch (Enemy.Type)
             {
-                if (Enemy.Type == EnemyType.SkeletonRanger || Enemy.Type == EnemyType.BanditRanger)
-                {
+                case EnemyType.SkeletonRanger:
+                case EnemyType.BanditRanger:
                     switch (_currentSubState)
                     {
                         case AttackSubState.Reloading:
@@ -90,15 +110,16 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
-                }
-                else if (Enemy.Type == EnemyType.Priest)
+
+                    break;
+                case EnemyType.Priest:
                 {
                     if (_activePriestAttack == PriestAttackState.None)
                     {
                         float distance = Vector3.Distance(Enemy.transform.position, Player.transform.position);
                         _activePriestAttack = ChoosePriestAttack(distance);
                     }
-                    
+
                     switch (_activePriestAttack)
                     {
                         case PriestAttackState.Fireball:
@@ -111,9 +132,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterInOmniAttack();
                             break;
                     }
+
+                    break;
                 }
-                else
-                {
+                case EnemyType.BanditLeader:
+
+                    break;
+                default:
                     switch (_currentSubState)
                     {
                         case AttackSubState.Attack:
@@ -123,7 +148,8 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Attack);
                             break;
                     }
-                }
+
+                    break;
             }
         }
 
@@ -250,6 +276,22 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 case AttackSubState.Omni:
                     AnimStateMachine.EnterIn<OmniEnemyAnimatedState>();
                     _subStateTimer = _attackDuration;
+                    break;
+                case AttackSubState.Attack1:
+                    AnimStateMachine.EnterIn<Attack1EnemyAnimatedState>();
+                    _subStateTimer = _attack1Duration;
+                    break;
+                case AttackSubState.Attack2:
+                    AnimStateMachine.EnterIn<Attack2EnemyAnimatedState>();
+                    _subStateTimer = _attack2Duration;
+                    break;
+                case AttackSubState.Attack3:
+                    AnimStateMachine.EnterIn<Attack3EnemyAnimatedState>();
+                    _subStateTimer = _attack3Duration;
+                    break;
+                case AttackSubState.Dodge:
+                    AnimStateMachine.EnterIn<DodgeEnemyAnimatedState>();
+                    _subStateTimer = _dodgeDuration;
                     break;
             }
         }

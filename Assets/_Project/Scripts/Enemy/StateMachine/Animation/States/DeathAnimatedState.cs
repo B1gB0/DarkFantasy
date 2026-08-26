@@ -11,16 +11,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         
         public override void Enter()
         {
-            base.Enter();
             Animator.applyRootMotion = true;
-            Animator.StopPlayback();
-            Animator.CrossFade(EnemyAnimationBase.Death, Duration);
+            base.Enter();
         }
 
         public override void Exit()
         {
             base.Exit();
-            Animator.StopPlayback();
             Animator.applyRootMotion = false;
         }
     }

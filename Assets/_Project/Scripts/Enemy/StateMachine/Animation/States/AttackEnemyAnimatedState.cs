@@ -6,18 +6,5 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
     {
         public AttackEnemyAnimatedState(Animator animator, EnemyAnimationNamesBase enemyAnimationNamesBase) 
             : base(animator, enemyAnimationNamesBase) { }
-
-        public override void Enter()
-        {
-            base.Enter();
-            Animator.StopPlayback();
-            Animator.CrossFade(EnemyAnimationBase.Attack, Duration);
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-            Animator.StopPlayback();
-        }
     }
 }

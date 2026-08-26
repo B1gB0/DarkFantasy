@@ -8,5 +8,9 @@
         Idle = 3,
         Coil = 4,
         Omni = 5,
+        Attack1 = 6,
+        Attack2 = 7,
+        Attack3 = 8,
+        Dodge = 9,
     }
 }

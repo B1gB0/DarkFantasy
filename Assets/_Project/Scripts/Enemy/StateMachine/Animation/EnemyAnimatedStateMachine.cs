@@ -19,6 +19,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
             AddState(new AimEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new MoveEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new AttackEnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new Attack1EnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new Attack2EnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new Attack3EnemyAnimatedState(animator, enemyAnimationBase));
+            AddState(new DodgeEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new ReloadingEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new HitEnemyAnimatedState(animator, enemyAnimationBase));
             AddState(new CoilEnemyAnimatedState(animator, enemyAnimationBase));
