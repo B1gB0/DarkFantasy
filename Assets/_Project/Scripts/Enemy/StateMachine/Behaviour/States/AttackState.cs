@@ -93,14 +93,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 }
                 else if (Enemy.Type == EnemyType.Priest)
                 {
-                    // Если активная атака не выбрана — выбираем новую
                     if (_activePriestAttack == PriestAttackState.None)
                     {
                         float distance = Vector3.Distance(Enemy.transform.position, Player.transform.position);
                         _activePriestAttack = ChoosePriestAttack(distance);
                     }
-
-                    // Выполняем соответствующую атаку
+                    
                     switch (_activePriestAttack)
                     {
                         case PriestAttackState.Fireball:
@@ -163,7 +161,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     break;
                 case AttackSubState.Attack:
                     EnterAttackSubState(AttackSubState.Idle);
-                    _activePriestAttack = PriestAttackState.None; // атака завершена
+                    _activePriestAttack = PriestAttackState.None;
                     break;
                 default:
                     ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
@@ -183,7 +181,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     break;
                 case AttackSubState.Coil:
                     EnterAttackSubState(AttackSubState.Idle);
-                    _activePriestAttack = PriestAttackState.None; // атака завершена
+                    _activePriestAttack = PriestAttackState.None;
                     break;
                 default:
                     ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);

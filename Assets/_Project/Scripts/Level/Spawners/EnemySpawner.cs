@@ -59,6 +59,7 @@ namespace _Project.Scripts.Level.Spawners
             int priestToSpawn = wave.PriestCount;
             int banditsToSpawn = wave.BanditCount;
             int banditsRangersToSpawn = wave.BanditRangerCount;
+            int banditsLeadersToSpawn = wave.BanditLeaderCount;
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
@@ -129,6 +130,18 @@ namespace _Project.Scripts.Level.Spawners
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 BanditRanger enemy = SpawnBanditRangerEnemy(candidatePoint, patrolPoints);
                 enemy.Hat.gameObject.SetActive(Random.value < HatChance);
+                availableSpawnPoints.RemoveAt(MinValue);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < banditsLeadersToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
+                BanditLeader enemy = SpawnBanditLeader(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
