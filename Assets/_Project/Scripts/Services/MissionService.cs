@@ -90,6 +90,8 @@ namespace _Project.Scripts.Services
             return CurrentMission.Id switch
             {
                 Game.Constant.Missions.Graveyard => _graveyardSceneLevels[number],
+                Game.Constant.Missions.BanditVillage => _banditCampSceneLevels[number],
+                Game.Constant.Missions.Castle => _castleSceneLevels[number],
                 _ => null
             };
         }

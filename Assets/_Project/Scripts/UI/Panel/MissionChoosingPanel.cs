@@ -12,6 +12,8 @@ namespace _Project.Scripts.UI.Panel
 {
     public class MissionChoosingPanel : View.View
     {
+        private const string PrologueId = "prologue";
+        
         [SerializeField] private Button _backSceneButton;
         [SerializeField] private List<NewMissionView> _missionViews;
 
@@ -67,6 +69,9 @@ namespace _Project.Scripts.UI.Panel
         {
             for (int i = 0; i < _missionService.Missions.Count; i++)
             {
+                if(_missionService.Missions[i].Id == PrologueId)
+                    continue;
+                
                 SetMission(_missionService.Missions[i], _missionViews[i]);
             }
             

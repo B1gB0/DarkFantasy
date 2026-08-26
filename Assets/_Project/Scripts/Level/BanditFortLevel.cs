@@ -9,6 +9,8 @@ namespace _Project.Scripts.Level
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         
+        [SerializeField] private GameObject[] _portals;
+        
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
@@ -65,6 +67,11 @@ namespace _Project.Scripts.Level
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
+            
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(false);
+            }
         }
         
         private void HandleMissionTransition()

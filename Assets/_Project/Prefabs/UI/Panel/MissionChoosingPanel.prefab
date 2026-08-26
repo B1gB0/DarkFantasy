@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cd99a53a6440b1a9aa6c3b54c29733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hover: {fileID: 3136256813554077218}
   _button: {fileID: 6863625836908511768}
 --- !u!1 &1307211032392008149
 GameObject:
@@ -1319,7 +1320,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backSceneButton: {fileID: 7721770743881008090}
   _missionViews:
-  - {fileID: 0}
+  - {fileID: 8654470304551558167}
+  - {fileID: 6280881989880230434}
+  - {fileID: 4906302759890799148}
 --- !u!1 &5879627905392146097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,6 +1373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cd99a53a6440b1a9aa6c3b54c29733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hover: {fileID: 7351306177849549994}
   _button: {fileID: 3130517492813097730}
 --- !u!1 &6060632270413504793
 GameObject:
@@ -1421,6 +1425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cd99a53a6440b1a9aa6c3b54c29733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hover: {fileID: 430719943103238545}
   _button: {fileID: 2628208791829147171}
 --- !u!1 &6142420837500846142
 GameObject:
