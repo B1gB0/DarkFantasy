@@ -15,6 +15,7 @@ namespace _Project.Scripts.UI.View
         public void Deactivate()
         {
             gameObject.SetActive(false);
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }

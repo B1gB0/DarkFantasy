@@ -15,13 +15,13 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Image _iconImage;
         [SerializeField] private TMP_Text _count;
         [SerializeField] private List<Sprite> _icons;
-        
+
         private ItemData _itemData;
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
 
         [Inject]
-        private void Construct(IPlayerService playerService,  IInventoryService inventoryService)
+        private void Construct(IPlayerService playerService, IInventoryService inventoryService)
         {
             _playerService = playerService;
             _inventoryService = inventoryService;
@@ -30,7 +30,7 @@ namespace _Project.Scripts.UI.View
         private void Start()
         {
             if (_itemData != null) return;
-            
+
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
         }
@@ -39,10 +39,10 @@ namespace _Project.Scripts.UI.View
         {
             _iconImage.gameObject.SetActive(true);
             _count.gameObject.SetActive(true);
-            
+
             _itemData = itemData;
             _count.text = count.ToString();
-            
+
             switch (_itemData.Type)
             {
                 case ItemType.HealthPotion:
@@ -58,41 +58,58 @@ namespace _Project.Scripts.UI.View
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         public void UnSet()
         {
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
         }
-        
+
         public void ApplyItemEffect()
         {
             if (_itemData == null) return;
-            
-            int count = _inventoryService.GetItemCount(_itemData.Type);
-            
-            if (count <= 0) return;
-            
+
+            int currentCount = _inventoryService.GetItemCount(_itemData.Type);
+            if (currentCount <= 0) return;
+
             var characteristics = _playerService.Player.PlayerCharacteristics;
+            bool effectApplied = false;
 
             switch (_itemData.Type)
             {
                 case ItemType.SpeedPotion:
-                    characteristics.AddSpeedModifier(_itemData.Value, _itemData.Duration, _itemData.IsMultiplier);
+                    effectApplied = characteristics.AddSpeedModifier(
+                        _itemData.Value,
+                        _itemData.Duration,
+                        _itemData.IsMultiplier);
                     break;
+
                 case ItemType.HealthPotion:
                     _playerService.Player.Health.AddHealth(_itemData.Value);
+                    effectApplied = true;
                     break;
+
                 case ItemType.Meat:
-                    _playerService.Player.Health.AddHealthOverTime(
+                    effectApplied = _playerService.Player.Health.TryStartHealingOverTime(
                         _itemData.Value,
-                        _itemData.Duration)
-                        .Forget();
+                        _itemData.Duration);
                     break;
             }
-            
+
+            if (!effectApplied)
+                return;
+
             _inventoryService.RemoveItem(_itemData.Type);
-            Set(_itemData, count);
+
+            int newCount = _inventoryService.GetItemCount(_itemData.Type);
+            if (newCount > 0)
+            {
+                Set(_itemData, newCount);
+            }
+            else
+            {
+                UnSet();
+            }
         }
     }
 }

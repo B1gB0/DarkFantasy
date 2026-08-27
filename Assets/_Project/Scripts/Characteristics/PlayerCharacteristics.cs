@@ -72,11 +72,15 @@ namespace _Project.Scripts.Characteristics
             }
         }
         
-        public void AddSpeedModifier(float value, float duration, bool isMultiplier = false)
+        public bool AddSpeedModifier(float value, float duration, bool isMultiplier = false)
         {
+            if (_speedModifiers.Count > 0)
+                return false;
+
             var modifier = new SpeedModifier(value, isMultiplier, duration);
             _speedModifiers.Add(modifier);
             RemoveSpeedModifierAfterDelay(modifier, duration).Forget();
+            return true;
         }
         
         public void ClearSpeedModifiers()

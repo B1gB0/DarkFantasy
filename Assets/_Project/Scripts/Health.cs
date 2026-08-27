@@ -33,6 +33,7 @@ namespace _Project.Scripts
         public float MaxHealth { get; private set; }
         public float TargetHealth { get; private set; }
         public float CurrentHealth { get; private set; }
+        public bool IsHealingModifierActivated { get; private set; }
 
         public bool IsHitting { get; private set; }
 
@@ -51,9 +52,9 @@ namespace _Project.Scripts
 
         public void TakeDamage(float damage, bool isShowTextDamage = false, float armor = MinValue)
         {
-            if(TargetHealth == MinValue)
+            if (TargetHealth == MinValue)
                 return;
-                
+
             IsDamaged?.Invoke();
 
             float finalDamage;
@@ -68,12 +69,12 @@ namespace _Project.Scripts
             {
                 finalDamage = damage - armor;
             }
-            
+
             IsSpawnedDamageText?.Invoke(damage.ToString(),
                 transform,
                 FloatingTextViewType.Damage,
                 Colors.GetColor(ColorName.DefaultWhiteTextColor));
-            
+
             TargetHealth -= finalDamage;
 
             OnChangeHealth();
@@ -122,20 +123,14 @@ namespace _Project.Scripts
                 TargetHealth = MaxHealth;
         }
         
-        public async UniTaskVoid AddHealthOverTime(float totalAmount, float duration)
+        public bool TryStartHealingOverTime(float totalAmount, float duration)
         {
-            float healPerSecond = totalAmount / duration;
-            float elapsed = 0f;
+            if (IsHealingModifierActivated)
+                return false;
 
-            while (elapsed < duration)
-            {
-                float deltaTime = Time.deltaTime;
-                float healThisFrame = healPerSecond * deltaTime;
-                AddHealth(healThisFrame);
-
-                elapsed += deltaTime;
-                await UniTask.NextFrame(); // ждём следующий кадр
-            }
+            IsHealingModifierActivated = true;
+            AddHealthOverTime(totalAmount, duration).Forget();
+            return true;
         }
 
         public void SetHealthValue(float healthValue)
@@ -149,6 +144,29 @@ namespace _Project.Scripts
         public void SetHit(bool isHitting)
         {
             IsHitting = isHitting;
+        }
+        
+        private async UniTaskVoid AddHealthOverTime(float totalAmount, float duration)
+        {
+            try
+            {
+                float healPerSecond = totalAmount / duration;
+                float elapsed = 0f;
+
+                while (elapsed < duration)
+                {
+                    float deltaTime = Time.deltaTime;
+                    float healThisFrame = healPerSecond * deltaTime;
+                    AddHealth(healThisFrame);
+
+                    elapsed += deltaTime;
+                    await UniTask.NextFrame();
+                }
+            }
+            finally
+            {
+                IsHealingModifierActivated = false;
+            }
         }
 
         private void OnChangeHealth()
