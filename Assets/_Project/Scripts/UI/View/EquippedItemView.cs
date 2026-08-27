@@ -68,6 +68,11 @@ namespace _Project.Scripts.UI.View
         public void ApplyItemEffect()
         {
             if (_itemData == null) return;
+            
+            int count = _inventoryService.GetItemCount(_itemData.Type);
+            
+            if (count <= 0) return;
+            
             var characteristics = _playerService.Player.PlayerCharacteristics;
 
             switch (_itemData.Type)
@@ -87,7 +92,7 @@ namespace _Project.Scripts.UI.View
             }
             
             _inventoryService.RemoveItem(_itemData.Type);
-            Set(_itemData, _inventoryService.GetItemCount(_itemData.Type));
+            Set(_itemData, count);
         }
     }
 }

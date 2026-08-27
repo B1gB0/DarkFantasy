@@ -10,6 +10,8 @@ namespace _Project.Scripts
     public class Health : MonoBehaviour
     {
         private const int MinValue = 0;
+        private const float DamageFirstFactor = 100f;
+        private const float DamageSecondFactor = 1f;
         private const float RecoveryRate = 10f;
 
         [SerializeField] private float _value;
@@ -54,14 +56,25 @@ namespace _Project.Scripts
                 
             IsDamaged?.Invoke();
 
-            damage -= armor;
+            float finalDamage;
+
+            if (armor > 0)
+            {
+                float damageReduction = armor / (armor + DamageFirstFactor);
+                finalDamage = damage * (DamageSecondFactor - damageReduction);
+                finalDamage = Mathf.Max(MinValue, finalDamage);
+            }
+            else
+            {
+                finalDamage = damage - armor;
+            }
             
             IsSpawnedDamageText?.Invoke(damage.ToString(),
                 transform,
                 FloatingTextViewType.Damage,
                 Colors.GetColor(ColorName.DefaultWhiteTextColor));
             
-            TargetHealth -= damage;
+            TargetHealth -= finalDamage;
 
             OnChangeHealth();
 

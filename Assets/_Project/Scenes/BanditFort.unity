@@ -5299,6 +5299,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: SpawnWaveOfEnemyDelay
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: _enemyWaves.Array.size
       value: 5
       objectReference: {fileID: 0}

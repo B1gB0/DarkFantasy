@@ -12,6 +12,8 @@ namespace _Project.Scripts.Characteristics
     [Serializable]
     public class PlayerCharacteristics
     {
+        private const float PercentFactor = 100f;
+        
         public float MaxHealth;
         public float TargetHealth;
         public float Armor;
@@ -95,7 +97,7 @@ namespace _Project.Scripts.Characteristics
             foreach (var mod in _speedModifiers)
             {
                 if (mod.IsMultiplier)
-                    result *= mod.Value;
+                    result += _baseMoveSpeed * mod.Value / PercentFactor;
             }
 
             return result;
