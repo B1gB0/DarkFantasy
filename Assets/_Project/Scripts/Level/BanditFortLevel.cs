@@ -19,10 +19,10 @@ namespace _Project.Scripts.Level
         
         private void FixedUpdate()
         {
-            if (_spawnCyclicWaveTrigger.IsEnemySpawned)
-            {
-                SpawnCyclicWave();
-            }
+            // if (_spawnCyclicWaveTrigger.IsEnemySpawned)
+            // {
+            //     SpawnCyclicWave();
+            // }
         }
 
         private void OnDisable()
@@ -48,9 +48,9 @@ namespace _Project.Scripts.Level
 
         private void SpawnStartWaves()
         {
-            CreateWaveOfEnemies(FirstWaveEnemy);
-            CreateWaveOfEnemies(SecondWaveEnemy);
-            CreateWaveOfEnemies(ThirdWaveEnemy);
+            // CreateWaveOfEnemies(FirstWaveEnemy);
+            // CreateWaveOfEnemies(SecondWaveEnemy);
+            // CreateWaveOfEnemies(ThirdWaveEnemy);
         }
 
         private void SpawnCyclicWave()
@@ -60,7 +60,17 @@ namespace _Project.Scripts.Level
 
         private void CreateFifthWave()
         {
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(true);
+            }
+            
             CreateWaveOfEnemies(FifthWaveNumber);
+            
+            foreach (var enemy in EnemyWaves[FifthWaveNumber].Enemies)
+            {
+                enemy.ChangeFollowEnemyState(true);
+            }
         }
 
         private void OnBanditLeaderKilled()

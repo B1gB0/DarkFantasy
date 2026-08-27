@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VortexPortalRed
       objectReference: {fileID: 0}
+    - target: {fileID: 1831969664268716, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4262661109255780, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.98
@@ -323,6 +327,10 @@ PrefabInstance:
     - target: {fileID: 1831969664268716, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
       propertyPath: m_Name
       value: VortexPortalRed (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831969664268716, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4262661109255780, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -659,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 1831969664268716, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
       propertyPath: m_Name
       value: VortexPortalRed (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831969664268716, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4262661109255780, guid: bc10ab94cceccfc48b5e7832a8dc015b, type: 3}
       propertyPath: m_LocalPosition.x

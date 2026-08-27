@@ -23,13 +23,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _comboChance1 = 0.3f;
         private float _comboChance2 = 0.4f;
         private float _comboChance3 = 0.3f;
-        private float _dodgeChance = 0.2f;
+        private float _dodgeChance = 0.3f;
         private float _attack1Duration = 0.8f;
         private float _attack2Duration = 1.0f;
         private float _attack3Duration = 1.2f;
-        private float _dodgeDuration = 0.6f;
+        private float _dodgeDuration = 2f;
         private float _dodgeDistance = 3f;
-        private float _dodgeSpeed = 6f; // Можно использовать для более точного контроля скорости, но в текущей реализации позиция задаётся напрямую
+        private float _dodgeSpeed = 6f;
 
         // Состояние комбо
         private int _comboLength;

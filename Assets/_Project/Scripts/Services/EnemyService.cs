@@ -252,7 +252,7 @@ namespace _Project.Scripts.Services
         
         public BanditLeader CreateBanditLeader()
         {
-            CreateEnemyBanditPool();
+            CreateEnemyBanditLeaderPool();
 
             var data = _enemiesData[EnemyType.BanditLeader];
             var banditLeader = _banditLeaderPool.GetFreeElement();

@@ -14,6 +14,7 @@ namespace _Project.Scripts.Level
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies += ShowPortals;
         }
         
         private void FixedUpdate()
@@ -27,6 +28,7 @@ namespace _Project.Scripts.Level
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= ShowPortals;
         }
 
         private void OnDestroy()
@@ -55,6 +57,14 @@ namespace _Project.Scripts.Level
         private void SpawnCyclicWave()
         {
             CreateWaveOfEnemyByTimer(FourthWaveEnemy);
+        }
+
+        private void ShowPortals()
+        {
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(true);
+            }
         }
 
         private void OnPriestKilled()

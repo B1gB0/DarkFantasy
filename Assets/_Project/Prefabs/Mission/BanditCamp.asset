@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367138053dde4080a913b1699e948387, type: 3}
+  m_Name: BanditCamp
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: banditCamp
+  <Maps>k__BackingField:
+  - {fileID: 11400000, guid: 6822431181e266a46a2bc9bad43da49c, type: 2}
+  - {fileID: 11400000, guid: ce6e3ea4a29dacc45aee2fffb45ba150, type: 2}
+  <NameRu>k__BackingField: "\u0424\u043E\u0440\u0442"
+  <NameEn>k__BackingField: Fort
+  <NameTr>k__BackingField: Kale
+  <Image>k__BackingField: {fileID: 21300000, guid: d6ba1e8deeff51f46ab885523763f75c, type: 3}

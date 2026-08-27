@@ -135,7 +135,7 @@ namespace _Project.Scripts.UI.Panel
                         YG2.saves.IsBanditCampUnlock = true;
                         YG2.SaveProgress();
                         break;
-                    case Missions.BanditVillage:
+                    case Missions.BanditCamp:
                         YG2.saves.IsCastleUnlock = true;
                         YG2.SaveProgress();
                         break;

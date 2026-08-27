@@ -7,6 +7,7 @@ using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 namespace _Project.Scripts.UI.Panel
 {
@@ -73,6 +74,16 @@ namespace _Project.Scripts.UI.Panel
                     continue;
                 
                 SetMission(_missionService.Missions[i], _missionViews[i]);
+                
+                if (YG2.saves.IsBanditCampUnlock)
+                {
+                    _missionViews[1].gameObject.SetActive(true);
+                }
+                
+                if (YG2.saves.IsCastleUnlock)
+                {
+                    _missionViews[2].gameObject.SetActive(true);
+                }
             }
             
             _tweenAnimationService.AnimateScale(transform);

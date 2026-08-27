@@ -15,7 +15,7 @@ namespace _Project.Scripts.Enemy
         
         protected override void OnPlayHitEffect()
         {
-            AudioSoundsService.PlaySound(SoundsType.SkeletonHit).Forget();
+            AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();
             ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Player.transform.position);
         }
 

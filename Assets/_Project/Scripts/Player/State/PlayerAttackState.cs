@@ -7,7 +7,7 @@ namespace _Project.Scripts.Player
     public class PlayerAttackState : IPlayerState
     {
         private const int MaxCombo = 3;
-        private const float FallbackEndThreshold = 0.95f; // 95% анимации
+        private const float FallbackEndThreshold = 0.95f;
 
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _anim;
@@ -16,7 +16,7 @@ namespace _Project.Scripts.Player
         private bool _isComboWindowOpen;
         private bool _isAttackBuffered;
         private int _comboCounter;
-        private bool _fallbackEndInvoked; // защита от повторного вызова EndAttack
+        private bool _fallbackEndInvoked;
 
         public PlayerAttackState(Core.Player player)
         {
@@ -36,7 +36,6 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
-            // Страховка: если анимация почти завершена, а EndAttack ещё не был вызван
             AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
             {
@@ -108,7 +107,7 @@ namespace _Project.Scripts.Player
         {
             _isAttackBuffered = false;
             _isComboWindowOpen = false;
-            _fallbackEndInvoked = false;      // Сбрасываем флаг, так как начинается новая анимация
+            _fallbackEndInvoked = false;
 
             _comboCounter++;
             _anim.OnComboChanged(_comboCounter);

@@ -10,7 +10,14 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         public override void Enter()
         {
             base.Enter();
+            Animator.applyRootMotion = true;
             Animator.CrossFade(EnemyAnimationBase.Dodge, Duration);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            Animator.applyRootMotion = false;
         }
     }
 }
