@@ -1,5 +1,7 @@
 ﻿using System;
 using _Project.Scripts.Level;
+using _Project.Scripts.Services;
+using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,13 +14,23 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Button _button;
 
         private Mission _mission;
+        private ITweenAnimationService _tweenAnimationService;
 
         public event Action<Mission> OnMissionChose;
 
-        private void Awake()
+        [Inject]
+        private void Construct(ITweenAnimationService tweenAnimationService)
+        {
+            _tweenAnimationService = tweenAnimationService;
+        }
+
+        private void Start()
         {
             if (_hover != null)
-                _hover.gameObject.SetActive(false);
+            {
+                _hover.gameObject.SetActive(true);
+                _tweenAnimationService.AnimateFade(_hover.transform, true);
+            }
         }
 
         private void OnEnable()
@@ -31,34 +43,24 @@ namespace _Project.Scripts.UI.View
             _button.onClick.RemoveListener(OnChooseMission);
             
             if (_hover != null)
-                _hover.gameObject.SetActive(false);
+                _tweenAnimationService.AnimateFade(_hover.transform, true);
         }
 
         public void GetMission(Mission mission)
         {
             _mission = mission;
         }
-
-        private void ActivateHover()
-        {
-            if (_hover != null)
-                _hover.gameObject.SetActive(true);
-        }
-
-        private void DeactivateHover()
-        {
-            if (_hover != null)
-                _hover.gameObject.SetActive(false);
-        }
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            ActivateHover();
+            if (_hover != null)
+                _tweenAnimationService.AnimateFade(_hover.transform);
         }
         
         public void OnPointerExit(PointerEventData eventData)
         {
-            DeactivateHover();
+            if (_hover != null)
+                _tweenAnimationService.AnimateFade(_hover.transform, true);
         }
 
         private void OnChooseMission()

@@ -16,5 +16,6 @@ namespace _Project.Scripts.Services
             bool isSetParentToPoint = false);
 
         public void AnimatePointer(Transform target, Transform pointerPoint);
+        public void AnimateFade(Transform target, bool isFade = false);
     }
 }

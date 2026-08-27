@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Services
 {
@@ -115,6 +116,33 @@ namespace _Project.Scripts.Services
                 .Append(target.DOLocalMoveY(originalY, BigPause).SetEase(Ease.Linear))
                 .AppendInterval(BigPause)
                 .SetLoops(-1, LoopType.Restart);
+        }
+
+        public void AnimateFade(Transform target, bool isFade = false)
+        {
+            if (!IsTargetValid(target))
+                return;
+
+            Graphic graphic = target.GetComponent<Graphic>();
+            if (graphic == null)
+            {
+                Debug.LogWarning($"AnimateFade: Target '{target.name}' does not have a Graphic component.");
+                return;
+            }
+            
+            graphic.DOKill();
+
+            if (!isFade)
+            {
+                graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, 0f);
+            }
+
+            float targetAlpha = isFade ? 0f : 1f;
+            float duration = isFade ? DurationHide : DurationShow;
+
+            graphic.DOFade(targetAlpha, duration)
+                .SetEase(isFade ? Ease.OutSine : Ease.InSine)
+                .SetUpdate(true);
         }
 
         private void TryOffGameObject(Transform target, bool isDisableTarget)

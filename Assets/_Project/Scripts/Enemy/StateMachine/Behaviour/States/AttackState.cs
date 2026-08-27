@@ -19,11 +19,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;
 
-        private int _comboLength;
-        private int _currentComboIndex;
-        private bool _comboInProgress;
-        private bool _canDodge;
-
+        // Параметры BanditLeader
         private float _comboChance1 = 0.3f;
         private float _comboChance2 = 0.4f;
         private float _comboChance3 = 0.3f;
@@ -33,7 +29,17 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _attack3Duration = 1.2f;
         private float _dodgeDuration = 0.6f;
         private float _dodgeDistance = 3f;
-        private float _dodgeSpeed = 6f;
+        private float _dodgeSpeed = 6f; // Можно использовать для более точного контроля скорости, но в текущей реализации позиция задаётся напрямую
+
+        // Состояние комбо
+        private int _comboLength;
+        private int _currentComboIndex;
+        private bool _comboInProgress;
+
+        // Уклонение
+        private Vector3 _dodgeDirection;
+        private Vector3 _dodgeStartPosition;
+        private float _dodgeElapsed;
 
         private AttackSubState _currentSubState;
         private PriestAttackState _lastPriestRangedAttack = PriestAttackState.None;
@@ -49,6 +55,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             _attackRange = Data.RangeAttack;
             _activePriestAttack = PriestAttackState.None;
+            
+            // Дополнительная инициализация для BanditLeader
+            if (Enemy.Type == EnemyType.BanditLeader)
+            {
+                _comboInProgress = false;
+                _currentComboIndex = 0;
+            }
         }
 
         public override void Update()
@@ -88,6 +101,15 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 rotationSpeed * Time.fixedDeltaTime,
                 MinValue);
 
+            // Обработка перемещения при кувырке для BanditLeader
+            if (Enemy.Type == EnemyType.BanditLeader && _currentSubState == AttackSubState.Dodge)
+            {
+                _dodgeElapsed += Time.fixedDeltaTime;
+                float t = Mathf.Clamp01(_dodgeElapsed / _dodgeDuration);
+                Vector3 targetPos = _dodgeStartPosition + _dodgeDirection * _dodgeDistance * t;
+                Enemy.transform.position = targetPos;
+            }
+
             _subStateTimer -= Time.fixedDeltaTime;
 
             if (!(_subStateTimer <= MinValue)) return;
@@ -110,10 +132,9 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
-
                     break;
+
                 case EnemyType.Priest:
-                {
                     if (_activePriestAttack == PriestAttackState.None)
                     {
                         float distance = Vector3.Distance(Enemy.transform.position, Player.transform.position);
@@ -132,12 +153,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterInOmniAttack();
                             break;
                     }
-
                     break;
-                }
+
                 case EnemyType.BanditLeader:
-
+                    UpdateBanditLeader();
                     break;
+
                 default:
                     switch (_currentSubState)
                     {
@@ -148,7 +169,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Attack);
                             break;
                     }
-
                     break;
             }
         }
@@ -158,6 +178,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
             ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
             _activePriestAttack = PriestAttackState.None;
+            
+            // Enemy.isdod = false;
+            if (Agent != null && !Agent.enabled)
+                Agent.enabled = true;
         }
 
         private PriestAttackState ChoosePriestAttack(float distance)
@@ -246,6 +270,87 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     _activePriestAttack = PriestAttackState.None;
                     break;
             }
+        }
+        
+        private void UpdateBanditLeader()
+        {
+            switch (_currentSubState)
+            {
+                case AttackSubState.Attack1:
+                case AttackSubState.Attack2:
+                case AttackSubState.Attack3:
+                    _currentComboIndex++;
+
+                    if (_currentComboIndex < _comboLength)
+                    {
+                        var nextState = _currentComboIndex == 1 
+                            ? AttackSubState.Attack2 
+                            : AttackSubState.Attack3;
+                        EnterAttackSubState(nextState);
+                    }
+                    else
+                    {
+                        _comboInProgress = false;
+                        
+                        if (Random.value < _dodgeChance)
+                        {
+                            EnterDodge();
+                        }
+                        else
+                        {
+                            EnterAttackSubState(AttackSubState.Idle);
+                        }
+                    }
+                    break;
+                case AttackSubState.Dodge:
+                    // Enemy.IsInvulnerable = false;
+                    Agent.enabled = true;
+                    EnterAttackSubState(AttackSubState.Idle);
+                    break;
+                case AttackSubState.Idle:
+                    float dist = Vector3.Distance(Enemy.transform.position, Player.transform.position);
+                    if (dist > _attackRange * 1.2f)
+                    {
+                        EnemyStateMachine.SwitchState<FollowState>();
+                    }
+                    else
+                    {
+                        StartNewCombo();
+                    }
+                    break;
+                default:
+                    EnterAttackSubState(AttackSubState.Idle);
+                    break;
+            }
+        }
+        
+        private void StartNewCombo()
+        {
+            float rand = Random.value;
+            if (rand < _comboChance1)
+                _comboLength = 1;
+            else if (rand < _comboChance1 + _comboChance2)
+                _comboLength = 2;
+            else
+                _comboLength = 3;
+
+            _currentComboIndex = 0;
+            _comboInProgress = true;
+            EnterAttackSubState(AttackSubState.Attack1);
+        }
+        
+        private void EnterDodge()
+        {
+            Vector3 right = Enemy.transform.right;
+            _dodgeDirection = Random.value > 0.5f ? right : -right;
+
+            _dodgeStartPosition = Enemy.transform.position;
+            _dodgeElapsed = 0f;
+
+            Agent.enabled = false;
+            // Enemy.IsInvulnerable = true;
+
+            EnterAttackSubState(AttackSubState.Dodge);
         }
 
         private void EnterAttackSubState(AttackSubState newSubState)

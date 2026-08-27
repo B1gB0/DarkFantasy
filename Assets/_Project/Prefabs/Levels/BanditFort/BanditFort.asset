@@ -13,39 +13,31 @@ MonoBehaviour:
   m_Name: BanditFort
   m_EditorClassIdentifier: 
   EnemyFirstPatrolPositions:
-  - {x: 15.38, y: 0, z: 29.71}
-  - {x: 9.72, y: 0, z: 26.7}
-  - {x: 23.1, y: 0, z: 29.94}
-  - {x: 21.64, y: 0, z: 18.05}
+  - {x: 22.64, y: 0, z: 35.28}
+  - {x: 8.72, y: 0, z: 34.42}
   EnemySecondPatrolPositions:
-  - {x: 5.1, y: 0, z: 11.12}
-  - {x: 2.97, y: 0, z: 4.6}
-  - {x: -3.58, y: 0, z: 9.64}
+  - {x: 14.47, y: 0, z: 26.82}
+  - {x: 14.73, y: 0, z: 33.43}
   EnemyThirdPatrolPositions:
-  - {x: -1.84, y: 0, z: 32.15}
-  - {x: 1.56, y: 0, z: 26.34}
-  - {x: -7.02, y: 0, z: 24.66}
+  - {x: 16.69, y: 0, z: 23.1}
+  - {x: 14.51, y: 0, z: 18.6}
+  - {x: 11.02, y: 0, z: 24.74}
   EnemyFourthPatrolPositions:
-  - {x: 13.2, y: 0, z: 26.71}
+  - {x: 10.5, y: 0, z: 17.39}
   EnemyFifthPatrolPositions: []
   FirstWaveSpawnPoints:
-  - {x: 20.6, y: 0, z: 31.04}
-  - {x: 23.800001, y: 0, z: 27.23}
-  - {x: 17.83, y: 0, z: 22.11}
-  - {x: 24.24, y: 0, z: 19}
+  - {x: 4.94, y: 0, z: 33.05}
+  - {x: 23.51, y: 0, z: 33.05}
   SecondWaveSpawnPoints:
-  - {x: 5.2, y: 0, z: 13.03}
-  - {x: 1.9899998, y: 0, z: 8.369999}
-  - {x: 15.07, y: 0, z: 10.139998}
-  - {x: 8.98, y: 0, z: 6.379999}
+  - {x: 14.07, y: 0, z: 26.02}
+  - {x: 13.19, y: 0, z: 29.8}
   ThirdWaveSpawnPoints:
-  - {x: -8.22, y: 0, z: 23.08}
-  - {x: -6.9600005, y: 0, z: 16.6}
-  - {x: -0.30000067, y: 0, z: 19.25}
-  - {x: -2.6300006, y: 0, z: 14.48}
+  - {x: 15.4, y: 0, z: 19.42}
+  - {x: 10.22, y: 0, z: 25.06}
   FourthWaveSpawnPoints:
-  - {x: 10.48, y: 0, z: 33.51}
-  - {x: 16.47, y: 0, z: 36.51}
-  - {x: 18.18, y: 0, z: 32.709995}
-  FifthWaveSpawnPoints: []
+  - {x: 24.952345, y: 0.50000024, z: 14.2720785}
+  - {x: 20.781345, y: 0.50000024, z: 14.141078}
+  - {x: 3.912345, y: 0.49999976, z: 14.299078}
+  FifthWaveSpawnPoints:
+  - {x: 13.97118, y: 0.5000005, z: 12.613384}
   PlayerSpawnPosition: {x: 14.2, y: 0, z: 43.94}
