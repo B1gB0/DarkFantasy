@@ -360,6 +360,8 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {
+            Debug.Log(" убит скелет");
+            
             enemy.Die -= OnKillSkeleton;
             _enemyCounter--;
 
@@ -368,6 +370,8 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
+            Debug.Log(" убит скелет тяжелый");
+            
             enemy.Die -= OnKillSkeletonHeavyArmor;
             _enemyCounter--;
 
@@ -376,6 +380,8 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
+            Debug.Log(" убит скелет лучник");
+            
             enemy.Die -= OnKillSkeletonRanger;
             _enemyCounter--;
 
@@ -384,6 +390,8 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillPriest(Enemy.Enemy enemy)
         {
+            Debug.Log(" убит жрец");
+            
             enemy.Die -= OnKillPriest;
             OnPriestKilled?.Invoke();
             _enemyCounter--;
@@ -393,6 +401,8 @@ namespace _Project.Scripts.Level.Spawners
         
         private void OnKillBandit(Enemy.Enemy enemy)
         {
+            Debug.Log(" убит бандит");
+            
             enemy.Die -= OnKillBandit;
             _enemyCounter--;
 
@@ -401,7 +411,8 @@ namespace _Project.Scripts.Level.Spawners
         
         private void OnKillBanditLeader(Enemy.Enemy enemy)
         {
-            enemy.Die -= OnKillPriest;
+            Debug.Log(" убит глава бандитов");
+            enemy.Die -= OnKillBanditLeader;
             OnBanditLeaderKilled?.Invoke();
             _enemyCounter--;
 
@@ -410,6 +421,7 @@ namespace _Project.Scripts.Level.Spawners
 
         private void CheckEnemiesCount()
         {
+            Debug.Log(_enemyCounter + " количество врагов");
             if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }

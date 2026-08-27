@@ -18,7 +18,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
         public virtual void Enter()
         {
             Animator.StopPlayback();
-            Animator.CrossFade(EnemyAnimationBase.Aim, Duration);
         }
 
         public virtual void Exit()

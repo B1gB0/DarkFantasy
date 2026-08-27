@@ -7,6 +7,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation
         public readonly int Idle = Animator.StringToHash(nameof(Idle));
         public readonly int Move = Animator.StringToHash(nameof(Move));
         public readonly int Attack = Animator.StringToHash(nameof(Attack));
+        public readonly int Attack1 = Animator.StringToHash(nameof(Attack1));
+        public readonly int Attack2 = Animator.StringToHash(nameof(Attack2));
+        public readonly int Attack3 = Animator.StringToHash(nameof(Attack3));
+        public readonly int Dodge = Animator.StringToHash(nameof(Dodge));
         public readonly int Aim = Animator.StringToHash(nameof(Aim));
         public readonly int Load = Animator.StringToHash(nameof(Load));
         public readonly int Hit = Animator.StringToHash(nameof(Hit));

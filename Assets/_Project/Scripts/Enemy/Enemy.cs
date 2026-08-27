@@ -49,6 +49,7 @@ namespace _Project.Scripts.Enemy
 
         private void OnEnable()
         {
+            _isDead = false;
             Health.Die += OnDie;
             Health.IsDamaged += OnPlayHitEffect;
         }

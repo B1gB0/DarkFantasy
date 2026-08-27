@@ -13,6 +13,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Animation.States
         {
             Animator.applyRootMotion = true;
             base.Enter();
+            Animator.CrossFade(EnemyAnimationBase.Death, Duration);
         }
 
         public override void Exit()
