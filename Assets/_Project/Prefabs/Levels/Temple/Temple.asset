@@ -12,14 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: Temple
   m_EditorClassIdentifier: 
-  EnemyFirstPatrolPositions: []
-  EnemySecondPatrolPositions: []
-  EnemyThirdPatrolPositions: []
-  EnemyFourthPatrolPositions: []
+  EnemyFirstPatrolPositions:
+  - {x: -0.44, y: 0, z: 41.89}
+  - {x: 6.74, y: 0, z: 41.54}
+  EnemySecondPatrolPositions:
+  - {x: 3.59, y: 0, z: 35.86}
+  - {x: 4.3, y: 0, z: 40.29}
+  EnemyThirdPatrolPositions:
+  - {x: -2.35, y: 0, z: 33.99}
+  - {x: 2.56, y: 0, z: 32.29}
+  - {x: 7.78, y: 0, z: 33.49}
+  EnemyFourthPatrolPositions:
+  - {x: 2.13, y: 0, z: 35.25}
   EnemyFifthPatrolPositions: []
-  FirstWaveSpawnPoints: []
-  SecondWaveSpawnPoints: []
-  ThirdWaveSpawnPoints: []
-  FourthWaveSpawnPoints: []
-  FifthWaveSpawnPoints: []
-  PlayerSpawnPosition: {x: 0, y: 0, z: 0}
+  FirstWaveSpawnPoints:
+  - {x: -0.82, y: 0, z: 42.35}
+  - {x: 6.71, y: 0, z: 41.8}
+  SecondWaveSpawnPoints:
+  - {x: 3.77, y: 0, z: 40.44}
+  - {x: 3.83, y: 0, z: 35.92}
+  ThirdWaveSpawnPoints:
+  - {x: -2.43, y: 0, z: 33.6}
+  - {x: 7.89, y: 0, z: 33.12}
+  FourthWaveSpawnPoints:
+  - {x: 7.37, y: 0.50000024, z: 28.59}
+  - {x: -2.06, y: 0.50000024, z: 29.219997}
+  FifthWaveSpawnPoints:
+  - {x: 3.538, y: 0.5000005, z: 31.283}
+  PlayerSpawnPosition: {x: 2.27, y: 0, z: 49.05}

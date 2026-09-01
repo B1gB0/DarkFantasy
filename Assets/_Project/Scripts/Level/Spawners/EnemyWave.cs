@@ -13,6 +13,7 @@ namespace _Project.Scripts.Level.Spawners
         [field: SerializeField] public int BanditCount { get; private set; }
         [field: SerializeField] public int BanditRangerCount { get; private set; }
         [field: SerializeField] public int BanditLeaderCount { get; private set; }
+        [field: SerializeField] public int DarkLordCount { get; private set; }
 
         public List<Enemy.Enemy> Enemies { get; private set; } = new();
         public List<Vector3> WaveSpawnPoints { get; private set; }
