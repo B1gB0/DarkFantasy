@@ -11,5 +11,6 @@ namespace _Project.Scripts.Enemy
         BanditMelee = 6,
         BanditRanger = 7,
         BanditLeader = 8,
+        DarkLord = 9,
     }
 }

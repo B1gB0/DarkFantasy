@@ -19,6 +19,7 @@ namespace _Project.Scripts.Services
         private const string BanditPool = nameof(BanditPool);
         private const string BanditRangerPool = nameof(BanditRangerPool);
         private const string BanditLeaderPool = nameof(BanditLeaderPool);
+        private const string DarkLordPool = nameof(DarkLordPool);
         private const string ArrowProjectilePool = nameof(ArrowProjectilePool);
         private const string MagicBallProjectilePool = nameof(MagicBallProjectilePool);
 
@@ -45,6 +46,7 @@ namespace _Project.Scripts.Services
         private ObjectPool<Bandit> _banditPool;
         private ObjectPool<BanditRanger> _banditRangerPool;
         private ObjectPool<BanditLeader> _banditLeaderPool;
+        private ObjectPool<DarkLord> _darkLordPool;
         private ObjectPool<Arrow> _arrowProjectilePool;
         private ObjectPool<Fireball> _magicBallProjectilePool;
 
@@ -275,6 +277,32 @@ namespace _Project.Scripts.Services
 
             return banditLeader;
         }
+        
+        public DarkLord CreateDarkLord()
+        {
+            CreateEnemyDarkLordPool();
+
+            var data = _enemiesData[EnemyType.DarkLord];
+            var darkLord = _darkLordPool.GetFreeElement();
+
+            darkLord.Construct(
+                _playerService.Player,
+                data,
+                _floatingTextService,
+                _particleEffectsService,
+                _audioSoundsService,
+                _experiencePoints,
+                _currencyService);
+            
+            darkLord.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+
+            if (darkLord.Health.TargetHealth <= MinValue)
+            {
+                darkLord.Health.LoadHealth(data.Health, data.Health);
+            }
+
+            return darkLord;
+        }
 
         public void GetData(EnemyInitData enemyInitData)
         {
@@ -389,6 +417,20 @@ namespace _Project.Scripts.Services
 
             _banditLeaderPool = new ObjectPool<BanditLeader>(
                 _enemyInitData.BanditLeaderPrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(BanditLeaderPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+        }
+        
+        private void CreateEnemyDarkLordPool()
+        {
+            if (_darkLordPool != null)
+                return;
+
+            _darkLordPool = new ObjectPool<DarkLord>(
+                _enemyInitData.DarkLordPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(BanditLeaderPool).transform)
             {

@@ -11,6 +11,10 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const float AttackChance = 0.5f;
         private const float FireballChance = 0.33f;
         private const float CoilChance = 0.66f;
+        private const float DarkLordMagicSpellDistance = 5f;
+        private const float FiftyChance = 0.5f;
+        private const float MinValue = 0f;
+        private const float DistanceFactor = 1.2f;
 
         private float _attackRange;
         private float _reloadDuration = 0.4f;
@@ -18,8 +22,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _idleDuration = 1f;
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;
-
-        // Параметры BanditLeader
+        
         private float _comboChance1 = 0.3f;
         private float _comboChance2 = 0.4f;
         private float _comboChance3 = 0.3f;
@@ -30,13 +33,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _dodgeDuration = 2f;
         private float _dodgeDistance = 3f;
         private float _dodgeSpeed = 6f;
-
-        // Состояние комбо
+        
         private int _comboLength;
         private int _currentComboIndex;
         private bool _comboInProgress;
-
-        // Уклонение
+        
         private Vector3 _dodgeDirection;
         private Vector3 _dodgeStartPosition;
         private float _dodgeElapsed;
@@ -52,16 +53,19 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 or EnemyType.SkeletonRanger
                 ? AttackSubState.Aiming
                 : AttackSubState.Idle;
-
-            _attackRange = Data.RangeAttack;
-            _activePriestAttack = PriestAttackState.None;
             
-            // Дополнительная инициализация для BanditLeader
-            if (Enemy.Type == EnemyType.BanditLeader)
+            if (Enemy.Type == EnemyType.BanditLeader || Enemy.Type == EnemyType.DarkLord)
             {
                 _comboInProgress = false;
                 _currentComboIndex = 0;
             }
+    
+            if (Enemy.Type == EnemyType.Priest || Enemy.Type == EnemyType.DarkLord)
+            {
+                _activePriestAttack = PriestAttackState.None;
+            }
+            
+            _attackRange = Enemy.Type == EnemyType.DarkLord ? DarkLordMagicSpellDistance : Data.RangeAttack;
         }
 
         public override void Update()
@@ -100,8 +104,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 direction,
                 rotationSpeed * Time.fixedDeltaTime,
                 MinValue);
-
-            // Обработка перемещения при кувырке для BanditLeader
+            
             if (Enemy.Type == EnemyType.BanditLeader && _currentSubState == AttackSubState.Dodge)
             {
                 _dodgeElapsed += Time.fixedDeltaTime;
@@ -133,12 +136,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                     }
                     break;
-
                 case EnemyType.Priest:
                     if (_activePriestAttack == PriestAttackState.None)
                     {
                         float distance = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-                        _activePriestAttack = ChoosePriestAttack(distance);
+                        _activePriestAttack = UpdatePriest(distance);
                     }
 
                     switch (_activePriestAttack)
@@ -154,11 +156,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                             break;
                     }
                     break;
-
                 case EnemyType.BanditLeader:
                     UpdateBanditLeader();
                     break;
-
+                case EnemyType.DarkLord:
+                    UpdateDarkLord();
+                    break;
                 default:
                     switch (_currentSubState)
                     {
@@ -179,12 +182,11 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
             _activePriestAttack = PriestAttackState.None;
             
-            // Enemy.isdod = false;
             if (Agent != null && !Agent.enabled)
                 Agent.enabled = true;
         }
 
-        private PriestAttackState ChoosePriestAttack(float distance)
+        private PriestAttackState UpdatePriest(float distance)
         {
             if (!(distance <= OmniRange))
                 return Random.value > AttackChance ? PriestAttackState.Fireball : PriestAttackState.Coil;
@@ -303,13 +305,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     }
                     break;
                 case AttackSubState.Dodge:
-                    // Enemy.IsInvulnerable = false;
                     Agent.enabled = true;
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
                 case AttackSubState.Idle:
                     float dist = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-                    if (dist > _attackRange * 1.2f)
+                    if (dist > _attackRange * DistanceFactor)
                     {
                         EnemyStateMachine.SwitchState<FollowState>();
                     }
@@ -322,6 +323,55 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
             }
+        }
+        
+        private void UpdateDarkLord()
+        {
+            float dist = Vector3.Distance(Enemy.transform.position, Player.transform.position);
+            
+            if (_activePriestAttack != PriestAttackState.None)
+            {
+                switch (_activePriestAttack)
+                {
+                    case PriestAttackState.Fireball:
+                        EnterInFireballAttack();
+                        break;
+                    case PriestAttackState.Coil:
+                        EnterInCoilAttack();
+                        break;
+                }
+                return;
+            }
+            
+            if (_currentSubState == AttackSubState.Attack1 ||
+                _currentSubState == AttackSubState.Attack2 ||
+                _currentSubState == AttackSubState.Attack3 ||
+                _currentSubState == AttackSubState.Dodge)
+            {
+                UpdateBanditLeader();
+                return;
+            }
+            
+            if (dist > DarkLordMagicSpellDistance)
+            {
+                EnemyStateMachine.SwitchState<FollowState>();
+            }
+            else if (dist > Data.RangeAttack)
+            {
+                StartDarkLordMagicAttack();
+            }
+            else
+            {
+                StartNewCombo();
+            }
+        }
+        
+        private void StartDarkLordMagicAttack()
+        {
+            _activePriestAttack =
+                Random.value > FiftyChance ? PriestAttackState.Fireball : PriestAttackState.Coil;
+            
+            EnterAttackSubState(AttackSubState.Idle);
         }
         
         private void StartNewCombo()
@@ -342,13 +392,12 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private void EnterDodge()
         {
             Vector3 right = Enemy.transform.right;
-            _dodgeDirection = Random.value > 0.5f ? right : -right;
+            _dodgeDirection = Random.value > FiftyChance ? right : -right;
 
             _dodgeStartPosition = Enemy.transform.position;
-            _dodgeElapsed = 0f;
+            _dodgeElapsed = MinValue;
 
             Agent.enabled = false;
-            // Enemy.IsInvulnerable = true;
 
             EnterAttackSubState(AttackSubState.Dodge);
         }

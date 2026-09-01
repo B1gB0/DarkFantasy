@@ -15,5 +15,6 @@ namespace _Project.Scripts.Services
         public Bandit CreateBandit();
         public BanditRanger CreateBanditRanger();
         public BanditLeader CreateBanditLeader();
+        public DarkLord CreateDarkLord();
     }
 }

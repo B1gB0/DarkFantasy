@@ -60,6 +60,7 @@ namespace _Project.Scripts.Level.Spawners
             int banditsToSpawn = wave.BanditCount;
             int banditsRangersToSpawn = wave.BanditRangerCount;
             int banditsLeadersToSpawn = wave.BanditLeaderCount;
+            int darkLordsToSpawn = wave.DarkLordCount;
 
             for (int i = 0; i < skeletonsToSpawn; i++)
             {
@@ -142,6 +143,18 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 BanditLeader enemy = SpawnBanditLeader(candidatePoint, patrolPoints);
+                availableSpawnPoints.RemoveAt(MinValue);
+                wave.AddEnemy(enemy);
+                _enemyCounter++;
+            }
+            
+            for (int i = 0; i < darkLordsToSpawn; i++)
+            {
+                if (availableSpawnPoints.Count == MinValue)
+                    break;
+
+                Vector3 candidatePoint = availableSpawnPoints[MinValue];
+                DarkLord enemy = SpawnDarkLord(candidatePoint, patrolPoints);
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -356,6 +369,36 @@ namespace _Project.Scripts.Level.Spawners
             banditLeader.EnemyStateMachine.SwitchState<PatrolState>();
 
             return banditLeader;
+        }
+        
+        private DarkLord SpawnDarkLord(Vector3 enemyPosition, List<Vector3> patrolPoints)
+        {
+            DarkLord darkLord = _enemyService.CreateDarkLord();
+
+            darkLord.NavMeshAgent.enabled = false;
+
+            var enemySpawnPosition = enemyPosition +
+                                     (Vector3.one * Random.Range(-RandomPositionFactor, RandomPositionFactor));
+
+            enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
+
+            darkLord.transform.position = enemySpawnPosition;
+            
+            darkLord.Rigidbody.isKinematic = true;
+            darkLord.Collider.enabled = true;
+
+            darkLord.NavMeshAgent.enabled = true;
+            darkLord.NavMeshAgent.isStopped = false;
+            darkLord.NavMeshAgent.ResetPath();
+
+            darkLord.Die += OnKillBanditLeader;
+
+            darkLord.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
+            darkLord.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
+            darkLord.EnemyStateMachine.InitializeAllStates();
+            darkLord.EnemyStateMachine.SwitchState<PatrolState>();
+
+            return darkLord;
         }
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
