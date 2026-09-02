@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.DataBase.InitDataSO;
+using _Project.Scripts.Enemy;
+using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -43,12 +48,15 @@ namespace _Project.Scripts.Level
 
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
+        private IUILocalizationService _uiLocalizationService;
         private ParticleEffectsService _particleEffectsService;
         private AudioSoundsService _audioSoundsService;
 
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
+
+        private Enemy.Enemy _boss;
 
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
@@ -65,7 +73,8 @@ namespace _Project.Scripts.Level
             ParticleEffectsService particleEffectsService,
             IShopService shopService,
             IInventoryService inventoryService,
-            AudioSoundsService audioSoundsService)
+            AudioSoundsService audioSoundsService,
+            IUILocalizationService uiLocalizationService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
@@ -73,11 +82,13 @@ namespace _Project.Scripts.Level
             ShopService = shopService;
             InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
+            this._uiLocalizationService = uiLocalizationService;
         }
 
         private void OnDestroy()
         {
             EnemySpawner.OnBossSpawned -= OnBossSpawned;
+            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged -= SetBossNameLocalization;
         }
 
         public void GetDependencies(
@@ -160,6 +171,35 @@ namespace _Project.Scripts.Level
         {
             OnGoToNextScene?.Invoke();
         }
+        
+        protected void SetBossNameLocalization()
+        {
+            if (_boss == null || BossHealthBar == null) return;
+
+            UITextType uiTextType = GetBossUITextType(_boss.Data.Type);
+            string localizedName = GetLocalizedText(uiTextType);
+            BossHealthBar.SetName(localizedName);
+        }
+
+        private UITextType GetBossUITextType(EnemyType enemyType) => enemyType switch
+        {
+            EnemyType.Priest => UITextType.PriestName,
+            EnemyType.BanditLeader => UITextType.BanditLeaderName,
+            EnemyType.DarkLord => UITextType.DarkLordName,
+            _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, "Unknown boss type")
+        };
+
+        private string GetLocalizedText(UITextType uiTextType)
+        {
+            var data = _uiLocalizationService.GetLevelTextData(uiTextType);
+            return YG2.lang switch
+            {
+                LocalizationCode.Ru => data.NameRu,
+                LocalizationCode.En => data.NameEn,
+                LocalizationCode.Tr => data.NameTr,
+                _ => data.NameEn
+            };
+        }
 
         private void InitSpawners(IEnemyService enemyService)
         {
@@ -210,12 +250,14 @@ namespace _Project.Scripts.Level
 
         private void OnBossSpawned(Enemy.Enemy enemy)
         {
-            CreateBossHealthBar(enemy.Health).Forget();
+            _boss = enemy;
+            CreateBossHealthBar().Forget();
+            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged += SetBossNameLocalization;
         }
 
-        private async UniTask CreateBossHealthBar(Health health)
+        private async UniTask CreateBossHealthBar()
         {
-            BossHealthBar = await ViewFactory.CreateBossHealthBar(health);
+            BossHealthBar = await ViewFactory.CreateBossHealthBar(_boss.Health);
         }
     }
 }

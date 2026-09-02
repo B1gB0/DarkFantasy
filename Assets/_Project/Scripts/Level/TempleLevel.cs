@@ -62,6 +62,7 @@ namespace _Project.Scripts.Level
         private void ShowPortals()
         {
             BossHealthBar.Show();
+            SetBossNameLocalization();
             
             foreach (var portal in _portals)
             {

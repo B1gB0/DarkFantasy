@@ -61,6 +61,7 @@ namespace _Project.Scripts.Level
         private void CreateFifthWave()
         {
             BossHealthBar.Show();
+            SetBossNameLocalization();
             
             foreach (var portal in _portals)
             {

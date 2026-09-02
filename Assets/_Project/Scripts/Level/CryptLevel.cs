@@ -1,4 +1,7 @@
-﻿using _Project.Scripts.Level.Triggers;
+﻿using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Game.Constant;
+using _Project.Scripts.Level.Triggers;
+using _Project.Scripts.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
@@ -62,6 +65,7 @@ namespace _Project.Scripts.Level
         private void OnSpawnCyclicWave()
         {
             BossHealthBar.Show();
+            SetBossNameLocalization();
             
             foreach (var portal in _portals)
             {
