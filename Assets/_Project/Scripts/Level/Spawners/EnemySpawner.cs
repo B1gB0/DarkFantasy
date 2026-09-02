@@ -466,6 +466,8 @@ namespace _Project.Scripts.Level.Spawners
 
         private void CheckEnemiesCount()
         {
+            Debug.Log(_enemyCounter + " врагов счётчик");
+            
             if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }

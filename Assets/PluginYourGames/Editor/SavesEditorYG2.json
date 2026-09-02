@@ -1,17 +1,17 @@
 {
-  "Gold": 15,
-  "AcumulatedScore": 1815,
+  "Gold": 575,
+  "AcumulatedScore": 2375,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 3,
   "DamageAttributeNumber": 3,
   "ArmorAttributeNumber": 8,
   "IsFirstLaunch": false,
   "IsBanditCampUnlock": true,
-  "IsCastleUnlock": false,
+  "IsCastleUnlock": true,
   "EquippedItemType": 1,
   "PlayerCharacteristics": {
     "MaxHealth": 106.0,
-    "TargetHealth": 146.0,
+    "TargetHealth": 101.454544,
     "Armor": 10.0,
     "Damage": 8.0,
     "MoveSpeed": 6.0,
@@ -36,5 +36,5 @@
     false,
     false
   ],
-  "idSave": 348
+  "idSave": 357
 }

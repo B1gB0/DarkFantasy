@@ -294,6 +294,13 @@ namespace _Project.Scripts.Services
                 _experiencePoints,
                 _currencyService);
             
+            darkLord.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
+            darkLord.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
+            darkLord.FireballSpell.SetData(_playerService.Player.transform, data.Damage);
+            
+            darkLord.Coil.SetData(_playerService.Player.transform, data.Damage);
+            darkLord.Coil.GetServices(_audioSoundsService, _particleEffectsService);
+            
             darkLord.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
 
             if (darkLord.Health.TargetHealth <= MinValue)
@@ -433,6 +440,17 @@ namespace _Project.Scripts.Services
                 _enemyInitData.DarkLordPrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(BanditLeaderPool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+            
+            if(_magicBallProjectilePool != null)
+                return;
+            
+            _magicBallProjectilePool = new ObjectPool<Fireball>(
+                _enemyInitData.FireballProjectilePrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(MagicBallProjectilePool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };

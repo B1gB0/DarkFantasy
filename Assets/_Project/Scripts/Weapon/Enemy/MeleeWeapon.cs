@@ -30,7 +30,6 @@ namespace _Project.Scripts.Weapon.Enemy
         private void HandleAttack(Scripts.Player.Core.Player player)
         {
             player.Health.TakeDamage(Damage, false, player.PlayerCharacteristics.Armor);
-            Debug.Log(Damage + " damage");
             EndAttack();
         }
     }

@@ -27,36 +27,7 @@ namespace _Project.Scripts.Player
                     enemy.ChangeFollowEnemyState(true);
                 }
             }
-            
-            // if (trigger.TryGetComponent(out EntranceTrigger entranceTrigger))
-            // {
-            //     entranceTrigger.Entrance.OpenGate();
-            // }
         }
-        
-        private void OnTriggerExit(Collider trigger)
-        {
-            // if (trigger.TryGetComponent(out EntranceTrigger entranceTrigger))
-            // {
-            //     entranceTrigger.Entrance.CloseGate();
-            // }
-        }
-        //
-        // private void OnCollisionEnter(Collision collision)
-        // {
-        //     if (collision.gameObject.TryGetComponent(out RedCrystal healingCrystal))
-        //     {
-        //         if (_playerService.PlayerActor.Health.TargetHealth == _playerService.PlayerActor.Health.MaxHealth)
-        //             return;
-        //
-        //         _playerService.PlayerActor.Health.AddHealth(healingCrystal.HealthValue);
-        //         healingCrystal.Destroy();
-        //     }
-        //     else if (collision.gameObject.TryGetComponent(out GoldCrystal goldCrystal))
-        //     {
-        //         goldCrystal.Destroy();
-        //     }
-        // }
 
         public void GetEnemyWaves(List<EnemyWave> enemyWaves)
         {

@@ -1385,8 +1385,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 870495062092206745}
-  - component: {fileID: 5860435894045872905}
   - component: {fileID: 8856038310323197572}
+  - component: {fileID: 5860435894045872905}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -1409,6 +1409,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7278838319894969477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8856038310323197572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173779548704960872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f588e0c0ba47447ca3b70165514e5dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &5860435894045872905
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1430,18 +1442,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.83, y: 8.16544, z: 0.72}
   m_Center: {x: -0.004378319, y: 6.007416, z: 0.010527492}
---- !u!114 &8856038310323197572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173779548704960872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f588e0c0ba47447ca3b70165514e5dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5305602544088008323
 GameObject:
   m_ObjectHideFlags: 0
