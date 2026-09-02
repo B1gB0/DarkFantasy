@@ -14,10 +14,13 @@ namespace _Project.Scripts.Level
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         [SerializeField] private GameObject[] _portals;
         
+        private bool _isBossTriggered;
+
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
             _spawnCyclicWaveTrigger.OnSpawnEnemies += OnSpawnCyclicWave;
+            OnBossHealthBarCreated += TryShowBossUI;
         }
         
         private void FixedUpdate()
@@ -32,6 +35,7 @@ namespace _Project.Scripts.Level
         {
             IsInitiatedSpawners -= SpawnStartWaves;
             _spawnCyclicWaveTrigger.OnSpawnEnemies -= OnSpawnCyclicWave;
+            OnBossHealthBarCreated -= TryShowBossUI;
         }
 
         private void OnDestroy()
@@ -64,13 +68,13 @@ namespace _Project.Scripts.Level
 
         private void OnSpawnCyclicWave()
         {
-            BossHealthBar.Show();
-            SetBossNameLocalization();
-            
             foreach (var portal in _portals)
             {
                 portal.SetActive(true);
             }
+            
+            _isBossTriggered = true;
+            TryShowBossUI();
         }
 
         private void OnPriestKilled()
@@ -87,8 +91,6 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
-            
-            BossHealthBar.Hide();
 
             YG2.saves.IsBanditCampUnlock = true;
             YG2.SaveProgress();
@@ -98,6 +100,17 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+        
+        private void TryShowBossUI()
+        {
+            if (!_isBossTriggered || BossHealthBar == null || Boss == null)
+                return;
+            
+            BossHealthBar.Show();
+            SetBossNameLocalization();
+            
+            OnBossHealthBarCreated -= TryShowBossUI;
         }
     }
 }

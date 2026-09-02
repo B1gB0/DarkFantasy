@@ -1,6 +1,6 @@
 {
   "Gold": 405,
-  "AcumulatedScore": 1205,
+  "AcumulatedScore": 1480,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 2,
   "DamageAttributeNumber": 2,
@@ -11,14 +11,14 @@
   "EquippedItemType": 1,
   "PlayerCharacteristics": {
     "MaxHealth": 103.0,
-    "TargetHealth": 110.051956,
+    "TargetHealth": 88.57693,
     "Armor": 4.0,
     "Damage": 7.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0
   },
   "InventoryItems": {
-    "HealthPotion": 11,
+    "HealthPotion": 10,
     "SpeedPotion": 1,
     "Meat": 1
   },
@@ -36,5 +36,5 @@
     false,
     false
   ],
-  "idSave": 313
+  "idSave": 318
 }

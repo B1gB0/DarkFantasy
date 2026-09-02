@@ -1,5 +1,3 @@
-using System;
-
 namespace _Project.Scripts.UI.View
 {
     public class HealthBar : Bar

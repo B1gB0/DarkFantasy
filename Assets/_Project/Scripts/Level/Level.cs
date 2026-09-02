@@ -38,6 +38,7 @@ namespace _Project.Scripts.Level
         protected ViewFactory ViewFactory;
         protected UIStateMachine UIStateMachine;
         protected UIRootView UIRootView;
+        protected Enemy.Enemy Boss;
 
         protected IShopService ShopService;
         protected IInventoryService InventoryService;
@@ -56,9 +57,9 @@ namespace _Project.Scripts.Level
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
 
-        private Enemy.Enemy _boss;
 
         public event Action IsInitiatedSpawners;
+        public event Action OnBossHealthBarCreated;
         public event Action PlayerIsSpawned;
         public event Action OnGoToNextScene;
 
@@ -82,7 +83,7 @@ namespace _Project.Scripts.Level
             ShopService = shopService;
             InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
-            this._uiLocalizationService = uiLocalizationService;
+            _uiLocalizationService = uiLocalizationService;
         }
 
         private void OnDestroy()
@@ -174,11 +175,19 @@ namespace _Project.Scripts.Level
         
         protected void SetBossNameLocalization()
         {
-            if (_boss == null || BossHealthBar == null) return;
+            if (Boss == null || BossHealthBar == null) return;
 
-            UITextType uiTextType = GetBossUITextType(_boss.Data.Type);
+            UITextType uiTextType = GetBossUITextType(Boss.Data.Type);
             string localizedName = GetLocalizedText(uiTextType);
             BossHealthBar.SetName(localizedName);
+        }
+        
+        protected async void OnBossSpawned(Enemy.Enemy enemy)
+        {
+            Boss = enemy;
+            await CreateBossHealthBar();
+            OnBossHealthBarCreated?.Invoke();
+            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged += SetBossNameLocalization;
         }
 
         private UITextType GetBossUITextType(EnemyType enemyType) => enemyType switch
@@ -206,8 +215,9 @@ namespace _Project.Scripts.Level
             InitEnemyWaves();
 
             EnemySpawner = new EnemySpawner(enemyService, _limitEnemies, _audioSoundsService, _particleEffectsService);
-
+            
             EnemySpawner.OnBossSpawned += OnBossSpawned;
+            
             IsInitiatedSpawners?.Invoke();
         }
 
@@ -248,16 +258,9 @@ namespace _Project.Scripts.Level
             }
         }
 
-        private void OnBossSpawned(Enemy.Enemy enemy)
-        {
-            _boss = enemy;
-            CreateBossHealthBar().Forget();
-            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged += SetBossNameLocalization;
-        }
-
         private async UniTask CreateBossHealthBar()
         {
-            BossHealthBar = await ViewFactory.CreateBossHealthBar(_boss.Health);
+            BossHealthBar = await ViewFactory.CreateBossHealthBar(Boss.Health);
         }
     }
 }
