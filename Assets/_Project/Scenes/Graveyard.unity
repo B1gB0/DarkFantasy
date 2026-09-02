@@ -1079,6 +1079,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1549088415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1213974071 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7114420267264759573, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+  m_PrefabInstance: {fileID: 7594630314422729243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1291709869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,6 +1596,77 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 178.36, y: -30, z: 0}
+--- !u!1001 &2104654359
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1213974071}
+    m_Modifications:
+    - target: {fileID: 1913512591576856, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_Name
+      value: SM_Env_Road_Gravel_Straight_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913512591576856, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.885
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 64546778538887198, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+--- !u!4 &2104654360 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4076186488114788, guid: d1cb9d13f1c0f634785b3d2591b3a74e, type: 3}
+  m_PrefabInstance: {fileID: 2104654359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2109488256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2003,6 +2079,9 @@ PrefabInstance:
     - {fileID: 1994119771323961620, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
     - {fileID: 1403495806743266360, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7114420267264759573, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 2104654360}
     - targetCorrespondingSourceObject: {fileID: 1161304057383515051, guid: 74e0b6f5d6fb0e34285ef5093c4ace6d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 662929505}
