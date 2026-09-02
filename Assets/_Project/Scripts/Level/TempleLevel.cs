@@ -61,6 +61,8 @@ namespace _Project.Scripts.Level
 
         private void ShowPortals()
         {
+            BossHealthBar.Show();
+            
             foreach (var portal in _portals)
             {
                 portal.SetActive(true);
@@ -81,6 +83,8 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
+            
+            BossHealthBar.Hide();
             
             YG2.SaveProgress();
         }

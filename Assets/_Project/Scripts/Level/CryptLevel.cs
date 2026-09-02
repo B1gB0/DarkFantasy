@@ -14,7 +14,7 @@ namespace _Project.Scripts.Level
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies += ShowPortals;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies += OnSpawnCyclicWave;
         }
         
         private void FixedUpdate()
@@ -28,7 +28,7 @@ namespace _Project.Scripts.Level
         private void OnDisable()
         {
             IsInitiatedSpawners -= SpawnStartWaves;
-            _spawnCyclicWaveTrigger.OnSpawnEnemies -= ShowPortals;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= OnSpawnCyclicWave;
         }
 
         private void OnDestroy()
@@ -59,8 +59,10 @@ namespace _Project.Scripts.Level
             CreateWaveOfEnemyByTimer(FourthWaveEnemy);
         }
 
-        private void ShowPortals()
+        private void OnSpawnCyclicWave()
         {
+            BossHealthBar.Show();
+            
             foreach (var portal in _portals)
             {
                 portal.SetActive(true);
@@ -81,6 +83,8 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
+            
+            BossHealthBar.Hide();
 
             YG2.saves.IsBanditCampUnlock = true;
             YG2.SaveProgress();

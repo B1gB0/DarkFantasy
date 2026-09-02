@@ -19,10 +19,11 @@ namespace _Project.Scripts.Level.Spawners
         private readonly IEnemyService _enemyService;
         private readonly AudioSoundsService _audioSoundsService;
         private readonly ParticleEffectsService _particleEffectsService;
+        private readonly int _limitEnemies;
 
         private int _enemyCounter;
-        private int _limitEnemies;
-
+        
+        public event Action<Enemy.Enemy> OnBossSpawned;
         public event Action OnPriestKilled;
         public event Action OnBanditLeaderKilled;
         public event Action OnDarkLordKilled;
@@ -102,9 +103,13 @@ namespace _Project.Scripts.Level.Spawners
             {
                 if (availableSpawnPoints.Count == MinValue)
                     break;
-
+                
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
+                
+                if (wave.PriestIsBoss)
+                    OnBossSpawned?.Invoke(enemy);
+                
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -143,6 +148,10 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 BanditLeader enemy = SpawnBanditLeader(candidatePoint, patrolPoints);
+                
+                if (wave.BanditLeaderIsBoss)
+                    OnBossSpawned?.Invoke(enemy);
+                
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -155,6 +164,10 @@ namespace _Project.Scripts.Level.Spawners
 
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 DarkLord enemy = SpawnDarkLord(candidatePoint, patrolPoints);
+                
+                if (wave.DarkLordIsBoss)
+                    OnBossSpawned?.Invoke(enemy);
+                
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -403,8 +416,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит скелет");
-            
             enemy.Die -= OnKillSkeleton;
             _enemyCounter--;
 
@@ -413,8 +424,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит скелет тяжелый");
-            
             enemy.Die -= OnKillSkeletonHeavyArmor;
             _enemyCounter--;
 
@@ -423,8 +432,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит скелет лучник");
-            
             enemy.Die -= OnKillSkeletonRanger;
             _enemyCounter--;
 
@@ -433,8 +440,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private void OnKillPriest(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит жрец");
-            
             enemy.Die -= OnKillPriest;
             OnPriestKilled?.Invoke();
             _enemyCounter--;
@@ -444,8 +449,6 @@ namespace _Project.Scripts.Level.Spawners
         
         private void OnKillBandit(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит бандит");
-            
             enemy.Die -= OnKillBandit;
             _enemyCounter--;
 
@@ -454,7 +457,6 @@ namespace _Project.Scripts.Level.Spawners
         
         private void OnKillBanditLeader(Enemy.Enemy enemy)
         {
-            Debug.Log(" убит глава бандитов");
             enemy.Die -= OnKillBanditLeader;
             OnBanditLeaderKilled?.Invoke();
             _enemyCounter--;
@@ -464,7 +466,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private void CheckEnemiesCount()
         {
-            Debug.Log(_enemyCounter + " количество врагов");
             if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }

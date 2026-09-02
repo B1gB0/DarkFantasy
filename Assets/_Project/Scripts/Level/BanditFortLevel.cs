@@ -60,6 +60,8 @@ namespace _Project.Scripts.Level
 
         private void CreateFifthWave()
         {
+            BossHealthBar.Show();
+            
             foreach (var portal in _portals)
             {
                 portal.SetActive(true);
@@ -82,6 +84,8 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
+            
+            BossHealthBar.Hide();
         }
         
         private void HandleMissionTransition()

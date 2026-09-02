@@ -24,8 +24,8 @@ namespace _Project.Scripts.Level
         protected const int FourthWaveEnemy = 3;
         protected const int FifthWaveNumber = 4;
 
-        [Header("EnemyWaves")]
-        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
+        [Header("EnemyWaves")] [SerializeField]
+        protected float SpawnWaveOfEnemyDelay = 10f;
 
         [SerializeField] private List<EnemyWave> _enemyWaves;
         [SerializeField] private int _limitEnemies;
@@ -49,12 +49,13 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
-        
+
         public event Action IsInitiatedSpawners;
         public event Action PlayerIsSpawned;
         public event Action OnGoToNextScene;
 
         public HealthBar HealthBar { get; private set; }
+        public BossHealthBar BossHealthBar { get; private set; }
         public List<EnemyWave> EnemyWaves => _enemyWaves;
 
         [Inject]
@@ -72,6 +73,11 @@ namespace _Project.Scripts.Level
             ShopService = shopService;
             InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
+        }
+
+        private void OnDestroy()
+        {
+            EnemySpawner.OnBossSpawned -= OnBossSpawned;
         }
 
         public void GetDependencies(
@@ -121,7 +127,7 @@ namespace _Project.Scripts.Level
             PlayerIsSpawned?.Invoke();
 
             _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
-            
+
             _playerService.SpawnPlayer();
         }
 
@@ -161,6 +167,7 @@ namespace _Project.Scripts.Level
 
             EnemySpawner = new EnemySpawner(enemyService, _limitEnemies, _audioSoundsService, _particleEffectsService);
 
+            EnemySpawner.OnBossSpawned += OnBossSpawned;
             IsInitiatedSpawners?.Invoke();
         }
 
@@ -199,6 +206,16 @@ namespace _Project.Scripts.Level
                         throw new Exception("There is not enough data for new waves");
                 }
             }
+        }
+
+        private void OnBossSpawned(Enemy.Enemy enemy)
+        {
+            CreateBossHealthBar(enemy.Health).Forget();
+        }
+
+        private async UniTask CreateBossHealthBar(Health health)
+        {
+            BossHealthBar = await ViewFactory.CreateBossHealthBar(health);
         }
     }
 }

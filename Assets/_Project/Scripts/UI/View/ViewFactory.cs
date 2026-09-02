@@ -116,6 +116,7 @@ namespace _Project.Scripts.UI.View
             healthBar.Construct(health);
             healthBar.transform.SetParent(UIScene.transform, false);
             healthBar.GetPoints(UIScene.ShowBossHealthPoint, UIScene.HideBossHealthPoint, UIScene.WeaponPoint);
+            healthBar.gameObject.SetActive(false);
 
             return healthBar;
         }
