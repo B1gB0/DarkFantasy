@@ -13,8 +13,6 @@ namespace _Project.Scripts.Level
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         [SerializeField] private GameObject[] _portals;
-        
-        private bool _isBossTriggered;
 
         private void OnEnable()
         {
@@ -73,7 +71,7 @@ namespace _Project.Scripts.Level
                 portal.SetActive(true);
             }
             
-            _isBossTriggered = true;
+            IsBossTriggered = true;
             TryShowBossUI();
         }
 
@@ -100,17 +98,6 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
-        }
-        
-        private void TryShowBossUI()
-        {
-            if (!_isBossTriggered || BossHealthBar == null || Boss == null)
-                return;
-            
-            BossHealthBar.Show();
-            SetBossNameLocalization();
-            
-            OnBossHealthBarCreated -= TryShowBossUI;
         }
     }
 }

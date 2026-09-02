@@ -46,6 +46,7 @@ namespace _Project.Scripts.Level
         protected float LastSpawnTime;
 
         protected EnemySpawner EnemySpawner;
+        protected bool IsBossTriggered;
 
         private IEnemyService _enemyService;
         private IPlayerService _playerService;
@@ -56,8 +57,7 @@ namespace _Project.Scripts.Level
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
-
-
+        
         public event Action IsInitiatedSpawners;
         public event Action OnBossHealthBarCreated;
         public event Action PlayerIsSpawned;
@@ -115,6 +115,25 @@ namespace _Project.Scripts.Level
             await CreatePlayer();
 
             InitSpawners(_enemyService);
+        }
+        
+        public void TryShowBossUI()
+        {
+            if (!IsBossTriggered || BossHealthBar == null || Boss == null)
+                return;
+            
+            BossHealthBar.Show();
+            SetBossNameLocalization();
+            
+            OnBossHealthBarCreated -= TryShowBossUI;
+        }
+        
+        public void TryHideBossUI()
+        {
+            if (!IsBossTriggered || BossHealthBar == null || Boss == null)
+                return;
+            
+            BossHealthBar.Hide();
         }
 
         protected async UniTask CreatePlayer()

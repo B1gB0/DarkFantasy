@@ -11,8 +11,6 @@ namespace _Project.Scripts.Level
         
         [SerializeField] private GameObject[] _portals;
         
-        private bool _isBossTriggered;
-        
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
@@ -66,7 +64,7 @@ namespace _Project.Scripts.Level
         
         private void OnSpawnCyclicWave()
         {
-            _isBossTriggered = true;
+            IsBossTriggered = true;
             TryShowBossUI();
         }
 
@@ -100,17 +98,6 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
-        }
-        
-        private void TryShowBossUI()
-        {
-            if (!_isBossTriggered || BossHealthBar == null || Boss == null)
-                return;
-            
-            BossHealthBar.Show();
-            SetBossNameLocalization();
-            
-            OnBossHealthBarCreated -= TryShowBossUI;
         }
     }
 }
