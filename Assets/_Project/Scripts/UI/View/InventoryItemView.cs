@@ -41,6 +41,14 @@ namespace _Project.Scripts.UI.View
             _iconImage.gameObject.SetActive(true);
             _count.gameObject.SetActive(true);
             
+            if (itemData == null)
+            {
+                _iconImage.gameObject.SetActive(false);
+                _count.gameObject.SetActive(false);
+                
+                return;
+            }
+            
             switch (_itemData.Type)
             {
                 case ItemType.HealthPotion:
@@ -51,10 +59,6 @@ namespace _Project.Scripts.UI.View
                     break;
                 case ItemType.Meat:
                     _iconImage.sprite = _icons[2];
-                    break;
-                case ItemType.None:
-                    _iconImage.gameObject.SetActive(false);
-                    _count.gameObject.SetActive(false);
                     break;
                 default:
                     _iconImage.gameObject.SetActive(false);

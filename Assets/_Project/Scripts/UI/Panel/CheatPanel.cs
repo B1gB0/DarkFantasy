@@ -48,6 +48,16 @@ namespace _Project.Scripts.UI.Panel
             _exitButton.onClick.RemoveListener(Deactivate);
         }
 
+        public override void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public override void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void GetServices(ExperiencePoints experiencePoints)
         {
             // _experiencePoints = experiencePoints;

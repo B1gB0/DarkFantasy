@@ -95,6 +95,11 @@ namespace _Project.Scripts.UI.Panel
 
             ResetSelection();
             
+            foreach (var itemView in _itemViews)
+            {
+                itemView.Set();
+            }
+            
             int index = MinValue;
             foreach (var item in YG2.saves.InventoryItems)
             {
