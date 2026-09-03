@@ -146,7 +146,15 @@ namespace _Project.Scripts.Game.Gameplay
 
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
             uiRoot.GoldView.Show();
-            OnShowJoystickWithAttackButton();
+            
+            _playerService.GetButtons(
+                _uiScene.Joystick,
+                _uiScene.AttackButton,
+                _uiScene.RollButton,
+                _uiScene.InventoryButton,
+                _uiScene.EquippedItemButton);
+            
+            OnShowJoystickWithMobileButtons();
 
             var scene = SceneManager.GetActiveScene();
 
@@ -287,15 +295,8 @@ namespace _Project.Scripts.Game.Gameplay
             _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
 
-        private void OnShowJoystickWithAttackButton()
+        private void OnShowJoystickWithMobileButtons()
         {
-            _playerService.GetButtons(
-                _uiScene.Joystick,
-                _uiScene.AttackButton,
-                _uiScene.RollButton,
-                _uiScene.InventoryButton,
-                _uiScene.EquippedItemButton);
-
             _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.RollButton.gameObject.SetActive(!YG2.envir.isDesktop);

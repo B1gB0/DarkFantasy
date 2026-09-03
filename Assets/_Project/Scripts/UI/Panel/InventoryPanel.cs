@@ -60,8 +60,6 @@ namespace _Project.Scripts.UI.Panel
             _equipButton.onClick.AddListener(OnEquippedButtonClicked);
             
             SetDescription();
-            
-            Deactivate();
         }
 
         private void OnEnable()
