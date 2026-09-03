@@ -68,6 +68,8 @@ namespace _Project.Scripts.Level
             _missionChoosingPanel.OnGoToMission += HandleMissionTransition;
 
             await base.OnStartLevel();
+            
+            await NavMeshWaypointService.Init();
 
             _shopAttributePanelTrigger.OnOpenShop += HealthBar.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed += HealthBar.Show;
@@ -77,6 +79,8 @@ namespace _Project.Scripts.Level
             
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+            
+            NavMeshWaypointService.ShowWaypoint(_shopAttributePanelTrigger.transform);
         }
 
         private void HandleMissionTransition()

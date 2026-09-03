@@ -42,6 +42,7 @@ namespace _Project.Scripts.Level
 
         protected IShopService ShopService;
         protected IInventoryService InventoryService;
+        protected NavMeshWaypointService NavMeshWaypointService;
 
         protected float LastSpawnTime;
 
@@ -75,7 +76,8 @@ namespace _Project.Scripts.Level
             IShopService shopService,
             IInventoryService inventoryService,
             AudioSoundsService audioSoundsService,
-            IUILocalizationService uiLocalizationService)
+            IUILocalizationService uiLocalizationService,
+            NavMeshWaypointService navMeshWaypointService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
@@ -84,6 +86,7 @@ namespace _Project.Scripts.Level
             InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
             _uiLocalizationService = uiLocalizationService;
+            NavMeshWaypointService = navMeshWaypointService;
         }
 
         private void OnDestroy()

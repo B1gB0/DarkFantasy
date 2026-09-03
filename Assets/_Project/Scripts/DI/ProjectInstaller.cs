@@ -20,6 +20,7 @@ namespace _Project.Scripts.DI
         [SerializeField] private UIRootView _uiRootViewPrefab;
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
         [SerializeField] private MissionService _missionServicePrefab;
+        [SerializeField] private NavMeshWaypointService _navMeshWaypointServicePrefab;
         
         private void OnDestroy()
         {
@@ -60,6 +61,7 @@ namespace _Project.Scripts.DI
             CreateService(_uiRootViewPrefab);
             CreateService(_gameEntryPointPrefab);
             CreateService(_missionServicePrefab);
+            CreateService(_navMeshWaypointServicePrefab);
         }
 
         private void CreateService<T>(T prefab)

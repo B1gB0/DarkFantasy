@@ -21,14 +21,18 @@ namespace _Project.Scripts.Level
         private void OnDestroy()
         {
             EnemySpawner.OnAllEnemiesKilled -= _nextLevelTrigger.Activate;
+            EnemySpawner.OnAllEnemiesKilled -= OnSetWaypointToTrigger;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
+
+            await NavMeshWaypointService.Init();
             
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
+            EnemySpawner.OnAllEnemiesKilled += OnSetWaypointToTrigger;
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
@@ -42,6 +46,11 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+
+        private void OnSetWaypointToTrigger()
+        {
+            NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
     }
 }
