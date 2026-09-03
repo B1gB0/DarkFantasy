@@ -13,39 +13,39 @@ MonoBehaviour:
   m_Name: Castle
   m_EditorClassIdentifier: 
   EnemyFirstPatrolPositions:
-  - {x: 10.63, y: 0, z: 37.42}
-  - {x: 19.6, y: 0, z: 33.5}
-  - {x: 26.59, y: 0, z: 26.36}
   - {x: 16.46, y: 0, z: 22.71}
+  - {x: 26.59, y: 0, z: 26.36}
+  - {x: 19.6, y: 0, z: 33.5}
+  - {x: 10.63, y: 0, z: 37.42}
   EnemySecondPatrolPositions:
-  - {x: 16.59, y: 0, z: 19.67}
-  - {x: 7.82, y: 0, z: 17.68}
   - {x: 26.39, y: 0, z: 16.04}
+  - {x: 7.82, y: 0, z: 17.68}
+  - {x: 16.59, y: 0, z: 19.67}
   EnemyThirdPatrolPositions:
-  - {x: 16.72, y: 0, z: 2.61}
-  - {x: 25.29, y: 0, z: -1.06}
   - {x: 4.15, y: 0, z: 5.08}
+  - {x: 25.29, y: 0, z: -1.06}
+  - {x: 16.84, y: 0, z: -4.99}
   EnemyFourthPatrolPositions:
   - {x: 17.09, y: 0, z: 13.89}
   EnemyFifthPatrolPositions: []
   FirstWaveSpawnPoints:
-  - {x: 10.83, y: 0, z: 39.97}
-  - {x: 22.97, y: 0, z: 37.44}
-  - {x: 7.32, y: 0, z: 29.59}
   - {x: 22.97, y: 0, z: 29.3}
+  - {x: 7.32, y: 0, z: 29.59}
+  - {x: 22.97, y: 0, z: 37.44}
+  - {x: 10.83, y: 0, z: 39.97}
   SecondWaveSpawnPoints:
-  - {x: 13.31, y: 0, z: 26.44}
-  - {x: 23.22, y: 0, z: 18.84}
-  - {x: 23.46, y: 0, z: 9.92}
   - {x: 8.42, y: 0, z: 13.6}
+  - {x: 23.46, y: 0, z: 9.92}
+  - {x: 23.22, y: 0, z: 18.84}
+  - {x: 13.31, y: 0, z: 26.44}
   ThirdWaveSpawnPoints:
-  - {x: 17.68, y: 0, z: -2.69}
-  - {x: 7.68, y: 0, z: -2.2}
+  - {x: 11.35, y: 0, z: 5.23}
   - {x: 23.37, y: 0, z: -4.87}
-  - {x: 14.56, y: 0, z: -6.24}
+  - {x: 7.68, y: 0, z: -2.2}
+  - {x: 22.86, y: 0, z: 4.54}
   FourthWaveSpawnPoints:
-  - {x: 12.14, y: 0, z: 19.12}
-  - {x: 18.06, y: 0, z: 25.45}
   - {x: 24.81, y: 0, z: 21.66}
+  - {x: 18.06, y: 0, z: 25.45}
+  - {x: 12.14, y: 0, z: 19.12}
   FifthWaveSpawnPoints: []
   PlayerSpawnPosition: {x: 15.17, y: 0, z: 54.89}

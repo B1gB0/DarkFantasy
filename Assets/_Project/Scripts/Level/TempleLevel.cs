@@ -35,7 +35,7 @@ namespace _Project.Scripts.Level
 
         private void OnDestroy()
         {
-            EnemySpawner.OnPriestKilled -= OnPriestKilled;
+            EnemySpawner.OnDarkLordKilled -= OnDarkLordKilled;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
@@ -43,7 +43,7 @@ namespace _Project.Scripts.Level
         {
             await base.OnStartLevel();
             
-            EnemySpawner.OnPriestKilled += OnPriestKilled;
+            EnemySpawner.OnDarkLordKilled += OnDarkLordKilled;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -72,7 +72,7 @@ namespace _Project.Scripts.Level
             }
         }
 
-        private void OnPriestKilled()
+        private void OnDarkLordKilled()
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
