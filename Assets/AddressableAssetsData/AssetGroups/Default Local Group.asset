@@ -45,6 +45,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Music
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12fcb8446c7c1a146be37be217a9e0e1
+    m_Address: WaypointLine
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 170287d6ceb47a749a540348f32bcdc6
     m_Address: ShopAttributePanel
     m_ReadOnly: 0

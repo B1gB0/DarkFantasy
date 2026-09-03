@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -24,7 +25,10 @@ namespace _Project.Scripts.Level
         private void OnDestroy()
         {
             EnemySpawner.OnAllEnemiesKilled -= _nextLevelTrigger.Activate;
+            EnemySpawner.OnAllEnemiesKilled -= OnShowWaypointToNextLevel;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
+            
+            YG2.SaveProgress();
         }
 
         public override async UniTask OnStartLevel()
@@ -32,6 +36,7 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
+            EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -52,6 +57,11 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+
+        private void OnShowWaypointToNextLevel()
+        {
+            NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
     }
 }

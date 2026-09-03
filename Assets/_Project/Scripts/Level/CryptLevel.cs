@@ -1,7 +1,4 @@
-﻿using _Project.Scripts.DataBase.Data;
-using _Project.Scripts.Game.Constant;
-using _Project.Scripts.Level.Triggers;
-using _Project.Scripts.UI;
+﻿using _Project.Scripts.Level.Triggers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
@@ -39,6 +36,7 @@ namespace _Project.Scripts.Level
         private void OnDestroy()
         {
             EnemySpawner.OnPriestKilled -= OnPriestKilled;
+            EnemySpawner.OnPriestKilled -= OnShowWaypointToNextLevel;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
@@ -47,6 +45,7 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             EnemySpawner.OnPriestKilled += OnPriestKilled;
+            EnemySpawner.OnPriestKilled += OnShowWaypointToNextLevel;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -89,6 +88,8 @@ namespace _Project.Scripts.Level
             {
                 portal.SetActive(false);
             }
+            
+            BossHealthBar.Hide();
 
             YG2.saves.IsBanditCampUnlock = true;
             YG2.SaveProgress();
@@ -98,6 +99,11 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+        
+        private void OnShowWaypointToNextLevel()
+        {
+            NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
     }
 }

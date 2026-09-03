@@ -38,7 +38,8 @@ namespace _Project.Scripts.Level
 
         private void OnDestroy()
         {
-            EnemySpawner.OnPriestKilled -= OnBanditLeaderKilled;
+            EnemySpawner.OnBanditLeaderKilled -= OnBanditLeaderKilled;
+            EnemySpawner.OnBanditLeaderKilled -= OnShowWaypointToNextLevel;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
         }
 
@@ -47,6 +48,7 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
             
             EnemySpawner.OnBanditLeaderKilled += OnBanditLeaderKilled;
+            EnemySpawner.OnBanditLeaderKilled += OnShowWaypointToNextLevel;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
@@ -94,6 +96,8 @@ namespace _Project.Scripts.Level
                 portal.SetActive(false);
             }
             
+            BossHealthBar.Hide();
+            
             YG2.saves.IsCastleUnlock = true;
             YG2.SaveProgress();
         }
@@ -102,6 +106,11 @@ namespace _Project.Scripts.Level
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+        
+        private void OnShowWaypointToNextLevel()
+        {
+            NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
     }
 }

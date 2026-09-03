@@ -5,24 +5,40 @@ using UnityEngine;
 
 namespace _Project.Scripts.Services
 {
-    public class NavMeshWaypointService : MonoBehaviour
+    public class NavMeshWaypointService : MonoBehaviour, IService
     {
-        [SerializeField] private NavMeshWaypoint _waypoint;
+        private const string NavMeshWaypointPath = "WaypointLine";
 
         private IPlayerService _playerService;
+        private IResourceService _resourceService;
+
+        private NavMeshWaypoint _waypoint;
+
+        public bool IsInitiated { get; private set; }
 
         [Inject]
-        private void Construct(IPlayerService playerService)
+        private void Construct(IPlayerService playerService, IResourceService resourceService)
         {
             _playerService = playerService;
+            _resourceService = resourceService;
         }
 
-        public UniTask Init()
+        public async UniTask Init()
         {
-            _waypoint = Instantiate(_waypoint);
+            if(_waypoint != null)
+                _waypoint.GetPlayer(_playerService.Player);
+            
+            if (IsInitiated) return;
+
+            var waypointTemplate = await _resourceService.Load<GameObject>(NavMeshWaypointPath);
+            waypointTemplate = Instantiate(waypointTemplate);
+            
+            _waypoint = waypointTemplate.GetComponent<NavMeshWaypoint>();
             _waypoint.GetPlayer(_playerService.Player);
 
-            return UniTask.CompletedTask;
+            DontDestroyOnLoad(_waypoint.gameObject);
+
+            IsInitiated = true;
         }
 
         public void ShowWaypoint(Transform target)

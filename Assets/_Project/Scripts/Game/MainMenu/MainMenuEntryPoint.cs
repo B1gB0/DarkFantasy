@@ -81,8 +81,6 @@ namespace _Project.Scripts.Game.MainMenu
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
 
             _exitParameters = new MainMenuExitParameters(gameplayEnterParameters);
-
-            YG2.saves.IsFirstLaunch = false;
         }
 
         private void OnDestroy()

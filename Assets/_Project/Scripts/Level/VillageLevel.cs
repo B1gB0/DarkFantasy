@@ -72,8 +72,6 @@ namespace _Project.Scripts.Level
 
             await base.OnStartLevel();
 
-            await NavMeshWaypointService.Init();
-
             _shopAttributePanelTrigger.OnOpenShop += HealthBar.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed += HealthBar.Show;
             _shopAttributePanel.OnBackToSceneButtonPressed += OnShowInventoryShop;

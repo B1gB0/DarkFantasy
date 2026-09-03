@@ -65,6 +65,7 @@ namespace _Project.Scripts.UI.Panel
         {
             foreach (var itemView in _itemViews)
             {
+                itemView.SetCurrencyColor(_currencyService.Gold);
                 itemView.OnButtonClicked += ApplyPurchase;
             }
             

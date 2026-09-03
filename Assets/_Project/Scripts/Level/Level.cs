@@ -118,6 +118,8 @@ namespace _Project.Scripts.Level
             await CreatePlayer();
 
             InitSpawners(_enemyService);
+            
+            await NavMeshWaypointService.Init();
         }
         
         public void TryShowBossUI()

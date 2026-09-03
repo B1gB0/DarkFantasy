@@ -404,7 +404,7 @@ namespace _Project.Scripts.Level.Spawners
             darkLord.NavMeshAgent.isStopped = false;
             darkLord.NavMeshAgent.ResetPath();
 
-            darkLord.Die += OnKillBanditLeader;
+            darkLord.Die += OnKillDarkLord;
 
             darkLord.EnemyStateMachine.AddState(new PatrolState(patrolPoints));
             darkLord.EnemyStateMachine.GetServices(_audioSoundsService, _particleEffectsService);
@@ -463,11 +463,18 @@ namespace _Project.Scripts.Level.Spawners
 
             CheckEnemiesCount();
         }
+        
+        private void OnKillDarkLord(Enemy.Enemy enemy)
+        {
+            enemy.Die -= OnKillDarkLord;
+            OnDarkLordKilled?.Invoke();
+            _enemyCounter--;
+
+            CheckEnemiesCount();
+        }
 
         private void CheckEnemiesCount()
         {
-            Debug.Log(_enemyCounter + " врагов счётчик");
-            
             if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }

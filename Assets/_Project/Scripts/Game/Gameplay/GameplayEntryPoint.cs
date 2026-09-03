@@ -269,6 +269,12 @@ namespace _Project.Scripts.Game.Gameplay
 
         public void GetVillageHubExitParameters()
         {
+            if (YG2.saves.IsFirstLaunch)
+            {
+                YG2.saves.IsFirstLaunch = false;
+                YG2.SaveProgress();
+            }
+            
             _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
 
             _missionService.SetCurrentNumberLevel(MinCountValue);
