@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
@@ -19,12 +21,17 @@ namespace _Project.Scripts.UI.View
         private ItemData _itemData;
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
+        private AudioSoundsService _audioService;
 
         [Inject]
-        private void Construct(IPlayerService playerService, IInventoryService inventoryService)
+        private void Construct(
+            IPlayerService playerService,
+            IInventoryService inventoryService,
+            AudioSoundsService audioSoundsService)
         {
             _playerService = playerService;
             _inventoryService = inventoryService;
+            _audioService = audioSoundsService;
         }
 
         private void Start()
@@ -99,6 +106,7 @@ namespace _Project.Scripts.UI.View
             if (!effectApplied)
                 return;
 
+            _audioService.PlaySound(SoundsType.PotionSound).Forget();
             _inventoryService.RemoveItem(_itemData.Type);
 
             int newCount = _inventoryService.GetItemCount(_itemData.Type);

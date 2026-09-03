@@ -13,8 +13,9 @@ namespace _Project.Scripts.Audio.Sounds
         HeavyArmorHit = 8,
         UIButtonClick = 9,
         SkeletonHit = 10,
-        MainMenuMusic = 11,
+        PotionSound = 11,
         ActionMusic = 12,
-        VillageMusic = 13,
+        MainMenuMusic = 13,
+        VillageMusic = 14,
     }
 }

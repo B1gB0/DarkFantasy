@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Reflex.Attributes;
 using TMPro;
@@ -30,6 +32,7 @@ namespace _Project.Scripts.UI.Panel
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
         private IShopService _shopService;
+        private AudioSoundsService _audioSoundsService;
         
         private ItemData _equippedItem;
         
@@ -40,12 +43,14 @@ namespace _Project.Scripts.UI.Panel
             ITweenAnimationService tweenAnimationService,
             IShopService shopService,
             IPlayerService playerService,
-            IInventoryService inventoryService)
+            IInventoryService inventoryService,
+            AudioSoundsService audioSoundsService)
         {
             _tweenAnimationService = tweenAnimationService;
             _shopService = shopService;
             _playerService = playerService;
             _inventoryService = inventoryService;
+            _audioSoundsService = audioSoundsService;
         }
         
         private void Start()
@@ -124,11 +129,14 @@ namespace _Project.Scripts.UI.Panel
 
         private void OnEquippedButtonClicked()
         {
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
             _inventoryService.EquipItem(_equippedItem.Type);
         }
 
         private void SelectItem(ItemType type, InventoryItemView  selectedItemView)
         {
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            
             ItemData itemData = GetItemDataByType(type);
 
             if (itemData == null || !_inventoryService.HasItem(type))
