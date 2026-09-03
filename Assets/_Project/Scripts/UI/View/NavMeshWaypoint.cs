@@ -19,7 +19,6 @@ namespace _Project.Scripts.UI.View
 
         [Header("Line Settings")]
         [SerializeField] private float _lineWidth = 0.3f;
-        [SerializeField] private Color _arrowColor = Color.yellow;
 
         private Material _materialInstance;
 
@@ -42,10 +41,6 @@ namespace _Project.Scripts.UI.View
 
             _lineRenderer.startWidth = _lineWidth;
             _lineRenderer.endWidth = _lineWidth;
-            
-            _materialInstance = _lineRenderer.material;
-            _lineRenderer.material = _materialInstance;
-            _materialInstance.SetColor("_Color", _arrowColor);
             
             _lineRenderer.textureMode = LineTextureMode.Tile;
             _lineRenderer.useWorldSpace = true;

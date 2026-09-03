@@ -20,6 +20,10 @@ namespace YG
         public bool IsBanditCampUnlock;
         public bool IsCastleUnlock;
 
+        public bool IsAttributeShopVisited;
+        public bool IsInventoryShopVisited;
+        public bool IsMissionPanelVisited;
+
         public ItemType EquippedItemType;
         
         public PlayerCharacteristics PlayerCharacteristics;

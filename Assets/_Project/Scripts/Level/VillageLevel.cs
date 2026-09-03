@@ -1,9 +1,8 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.UI.Panel;
-using _Project.Scripts.UI.StateMachine.States;
-using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -20,18 +19,21 @@ namespace _Project.Scripts.Level
         private void OnDestroy()
         {
             _shopAttributePanelTrigger.OnOpenShop -= _shopAttributePanel.Show;
+            _shopAttributePanelTrigger.OnOpenShop -= OnShowAttributePanel;
             _shopAttributePanelTrigger.OnOpenShop -= UIRootView.UIRootButtons.Deactivate;
             _shopAttributePanelTrigger.OnOpenShop -= HealthBar.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _shopAttributePanel.OnBackToSceneButtonPressed -= _shopAttributePanel.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed -= HealthBar.Show;
-            
+            _shopAttributePanel.OnBackToSceneButtonPressed -= OnShowInventoryShop;
+
             _shopItemsPanelTrigger.OnOpenShop -= _shopItemsPanel.Show;
             _shopItemsPanelTrigger.OnOpenShop -= UIRootView.UIRootButtons.Deactivate;
             _shopItemsPanelTrigger.OnOpenShop -= HealthBar.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _shopItemsPanel.OnBackToSceneButtonPressed -= _shopItemsPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
+            _shopItemsPanel.OnBackToSceneButtonPressed -= OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel -= _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel -= UIRootView.UIRootButtons.Deactivate;
@@ -52,15 +54,16 @@ namespace _Project.Scripts.Level
             _missionChoosingPanel = await ViewFactory.CreateMissionChoosingPanel();
 
             _shopAttributePanelTrigger.OnOpenShop += _shopAttributePanel.Show;
+            _shopAttributePanelTrigger.OnOpenShop += OnShowAttributePanel;
             _shopAttributePanelTrigger.OnOpenShop += UIRootView.UIRootButtons.Deactivate;
             _shopAttributePanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
             _shopAttributePanel.OnBackToSceneButtonPressed += _shopAttributePanel.Hide;
-            
+
             _shopItemsPanelTrigger.OnOpenShop += _shopItemsPanel.Show;
             _shopItemsPanelTrigger.OnOpenShop += UIRootView.UIRootButtons.Deactivate;
             _shopItemsPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
             _shopItemsPanel.OnBackToSceneButtonPressed += _shopItemsPanel.Hide;
-            
+
             _missionChoosingTrigger.OnOpenMissionPanel += _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel += UIRootView.UIRootButtons.Deactivate;
             _missionChoosingPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
@@ -68,25 +71,73 @@ namespace _Project.Scripts.Level
             _missionChoosingPanel.OnGoToMission += HandleMissionTransition;
 
             await base.OnStartLevel();
-            
+
             await NavMeshWaypointService.Init();
 
             _shopAttributePanelTrigger.OnOpenShop += HealthBar.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed += HealthBar.Show;
-            
+            _shopAttributePanel.OnBackToSceneButtonPressed += OnShowInventoryShop;
+
             _shopItemsPanelTrigger.OnOpenShop += HealthBar.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed += HealthBar.Show;
-            
+            _shopItemsPanel.OnBackToSceneButtonPressed += OnShowMissionChoosingPanel;
+
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+
+            if (!YG2.saves.IsAttributeShopVisited)
+            {
+                NavMeshWaypointService.ShowWaypoint(_shopAttributePanelTrigger.transform);
+                _shopItemsPanelTrigger.Deactivate();
+                _missionChoosingTrigger.Deactivate();
+                return;
+            }
+
+            if (!YG2.saves.IsInventoryShopVisited)
+            {
+                NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
+                _missionChoosingTrigger.Deactivate();
+                return;
+            }
             
-            NavMeshWaypointService.ShowWaypoint(_shopAttributePanelTrigger.transform);
+            if (!YG2.saves.IsMissionPanelVisited)
+            {
+                NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
+            }
         }
 
         private void HandleMissionTransition()
         {
+            if (!YG2.saves.IsMissionPanelVisited)
+                YG2.saves.IsMissionPanelVisited = true;
+            
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
+        }
+
+        private void OnShowAttributePanel()
+        {
+            if (YG2.saves.IsAttributeShopVisited) return;
+
+            YG2.saves.IsAttributeShopVisited = true;
+        }
+
+        private void OnShowInventoryShop()
+        {
+            if (YG2.saves.IsInventoryShopVisited) return;
+            
+            NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
+            _shopItemsPanelTrigger.Activate();
+
+            YG2.saves.IsInventoryShopVisited = true;
+        }
+
+        private void OnShowMissionChoosingPanel()
+        {
+            if (YG2.saves.IsMissionPanelVisited) return;
+
+            _missionChoosingTrigger.Activate();
+            NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
         }
     }
 }

@@ -1,19 +1,22 @@
 {
-  "Gold": 30,
+  "Gold": 0,
   "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 0,
-  "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 0,
+  "HealthAttributeNumber": 1,
+  "DamageAttributeNumber": 1,
+  "ArmorAttributeNumber": 1,
   "IsFirstLaunch": false,
   "IsBanditCampUnlock": false,
   "IsCastleUnlock": false,
+  "IsAttributeShopVisited": true,
+  "IsInventoryShopVisited": false,
+  "IsMissionPanelVisited": false,
   "EquippedItemType": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 100.0,
-    "TargetHealth": 70.58823,
-    "Armor": 2.0,
-    "Damage": 5.0,
+    "MaxHealth": 101.0,
+    "TargetHealth": 71.2941055,
+    "Armor": 3.0,
+    "Damage": 6.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0
   },
@@ -32,5 +35,5 @@
     false,
     false
   ],
-  "idSave": 14
+  "idSave": 38
 }
