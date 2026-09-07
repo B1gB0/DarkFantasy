@@ -6,55 +6,35 @@ namespace _Project.Scripts.Services
 {
     public class PauseService : IPauseService
     {
+        private const float StopTime = 0f;
+        private const float PlayTime = 1f;
+
         private EventSystem _eventSystem;
 
         public event Action OnGameStarted;
         public event Action OnGamePaused;
-        
-        private bool _isGamePausedByUser;
 
         public void OnStopGameWithoutMusic()
         {
-            if (_isGamePausedByUser) return;
-            _isGamePausedByUser = true;
-            Time.timeScale = 0f;
+            AudioListener.pause = false;
+            Time.timeScale = StopTime;
+
             OnGamePaused?.Invoke();
         }
 
         public void OnStopGameWithMusic()
         {
-            if (_isGamePausedByUser) return;
-            _isGamePausedByUser = true;
-            Time.timeScale = 0f;
             AudioListener.pause = true;
+            Time.timeScale = StopTime;
+
             OnGamePaused?.Invoke();
         }
 
         public void OnPlayGame()
         {
-            if (!_isGamePausedByUser) return;
-            _isGamePausedByUser = false;
-            Time.timeScale = 1f;
             AudioListener.pause = false;
-            OnGameStarted?.Invoke();
-        }
-        
-        public void HandleSdkPause()
-        {
-            AudioListener.pause = true;
-            _eventSystem.enabled = false;
-            OnGamePaused?.Invoke();
-        }
+            Time.timeScale = PlayTime;
 
-        public void HandleSdkResume()
-        {
-            if (!_isGamePausedByUser)
-            {
-                Time.timeScale = 1f;
-            }
-            
-            AudioListener.pause = false;
-            _eventSystem.enabled = true;
             OnGameStarted?.Invoke();
         }
 
@@ -63,7 +43,14 @@ namespace _Project.Scripts.Services
             _eventSystem = eventSystem;
         }
 
-        public void DisableEventSystem() => _eventSystem.enabled = false;
-        public void EnableEventSystem() => _eventSystem.enabled = true;
+        public void DisableEventSystem()
+        {
+            _eventSystem.enabled = false;
+        }
+
+        public void EnableEventSystem()
+        {
+            _eventSystem.enabled = true;
+        }
     }
 }

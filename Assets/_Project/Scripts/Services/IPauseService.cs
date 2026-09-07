@@ -14,7 +14,5 @@ namespace _Project.Scripts.Services
         public void GetEventSystem(EventSystem eventSystem);
         public void DisableEventSystem();
         public void EnableEventSystem();
-        public void HandleSdkPause();
-        public void HandleSdkResume();
     }
 }
