@@ -34,7 +34,7 @@ namespace _Project.Scripts.Experience
             }
         }
 
-#if UNITY_EDITOR
+#if CHEATS
         public void Visit(CheatPanel cheatPanel)
         {
             AccumulatedExperience += cheatPanel.ExpValue;

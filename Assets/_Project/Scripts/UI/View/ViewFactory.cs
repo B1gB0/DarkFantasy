@@ -17,7 +17,7 @@ namespace _Project.Scripts.UI.View
 {
     public class ViewFactory : MonoBehaviour
     {
-#if UNITY_EDITOR
+#if CHEATS
         private const string CheatPanelPath = "CheatPanel";
 #endif
         private const string HealthBarPath = "HealthBar";
@@ -206,7 +206,7 @@ namespace _Project.Scripts.UI.View
             return _inventoryPanel;
         }
 
-#if UNITY_EDITOR
+#if CHEATS
         public async UniTask<CheatPanel> CreateCheatPanel()
         {
             var cheatPanelTemplate = await _resourceService.Load<GameObject>(CheatPanelPath);

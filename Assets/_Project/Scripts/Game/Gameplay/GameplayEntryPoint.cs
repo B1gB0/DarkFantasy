@@ -55,7 +55,7 @@ namespace _Project.Scripts.Game.Gameplay
         private EndGamePanel _endGamePanel;
         private InventoryPanel _inventoryPanel;
 
-#if UNITY_EDITOR
+#if CHEATS
         private CheatPanel _cheatPanel;
 #endif
 
@@ -160,7 +160,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryPanel = await _viewFactory.CreateInventoryPanel();
 
-#if UNITY_EDITOR
+#if CHEATS
             _cheatPanel = await _viewFactory.CreateCheatPanel();
             _uiScene.CheatButton.onClick.AddListener(_cheatPanel.Show);
 #endif
@@ -213,7 +213,7 @@ namespace _Project.Scripts.Game.Gameplay
         private void OnDestroy()
         {
             
-#if UNITY_EDITOR
+#if CHEATS
             _uiScene.CheatButton.onClick.RemoveListener(_cheatPanel.Show);
 #endif
             

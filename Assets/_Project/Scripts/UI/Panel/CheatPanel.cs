@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if CHEATS
 
 using _Project.Scripts.Experience;
 using _Project.Scripts.Services;

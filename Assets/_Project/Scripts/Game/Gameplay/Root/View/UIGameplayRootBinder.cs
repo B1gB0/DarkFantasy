@@ -41,7 +41,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Button AttackButton { get; private set; }
         [field: SerializeField] public Button RollButton { get; private set; }
         [field: SerializeField] public Button InventoryButton { get; private set; }
-#if UNITY_EDITOR
+#if CHEATS
         [field: SerializeField] public Button CheatButton { get; private set; }
 #endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }

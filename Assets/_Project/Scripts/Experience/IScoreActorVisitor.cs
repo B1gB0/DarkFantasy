@@ -5,7 +5,7 @@ namespace _Project.Scripts.Experience
     public interface IScoreActorVisitor
     {
         public void Visit(IExperienceScoreActor experienceScoreActor);
-#if UNITY_EDITOR
+#if CHEATS
         public void Visit(CheatPanel cheatPanel);
 #endif
     }
