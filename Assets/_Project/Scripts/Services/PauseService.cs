@@ -11,31 +11,22 @@ namespace _Project.Scripts.Services
 
         private EventSystem _eventSystem;
 
-        public event Action OnGameStarted;
-        public event Action OnGamePaused;
-
         public void OnStopGameWithoutMusic()
         {
             AudioListener.pause = false;
             Time.timeScale = StopTime;
-
-            OnGamePaused?.Invoke();
         }
 
         public void OnStopGameWithMusic()
         {
             AudioListener.pause = true;
             Time.timeScale = StopTime;
-
-            OnGamePaused?.Invoke();
         }
 
         public void OnPlayGame()
         {
             AudioListener.pause = false;
             Time.timeScale = PlayTime;
-
-            OnGameStarted?.Invoke();
         }
 
         public void GetEventSystem(EventSystem eventSystem)
