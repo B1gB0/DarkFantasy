@@ -69,8 +69,10 @@ namespace _Project.Scripts.Game.GameRoot
             YG2.onHideWindowGame += _pauseService.HandleSdkPause;
             YG2.onOpenAnyAdv += _pauseService.HandleSdkPause;
             YG2.onOpenAnyAdv += _pauseService.DisableEventSystem;
+            YG2.onOpenAnyAdv += _pauseService.HandleSdkPause;
             YG2.onCloseAnyAdv += _pauseService.EnableEventSystem;
-            YG2.onCloseInterAdv += _pauseService.HandleSdkResume;
+            YG2.onCloseAnyAdv += _pauseService.HandleSdkResume;
+            // YG2.onCloseInterAdv += _pauseService.HandleSdkResume;
             YG2.onShowWindowGame += _pauseService.HandleSdkResume;
         }
 
@@ -86,8 +88,10 @@ namespace _Project.Scripts.Game.GameRoot
             YG2.onHideWindowGame -= _pauseService.HandleSdkPause;
             YG2.onOpenAnyAdv -= _pauseService.HandleSdkPause;
             YG2.onOpenAnyAdv -= _pauseService.DisableEventSystem;
+            YG2.onOpenAnyAdv -= _pauseService.HandleSdkPause;
             YG2.onCloseAnyAdv -= _pauseService.EnableEventSystem;
-            YG2.onCloseInterAdv -= _pauseService.HandleSdkResume;
+            YG2.onCloseAnyAdv -= _pauseService.HandleSdkResume;
+            // YG2.onCloseInterAdv -= _pauseService.HandleSdkResume;
             YG2.onShowWindowGame -= _pauseService.HandleSdkResume;
         }
 

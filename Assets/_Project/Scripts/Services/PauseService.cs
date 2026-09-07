@@ -48,6 +48,11 @@ namespace _Project.Scripts.Services
 
         public void HandleSdkResume()
         {
+            if (!_isGamePausedByUser)
+            {
+                Time.timeScale = 1f;
+            }
+            
             AudioListener.pause = false;
             _eventSystem.enabled = true;
             OnGameStarted?.Invoke();
