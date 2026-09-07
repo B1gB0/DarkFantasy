@@ -295,6 +295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider
       objectReference: {fileID: 0}
+    - target: {fileID: 5163086717113548400, guid: a219bdf5663543646923deb816d87c9c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7035590099291789281, guid: a219bdf5663543646923deb816d87c9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
