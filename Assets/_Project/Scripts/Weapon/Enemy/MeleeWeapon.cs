@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.Player;
+using UnityEngine;
 
 namespace _Project.Scripts.Weapon.Enemy
 {
@@ -27,9 +28,9 @@ namespace _Project.Scripts.Weapon.Enemy
             _hitBox.gameObject.SetActive(false);
         }
 
-        private void HandleAttack(Scripts.Player.Core.Player player)
+        private void HandleAttack(PlayerHitBox hitBox)
         {
-            player.Health.TakeDamage(Damage, false, player.PlayerCharacteristics.Armor);
+            hitBox.HandleEnemyAttack(Damage);
             EndAttack();
         }
     }

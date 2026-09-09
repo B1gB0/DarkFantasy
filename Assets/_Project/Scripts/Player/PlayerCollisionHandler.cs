@@ -9,29 +9,20 @@ namespace _Project.Scripts.Player
     [RequireComponent(typeof(Core.Player))]
     public class PlayerCollisionHandler : MonoBehaviour
     {
-        private Core.Player _player;
-
-        public List<EnemyWave> EnemyWaves { get; private set; }
-
-        private void Awake()
-        {
-            _player = GetComponent<Core.Player>();
-        }
-
+        private List<EnemyWave> _enemyWaves;
+        
         private void OnTriggerEnter(Collider trigger)
         {
-            if (trigger.TryGetComponent(out EnemyWaveFollowTrigger followTrigger))
+            if (!trigger.TryGetComponent(out EnemyWaveFollowTrigger followTrigger)) return;
+            foreach (var enemy in followTrigger.NumberWaveOfEnemies.SelectMany(number => _enemyWaves[number].Enemies))
             {
-                foreach (var enemy in followTrigger.NumberWaveOfEnemies.SelectMany(number => EnemyWaves[number].Enemies))
-                {
-                    enemy.ChangeFollowEnemyState(true);
-                }
+                enemy.ChangeFollowEnemyState(true);
             }
         }
-
+        
         public void GetEnemyWaves(List<EnemyWave> enemyWaves)
         {
-            EnemyWaves = enemyWaves;
+            _enemyWaves = enemyWaves;
         }
     }
 }

@@ -50,7 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3213851043470871558, guid: 5676bdababfc9c144824b1050aa60674, type: 3}
       propertyPath: m_Name
-      value: Sword4_Blue Variant
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006259797194583507, guid: 5676bdababfc9c144824b1050aa60674, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006259797194583507, guid: 5676bdababfc9c144824b1050aa60674, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

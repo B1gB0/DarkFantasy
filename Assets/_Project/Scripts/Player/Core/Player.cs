@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
+using _Project.Scripts.Level.Spawners;
+using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Input;
 using _Project.Scripts.Services;
@@ -14,6 +18,9 @@ namespace _Project.Scripts.Player.Core
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
         [field: SerializeField] public Sword Sword { get; private set; }
+        [field: SerializeField] public Collider HitBox { get; private set; }
+        [field: SerializeField] public float RollSpeed { get; private set; } = 6f;
+        [field: SerializeField] public float RollDistance { get; private set; } = 3f;
 
         private ParticleEffectsService _particleEffectsService;
 
@@ -37,7 +44,6 @@ namespace _Project.Scripts.Player.Core
         public PlayerAnimatedState PlayerAnimatedState => _playerAnimatedState;
 
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
-        public PlayerAttackState PlayerAttackState => _playerAttackState;
 
         public bool CanFollow { get; private set; } = true;
 
@@ -106,6 +112,11 @@ namespace _Project.Scripts.Player.Core
         public void AnimationEvent_EndAttack()
         {
             _playerAttackState.EndAttack();
+        }
+        
+        public void AnimationEvent_EndRoll()
+        {
+            _stateMachine.SwitchState(InputController.IsMoveInputPerformed ? StateId.Move : StateId.Idle);
         }
 
         private void OnPlayHitEffect()

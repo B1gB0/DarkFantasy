@@ -1,5 +1,3 @@
-using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
-
 namespace _Project.Scripts.Player
 {
     public interface IPlayerState

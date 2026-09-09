@@ -1,3 +1,4 @@
+using _Project.Scripts.Player;
 using UnityEngine;
 
 namespace _Project.Scripts.Projectile
@@ -6,9 +7,9 @@ namespace _Project.Scripts.Projectile
     {
         protected override void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.TryGetComponent(out Player.Core.Player player))
+            if (collision.gameObject.TryGetComponent(out PlayerHitBox hitBox))
             {
-                player.Health.TakeDamage(Damage, false, player.PlayerCharacteristics.Armor);
+                hitBox.HandleEnemyAttack(Damage);
                 gameObject.SetActive(false);
             }
 

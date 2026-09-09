@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Effects;
+using _Project.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -28,9 +29,9 @@ namespace _Project.Scripts.Weapon.Enemy
             int count = Physics.OverlapSphereNonAlloc(center, radius, _results, playerLayer);
             for (int i = 0; i < count; i++)
             {
-                if (_results[i].TryGetComponent<Scripts.Player.Core.Player>(out var player))
+                if (_results[i].TryGetComponent<PlayerHitBox>(out var hitBox))
                 {
-                    player.Health.TakeDamage(damage, false, player.PlayerCharacteristics.Armor);
+                    hitBox.HandleEnemyAttack(damage);
                 }
             }
         }
