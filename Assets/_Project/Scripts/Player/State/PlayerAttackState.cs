@@ -42,6 +42,9 @@ namespace _Project.Scripts.Player
                 _fallbackEndInvoked = true;
                 EndAttack();
             }
+            
+            if (_player.InputController.IsRollInputPerformed)
+                _stateMachine.SwitchState(StateId.Roll);
         }
 
         public void FixedUpdate() { }

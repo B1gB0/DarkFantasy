@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -187,7 +188,7 @@ namespace _Project.Scripts.Player.Input
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-            if(_isAttackLocked)
+            if(_isAttackLocked && EventSystem.current.IsPointerOverGameObject())
                 return;
             
             if (context.performed) OnAttackButtonPressed?.Invoke();
