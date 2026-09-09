@@ -235,6 +235,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: dbc4de77695058c47bfba3d7484a46cb, type: 2}
+    - target: {fileID: 137983680142849938, guid: 773d21b665a278541ae517d2cf706d63, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137983680142849938, guid: 773d21b665a278541ae517d2cf706d63, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1625677200488740, guid: 773d21b665a278541ae517d2cf706d63, type: 3}

@@ -105,6 +105,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 622225818133081506, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863671345396309809, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863671345396309809, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4032658138706470389, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -159,6 +171,14 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: b67fd4a8898bf2f4988f794fffa9571f, type: 2}
     - target: {fileID: 6996005444251697039, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
       propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7522682306548961348, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7522682306548961348, guid: 7472f1051c156254781f50ed411e09f1, type: 3}
+      propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -421,6 +441,14 @@ PrefabInstance:
     - target: {fileID: 9059637205990600858, guid: 14d8580fcdae4074eb08ea0e8800795c, type: 3}
       propertyPath: m_Name
       value: TwoHandedSkeletonSword Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073675584765608744, guid: 14d8580fcdae4074eb08ea0e8800795c, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073675584765608744, guid: 14d8580fcdae4074eb08ea0e8800795c, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 740871224265544775, guid: 14d8580fcdae4074eb08ea0e8800795c, type: 3}
