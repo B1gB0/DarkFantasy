@@ -4,6 +4,8 @@ namespace _Project.Scripts.Player
 {
     public class PlayerIdleState : IPlayerState
     {
+        private const float MinValue = 0f;
+
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
 
@@ -17,7 +19,7 @@ namespace _Project.Scripts.Player
 
         public void Enter()
         {
-            _player.PlayerAnimatedState.OnMove(0f);
+            _player.PlayerAnimatedState.OnMove(MinValue);
         }
 
         public void Update()

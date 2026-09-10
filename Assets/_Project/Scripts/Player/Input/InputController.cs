@@ -17,9 +17,14 @@ namespace _Project.Scripts.Player.Input
         [SerializeField] private bool _isRollLocked;
         
         [SerializeField] private float _rollCooldownDuration = 0.7f;
+        
+        [Header("Camera")]
+        [SerializeField] private float _cameraSensitivityX = 3f;
+        [SerializeField] private float _cameraSensitivityY = 2f;
 
         private InputSystem _inputSystem;
-        private Joystick _joystick;
+        private Joystick _moveJoystick;
+        private Joystick _cameraJoystick;
         private Button _attackButton;
         private Button _rollButton;
         private Button _inventoryButton;
@@ -37,7 +42,9 @@ namespace _Project.Scripts.Player.Input
         public event Action OnUnlockController;
 
         public Vector2 MoveDirection { get; private set; }
+        public Vector2 CameraLookDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
+        public bool IsCameraRotating { get; private set; }
 
         public bool IsRollInputPerformed => _rollRequested;
 
@@ -64,6 +71,8 @@ namespace _Project.Scripts.Player.Input
         {
             if (_rollCooldownTimer > MinValue)
                 _rollCooldownTimer -= Time.deltaTime;
+
+            UpdateCameraInput();
         }
 
         private void LateUpdate()
@@ -85,7 +94,7 @@ namespace _Project.Scripts.Player.Input
 
         private void OnDestroy()
         {
-            if (_joystick != null) _joystick.OnInputHandled -= OnMoveWithJoystick;
+            if (_moveJoystick != null) _moveJoystick.OnInputHandled -= OnWithMoveJoystick;
             if (_attackButton != null) _attackButton.onClick.RemoveListener(OnAttackByButton);
             if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
             if (_inventoryButton != null) _inventoryButton.onClick.RemoveListener(OnInventoryButtonClicked);
@@ -93,14 +102,16 @@ namespace _Project.Scripts.Player.Input
         }
 
         public void GetButtons(
-            Joystick joystick,
+            Joystick moveJoystick,
+            Joystick cameraJoystick,
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
             Button equippedItemButton)
         {
-            _joystick = joystick;
-            _joystick.OnInputHandled += OnMoveWithJoystick;
+            _moveJoystick = moveJoystick;
+            _cameraJoystick = cameraJoystick;
+            _moveJoystick.OnInputHandled += OnWithMoveJoystick;
             _attackButton = attackButton;
             _attackButton.onClick.AddListener(OnAttackByButton);
             _rollButton = rollButton;
@@ -128,8 +139,35 @@ namespace _Project.Scripts.Player.Input
             
             OnUnlockController?.Invoke();
         }
+        
+        private void UpdateCameraInput()
+        {
+            if (_cameraJoystick != null)
+            {
+                var dir = _cameraJoystick.Direction;
+                if (dir.sqrMagnitude > MinMagnitude)
+                {
+                    CameraLookDirection = dir;
+                    IsCameraRotating = true;
+                    return;
+                }
+            }
+            
+            if (_inputSystem.PLayer.CameraDragButton.IsPressed())
+            {
+                var delta = _inputSystem.PLayer.Look.ReadValue<Vector2>();
+                CameraLookDirection = new Vector2(
+                    delta.x * _cameraSensitivityX,
+                    delta.y * _cameraSensitivityY);
+                IsCameraRotating = true;
+                return;
+            }
 
-        private void OnMoveWithJoystick()
+            CameraLookDirection = Vector2.zero;
+            IsCameraRotating = false;
+        }
+
+        private void OnWithMoveJoystick()
         {
             if (_isMovementLocked)
             {
@@ -138,7 +176,7 @@ namespace _Project.Scripts.Player.Input
                 return;
             }
             
-            MoveDirection = _joystick.Direction;
+            MoveDirection = _moveJoystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
             if (IsMoveInputPerformed) OnMoveButtonsPressed?.Invoke();
         }

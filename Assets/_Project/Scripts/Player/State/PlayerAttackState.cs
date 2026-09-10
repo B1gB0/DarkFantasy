@@ -7,6 +7,8 @@ namespace _Project.Scripts.Player
     public class PlayerAttackState : IPlayerState
     {
         private const int MaxCombo = 3;
+        private const int MinValue = 0;
+        private const int StartCounter = 1;
         private const float FallbackEndThreshold = 0.95f;
 
         private readonly Core.Player _player;
@@ -36,7 +38,7 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
-            AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(0);
+            AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(MinValue);
             if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
             {
                 _fallbackEndInvoked = true;
@@ -82,7 +84,7 @@ namespace _Project.Scripts.Player
 
         private void StartCombo()
         {
-            _comboCounter = 1;
+            _comboCounter = StartCounter;
             _isComboWindowOpen = false;
             _isAttackBuffered = false;
             _fallbackEndInvoked = false;
@@ -118,7 +120,7 @@ namespace _Project.Scripts.Player
 
         private void ResetCombo()
         {
-            _comboCounter = 0;
+            _comboCounter = MinValue;
             _isComboWindowOpen = false;
             _isAttackBuffered = false;
             _anim.OnAttack(false);

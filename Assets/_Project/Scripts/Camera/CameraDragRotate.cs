@@ -1,71 +1,69 @@
+using _Project.Scripts.Player.Input;
+using _Project.Scripts.Services;
 using Cinemachine;
+using Reflex.Attributes;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Camera
 {
     public class CameraDragRotate : MonoBehaviour
     {
-        [SerializeField] private CinemachineFreeLook freeLookCamera;
-        [SerializeField] private float sensitivityX = 3f;
-        [SerializeField] private float sensitivityY = 2f;
-        [SerializeField] private float zoomSpeed = 2f;
-        [SerializeField] private float minZoom = 2f;
-        [SerializeField] private float maxZoom = 10f;
+        private const float MinValue = 0f;
 
-        private bool _isRotating;
+        private IPlayerService _playerService;
 
-        private void Update()
+        private bool _isConfigured;
+        
+        [Inject]
+        public void Construct(IPlayerService playerService)
         {
-            // HandleRotation();
-            // HandleZoom();
+            _playerService = playerService;
         }
 
-        private void HandleRotation()
+        private void LateUpdate()
         {
-            if (Mouse.current.middleButton.wasPressedThisFrame)
+            if (!TryGetDependencies(out var cam, out var input)) return;
+
+            if (!_isConfigured)
             {
-                _isRotating = true;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                ConfigureCamera(cam);
+                _isConfigured = true;
             }
 
-            if (Mouse.current.middleButton.wasReleasedThisFrame)
+            if (input.IsCameraRotating)
             {
-                _isRotating = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-
-            if (_isRotating)
-            {
-                Vector2 delta = Mouse.current.delta.ReadValue();
-                freeLookCamera.m_XAxis.m_InputAxisValue = delta.x * sensitivityX;
-                freeLookCamera.m_YAxis.m_InputAxisValue = delta.y * sensitivityY;
+                var dir = input.CameraLookDirection;
+                cam.m_XAxis.m_InputAxisValue = dir.x;
+                cam.m_YAxis.m_InputAxisValue = -dir.y;
             }
             else
             {
-                freeLookCamera.m_XAxis.m_InputAxisValue = 0;
-                freeLookCamera.m_YAxis.m_InputAxisValue = 0;
+                cam.m_XAxis.m_InputAxisValue = MinValue;
+                cam.m_YAxis.m_InputAxisValue = MinValue;
             }
         }
 
-        private void HandleZoom()
+        private bool TryGetDependencies(out CinemachineFreeLook cam, out InputController input)
         {
-            float scroll = Mouse.current.scroll.ReadValue().y;
+            cam = null;
+            input = null;
 
-            if (Mathf.Abs(scroll) > 0.01f)
-            {
-                float zoomDelta = scroll * zoomSpeed * Time.deltaTime;
+            if (_playerService == null) return false;
+            if (_playerService.FreeLookCamera == null) return false;
+            if (_playerService.Player == null) return false;
+            if (_playerService.Player.InputController == null) return false;
 
-                // Меняем радиусы всех трёх орбит
-                for (int i = 0; i < 3; i++)
-                {
-                    var orbit = freeLookCamera.m_Orbits[i];
-                    orbit.m_Radius = Mathf.Clamp(orbit.m_Radius - zoomDelta, minZoom, maxZoom);
-                    freeLookCamera.m_Orbits[i] = orbit;
-                }
-            }
+            cam = _playerService.FreeLookCamera;
+            input = _playerService.Player.InputController;
+            return true;
+        }
+
+        private void ConfigureCamera(CinemachineFreeLook cam)
+        {
+            cam.m_XAxis.m_InputAxisName = string.Empty;
+            cam.m_YAxis.m_InputAxisName = string.Empty;
+            cam.m_XAxis.m_InputAxisValue = MinValue;
+            cam.m_YAxis.m_InputAxisValue = MinValue;
         }
     }
 }

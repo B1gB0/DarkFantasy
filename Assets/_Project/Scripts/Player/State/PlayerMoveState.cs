@@ -6,13 +6,19 @@ namespace _Project.Scripts.Player
 {
     public class PlayerMoveState : IPlayerState
     {
+        private const float MinValue = 0f;
+        private const float MinMagnitude = 0.01f;
+        private const float HeightOffset = 0.1f;
+        private const float Gravity = 2f;
+        private const float RayLength = 0.5f;
+        
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
 
         private float _currentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
-                0,
+                MinValue,
                 _player.Rigidbody.velocity.z)
             .magnitude;
 
@@ -25,9 +31,7 @@ namespace _Project.Scripts.Player
 
         public StateId IdState => StateId.Move;
 
-        public void Enter()
-        {
-        }
+        public void Enter() { }
 
         public void Update()
         {
@@ -44,8 +48,8 @@ namespace _Project.Scripts.Player
             Vector3 camForward = UnityEngine.Camera.main.transform.forward;
             Vector3 camRight = UnityEngine.Camera.main.transform.right;
 
-            camForward.y = 0;
-            camRight.y = 0;
+            camForward.y = MinValue;
+            camRight.y = MinValue;
 
             camForward.Normalize();
             camRight.Normalize();
@@ -62,23 +66,23 @@ namespace _Project.Scripts.Player
         {
             _player.Rigidbody.velocity = Vector3.zero;
             
-            _playerAnimatedState.OnMove(0f); 
+            _playerAnimatedState.OnMove(MinValue); 
         }
 
         private void Move(Vector3 moveDirection)
         {
             Vector3 velocity = moveDirection * _player.PlayerCharacteristics.GetCurrentMoveSpeed();
             
-            float rayLength = 0.5f; 
-            Vector3 rayStart = _player.transform.position + Vector3.up * 0.1f;
+            float rayLength = RayLength; 
+            Vector3 rayStart = _player.transform.position + Vector3.up * HeightOffset;
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
             {
                 velocity = Vector3.ProjectOnPlane(velocity, hit.normal);
                 
-                if (velocity.y < 0)
+                if (velocity.y < MinValue)
                 {
-                    velocity.y -= 2f;
+                    velocity.y -= Gravity;
                 }
             }
             else
@@ -92,7 +96,7 @@ namespace _Project.Scripts.Player
 
         private void Rotate(Vector3 moveDirection)
         {
-            if (moveDirection.sqrMagnitude > 0.01f)
+            if (moveDirection.sqrMagnitude > MinMagnitude)
             {
                 Quaternion target = Quaternion.LookRotation(moveDirection);
                 _player.transform.rotation = Quaternion.Slerp(

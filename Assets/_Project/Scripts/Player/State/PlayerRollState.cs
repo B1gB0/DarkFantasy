@@ -6,6 +6,9 @@ namespace _Project.Scripts.Player
 {
     public class PlayerRollState : IPlayerState
     {
+        private const float MinValue = 0f;
+        private const float MinMagnitude = 0.01f;
+        
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _animationSystem;
 
@@ -29,17 +32,17 @@ namespace _Project.Scripts.Player
 
             Vector3 camForward = UnityEngine.Camera.main.transform.forward;
             Vector3 camRight = UnityEngine.Camera.main.transform.right;
-            camForward.y = 0f;
-            camRight.y = 0f;
+            camForward.y = MinValue;
+            camRight.y = MinValue;
             camForward.Normalize();
             camRight.Normalize();
 
             Vector3 moveDirection = camForward * moveInput.y + camRight * moveInput.x;
 
-            if (moveDirection.sqrMagnitude < 0.01f)
+            if (moveDirection.sqrMagnitude < MinMagnitude)
             {
                 moveDirection = _player.transform.forward;
-                moveDirection.y = 0f;
+                moveDirection.y = MinValue;
                 moveDirection.Normalize();
             }
             else
@@ -49,7 +52,7 @@ namespace _Project.Scripts.Player
 
             _rollDirection = moveDirection;
 
-            if (_rollDirection.sqrMagnitude > 0.01f)
+            if (_rollDirection.sqrMagnitude > MinMagnitude)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_rollDirection);
                 _player.Rigidbody.MoveRotation(targetRotation);
@@ -77,7 +80,7 @@ namespace _Project.Scripts.Player
             _player.HitBox.enabled = true;
             _isRolling = false;
             
-            _player.Rigidbody.velocity = new Vector3(0f, _player.Rigidbody.velocity.y, 0f);
+            _player.Rigidbody.velocity = new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
         }
     }
 }

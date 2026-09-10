@@ -101,14 +101,16 @@ namespace _Project.Scripts.Services
         }
         
         public void GetButtons(
-            Joystick joystick,
+            Joystick moveJoystick,
+            Joystick cameraJoystick,
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
             Button equippedItemButton)
         {
             Player.InputController.GetButtons(
-                joystick,
+                moveJoystick,
+                cameraJoystick,
                 attackButton,
                 rollButton,
                 inventoryButton,

@@ -118,6 +118,24 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraDragButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b2a7d67-edc8-41b2-b4d6-636dac6790fe"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""351b3b3c-a0aa-417d-a33a-b0ce2d749080"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -307,6 +325,127 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26a0f267-34ee-41cf-b448-951be32313fa"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""CameraDragButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector Mobile"",
+                    ""id"": ""0d9d0d12-a22e-4bdc-a40c-7d250aeabc0f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b7b8c4ae-3b42-4da0-8317-15b11dab1839"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mobile"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""7f3f77cf-cdc7-4437-9cab-4b63a3c20827"",
+                    ""path"": ""<Joystick>/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mobile"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""adc7c2b6-b9d3-4e87-b3ef-4bca2d3fd00e"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mobile"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8331d82b-7de4-49e3-af16-de6e4073e1f0"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mobile"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector PC"",
+                    ""id"": ""937c7fd1-a7c4-45f5-a84f-f128e7dcae4a"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""8de802c5-dccc-42d2-b081-011d78ef70d4"",
+                    ""path"": ""<Mouse>/delta/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""35730465-9e98-489c-8376-3f2e07a5755b"",
+                    ""path"": ""<Mouse>/delta/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""4a21510a-f436-42f1-afbe-24cdc87ce543"",
+                    ""path"": ""<Mouse>/delta/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e5d04d66-41dd-4d8e-956f-e4b5c5a73479"",
+                    ""path"": ""<Mouse>/delta/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -346,6 +485,8 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_PLayer_Move = m_PLayer.FindAction("Move", throwIfNotFound: true);
         m_PLayer_Attack = m_PLayer.FindAction("Attack", throwIfNotFound: true);
         m_PLayer_Roll = m_PLayer.FindAction("Roll", throwIfNotFound: true);
+        m_PLayer_CameraDragButton = m_PLayer.FindAction("CameraDragButton", throwIfNotFound: true);
+        m_PLayer_Look = m_PLayer.FindAction("Look", throwIfNotFound: true);
     }
 
     ~@InputSystem()
@@ -429,6 +570,8 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_PLayer_Move;
     private readonly InputAction m_PLayer_Attack;
     private readonly InputAction m_PLayer_Roll;
+    private readonly InputAction m_PLayer_CameraDragButton;
+    private readonly InputAction m_PLayer_Look;
     /// <summary>
     /// Provides access to input actions defined in input action map "PLayer".
     /// </summary>
@@ -452,6 +595,14 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PLayer/Roll".
         /// </summary>
         public InputAction @Roll => m_Wrapper.m_PLayer_Roll;
+        /// <summary>
+        /// Provides access to the underlying input action "PLayer/CameraDragButton".
+        /// </summary>
+        public InputAction @CameraDragButton => m_Wrapper.m_PLayer_CameraDragButton;
+        /// <summary>
+        /// Provides access to the underlying input action "PLayer/Look".
+        /// </summary>
+        public InputAction @Look => m_Wrapper.m_PLayer_Look;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -487,6 +638,12 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Roll.started += instance.OnRoll;
             @Roll.performed += instance.OnRoll;
             @Roll.canceled += instance.OnRoll;
+            @CameraDragButton.started += instance.OnCameraDragButton;
+            @CameraDragButton.performed += instance.OnCameraDragButton;
+            @CameraDragButton.canceled += instance.OnCameraDragButton;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         /// <summary>
@@ -507,6 +664,12 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Roll.started -= instance.OnRoll;
             @Roll.performed -= instance.OnRoll;
             @Roll.canceled -= instance.OnRoll;
+            @CameraDragButton.started -= instance.OnCameraDragButton;
+            @CameraDragButton.performed -= instance.OnCameraDragButton;
+            @CameraDragButton.canceled -= instance.OnCameraDragButton;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         /// <summary>
@@ -594,5 +757,19 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRoll(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraDragButton" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraDragButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLook(InputAction.CallbackContext context);
     }
 }

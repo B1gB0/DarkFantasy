@@ -18,7 +18,8 @@ namespace _Project.Scripts.Services
         public void SpawnPlayer();
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
         public void GetButtons(
-            Joystick joystick,
+            Joystick moveJoystick,
+            Joystick cameraJoystick,
             Button attackButton,
             Button rollButton,
             Button inventoryButton,

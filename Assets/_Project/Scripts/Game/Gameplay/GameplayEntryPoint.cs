@@ -148,7 +148,8 @@ namespace _Project.Scripts.Game.Gameplay
             uiRoot.GoldView.Show();
             
             _playerService.GetButtons(
-                _uiScene.Joystick,
+                _uiScene.MoveJoystick,
+                _uiScene.CameraJoystick,
                 _uiScene.AttackButton,
                 _uiScene.RollButton,
                 _uiScene.InventoryButton,
@@ -303,7 +304,8 @@ namespace _Project.Scripts.Game.Gameplay
 
         private void OnShowJoystickWithMobileButtons()
         {
-            _uiScene.Joystick.gameObject.SetActive(!YG2.envir.isDesktop);
+            _uiScene.MoveJoystick.gameObject.SetActive(!YG2.envir.isDesktop);
+            _uiScene.CameraJoystick.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.AttackButton.gameObject.SetActive(!YG2.envir.isDesktop);
             _uiScene.RollButton.gameObject.SetActive(!YG2.envir.isDesktop);
         }
