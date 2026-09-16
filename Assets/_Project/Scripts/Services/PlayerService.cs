@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
@@ -37,15 +36,12 @@ namespace _Project.Scripts.Services
         
         private void Update()
         {
-            // if (YG2.saves == null)
-            //     return;
-            //
-            // var characteristics = YG2.saves?.PlayerCharacteristics;
-            // if (characteristics == null) return;
-            //
-            // characteristics.Tick(Time.deltaTime);
-            //
-            // Player.PlayerCharacteristics.SaveHealingState(Player.Health.HealingModifier);
+            if (YG2.saves == null) return;
+
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            if (characteristics == null) return;
+
+            characteristics.Tick(Time.deltaTime);
         }
 
         public UniTask Init()
@@ -101,10 +97,12 @@ namespace _Project.Scripts.Services
             Player.gameObject.SetActive(true);
 
             if (Player.Health.TargetHealth <= MinValue)
-            {
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);
-            }
-            
+
+            // Связываем Health с характеристиками: HP + HealingModifier
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            characteristics?.BindToPlayer(Player);
+
             Player.StateMachine.SwitchState(StateId.Idle);
         }
 

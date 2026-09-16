@@ -119,7 +119,9 @@ namespace _Project.Scripts.Level
         private void HandleMissionTransition()
         {
             if (!YG2.saves.IsMissionPanelVisited)
+            {
                 YG2.saves.IsMissionPanelVisited = true;
+            }
             
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();

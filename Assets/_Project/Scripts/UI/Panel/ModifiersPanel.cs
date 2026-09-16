@@ -111,7 +111,7 @@ namespace _Project.Scripts.UI.Panel
         {
             _buffer.Clear();
 
-            var heal = _playerService.Player.Health.HealingModifier;
+            var heal = _playerService.Player.PlayerCharacteristics.HealingModifier;
             if (heal != null && heal.Timer.IsActive)
             {
                 _buffer.Add(new ModifierViewData(

@@ -1,42 +1,39 @@
 {
-  "Gold": 10,
+  "Gold": 0,
   "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 1,
-  "DamageAttributeNumber": 1,
-  "ArmorAttributeNumber": 1,
+  "HealthAttributeNumber": 0,
+  "DamageAttributeNumber": 0,
+  "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
   "IsBanditCampUnlock": false,
   "IsCastleUnlock": false,
   "IsAttributeShopVisited": true,
-  "IsInventoryShopVisited": false,
-  "IsMissionPanelVisited": false,
-  "EquippedItemType": 2,
+  "IsInventoryShopVisited": true,
+  "IsMissionPanelVisited": true,
+  "EquippedItemType": 3,
   "PlayerCharacteristics": {
-    "MaxHealth": 101.0,
-    "TargetHealth": 86.14848,
-    "Armor": 3.0,
-    "Damage": 6.0,
+    "MaxHealth": 100.0,
+    "TargetHealth": 75.53592,
+    "Armor": 2.0,
+    "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [
       {
         "Timer": {
           "TotalDuration": 30.0,
-          "RemainingTime": 30.0,
+          "RemainingTime": 13.2625008,
           "IsActive": true,
-          "Progress01": 1.0
+          "Progress01": 0.442083359
         },
         "Value": 15.0,
         "IsMultiplier": true
       }
-    ]
+    ],
+    "HealingModifier": null
   },
-  "InventoryItems": {
-    "Meat": 2,
-    "SpeedPotion": 3,
-    "HealthPotion": 1
-  },
+  "InventoryItems": {},
   "stringKeys": [],
   "stringValues": [],
   "floatKeys": [],
@@ -51,5 +48,5 @@
     false,
     false
   ],
-  "idSave": 54
+  "idSave": 15
 }

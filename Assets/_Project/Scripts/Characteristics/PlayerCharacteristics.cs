@@ -30,8 +30,7 @@ namespace _Project.Scripts.Characteristics
         [NonSerialized] private IPlayerService _playerService;
         
         public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
-        
-        public void SaveHealingState(HealingModifier healingModifier) => _healingModifier = healingModifier;
+        public HealingModifier HealingModifier => _healingModifier;
 
         public void SetStartingData(PlayerData data)
         {
@@ -56,21 +55,43 @@ namespace _Project.Scripts.Characteristics
             }
             
             _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
-            _playerService.Player.Health.RestoreHealingState(_healingModifier);
             
             _baseMoveSpeed = MoveSpeed;
         }
         
-        public void Tick(float deltaTime)
+        public void LoadHealth(Player.Core.Player player)
         {
-            if (_speedModifiers == null || _speedModifiers.Count == MinValue)
+            if (player == null || player.Health == null)
                 return;
 
-            for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
+            player.Health.LoadHealth(MaxHealth, TargetHealth);
+            player.Health.BindCharacteristics(this);
+        }
+        
+        public void BindToPlayer(Player.Core.Player player)
+        {
+            if (player == null || player.Health == null)
+                return;
+
+            player.Health.LoadHealth(MaxHealth, TargetHealth);
+            player.Health.BindCharacteristics(this);
+        }
+        
+        public void Tick(float deltaTime)
+        {
+            if (_speedModifiers != null || _speedModifiers.Count > MinValue)
             {
-                if (_speedModifiers[i].Tick(deltaTime))
-                    _speedModifiers.RemoveAt(i);
+                for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
+                {
+                    if (_speedModifiers[i].Tick(deltaTime))
+                    {
+                        _speedModifiers.RemoveAt(i);
+                    }
+                }
             }
+            
+            if (_healingModifier != null && _healingModifier.Tick(deltaTime))
+                _healingModifier = null;
         }
 
         public void SaveTargetHealth(float targetHealth)
@@ -117,6 +138,23 @@ namespace _Project.Scripts.Characteristics
         public void ClearSpeedModifiers()
         {
             _speedModifiers?.Clear();
+        }
+        
+        public void ClearHealing()
+        {
+            _healingModifier = null;
+        }
+        
+        public bool TryStartHealing(float totalAmount, float duration)
+        {
+            if (duration <= 0f)
+                return false;
+
+            if (_healingModifier != null && _healingModifier.Timer.IsActive)
+                return false;
+
+            _healingModifier = new HealingModifier(totalAmount, duration);
+            return true;
         }
         
         public float GetCurrentMoveSpeed()

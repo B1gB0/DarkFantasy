@@ -16,20 +16,17 @@ namespace _Project.Scripts
         private const float DamageFirstFactor = 100f;
         private const float DamageSecondFactor = 1f;
         private const float RecoveryRate = 10f;
-        
+
         [SerializeField] private Transform _hitPoint;
 
         private CancellationTokenSource _healthCts;
-        private HealingModifier _healingModifier;
+        private PlayerCharacteristics _characteristics;
 
         public event Action Die;
         public event Action<Health> DieHealth;
-
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
-
         public event Action IsDamaged;
-
         public event Action<float, float, float> HealthChanged;
         public event Action<float> TargetHealthChanged;
 
@@ -38,33 +35,35 @@ namespace _Project.Scripts
         public float CurrentHealth { get; private set; }
 
         public bool IsHitting { get; private set; }
-
         public Transform HitPoint => _hitPoint;
-        public HealingModifier HealingModifier => _healingModifier;
-        
 
         private void Start()
         {
             HealthChanged?.Invoke(CurrentHealth, MaxHealth, TargetHealth);
             TargetHealthChanged?.Invoke(TargetHealth);
         }
-        
+
         private void Update()
         {
-            if (_healingModifier == null || !_healingModifier.Timer.IsActive)
+            if (_characteristics == null)
+                return;
+
+            var heal = _characteristics.HealingModifier;
+            if (heal == null || !heal.Timer.IsActive)
                 return;
 
             float dt = Time.deltaTime;
-            float heal = _healingModifier.HealPerSecond * dt;
-            AddHealthSilent(heal);
-
-            if (_healingModifier.Tick(dt))
-                _healingModifier = null;
+            AddHealthSilent(heal.HealPerSecond * dt);
         }
 
         private void OnDestroy()
         {
             _healthCts?.Cancel();
+        }
+
+        public void BindCharacteristics(PlayerCharacteristics characteristics)
+        {
+            _characteristics = characteristics;
         }
 
         public void TakeDamage(float damage, bool isShowTextDamage = false, float armor = MinValue)
@@ -88,7 +87,7 @@ namespace _Project.Scripts
 
             if (TargetHealth == MinValue)
             {
-                _healingModifier = null;
+                _characteristics?.ClearHealing();
                 _healthCts?.Cancel();
                 Die?.Invoke();
                 DieHealth?.Invoke(this);
@@ -109,7 +108,6 @@ namespace _Project.Scripts
         public void LoadHealth(float maxHealth, float targetHealth)
         {
             MaxHealth = maxHealth;
-
             SetHealthValue(targetHealth);
         }
 
@@ -122,34 +120,21 @@ namespace _Project.Scripts
                 Colors.GetColor(ColorName.HealingColor));
 
             TargetHealth += healthValue;
-
             OnChangeHealth();
         }
-        
-        public void RestoreHealingState(HealingModifier state)
-        {
-            _healingModifier = state;
-        }
-        
+
         public bool TryStartHealingOverTime(float totalAmount, float duration)
         {
-            if (duration <= MinValue)
-                return false;
-
-            if (_healingModifier != null && _healingModifier.Timer.IsActive)
-                return false;
-
-            _healingModifier = new HealingModifier(totalAmount, duration);
-            return true;
+            return _characteristics != null &&
+                   _characteristics.TryStartHealing(totalAmount, duration);
         }
 
         public void SetHealthValue(float healthValue)
         {
             TargetHealth = healthValue;
-
             OnChangeHealth();
         }
-        
+
         private float CalculateFinalDamage(float damage, float armor)
         {
             if (armor <= MinValue)
@@ -158,7 +143,7 @@ namespace _Project.Scripts
             float reduction = armor / (armor + DamageFirstFactor);
             return Mathf.Max(MinValue, damage * (DamageSecondFactor - reduction));
         }
-        
+
         private void AddHealthSilent(float value)
         {
             TargetHealth += value;
@@ -168,7 +153,7 @@ namespace _Project.Scripts
         private void OnChangeHealth()
         {
             TargetHealth = Mathf.Clamp(TargetHealth, MinValue, MaxHealth);
-            
+
             if (TargetHealth is > MinValue and < MinAliveHealth)
                 TargetHealth = MinAliveHealth;
 
