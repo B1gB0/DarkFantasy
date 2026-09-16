@@ -471,10 +471,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buyButton: {fileID: 6200443570840162987}
-  _icons:
-  - {fileID: 21300000, guid: 47f290a00b1f4e948813b2286db65343, type: 3}
-  - {fileID: 21300000, guid: 881eedcd1dd35354ab5eb19ea799a3fa, type: 3}
-  - {fileID: 21300000, guid: 2ce1f0a16f7b2d74e9029ad91f27f05a, type: 3}
   _iconItem: {fileID: 4584581234297578810}
   _name: {fileID: 8456590816839226862}
   _value: {fileID: 284857112843436320}
@@ -693,7 +689,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +50 HP
+  m_text: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442
+    5 \u043E\u0447\u043A\u043E\u0432 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F
+    \u0432 \u0441\u0435\u043A\u0443\u043D\u0434\u0443 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C\u044E
+    5 \u0441\u0435\u043A\u0443\u043D\u0434"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
   m_sharedMaterial: {fileID: -178038262655079599, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
