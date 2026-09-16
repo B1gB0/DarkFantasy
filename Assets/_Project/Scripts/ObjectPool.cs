@@ -33,19 +33,27 @@ namespace _Project.Scripts
 
             throw new Exception($"There is no free elements in pool of type {typeof(T)}");
         }
+        
+        public void Return(T element)
+        {
+            if (element == null) return;
+            element.gameObject.SetActive(false);
+        }
 
         private bool HasFreeElement(out T element)
         {
-            foreach (var objects in _pool.Where(objects => objects != null && !objects.gameObject.activeInHierarchy))
+            for (int i = _pool.Count - 1; i >= 0; i--)
             {
-                element = objects;
-                objects.gameObject.SetActive(true);
-
-                return true;
+                var obj = _pool[i];
+                if (obj != null && !obj.gameObject.activeInHierarchy)
+                {
+                    obj.gameObject.SetActive(true);
+                    element = obj;
+                    return true;
+                }
             }
 
             element = null;
-
             return false;
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
 
@@ -12,6 +11,9 @@ namespace _Project.Scripts.Characteristics
     [Serializable]
     public class PlayerCharacteristics
     {
+        private const int MinValue = 0;
+        private const int CorrectFactor = 1;
+        
         private const float PercentFactor = 100f;
         
         public float MaxHealth;
@@ -21,12 +23,15 @@ namespace _Project.Scripts.Characteristics
         public float MoveSpeed;
         public float RotationSpeed;
 
-        [NonSerialized] 
-        private List<SpeedModifier> _speedModifiers = new();
-        [NonSerialized] 
-        private float _baseMoveSpeed;
-
-        private IPlayerService _playerService;
+        [SerializeField] private List<SpeedModifier> _speedModifiers = new();
+        [SerializeField] private HealingModifier _healingModifier;
+        
+        [NonSerialized] private float _baseMoveSpeed;
+        [NonSerialized] private IPlayerService _playerService;
+        
+        public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
+        
+        public void SaveHealingState(HealingModifier healingModifier) => _healingModifier = healingModifier;
 
         public void SetStartingData(PlayerData data)
         {
@@ -43,9 +48,29 @@ namespace _Project.Scripts.Characteristics
         public void SetCharacteristics(IPlayerService playerService)
         {
             _playerService = playerService;
+            
+            for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
+            {
+                if (!_speedModifiers[i].Timer.IsActive)
+                    _speedModifiers.RemoveAt(i);
+            }
+            
             _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
-            _speedModifiers?.Clear();
+            _playerService.Player.Health.RestoreHealingState(_healingModifier);
+            
             _baseMoveSpeed = MoveSpeed;
+        }
+        
+        public void Tick(float deltaTime)
+        {
+            if (_speedModifiers == null || _speedModifiers.Count == MinValue)
+                return;
+
+            for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
+            {
+                if (_speedModifiers[i].Tick(deltaTime))
+                    _speedModifiers.RemoveAt(i);
+            }
         }
 
         public void SaveTargetHealth(float targetHealth)
@@ -74,12 +99,18 @@ namespace _Project.Scripts.Characteristics
         
         public bool AddSpeedModifier(float value, float duration, bool isMultiplier = false)
         {
-            if (_speedModifiers.Count > 0)
+            _speedModifiers ??= new List<SpeedModifier>();
+            
+            for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
+            {
+                if (!_speedModifiers[i].Timer.IsActive)
+                    _speedModifiers.RemoveAt(i);
+            }
+
+            if (_speedModifiers.Count > MinValue)
                 return false;
 
-            var modifier = new SpeedModifier(value, isMultiplier, duration);
-            _speedModifiers.Add(modifier);
-            RemoveSpeedModifierAfterDelay(modifier, duration).Forget();
+            _speedModifiers.Add(new SpeedModifier(value, isMultiplier, duration));
             return true;
         }
         
@@ -91,13 +122,14 @@ namespace _Project.Scripts.Characteristics
         public float GetCurrentMoveSpeed()
         {
             float result = _baseMoveSpeed;
-            
+            if (_speedModifiers == null) return result;
+
             foreach (var mod in _speedModifiers)
             {
                 if (!mod.IsMultiplier)
                     result += mod.Value;
             }
-            
+
             foreach (var mod in _speedModifiers)
             {
                 if (mod.IsMultiplier)
@@ -105,12 +137,6 @@ namespace _Project.Scripts.Characteristics
             }
 
             return result;
-        }
-
-        private async UniTaskVoid RemoveSpeedModifierAfterDelay(SpeedModifier modifier, float delay)
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(delay));
-            _speedModifiers.Remove(modifier);
         }
 
         private void IncreaseHealth(float healthValue)

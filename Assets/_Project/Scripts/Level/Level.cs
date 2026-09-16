@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
 using _Project.Scripts.Game.Constant;
@@ -9,6 +8,7 @@ using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI;
+using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.View;
 using Cinemachine;
@@ -54,6 +54,7 @@ namespace _Project.Scripts.Level
         private IUILocalizationService _uiLocalizationService;
         private ParticleEffectsService _particleEffectsService;
         private AudioSoundsService _audioSoundsService;
+        private IFloatingTextService _floatingTextService;
 
         private LevelInitData _levelInitData;
         private PlayerInitData _playerInitData;
@@ -66,6 +67,7 @@ namespace _Project.Scripts.Level
 
         public HealthBar HealthBar { get; private set; }
         public BossHealthBar BossHealthBar { get; private set; }
+        public ModifiersPanel ModifiersPanel { get; private set; }
         public List<EnemyWave> EnemyWaves => _enemyWaves;
 
         [Inject]
@@ -77,7 +79,8 @@ namespace _Project.Scripts.Level
             IInventoryService inventoryService,
             AudioSoundsService audioSoundsService,
             IUILocalizationService uiLocalizationService,
-            NavMeshWaypointService navMeshWaypointService)
+            NavMeshWaypointService navMeshWaypointService,
+            IFloatingTextService floatingTextService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
@@ -87,6 +90,7 @@ namespace _Project.Scripts.Level
             _audioSoundsService = audioSoundsService;
             _uiLocalizationService = uiLocalizationService;
             NavMeshWaypointService = navMeshWaypointService;
+            _floatingTextService = floatingTextService;
         }
 
         private void OnDestroy()
@@ -141,32 +145,6 @@ namespace _Project.Scripts.Level
             BossHealthBar.Hide();
         }
 
-        protected async UniTask CreatePlayer()
-        {
-            var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-
-            Player.Core.Player player = _playerService.CreatePlayerByPrefab(
-                _playerInitData.CommonHero,
-                _levelInitData.PlayerSpawnPosition);
-
-            var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
-            player.Construct(playerCharacteristics, _particleEffectsService);
-
-            HealthBar = await ViewFactory.CreateHealthBar(player.Health);
-            HealthBar.Show();
-
-            var playerTransform = player.transform;
-
-            _cinemachineFreeLook.LookAt = playerTransform;
-            _cinemachineFreeLook.Follow = playerTransform;
-
-            PlayerIsSpawned?.Invoke();
-
-            _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
-
-            _playerService.SpawnPlayer();
-        }
-
         protected void CreateWaveOfEnemyByTimer(int numberWaveEnemy)
         {
             if (LastSpawnTime <= MinValue)
@@ -197,7 +175,36 @@ namespace _Project.Scripts.Level
             OnGoToNextScene?.Invoke();
         }
         
-        protected void SetBossNameLocalization()
+        private async UniTask CreatePlayer()
+        {
+            var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Player.Core.Player player = _playerService.CreatePlayerByPrefab(
+                _playerInitData.CommonHero,
+                _levelInitData.PlayerSpawnPosition);
+
+            var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
+            player.Construct(playerCharacteristics, _particleEffectsService, _floatingTextService);
+
+            HealthBar = await ViewFactory.CreateHealthBar(player.Health);
+            HealthBar.Show();
+
+            ModifiersPanel = await ViewFactory.CreateModifiersPanel();
+            ModifiersPanel.Show();
+
+            var playerTransform = player.transform;
+
+            _cinemachineFreeLook.LookAt = playerTransform;
+            _cinemachineFreeLook.Follow = playerTransform;
+
+            PlayerIsSpawned?.Invoke();
+
+            _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(_enemyWaves);
+
+            _playerService.SpawnPlayer();
+        }
+        
+        private void SetBossNameLocalization()
         {
             if (Boss == null || BossHealthBar == null) return;
 
@@ -206,7 +213,7 @@ namespace _Project.Scripts.Level
             BossHealthBar.SetName(localizedName);
         }
         
-        protected async void OnBossSpawned(Enemy.Enemy enemy)
+        private async void OnBossSpawned(Enemy.Enemy enemy)
         {
             Boss = enemy;
             await CreateBossHealthBar();

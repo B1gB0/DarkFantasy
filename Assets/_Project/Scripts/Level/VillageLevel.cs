@@ -22,25 +22,31 @@ namespace _Project.Scripts.Level
             _shopAttributePanelTrigger.OnOpenShop -= OnShowAttributePanel;
             _shopAttributePanelTrigger.OnOpenShop -= UIRootView.UIRootButtons.Deactivate;
             _shopAttributePanelTrigger.OnOpenShop -= HealthBar.Hide;
+            _shopAttributePanelTrigger.OnOpenShop -= ModifiersPanel.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _shopAttributePanel.OnBackToSceneButtonPressed -= _shopAttributePanel.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed -= HealthBar.Show;
+            _shopAttributePanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
             _shopAttributePanel.OnBackToSceneButtonPressed -= OnShowInventoryShop;
 
             _shopItemsPanelTrigger.OnOpenShop -= _shopItemsPanel.Show;
             _shopItemsPanelTrigger.OnOpenShop -= UIRootView.UIRootButtons.Deactivate;
             _shopItemsPanelTrigger.OnOpenShop -= HealthBar.Hide;
+            _shopItemsPanelTrigger.OnOpenShop -= ModifiersPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _shopItemsPanel.OnBackToSceneButtonPressed -= _shopItemsPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
+            _shopItemsPanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
             _shopItemsPanel.OnBackToSceneButtonPressed -= OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel -= _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel -= UIRootView.UIRootButtons.Deactivate;
             _missionChoosingTrigger.OnOpenMissionPanel -= HealthBar.Hide;
+            _missionChoosingTrigger.OnOpenMissionPanel -= ModifiersPanel.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= UIRootView.UIRootButtons.Activate;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= _missionChoosingPanel.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
+            _missionChoosingPanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
             _missionChoosingPanel.OnGoToMission -= HandleMissionTransition;
         }
 
@@ -73,15 +79,21 @@ namespace _Project.Scripts.Level
             await base.OnStartLevel();
 
             _shopAttributePanelTrigger.OnOpenShop += HealthBar.Hide;
+            _shopAttributePanelTrigger.OnOpenShop += ModifiersPanel.Hide;
             _shopAttributePanel.OnBackToSceneButtonPressed += HealthBar.Show;
+            _shopAttributePanel.OnBackToSceneButtonPressed += ModifiersPanel.Show;
             _shopAttributePanel.OnBackToSceneButtonPressed += OnShowInventoryShop;
 
             _shopItemsPanelTrigger.OnOpenShop += HealthBar.Hide;
+            _shopItemsPanelTrigger.OnOpenShop += ModifiersPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+            _shopItemsPanel.OnBackToSceneButtonPressed += ModifiersPanel.Show;
             _shopItemsPanel.OnBackToSceneButtonPressed += OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;
+            _missionChoosingTrigger.OnOpenMissionPanel += ModifiersPanel.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed += HealthBar.Show;
+            _missionChoosingPanel.OnBackToSceneButtonPressed += ModifiersPanel.Show;
 
             if (!YG2.saves.IsAttributeShopVisited)
             {

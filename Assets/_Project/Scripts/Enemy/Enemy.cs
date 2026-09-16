@@ -118,13 +118,9 @@ namespace _Project.Scripts.Enemy
             if (_isDead) return;
             _isDead = true;
             
-            // ResetModifiers();
             Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
-            // OnChangeSpeed -= UpdateCurrentSpeed;
 
             Die?.Invoke(this);
-
-            // gameObject.SetActive(false);
         }
 
         protected virtual void OnPlayHitEffect()

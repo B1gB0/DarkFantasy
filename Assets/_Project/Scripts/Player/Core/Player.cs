@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
-using _Project.Scripts.Level.Spawners;
-using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Input;
 using _Project.Scripts.Services;
 using UnityEngine;
-using YG;
 using Sword = _Project.Scripts.Player.Combat.Sword;
 
 namespace _Project.Scripts.Player.Core
@@ -23,6 +18,7 @@ namespace _Project.Scripts.Player.Core
         [field: SerializeField] public float RollDistance { get; private set; } = 3f;
 
         private ParticleEffectsService _particleEffectsService;
+        private IFloatingTextService _floatingTextService;
 
         private Animator _animator;
         private Rigidbody _rigidbody;
@@ -76,17 +72,22 @@ namespace _Project.Scripts.Player.Core
                 Health.TargetHealthChanged -= PlayerCharacteristics.SaveTargetHealth;
             
             _inputController.OnUnlockController -= OnUnlockController;
+            Health.IsSpawnedHealingText -= _floatingTextService.OnSpawnFloatingText;
         }
 
         public void Construct(
             PlayerCharacteristics playerCharacteristics,
-            ParticleEffectsService particleEffectsService)
+            ParticleEffectsService particleEffectsService,
+            IFloatingTextService floatingTextService)
         {
             PlayerCharacteristics = playerCharacteristics;
             _particleEffectsService = particleEffectsService;
+            _floatingTextService = floatingTextService;
 
             if (Health != null && PlayerCharacteristics != null)
                 Health.TargetHealthChanged += PlayerCharacteristics.SaveTargetHealth;
+            
+            Health.IsSpawnedHealingText += _floatingTextService.OnSpawnFloatingText;
         }
 
         public void ChangeFollowEnemyState(bool canFollow)

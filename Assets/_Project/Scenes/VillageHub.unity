@@ -671,6 +671,14 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 201753752893129011, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 201753752893129011, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.603
+      objectReference: {fileID: 0}
     - target: {fileID: 228256162982996704, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -2883,6 +2891,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8188018148520463728, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.544
+      objectReference: {fileID: 0}
     - target: {fileID: 8190894295559847315, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -2981,7 +2993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667362336470418213, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8667362336470418213, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_NavMeshData
@@ -3091,8 +3103,7 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8667362336470418213, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1710866097214475199, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}

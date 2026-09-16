@@ -2,17 +2,20 @@
 
 namespace _Project.Scripts.Characteristics
 {
+    [Serializable]
     public class SpeedModifier
     {
-        public float Value;      // абсолютное значение или множитель
-        public bool IsMultiplier; // true – множитель, false – абсолютное прибавление
-        public DateTime EndTime; // момент окончания действия (или использовать UniTask)
+        public ModifierTimer Timer;
+        public float Value;
+        public bool IsMultiplier;
 
         public SpeedModifier(float value, bool isMultiplier, float duration)
         {
             Value = value;
             IsMultiplier = isMultiplier;
-            EndTime = DateTime.UtcNow.AddSeconds(duration);
+            Timer = new ModifierTimer(duration);
         }
+
+        public bool Tick(float deltaTime) => Timer.Tick(deltaTime);
     }
 }

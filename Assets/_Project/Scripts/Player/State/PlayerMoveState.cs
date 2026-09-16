@@ -31,12 +31,13 @@ namespace _Project.Scripts.Player
 
         public StateId IdState => StateId.Move;
 
-        public void Enter() { }
+        public void Enter()
+        {
+            _player.InputController.OnAttackButtonPressed += EnterAttack;
+        }
 
         public void Update()
         {
-            if (_player.InputController.IsAttackButtonPressed)
-                _stateMachine.SwitchState(StateId.Attack);
             if (_player.InputController.IsRollInputPerformed)
                 _stateMachine.SwitchState(StateId.Roll);
             if (_player.InputController.IsMoveInputPerformed == false)
@@ -64,6 +65,8 @@ namespace _Project.Scripts.Player
 
         public void Exit()
         {
+            _player.InputController.OnAttackButtonPressed -= EnterAttack;
+            
             _player.Rigidbody.velocity = Vector3.zero;
             
             _playerAnimatedState.OnMove(MinValue); 
@@ -104,6 +107,11 @@ namespace _Project.Scripts.Player
                     target,
                     Time.fixedDeltaTime * _player.PlayerCharacteristics.RotationSpeed);
             }
+        }
+        
+        private void EnterAttack()
+        {
+            _stateMachine.SwitchState(StateId.Attack);
         }
     }
 }

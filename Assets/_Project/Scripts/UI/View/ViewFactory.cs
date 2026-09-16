@@ -29,6 +29,7 @@ namespace _Project.Scripts.UI.View
         private const string EndGamePanelPath = "EndGamePanel";
         private const string ShopItemViewPath = "ShopItemView";
         private const string InventoryPanelPath = "InventoryPanel";
+        private const string ModifierPanelPath = "ModifierPanel";
 
         private IResourceService _resourceService;
         private IPlayerService _playerService;
@@ -42,6 +43,7 @@ namespace _Project.Scripts.UI.View
         private ShopItemsPanel _shopItemsPanel;
         private MissionChoosingPanel _missionChoosingPanel;
         private EndGamePanel _endGamePanel;
+        private ModifiersPanel _modifiersPanel;
         private InventoryPanel _inventoryPanel;
         
         private List<ShopItemView> _shopItemViews = new ();
@@ -161,6 +163,7 @@ namespace _Project.Scripts.UI.View
             {
                 ShopItemView itemView = await CreateShopItemView(_shopItemsPanel.ItemContent);
                 itemView.Set(itemData);
+                GameObjectInjector.InjectRecursive(itemView.gameObject, _container);
             }
             
             _shopItemsPanel.GetItemViews(_shopItemViews);
@@ -191,6 +194,19 @@ namespace _Project.Scripts.UI.View
             _endGamePanel.gameObject.SetActive(false);
 
             return _endGamePanel;
+        }
+        
+        public async UniTask<ModifiersPanel> CreateModifiersPanel()
+        {
+            var modifiersPanelTemplate = await _resourceService.Load<GameObject>(ModifierPanelPath);
+            modifiersPanelTemplate = Instantiate(modifiersPanelTemplate);
+
+            _modifiersPanel = modifiersPanelTemplate.GetComponent<ModifiersPanel>();
+            GameObjectInjector.InjectObject(_modifiersPanel.gameObject, _container);
+            _modifiersPanel.transform.SetParent(UIScene.transform, false);
+            _modifiersPanel.GetPoints(UIScene.ShowModifiersPanel, UIScene.HideModifiersPanel);
+
+            return _modifiersPanel;
         }
         
         public async UniTask<InventoryPanel> CreateInventoryPanel()

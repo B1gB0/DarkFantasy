@@ -169,10 +169,12 @@ namespace _Project.Scripts.Game.Gameplay
             _playerService.Player.InputController.OnInventoryButtonPressed += _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed += uiRoot.UIRootButtons.Deactivate;
             _playerService.Player.InputController.OnInventoryButtonPressed += _level.HealthBar.Hide;
+            _playerService.Player.InputController.OnInventoryButtonPressed += _level.ModifiersPanel.Hide;
             _playerService.Player.InputController.OnInventoryButtonPressed += _level.TryHideBossUI;
             _inventoryPanel.OnBackToSceneButtonPressed += _inventoryPanel.Hide;
             _inventoryPanel.OnBackToSceneButtonPressed += uiRoot.UIRootButtons.Activate;
             _inventoryPanel.OnBackToSceneButtonPressed += _level.HealthBar.Show;
+            _inventoryPanel.OnBackToSceneButtonPressed += _level.ModifiersPanel.Show;
             _inventoryPanel.OnBackToSceneButtonPressed += _level.TryShowBossUI;
 
             _inventoryService.OnEquippedItem += _uiScene.EquippedItemView.Set;
@@ -189,6 +191,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerService.Player.Health.Die += _pauseService.OnStopGameWithoutMusic;
                 uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _endGamePanel.SetLabelText;
                 _endGamePanel.OnSpawnPlayer += _level.HealthBar.Show;
+                _endGamePanel.OnSpawnPlayer += _level.ModifiersPanel.Show;
                 _endGamePanel.OnSpawnPlayer += _level.TryShowBossUI;
             }
             else
@@ -223,10 +226,12 @@ namespace _Project.Scripts.Game.Gameplay
             _playerService.Player.InputController.OnInventoryButtonPressed -= _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed -= _uiRoot.UIRootButtons.Deactivate;
             _playerService.Player.InputController.OnInventoryButtonPressed -= _level.HealthBar.Hide;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.ModifiersPanel.Hide;
             _playerService.Player.InputController.OnInventoryButtonPressed -= _level.TryHideBossUI;
             _inventoryPanel.OnBackToSceneButtonPressed -= _inventoryPanel.Hide;
             _inventoryPanel.OnBackToSceneButtonPressed -= _uiRoot.UIRootButtons.Activate;
             _inventoryPanel.OnBackToSceneButtonPressed -= _level.HealthBar.Show;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _level.ModifiersPanel.Show;
             _inventoryPanel.OnBackToSceneButtonPressed -= _level.TryShowBossUI;
 
             _inventoryService.OnEquippedItem -= _uiScene.EquippedItemView.Set;
@@ -242,6 +247,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
                 _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
                 _endGamePanel.OnSpawnPlayer -= _level.HealthBar.Show;
+                _endGamePanel.OnSpawnPlayer -= _level.ModifiersPanel.Show;
                 _endGamePanel.OnSpawnPlayer -= _level.TryShowBossUI;
             }
 

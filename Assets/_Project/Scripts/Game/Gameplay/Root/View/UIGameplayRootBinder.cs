@@ -32,9 +32,12 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Transform ShowBossHealthPoint { get; private set; }
         [field: SerializeField] public Transform HideBossHealthPoint { get; private set; }
         [field: SerializeField] public Transform WeaponPoint { get; private set; }
+        [field: SerializeField] public Transform ShowModifiersPanel { get; private set; }
+        [field: SerializeField] public Transform HideModifiersPanel { get; private set; }
         [field: SerializeField] public Joystick MoveJoystick { get; private set; }
         [field: SerializeField] public Joystick CameraJoystick { get; private set; }
         [field: SerializeField] public GameObject JoystickIcon { get; private set; }
+        [field: SerializeField] public GameObject CameraJoystickIcon { get; private set; }
         [field: SerializeField] public TutorialPointer TutorialPointer { get; private set; }
         [field: SerializeField] public KeyboardTutorialView KeyboardTutorialView { get; private set; }
         [field: SerializeField] public GameObject MouseTutorialView { get; private set; }
@@ -85,6 +88,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
             else
             {
                 JoystickIcon.SetActive(false);
+                CameraJoystickIcon.SetActive(false);
                 TutorialPointer.Deactivate();
             }
 
@@ -111,6 +115,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 return;
 
             JoystickIcon.gameObject.SetActive(true);
+            CameraJoystickIcon.SetActive(true);
             TutorialPointer.Activate();
             TutorialPointer.transform.position = PointerPoint.transform.position;
             _tweenAnimationService.AnimatePointer(TutorialPointer.transform, PointerPoint);

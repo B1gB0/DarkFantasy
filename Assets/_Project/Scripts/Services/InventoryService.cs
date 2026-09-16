@@ -102,19 +102,19 @@ namespace _Project.Scripts.Services
             return true;
         }
 
-        public void UnequipItem()
+        public ItemType GetEquippedItemType()
+        {
+            return _equippedItemType;
+        }
+        
+        private void UnequipItem()
         {
             _equippedItemType = ItemType.None;
             OnUnEquippedItem?.Invoke();
             Save();
         }
 
-        public ItemType GetEquippedItemType()
-        {
-            return _equippedItemType;
-        }
-
-        public ItemData GetEquippedItemData()
+        private ItemData GetEquippedItemData()
         {
             return _shopService.GetItemDataByType(_equippedItemType);
         }

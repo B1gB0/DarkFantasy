@@ -5,11 +5,14 @@ using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
+using UnityEngine;
 
 namespace _Project.Scripts.Services
 {
     public class ShopService : IShopService
     {
+        public const string IconsConfigPath = "IconData";
+
         private readonly Dictionary<string, PlayerAttributeLevelData> _attributesData = new();
 
         private readonly Dictionary<CharacteristicType, CharacteristicsLocalizationData>
@@ -18,19 +21,22 @@ namespace _Project.Scripts.Services
         private readonly Dictionary<ItemType, ItemData> _itemsData = new();
 
         private IDataBaseService _dataBaseService;
+        private IResourceService _resourceService;
+        private IconsConfig _iconsConfig;
 
         [Inject]
-        public void Construct(IDataBaseService dataBaseService)
+        public void Construct(IDataBaseService dataBaseService, IResourceService resourceService)
         {
             _dataBaseService = dataBaseService;
+            _resourceService = resourceService;
         }
 
         public bool IsInitiated { get; private set; }
 
-        public UniTask Init()
+        public async UniTask Init()
         {
             if (IsInitiated)
-                return UniTask.CompletedTask;
+                return;
 
             foreach (var attributeData in _dataBaseService.Content.PlayerAttributeLevelData)
             {
@@ -47,9 +53,9 @@ namespace _Project.Scripts.Services
                 _itemsData.TryAdd(itemData.Type, itemData);
             }
 
-            IsInitiated = true;
+            _iconsConfig = await _resourceService.Load<IconsConfig>(IconsConfigPath);
 
-            return UniTask.CompletedTask;
+            IsInitiated = true;
         }
 
         public List<PlayerAttributeLevelData> GetAttributesByType(CharacteristicType type)
@@ -69,10 +75,15 @@ namespace _Project.Scripts.Services
         {
             return _characteristicsLocalizationData[type];
         }
-        
+
         public ItemData GetItemDataByType(ItemType type)
         {
             return _itemsData[type];
+        }
+        
+        public Sprite GetItemSpriteByType(ItemType type)
+        {
+            return _iconsConfig.Get(type);
         }
 
         public List<ItemData> GetItemsData()

@@ -11,14 +11,15 @@ namespace _Project.Scripts.Player.Input
         private const float MinMagnitude = 0.01f;
         private const float MinValue = 0f;
 
-        [Header("Action Locks")]
+        [Header("Action Locks")] 
         [SerializeField] private bool _isMovementLocked;
+
         [SerializeField] private bool _isAttackLocked;
         [SerializeField] private bool _isRollLocked;
-        
+
         [SerializeField] private float _rollCooldownDuration = 0.7f;
-        
-        [Header("Camera")]
+
+        [Header("Camera")] 
         [SerializeField] private float _cameraSensitivityX = 3f;
         [SerializeField] private float _cameraSensitivityY = 2f;
 
@@ -48,9 +49,6 @@ namespace _Project.Scripts.Player.Input
 
         public bool IsRollInputPerformed => _rollRequested;
 
-        public bool IsAttackButtonPressed => !_isAttackLocked &&
-            (_inputSystem.PLayer.Attack.WasPressedThisFrame() || _uiAttackPressed);
-
         private void Awake()
         {
             _inputSystem = new InputSystem();
@@ -62,8 +60,7 @@ namespace _Project.Scripts.Player.Input
 
             _inputSystem.PLayer.Move.performed += OnMove;
             _inputSystem.PLayer.Move.canceled += OnMove;
-
-            _inputSystem.PLayer.Attack.performed += OnAttack;
+            
             _inputSystem.PLayer.Roll.performed += OnRollPerformed;
         }
 
@@ -77,6 +74,8 @@ namespace _Project.Scripts.Player.Input
 
         private void LateUpdate()
         {
+            UpdateAttackInput();
+
             _uiAttackPressed = false;
             _rollRequested = false;
         }
@@ -85,8 +84,7 @@ namespace _Project.Scripts.Player.Input
         {
             _inputSystem.PLayer.Move.performed -= OnMove;
             _inputSystem.PLayer.Move.canceled -= OnMove;
-
-            _inputSystem.PLayer.Attack.performed -= OnAttack;
+            
             _inputSystem.PLayer.Roll.performed -= OnRollPerformed;
 
             _inputSystem.PLayer.Disable();
@@ -116,7 +114,7 @@ namespace _Project.Scripts.Player.Input
             _attackButton.onClick.AddListener(OnAttackByButton);
             _rollButton = rollButton;
             _rollButton.onClick.AddListener(OnRollByButton);
-            _inventoryButton =  inventoryButton;
+            _inventoryButton = inventoryButton;
             _inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
             _equippedItemButton = equippedItemButton;
             _equippedItemButton.onClick.AddListener(OnEquippedItemButtonClicked);
@@ -124,22 +122,55 @@ namespace _Project.Scripts.Player.Input
 
         public void LockPlayerMovement()
         {
-            Debug.Log("LockPlayerMovement");
             _isMovementLocked = true;
             _isAttackLocked = true;
             _isRollLocked = true;
         }
-        
+
         public void UnlockPlayerMovement()
         {
-            Debug.Log("UnlockPlayerMovement");
             _isMovementLocked = false;
             _isAttackLocked = false;
             _isRollLocked = false;
-            
+
             OnUnlockController?.Invoke();
         }
         
+        private void UpdateAttackInput()
+        {
+            if (_isAttackLocked) return;
+
+            bool inputAttack = _inputSystem.PLayer.Attack.WasPressedThisFrame()
+                               && !IsPointerOverUI();
+
+            if (inputAttack || _uiAttackPressed)
+                OnAttackButtonPressed?.Invoke();
+        }
+
+        private bool IsPointerOverUI()
+        {
+            var eventSystem = EventSystem.current;
+            if (eventSystem == null)
+                return false;
+
+            if (Mouse.current != null && eventSystem.IsPointerOverGameObject())
+                return true;
+
+            if (Touchscreen.current != null)
+            {
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (!touch.press.isPressed) continue;
+
+                    int fingerId = touch.touchId.ReadValue();
+                    if (eventSystem.IsPointerOverGameObject(fingerId))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
         private void UpdateCameraInput()
         {
             if (_cameraJoystick != null)
@@ -152,7 +183,9 @@ namespace _Project.Scripts.Player.Input
                     return;
                 }
             }
-            
+
+            if (IsPointerOverUI()) return;
+
             if (_inputSystem.PLayer.CameraDragButton.IsPressed())
             {
                 var delta = _inputSystem.PLayer.Look.ReadValue<Vector2>();
@@ -175,7 +208,7 @@ namespace _Project.Scripts.Player.Input
                 IsMoveInputPerformed = false;
                 return;
             }
-            
+
             MoveDirection = _moveJoystick.Direction;
             IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
             if (IsMoveInputPerformed) OnMoveButtonsPressed?.Invoke();
@@ -217,26 +250,17 @@ namespace _Project.Scripts.Player.Input
 
         private void OnAttackByButton()
         {
-            if(_isAttackLocked)
+            if (_isAttackLocked)
                 return;
-            
-            _uiAttackPressed = true;
-            OnAttackButtonPressed?.Invoke();
-        }
 
-        private void OnAttack(InputAction.CallbackContext context)
-        {
-            if(_isAttackLocked && EventSystem.current.IsPointerOverGameObject())
-                return;
-            
-            if (context.performed) OnAttackButtonPressed?.Invoke();
+            _uiAttackPressed = true;
         }
 
         private void OnInventoryButtonClicked()
         {
             OnInventoryButtonPressed?.Invoke();
         }
-        
+
         private void OnEquippedItemButtonClicked()
         {
             OnEquippedItemButtonPressed?.Invoke();

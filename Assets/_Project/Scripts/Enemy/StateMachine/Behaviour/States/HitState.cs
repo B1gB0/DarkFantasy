@@ -24,7 +24,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 Enemy.ChangeFollowEnemyState(true);
                 EnemyStateMachine.SwitchState<FollowState>();
             }
-            else if (Enemy.Health.CurrentHealth <= MinValue)
+            else if (Enemy.Health.TargetHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<DeathState>();
             }

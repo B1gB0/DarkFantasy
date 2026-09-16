@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
@@ -33,6 +34,19 @@ namespace _Project.Scripts.Services
         }
         
         public CinemachineFreeLook FreeLookCamera { get; private set; }
+        
+        private void Update()
+        {
+            // if (YG2.saves == null)
+            //     return;
+            //
+            // var characteristics = YG2.saves?.PlayerCharacteristics;
+            // if (characteristics == null) return;
+            //
+            // characteristics.Tick(Time.deltaTime);
+            //
+            // Player.PlayerCharacteristics.SaveHealingState(Player.Health.HealingModifier);
+        }
 
         public UniTask Init()
         {

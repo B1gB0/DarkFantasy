@@ -12,5 +12,7 @@ namespace _Project.Scripts.Game.Constant
         ArmorIconColor = 7,
         HealthIconColor = 8,
         DamageIconColor = 9,
+        SpeedColorBar = 10,
+        HealthColorBar = 11,
     }
 }

@@ -90,12 +90,10 @@ namespace _Project.Scripts.UI.View
                         _itemData.Duration,
                         _itemData.IsMultiplier);
                     break;
-
                 case ItemType.HealthPotion:
                     _playerService.Player.Health.AddHealth(_itemData.Value);
                     effectApplied = true;
                     break;
-
                 case ItemType.Meat:
                     effectApplied = _playerService.Player.Health.TryStartHealingOverTime(
                         _itemData.Value,

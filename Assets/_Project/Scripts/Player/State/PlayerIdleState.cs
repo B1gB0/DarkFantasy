@@ -24,11 +24,7 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
-            if (_player.InputController.IsAttackButtonPressed)
-            {
-                _stateMachine.SwitchState(StateId.Attack);
-                return;
-            }
+            _player.InputController.OnAttackButtonPressed += EnterAttack;
 
             if (_player.InputController.IsRollInputPerformed)
             {
@@ -48,6 +44,12 @@ namespace _Project.Scripts.Player
 
         public void Exit()
         {
+            _player.InputController.OnAttackButtonPressed -= EnterAttack;
+        }
+        
+        private void EnterAttack()
+        {
+            _stateMachine.SwitchState(StateId.Attack);
         }
     }
 }

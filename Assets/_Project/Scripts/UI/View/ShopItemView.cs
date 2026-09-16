@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
+using _Project.Scripts.Services;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +15,6 @@ namespace _Project.Scripts.UI.View
     public class ShopItemView : View
     {
         [SerializeField] private Button _buyButton;
-        [SerializeField] private List<Sprite> _icons;
         [SerializeField] private Image _iconItem;
         
         [SerializeField] private TMP_Text _name;
@@ -21,8 +22,15 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private TMP_Text _price;
 
         private ItemData _currentData;
+        private IShopService _shopService;
         
         public event Action<ItemData, ShopItemView> OnButtonClicked;
+
+        [Inject]
+        public void Construct(IShopService shopService)
+        {
+            _shopService = shopService;
+        }
         
         private void OnEnable()
         {
@@ -49,13 +57,13 @@ namespace _Project.Scripts.UI.View
             switch (_currentData.Type)
             {
                 case ItemType.HealthPotion:
-                    _iconItem.sprite = _icons[0];
+                    _iconItem.sprite = _shopService.GetItemSpriteByType(ItemType.HealthPotion);
                     break;
                 case ItemType.SpeedPotion:
-                    _iconItem.sprite = _icons[1];
+                    _iconItem.sprite = _shopService.GetItemSpriteByType(ItemType.SpeedPotion);;
                     break;
                 case ItemType.Meat:
-                    _iconItem.sprite = _icons[2];
+                    _iconItem.sprite = _shopService.GetItemSpriteByType(ItemType.Meat);;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
