@@ -49,7 +49,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Button CheatButton { get; private set; }
 #endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }
-        [field: SerializeField] public EquippedItemView EquippedItemView { get; private set; }
+        [field: SerializeField] public EquippedConsumableItemView EquippedConsumableItemView { get; private set; }
 
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)

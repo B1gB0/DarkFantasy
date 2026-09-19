@@ -121,6 +121,7 @@ namespace _Project.Scripts.Enemy
             Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
 
             Die?.Invoke(this);
+            ParticleEffectsService.PlayEffect(ParticleType.GenericDeath, Health.HitPoint.position);
         }
 
         protected virtual void OnPlayHitEffect()

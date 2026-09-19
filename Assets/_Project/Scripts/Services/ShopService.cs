@@ -11,7 +11,7 @@ namespace _Project.Scripts.Services
 {
     public class ShopService : IShopService
     {
-        public const string IconsConfigPath = "IconData";
+        private const string IconsConfigPath = "IconData";
 
         private readonly Dictionary<string, PlayerAttributeLevelData> _attributesData = new();
 

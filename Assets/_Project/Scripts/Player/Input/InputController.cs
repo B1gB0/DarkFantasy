@@ -11,16 +11,15 @@ namespace _Project.Scripts.Player.Input
         private const float MinMagnitude = 0.01f;
         private const float MinValue = 0f;
 
-        [Header("Action Locks")] 
-        [SerializeField] private bool _isMovementLocked;
+        [Header("Action Locks")] [SerializeField]
+        private bool _isMovementLocked;
 
         [SerializeField] private bool _isAttackLocked;
         [SerializeField] private bool _isRollLocked;
 
         [SerializeField] private float _rollCooldownDuration = 0.7f;
 
-        [Header("Camera")] 
-        [SerializeField] private float _cameraSensitivityX = 3f;
+        [Header("Camera")] [SerializeField] private float _cameraSensitivityX = 3f;
         [SerializeField] private float _cameraSensitivityY = 2f;
 
         private InputSystem _inputSystem;
@@ -60,7 +59,7 @@ namespace _Project.Scripts.Player.Input
 
             _inputSystem.PLayer.Move.performed += OnMove;
             _inputSystem.PLayer.Move.canceled += OnMove;
-            
+
             _inputSystem.PLayer.Roll.performed += OnRollPerformed;
         }
 
@@ -84,7 +83,7 @@ namespace _Project.Scripts.Player.Input
         {
             _inputSystem.PLayer.Move.performed -= OnMove;
             _inputSystem.PLayer.Move.canceled -= OnMove;
-            
+
             _inputSystem.PLayer.Roll.performed -= OnRollPerformed;
 
             _inputSystem.PLayer.Disable();
@@ -135,7 +134,7 @@ namespace _Project.Scripts.Player.Input
 
             OnUnlockController?.Invoke();
         }
-        
+
         private void UpdateAttackInput()
         {
             if (_isAttackLocked) return;
@@ -184,7 +183,12 @@ namespace _Project.Scripts.Player.Input
                 }
             }
 
-            if (IsPointerOverUI()) return;
+            if (IsPointerOverUI())
+            {
+                CameraLookDirection = Vector2.zero;
+                IsCameraRotating = false;
+                return;
+            }
 
             if (_inputSystem.PLayer.CameraDragButton.IsPressed())
             {

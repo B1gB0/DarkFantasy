@@ -177,9 +177,9 @@ namespace _Project.Scripts.Game.Gameplay
             _inventoryPanel.OnBackToSceneButtonPressed += _level.ModifiersPanel.Show;
             _inventoryPanel.OnBackToSceneButtonPressed += _level.TryShowBossUI;
 
-            _inventoryService.OnEquippedItem += _uiScene.EquippedItemView.Set;
-            _inventoryService.OnUnEquippedItem += _uiScene.EquippedItemView.UnSet;
-            _uiScene.EquippedItemButton.onClick.AddListener(_uiScene.EquippedItemView.ApplyItemEffect);
+            _inventoryService.OnEquippedItem += _uiScene.EquippedConsumableItemView.Set;
+            _inventoryService.OnUnEquippedItem += _uiScene.EquippedConsumableItemView.UnSet;
+            _uiScene.EquippedItemButton.onClick.AddListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
             {
@@ -234,9 +234,9 @@ namespace _Project.Scripts.Game.Gameplay
             _inventoryPanel.OnBackToSceneButtonPressed -= _level.ModifiersPanel.Show;
             _inventoryPanel.OnBackToSceneButtonPressed -= _level.TryShowBossUI;
 
-            _inventoryService.OnEquippedItem -= _uiScene.EquippedItemView.Set;
-            _inventoryService.OnUnEquippedItem -= _uiScene.EquippedItemView.UnSet;
-            _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedItemView.ApplyItemEffect);
+            _inventoryService.OnEquippedItem -= _uiScene.EquippedConsumableItemView.Set;
+            _inventoryService.OnUnEquippedItem -= _uiScene.EquippedConsumableItemView.UnSet;
+            _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
             {

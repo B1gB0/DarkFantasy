@@ -159,7 +159,7 @@ namespace _Project.Scripts.UI.View
 
             _itemsData = _shopService.GetItemsData();
             
-            foreach (var itemData in _itemsData)
+            foreach (var itemData in _itemsData.Where(itemData => itemData.IsSold))
             {
                 ShopItemView itemView = await CreateShopItemView(_shopItemsPanel.ItemContent);
                 itemView.Set(itemData);
@@ -230,7 +230,6 @@ namespace _Project.Scripts.UI.View
 
             CheatPanel cheatPanel = cheatPanelTemplate.GetComponent<CheatPanel>();
             GameObjectInjector.InjectObject(cheatPanel.gameObject, _container);
-            // cheatPanel.GetServices(experiencePoints);
             cheatPanel.transform.SetParent(UIScene.transform, false);
             return cheatPanel;
         }

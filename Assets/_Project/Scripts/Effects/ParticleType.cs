@@ -8,8 +8,9 @@ namespace _Project.Scripts.Effects
         MagicExplosion = 3,
         ShieldEffect = 4,
         RedBloodHit = 5,
-        SoulCoil = 6,
-        ExplosionFireball = 7,
-        MagicChargeBlue = 8,
+        MagicChargeBlue = 6,
+        SoulCoil = 7,
+        ExplosionFireball = 8,
+        GenericDeath = 9,
     }
 }

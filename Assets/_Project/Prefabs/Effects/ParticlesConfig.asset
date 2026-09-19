@@ -18,7 +18,8 @@ MonoBehaviour:
   - ParticleName: MagicExplosion
   - ParticleName: ShieldEffect
   - ParticleName: RedBloodHit
+  - ParticleName: MagicChargeBlue
   - ParticleName: SoulCoil
   - ParticleName: ExplosionFireball
-  - ParticleName: MagicChargeBlue
+  - ParticleName: GenericDeath
   _particleLabel: Particles

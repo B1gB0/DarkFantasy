@@ -272,6 +272,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Particles
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7dc0ddf28532d9428b1487084db0735
+    m_Address: GenericDeath
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Particles
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1871eaa3da924e498a54a74c28d628e
     m_Address: ExplosionFireball
     m_ReadOnly: 0

@@ -2665,7 +2665,7 @@ MonoBehaviour:
   <InventoryButton>k__BackingField: {fileID: 3078341238102668320}
   <CheatButton>k__BackingField: {fileID: 2818962466734275253}
   <EquippedItemButton>k__BackingField: {fileID: 5939948690564141460}
-  <EquippedItemView>k__BackingField: {fileID: 3904233132281406693}
+  <EquippedConsumableItemView>k__BackingField: {fileID: 3904233132281406693}
 --- !u!114 &8337989662546423875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2949,10 +2949,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _iconImage: {fileID: 9020846550314534839}
   _count: {fileID: 2912009940743989875}
-  _icons:
-  - {fileID: 21300000, guid: 47f290a00b1f4e948813b2286db65343, type: 3}
-  - {fileID: 21300000, guid: 881eedcd1dd35354ab5eb19ea799a3fa, type: 3}
-  - {fileID: 21300000, guid: 2ce1f0a16f7b2d74e9029ad91f27f05a, type: 3}
 --- !u!1 &6142880384520079245
 GameObject:
   m_ObjectHideFlags: 0
