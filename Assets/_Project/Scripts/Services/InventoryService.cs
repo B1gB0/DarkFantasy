@@ -18,8 +18,10 @@ namespace _Project.Scripts.Services
 
         public bool IsInitiated { get; private set; }
 
-        public event Action<ItemData, int> OnEquippedItem;
-        public event Action OnUnEquippedItem;
+        public event Action<ItemType, int> OnEquippedConsumableItem;
+        public event Action OnUnEquippedConsumableItem;
+        public event Action<ItemType> OnEquippedItem;
+        public event Action<ItemType> OnUnEquippedItem;
 
         [Inject]
         private void Construct(IShopService shopService)
@@ -44,7 +46,7 @@ namespace _Project.Scripts.Services
             _equippedItemType = YG2.saves.EquippedItemType;
 
             IsInitiated = true;
-            
+
             return UniTask.CompletedTask;
         }
 
@@ -56,17 +58,16 @@ namespace _Project.Scripts.Services
             Save();
         }
 
-        public bool RemoveItem(ItemType itemType, int amount = 1)
+        public void RemoveItem(ItemType itemType, int amount = 1)
         {
             if (!_items.ContainsKey(itemType) || _items[itemType] < amount)
-                return false;
+                return;
 
             _items[itemType] -= amount;
             if (_items[itemType] <= 0)
                 _items.Remove(itemType);
 
             Save();
-            return true;
         }
 
         public int GetItemCount(ItemType itemType)
@@ -84,33 +85,81 @@ namespace _Project.Scripts.Services
             return _items.ContainsKey(itemType) && _items[itemType] > 0;
         }
 
-        public bool EquipItem(ItemType itemType)
+        public void EquipConsumableItem(ItemType itemType)
         {
             if (!HasItem(itemType))
             {
-                UnequipItem();
-                return false;
+                UnequipConsumableItem();
+                return;
             }
 
-            _equippedItemType = itemType;
-            
             ItemData data = GetEquippedItemData();
+
+            if (data.Kind == ItemKind.Equipment)
+                return;
+
+            _equippedItemType = itemType;
+
             int count = GetItemCount(itemType);
-            OnEquippedItem?.Invoke(data, count);
+            
+            OnEquippedConsumableItem?.Invoke(data.Type, count);
 
             Save();
-            return true;
         }
 
-        public ItemType GetEquippedItemType()
+        public void EquipItem(ItemType itemType)
         {
-            return _equippedItemType;
+            if (!HasItem(itemType))
+            {
+                UnequipItem(itemType);
+                return;
+            }
+
+            ItemData data = _shopService.GetItemDataByType(itemType);
+
+            if (data.Kind == ItemKind.Consumable)
+                return;
+
+            switch (data.Slot)
+            {
+                case EquipmentType.Weapon:
+                    YG2.saves.EquipedWeaponType = itemType;
+                    break;
+                case EquipmentType.Armor:
+                    YG2.saves.EquipedArmorType = itemType;
+                    break;
+                case EquipmentType.Ring:
+                    YG2.saves.EquipedRingType = itemType;
+                    break;
+            }
+
+            OnEquippedItem?.Invoke(itemType);
         }
-        
-        private void UnequipItem()
+
+        private void UnequipItem(ItemType itemType)
+        {
+            ItemData data = _shopService.GetItemDataByType(itemType);
+
+            switch (data.Slot)
+            {
+                case EquipmentType.Weapon:
+                    YG2.saves.EquipedWeaponType = ItemType.None;
+                    break;
+                case EquipmentType.Armor:
+                    YG2.saves.EquipedArmorType = ItemType.None;
+                    break;
+                case EquipmentType.Ring:
+                    YG2.saves.EquipedRingType = ItemType.None;
+                    break;
+            }
+
+            OnUnEquippedItem?.Invoke(itemType);
+        }
+
+        private void UnequipConsumableItem()
         {
             _equippedItemType = ItemType.None;
-            OnUnEquippedItem?.Invoke();
+            OnUnEquippedConsumableItem?.Invoke();
             Save();
         }
 

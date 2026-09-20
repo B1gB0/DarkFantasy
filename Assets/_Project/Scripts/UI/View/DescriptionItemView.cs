@@ -24,6 +24,8 @@ namespace _Project.Scripts.UI.View
         private AudioSoundsService _audioSoundsService;
         private InventoryService _inventoryService;
         private ItemData _currentItem;
+        
+        public event Action OnEquippedItem;
 
         [Inject]
         private void Construct(AudioSoundsService audioSoundsService, InventoryService inventoryService)
@@ -78,7 +80,10 @@ namespace _Project.Scripts.UI.View
         private void OnEquippedButtonClicked()
         {
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            _inventoryService.EquipConsumableItem(_currentItem.Type);
             _inventoryService.EquipItem(_currentItem.Type);
+            
+            OnEquippedItem?.Invoke();
         }
     }
 }

@@ -9,17 +9,18 @@ using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 namespace _Project.Scripts.UI.View
 {
     public class EquippedConsumableItemView : View
     {
         private const int MinCount = 0;
-        
+
         [SerializeField] private Image _iconImage;
         [SerializeField] private TMP_Text _count;
 
-        private ItemData _itemData;
+        private ItemType _equippedItemType;
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
         private IShopService _shopService;
@@ -40,21 +41,27 @@ namespace _Project.Scripts.UI.View
 
         private void Start()
         {
-            if (_itemData != null) return;
+            _equippedItemType = YG2.saves.EquippedItemType;
+            
+            if (_equippedItemType != ItemType.None)
+            {
+                _inventoryService.EquipConsumableItem(_equippedItemType);
+                return;
+            }
 
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
         }
 
-        public void Set(ItemData itemData, int count)
+        public void Set(ItemType itemType, int count)
         {
             _iconImage.gameObject.SetActive(true);
             _count.gameObject.SetActive(true);
 
-            _itemData = itemData;
+            _equippedItemType = itemType;
             _count.text = count.ToString();
 
-            _iconImage.sprite = _shopService.GetItemSpriteByType(_itemData.Type);
+            _iconImage.sprite = _shopService.GetItemSpriteByType(_equippedItemType);
         }
 
         public void UnSet()
@@ -65,30 +72,32 @@ namespace _Project.Scripts.UI.View
 
         public void ApplyItemEffect()
         {
-            if (_itemData == null) return;
+            if (_equippedItemType == ItemType.None) return;
 
-            int currentCount = _inventoryService.GetItemCount(_itemData.Type);
+            int currentCount = _inventoryService.GetItemCount(_equippedItemType);
             if (currentCount <= MinCount) return;
 
             var characteristics = _playerService.Player.PlayerCharacteristics;
             bool effectApplied = false;
+            
+            ItemData data = _shopService.GetItemDataByType(_equippedItemType);
 
-            switch (_itemData.Type)
+            switch (_equippedItemType)
             {
                 case ItemType.SpeedPotion:
                     effectApplied = characteristics.AddSpeedModifier(
-                        _itemData.Value,
-                        _itemData.Duration,
-                        _itemData.IsMultiplier);
+                        data.Value,
+                        data.Duration,
+                        data.IsMultiplier);
                     break;
                 case ItemType.HealthPotion:
-                    _playerService.Player.Health.AddHealth(_itemData.Value);
+                    _playerService.Player.Health.AddHealth(data.Value);
                     effectApplied = true;
                     break;
                 case ItemType.Meat:
                     effectApplied = _playerService.Player.Health.TryStartHealingOverTime(
-                        _itemData.Value,
-                        _itemData.Duration);
+                        data.Value,
+                        data.Duration);
                     break;
             }
 
@@ -96,12 +105,12 @@ namespace _Project.Scripts.UI.View
                 return;
 
             _audioService.PlaySound(SoundsType.PotionSound).Forget();
-            _inventoryService.RemoveItem(_itemData.Type);
+            _inventoryService.RemoveItem(_equippedItemType);
 
-            int newCount = _inventoryService.GetItemCount(_itemData.Type);
+            int newCount = _inventoryService.GetItemCount(_equippedItemType);
             if (newCount > MinCount)
             {
-                Set(_itemData, newCount);
+                Set(_equippedItemType, newCount);
             }
             else
             {

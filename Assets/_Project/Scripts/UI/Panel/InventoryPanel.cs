@@ -22,6 +22,7 @@ namespace _Project.Scripts.UI.Panel
 
         [SerializeField] private List<InventoryItemView> _itemViews;
         [SerializeField] private DescriptionItemView _descriptionItemView;
+        [SerializeField] private List<SlotView> _slotViews;
 
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
@@ -110,6 +111,16 @@ namespace _Project.Scripts.UI.Panel
         {
             _tweenAnimationService.AnimateScale(transform, true);
             _playerService.Player.InputController.UnlockPlayerMovement();
+        }
+
+        public void SetSlots(ItemType itemType)
+        {
+            ItemData data = _shopService.GetItemDataByType(itemType);
+            
+            foreach (var slotView in _slotViews)
+            {
+                slotView.Set(data);
+            }
         }
 
         private void MoveBackToScene()

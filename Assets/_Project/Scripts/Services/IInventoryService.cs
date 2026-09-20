@@ -7,11 +7,13 @@ namespace _Project.Scripts.Services
     public interface IInventoryService : IService
     {
         public void AddItem(ItemType itemType, int amount = 1);
-        public bool EquipItem(ItemType itemType);
-        public bool RemoveItem(ItemType itemType, int amount = 1);
+        public void EquipConsumableItem(ItemType itemType);
+        public void RemoveItem(ItemType itemType, int amount = 1);
         public bool HasItem(ItemType itemType);
         public int GetItemCount(ItemType itemType);
-        public event Action<ItemData, int> OnEquippedItem;
-        public event Action OnUnEquippedItem;
+        public event Action<ItemType, int> OnEquippedConsumableItem;
+        public event Action OnUnEquippedConsumableItem;
+        public event Action<ItemType> OnEquippedItem;
+        public event Action<ItemType> OnUnEquippedItem;
     }
 }
