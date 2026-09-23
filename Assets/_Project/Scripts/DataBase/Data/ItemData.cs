@@ -23,6 +23,7 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private EquipmentType _slot;
         [SerializeField] private ItemRarity _rarity;
         [SerializeField] private bool _isSold;
+        [SerializeField] private BonusType _bonusType;
 
         public string Id => _id;
         public ItemType Type => _type;
@@ -40,5 +41,6 @@ namespace _Project.Scripts.DataBase.Data
         public EquipmentType Slot => _slot;
         public ItemRarity Rarity => _rarity;
         public bool IsSold => _isSold;
+        public BonusType BonusType => _bonusType;
     }
 }

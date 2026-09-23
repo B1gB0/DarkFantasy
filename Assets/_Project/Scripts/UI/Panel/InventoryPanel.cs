@@ -113,16 +113,6 @@ namespace _Project.Scripts.UI.Panel
             _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
-        public void SetSlots(ItemType itemType)
-        {
-            ItemData data = _shopService.GetItemDataByType(itemType);
-            
-            foreach (var slotView in _slotViews)
-            {
-                slotView.Set(data);
-            }
-        }
-
         private void MoveBackToScene()
         {
             OnBackToSceneButtonPressed?.Invoke();

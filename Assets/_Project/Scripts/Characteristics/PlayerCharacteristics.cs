@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 using _Project.Scripts.Player;
 using _Project.Scripts.Services;
 using UnityEngine;
@@ -13,9 +14,9 @@ namespace _Project.Scripts.Characteristics
     {
         private const int MinValue = 0;
         private const int CorrectFactor = 1;
-        
+
         private const float PercentFactor = 100f;
-        
+
         public float MaxHealth;
         public float TargetHealth;
         public float Armor;
@@ -23,14 +24,26 @@ namespace _Project.Scripts.Characteristics
         public float MoveSpeed;
         public float RotationSpeed;
 
-        [SerializeField] private List<SpeedModifier> _speedModifiers = new();
+        [SerializeField] private List<SpeedModifier> _speedModifiers;
         [SerializeField] private HealingModifier _healingModifier;
-        
+
         [NonSerialized] private float _baseMoveSpeed;
         [NonSerialized] private IPlayerService _playerService;
-        
+
+        [NonSerialized] private float _equipmentArmorBonus;
+        [NonSerialized] private float _equipmentDamageBonus;
+        [NonSerialized] private float _equipmentMaxHealthBonus;
+        [NonSerialized] private float _equipmentHealthRegenBonus;
+        [NonSerialized] private float _equipmentMoveSpeedBonus;
+
         public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
         public HealingModifier HealingModifier => _healingModifier;
+
+        public float GetTotalArmor() => Armor + _equipmentArmorBonus;
+        public float GetTotalDamage() => Damage + _equipmentDamageBonus;
+        public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
+        public float GetHealthRegenPerSecond() => _equipmentHealthRegenBonus;
+        public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
 
         public void SetStartingData(PlayerData data)
         {
@@ -47,39 +60,66 @@ namespace _Project.Scripts.Characteristics
         public void SetCharacteristics(IPlayerService playerService)
         {
             _playerService = playerService;
-            
+            _speedModifiers ??= new List<SpeedModifier>();
+
             for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
             {
                 if (!_speedModifiers[i].Timer.IsActive)
                     _speedModifiers.RemoveAt(i);
             }
-            
-            _playerService.Player.Health.LoadHealth(MaxHealth, TargetHealth);
-            
+
             _baseMoveSpeed = MoveSpeed;
         }
-        
-        public void LoadHealth(Player.Core.Player player)
-        {
-            if (player == null || player.Health == null)
-                return;
 
-            player.Health.LoadHealth(MaxHealth, TargetHealth);
-            player.Health.BindCharacteristics(this);
+        public void RecalculateEquipmentBonuses(IReadOnlyList<ItemData> equippedItems)
+        {
+            _equipmentArmorBonus = 0f;
+            _equipmentDamageBonus = 0f;
+            _equipmentMaxHealthBonus = 0f;
+            _equipmentHealthRegenBonus = 0f;
+            _equipmentMoveSpeedBonus = 0f;
+
+            if (equippedItems == null) return;
+
+            foreach (var item in equippedItems)
+            {
+                if (item == null) continue;
+
+                switch (item.BonusType)
+                {
+                    case BonusType.Armor:
+                        _equipmentArmorBonus += item.Value;
+                        break;
+                    case BonusType.Damage:
+                        _equipmentDamageBonus += item.Value;
+                        break;
+                    case BonusType.MaxHealth:
+                        _equipmentMaxHealthBonus += item.Value;
+                        break;
+                    case BonusType.HealthRegen:
+                        _equipmentHealthRegenBonus += item.Value;
+                        break;
+                    case BonusType.MoveSpeed:
+                        _equipmentMoveSpeedBonus += item.Value;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
-        
+
         public void BindToPlayer(Player.Core.Player player)
         {
             if (player == null || player.Health == null)
                 return;
 
-            player.Health.LoadHealth(MaxHealth, TargetHealth);
+            player.Health.LoadHealth(GetTotalMaxHealth(), TargetHealth);
             player.Health.BindCharacteristics(this);
         }
-        
+
         public void Tick(float deltaTime)
         {
-            if (_speedModifiers != null || _speedModifiers.Count > MinValue)
+            if (_speedModifiers != null && _speedModifiers.Count > MinValue)
             {
                 for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
                 {
@@ -89,7 +129,7 @@ namespace _Project.Scripts.Characteristics
                     }
                 }
             }
-            
+
             if (_healingModifier != null && _healingModifier.Tick(deltaTime))
                 _healingModifier = null;
         }
@@ -117,11 +157,11 @@ namespace _Project.Scripts.Characteristics
                     break;
             }
         }
-        
+
         public bool AddSpeedModifier(float value, float duration, bool isMultiplier = false)
         {
             _speedModifiers ??= new List<SpeedModifier>();
-            
+
             for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
             {
                 if (!_speedModifiers[i].Timer.IsActive)
@@ -134,20 +174,20 @@ namespace _Project.Scripts.Characteristics
             _speedModifiers.Add(new SpeedModifier(value, isMultiplier, duration));
             return true;
         }
-        
+
         public void ClearSpeedModifiers()
         {
             _speedModifiers?.Clear();
         }
-        
+
         public void ClearHealing()
         {
             _healingModifier = null;
         }
-        
+
         public bool TryStartHealing(float totalAmount, float duration)
         {
-            if (duration <= 0f)
+            if (duration <= MinValue)
                 return false;
 
             if (_healingModifier != null && _healingModifier.Timer.IsActive)
@@ -156,7 +196,7 @@ namespace _Project.Scripts.Characteristics
             _healingModifier = new HealingModifier(totalAmount, duration);
             return true;
         }
-        
+
         public float GetCurrentMoveSpeed()
         {
             float result = _baseMoveSpeed;
@@ -185,14 +225,12 @@ namespace _Project.Scripts.Characteristics
 
         private void IncreaseArmor(float armorValue)
         {
-            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-            Armor = data.Armor + armorValue;
+            Armor += armorValue;
         }
 
         private void IncreaseDamage(float damageValue)
         {
-            PlayerData data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
-            Damage = data.Damage + damageValue;
+            Damage += damageValue;
         }
     }
 }

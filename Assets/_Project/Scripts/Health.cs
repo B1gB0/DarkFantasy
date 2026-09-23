@@ -45,15 +45,17 @@ namespace _Project.Scripts
 
         private void Update()
         {
-            if (_characteristics == null)
-                return;
-
-            var heal = _characteristics.HealingModifier;
-            if (heal == null || !heal.Timer.IsActive)
-                return;
+            if (_characteristics == null) return;
 
             float dt = Time.deltaTime;
-            AddHealthSilent(heal.HealPerSecond * dt);
+            
+            var heal = _characteristics.HealingModifier;
+            if (heal != null && heal.Timer.IsActive)
+                AddHealthSilent(heal.HealPerSecond * dt);
+
+            float regen = _characteristics.GetHealthRegenPerSecond();
+            if (regen > MinValue && TargetHealth < MaxHealth)
+                AddHealthSilent(regen * dt);
         }
 
         private void OnDestroy()
@@ -127,6 +129,22 @@ namespace _Project.Scripts
         {
             return _characteristics != null &&
                    _characteristics.TryStartHealing(totalAmount, duration);
+        }
+        
+        public void SetMaxHealth(float newMax)
+        {
+            if (Mathf.Approximately(MaxHealth, newMax)) return;
+
+            float percent = MaxHealth > 0f ? TargetHealth / MaxHealth : 1f;
+
+            MaxHealth = newMax;
+            
+            float newTarget = Mathf.Clamp(MaxHealth * percent, MinValue, newMax);
+            if (newTarget < MinAliveHealth && newMax >= MinAliveHealth)
+                newTarget = MinAliveHealth;
+
+            TargetHealth = newTarget;
+            OnChangeHealth();
         }
 
         public void SetHealthValue(float healthValue)

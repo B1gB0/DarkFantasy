@@ -20,8 +20,8 @@ namespace _Project.Scripts.Services
 
         public event Action<ItemType, int> OnEquippedConsumableItem;
         public event Action OnUnEquippedConsumableItem;
-        public event Action<ItemType> OnEquippedItem;
-        public event Action<ItemType> OnUnEquippedItem;
+        public event Action OnEquippedItem;
+        public event Action OnUnEquippedItem;
 
         [Inject]
         private void Construct(IShopService shopService)
@@ -133,7 +133,7 @@ namespace _Project.Scripts.Services
                     break;
             }
 
-            OnEquippedItem?.Invoke(itemType);
+            OnEquippedItem?.Invoke();
         }
 
         private void UnequipItem(ItemType itemType)
@@ -153,7 +153,7 @@ namespace _Project.Scripts.Services
                     break;
             }
 
-            OnUnEquippedItem?.Invoke(itemType);
+            OnUnEquippedItem?.Invoke();
         }
 
         private void UnequipConsumableItem()

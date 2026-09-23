@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Items;
 using _Project.Scripts.Player;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -20,6 +22,8 @@ namespace _Project.Scripts.Services
         private readonly Dictionary<PlayerType, PlayerData> _playersData = new ();
         
         private IDataBaseService _dataBaseService;
+        private IShopService _shopService;
+        private IInventoryService _inventoryService;
         
         public bool IsInitiated { get; private set; }
         public Player.Core.Player Player { get; private set; }
@@ -27,9 +31,18 @@ namespace _Project.Scripts.Services
         private Container _container;
 
         [Inject]
-        public void Construct(IDataBaseService dataBaseService)
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IShopService shopService,
+            IInventoryService inventoryService)
         {
             _dataBaseService = dataBaseService;
+            _shopService = shopService;
+            _inventoryService =  inventoryService;
+
+
+            _inventoryService.OnEquippedItem += RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
         }
         
         public CinemachineFreeLook FreeLookCamera { get; private set; }
@@ -42,6 +55,12 @@ namespace _Project.Scripts.Services
             if (characteristics == null) return;
 
             characteristics.Tick(Time.deltaTime);
+        }
+
+        private void OnDestroy()
+        {
+            _inventoryService.OnEquippedItem -= RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem -= RecalculateEquipment;
         }
 
         public UniTask Init()
@@ -74,6 +93,7 @@ namespace _Project.Scripts.Services
                 characteristics.SetCharacteristics(this);
             }
 
+            RecalculateEquipment();
             YG2.saves.PlayerCharacteristics = characteristics;
 
             return characteristics;
@@ -98,8 +118,7 @@ namespace _Project.Scripts.Services
 
             if (Player.Health.TargetHealth <= MinValue)
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);
-
-            // Связываем Health с характеристиками: HP + HealingModifier
+            
             var characteristics = YG2.saves.PlayerCharacteristics;
             characteristics?.BindToPlayer(Player);
 
@@ -127,6 +146,34 @@ namespace _Project.Scripts.Services
                 rollButton,
                 inventoryButton,
                 equippedItemButton);
+        }
+        
+        private void RecalculateEquipment()
+        {
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            if (characteristics == null) return;
+
+            var equipped = CollectEquippedItems();
+            characteristics.RecalculateEquipmentBonuses(equipped);
+            
+            if (Player != null && Player.Health != null)
+                Player.Health.SetMaxHealth(characteristics.GetTotalMaxHealth());
+        }
+        
+        private List<ItemData> CollectEquippedItems()
+        {
+            var result = new List<ItemData>(3);
+            AddIfEquipped(result, YG2.saves.EquipedWeaponType);
+            AddIfEquipped(result, YG2.saves.EquipedArmorType);
+            AddIfEquipped(result, YG2.saves.EquipedRingType);
+            return result;
+        }
+
+        private void AddIfEquipped(List<ItemData> list, ItemType type)
+        {
+            if (type == ItemType.None) return;
+            var data = _shopService.GetItemDataByType(type);
+            if (data != null) list.Add(data);
         }
     }
 }

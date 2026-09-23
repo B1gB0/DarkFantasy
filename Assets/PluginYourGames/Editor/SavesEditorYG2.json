@@ -11,7 +11,10 @@
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
-  "EquippedItemType": 3,
+  "EquippedItemType": 0,
+  "EquipedWeaponType": 0,
+  "EquipedArmorType": 0,
+  "EquipedRingType": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
     "TargetHealth": 75.53592,
@@ -23,9 +26,9 @@
       {
         "Timer": {
           "TotalDuration": 30.0,
-          "RemainingTime": 13.2625008,
+          "RemainingTime": 4.793485,
           "IsActive": true,
-          "Progress01": 0.442083359
+          "Progress01": 0.159782842
         },
         "Value": 15.0,
         "IsMultiplier": true
@@ -48,5 +51,5 @@
     false,
     false
   ],
-  "idSave": 15
+  "idSave": 20
 }

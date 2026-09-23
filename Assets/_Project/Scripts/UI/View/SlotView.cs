@@ -16,19 +16,30 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Sprite _defaultSprite;
 
         private IShopService _shopService;
+        private IInventoryService _inventoryService;
 
         [Inject]
-        private void Construct(IShopService shopService)
+        private void Construct(IShopService shopService, IInventoryService inventoryService)
         {
             _shopService = shopService;
+            _inventoryService = inventoryService;
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            LoadSlots();
+            _inventoryService.OnEquippedItem += Refresh;
+            _inventoryService.OnUnEquippedItem += Refresh;
+
+            Refresh();
         }
 
-        public void Set(ItemData data)
+        private void OnDisable()
+        {
+            _inventoryService.OnEquippedItem -= Refresh;
+            _inventoryService.OnUnEquippedItem -= Refresh;
+        }
+
+        private void Set(ItemData data)
         {
             if (data == null)
             {
@@ -36,47 +47,37 @@ namespace _Project.Scripts.UI.View
                 _icon.sprite = _defaultSprite;
                 return;
             }
-            
+
             _rarityBackground.color = data.Rarity switch
             {
                 ItemRarity.Common => Color.white,
                 ItemRarity.Uncommon => Color.green,
                 ItemRarity.Rare => Color.blue,
-                _ => _rarityBackground.color
+                _ => Color.white,
             };
-            
+
             _icon.sprite = _shopService.GetItemSpriteByType(data.Type);
         }
-        
-        private void LoadSlots()
+
+        private void Refresh()
         {
-            switch (_equipmentType)
+            ItemType type = GetEquippedTypeForMySlot();
+            ItemData data = type == ItemType.None
+                ? null
+                : _shopService.GetItemDataByType(type);
+
+            Set(data);
+        }
+
+        private ItemType GetEquippedTypeForMySlot()
+        {
+            return _equipmentType switch
             {
-                case EquipmentType.Armor:
-                {
-                    if (YG2.saves.EquipedArmorType != ItemType.None)
-                    {
-                        Set(_shopService.GetItemDataByType(YG2.saves.EquipedArmorType));
-                    }
-                    break;
-                }
-                case EquipmentType.Weapon:
-                {
-                    if (YG2.saves.EquipedWeaponType != ItemType.None)
-                    {
-                        Set(_shopService.GetItemDataByType(YG2.saves.EquipedWeaponType));
-                    }
-                    break;
-                }
-                case EquipmentType.Ring:
-                {
-                    if (YG2.saves.EquipedRingType != ItemType.None)
-                    {
-                        Set(_shopService.GetItemDataByType(YG2.saves.EquipedRingType));
-                    }
-                    break;
-                }
-            }
+                EquipmentType.Weapon => YG2.saves.EquipedWeaponType,
+                EquipmentType.Armor  => YG2.saves.EquipedArmorType,
+                EquipmentType.Ring   => YG2.saves.EquipedRingType,
+                _ => ItemType.None,
+            };
         }
     }
 }

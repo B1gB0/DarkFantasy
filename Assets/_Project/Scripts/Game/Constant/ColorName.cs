@@ -14,5 +14,8 @@ namespace _Project.Scripts.Game.Constant
         DamageIconColor = 9,
         SpeedColorBar = 10,
         HealthColorBar = 11,
+        RarityCommon = 12,
+        RarityUncommon = 13,
+        RarityRare = 14,
     }
 }

@@ -179,7 +179,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryService.OnEquippedConsumableItem += _uiScene.EquippedConsumableItemView.Set;
             _inventoryService.OnUnEquippedConsumableItem += _uiScene.EquippedConsumableItemView.UnSet;
-            _inventoryService.OnEquippedItem += _inventoryPanel.SetSlots;
+            // _inventoryService.OnEquippedItem += _inventoryPanel.SetSlots;
             _uiScene.EquippedItemButton.onClick.AddListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
@@ -237,7 +237,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryService.OnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.Set;
             _inventoryService.OnUnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.UnSet;
-            _inventoryService.OnEquippedItem -= _inventoryPanel.SetSlots;
+            // _inventoryService.OnEquippedItem -= _inventoryPanel.SetSlots;
             _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
