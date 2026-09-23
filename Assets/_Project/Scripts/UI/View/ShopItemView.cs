@@ -88,10 +88,10 @@ namespace _Project.Scripts.UI.View
 
             _value.text = YG2.lang switch
             {
-                LocalizationCode.Ru => "+" + _currentData.Value + "ОЗ",
-                LocalizationCode.En => "+" + _currentData.Value + "HP",
-                LocalizationCode.Tr => "+" + _currentData.Value + "CP",
-                _ => _name.text
+                LocalizationCode.Ru => _currentData.DescriptionRu,
+                LocalizationCode.En => _currentData.DescriptionEn,
+                LocalizationCode.Tr => _currentData.DescriptionTr,
+                _ => _value.text
             };
 
             if (_currentData.Rarity == ItemRarity.None)
