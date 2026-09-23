@@ -242,6 +242,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 1
+      _bonusType: 0
     - _id: SpeedPotion
       _type: 2
       _value: 15
@@ -262,6 +263,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 1
+      _bonusType: 0
     - _id: Meat
       _type: 3
       _value: 5
@@ -282,8 +284,9 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 1
+      _bonusType: 0
     - _id: Common_Ring_Max_Health
-      _type: 0
+      _type: 4
       _value: 1
       _price: 0
       _duration: 0
@@ -300,8 +303,9 @@ MonoBehaviour:
       _slot: 3
       _rarity: 1
       _isSold: 0
+      _bonusType: 1
     - _id: UnCommon_Ring_Max_Health
-      _type: 0
+      _type: 5
       _value: 3
       _price: 0
       _duration: 0
@@ -318,8 +322,9 @@ MonoBehaviour:
       _slot: 3
       _rarity: 2
       _isSold: 0
+      _bonusType: 1
     - _id: Rare_Ring_Max_Health
-      _type: 0
+      _type: 6
       _value: 5
       _price: 300
       _duration: 0
@@ -336,6 +341,7 @@ MonoBehaviour:
       _slot: 3
       _rarity: 3
       _isSold: 1
+      _bonusType: 1
     - _id: Common_Ring_Regeneration_Health
       _type: 0
       _value: 1
@@ -355,6 +361,7 @@ MonoBehaviour:
       _slot: 3
       _rarity: 1
       _isSold: 1
+      _bonusType: 2
     - _id: UnCommon_Ring_Regeneration_Health
       _type: 0
       _value: 2
@@ -374,6 +381,7 @@ MonoBehaviour:
       _slot: 3
       _rarity: 2
       _isSold: 0
+      _bonusType: 2
     - _id: Rare_Ring_Regeneration_Health
       _type: 0
       _value: 3
@@ -393,8 +401,9 @@ MonoBehaviour:
       _slot: 3
       _rarity: 3
       _isSold: 0
+      _bonusType: 2
     - _id: Common_Sword
-      _type: 0
+      _type: 10
       _value: 3
       _price: 0
       _duration: 0
@@ -410,8 +419,9 @@ MonoBehaviour:
       _slot: 1
       _rarity: 1
       _isSold: 0
+      _bonusType: 4
     - _id: UnCommon_Sword
-      _type: 0
+      _type: 11
       _value: 5
       _price: 200
       _duration: 0
@@ -427,8 +437,9 @@ MonoBehaviour:
       _slot: 1
       _rarity: 2
       _isSold: 1
+      _bonusType: 4
     - _id: Rare_Sword
-      _type: 0
+      _type: 12
       _value: 7
       _price: 0
       _duration: 0
@@ -444,8 +455,9 @@ MonoBehaviour:
       _slot: 1
       _rarity: 3
       _isSold: 0
+      _bonusType: 4
     - _id: Common_Armor
-      _type: 0
+      _type: 13
       _value: 2
       _price: 100
       _duration: 0
@@ -461,8 +473,9 @@ MonoBehaviour:
       _slot: 2
       _rarity: 1
       _isSold: 1
+      _bonusType: 5
     - _id: UnCommon_Armor
-      _type: 0
+      _type: 14
       _value: 4
       _price: 0
       _duration: 0
@@ -478,8 +491,9 @@ MonoBehaviour:
       _slot: 2
       _rarity: 2
       _isSold: 0
+      _bonusType: 5
     - _id: Rare_Armor
-      _type: 0
+      _type: 15
       _value: 6
       _price: 0
       _duration: 0
@@ -495,6 +509,7 @@ MonoBehaviour:
       _slot: 2
       _rarity: 3
       _isSold: 0
+      _bonusType: 5
     - _id: 
       _type: 0
       _value: 0
@@ -511,6 +526,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 0
+      _bonusType: 0
     - _id: 
       _type: 0
       _value: 0
@@ -527,6 +543,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 0
+      _bonusType: 0
     - _id: 
       _type: 0
       _value: 0
@@ -543,6 +560,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 0
+      _bonusType: 0
     - _id: 
       _type: 0
       _value: 0
@@ -559,6 +577,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 0
+      _bonusType: 0
     - _id: 
       _type: 0
       _value: 0
@@ -575,6 +594,7 @@ MonoBehaviour:
       _slot: 0
       _rarity: 0
       _isSold: 0
+      _bonusType: 0
     PlayerAttributeLevelData:
     - _id: damage_1
       _type: 0

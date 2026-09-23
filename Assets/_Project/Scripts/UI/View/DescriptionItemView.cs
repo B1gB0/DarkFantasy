@@ -22,13 +22,13 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Button _backButton;
 
         private AudioSoundsService _audioSoundsService;
-        private InventoryService _inventoryService;
+        private IInventoryService _inventoryService;
         private ItemData _currentItem;
         
         public event Action OnEquippedItem;
 
         [Inject]
-        private void Construct(AudioSoundsService audioSoundsService, InventoryService inventoryService)
+        private void Construct(AudioSoundsService audioSoundsService, IInventoryService inventoryService)
         {
             _audioSoundsService = audioSoundsService;
             _inventoryService = inventoryService;

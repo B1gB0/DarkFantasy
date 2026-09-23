@@ -215,7 +215,7 @@ namespace _Project.Scripts.UI.View
             inventoryPanelTemplate = Instantiate(inventoryPanelTemplate);
 
             _inventoryPanel = inventoryPanelTemplate.GetComponent<InventoryPanel>();
-            GameObjectInjector.InjectObject(_inventoryPanel.gameObject, _container);
+            GameObjectInjector.InjectRecursive(_inventoryPanel.gameObject, _container);
             _inventoryPanel.transform.SetParent(UIScene.transform, false);
             _inventoryPanel.gameObject.SetActive(false);
 

@@ -23,17 +23,17 @@ namespace _Project.Scripts.UI.View
         {
             _shopService = shopService;
             _inventoryService = inventoryService;
+            
+            _inventoryService.OnEquippedItem += Refresh;
+            _inventoryService.OnUnEquippedItem += Refresh;
         }
 
         private void OnEnable()
         {
-            _inventoryService.OnEquippedItem += Refresh;
-            _inventoryService.OnUnEquippedItem += Refresh;
-
             Refresh();
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _inventoryService.OnEquippedItem -= Refresh;
             _inventoryService.OnUnEquippedItem -= Refresh;
