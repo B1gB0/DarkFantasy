@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
+using _Project.Scripts.Services;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,11 +18,17 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Image _hoverImage;
         [SerializeField] private TMP_Text _count;
         [SerializeField] private Button _button;
-        [SerializeField] private List<Sprite> _icons;
 
         private ItemData _itemData;
-        
+        private IShopService _shopService;
+
         public event Action<ItemType, InventoryItemView> OnSelectButtonPressed;
+
+        [Inject]
+        private void Construct(IShopService shopService)
+        {
+            _shopService = shopService;
+        }
 
         private void Start()
         {
@@ -36,42 +44,27 @@ namespace _Project.Scripts.UI.View
         {
             _itemData = itemData;
             _count.text = count.ToString();
-            
+
             _hoverImage.gameObject.SetActive(false);
             _iconImage.gameObject.SetActive(true);
             _count.gameObject.SetActive(true);
-            
+
             if (itemData == null)
             {
                 _iconImage.gameObject.SetActive(false);
                 _count.gameObject.SetActive(false);
-                
+
                 return;
             }
-            
-            switch (_itemData.Type)
-            {
-                case ItemType.HealthPotion:
-                    _iconImage.sprite = _icons[0];
-                    break;
-                case ItemType.SpeedPotion:
-                    _iconImage.sprite = _icons[1];
-                    break;
-                case ItemType.Meat:
-                    _iconImage.sprite = _icons[2];
-                    break;
-                default:
-                    _iconImage.gameObject.SetActive(false);
-                    _count.gameObject.SetActive(false);
-                    break;
-            }
+
+            _iconImage.sprite = _shopService.GetItemSpriteByType(_itemData.Type);
         }
 
         public void ShowHover()
         {
             _hoverImage.gameObject.SetActive(true);
         }
-        
+
         public void HideHover()
         {
             _hoverImage.gameObject.SetActive(false);
@@ -79,7 +72,7 @@ namespace _Project.Scripts.UI.View
 
         private void OnSelectItem()
         {
-            if(_itemData != null)
+            if (_itemData != null)
                 OnSelectButtonPressed?.Invoke(_itemData.Type, this);
         }
     }

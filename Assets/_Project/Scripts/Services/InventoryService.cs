@@ -58,6 +58,20 @@ namespace _Project.Scripts.Services
             Save();
         }
 
+        public void ShowCurrentEquippedConsumableItem()
+        {
+            var data = _shopService.GetItemDataByType(_equippedItemType);
+            int count = GetItemCount(data.Type);
+
+            if (count < 0)
+            {
+                UnequipConsumableItem();
+                return;
+            }
+            
+            OnEquippedConsumableItem?.Invoke(_equippedItemType, count);
+        }
+
         public void RemoveItem(ItemType itemType, int amount = 1)
         {
             if (!_items.ContainsKey(itemType) || _items[itemType] < amount)
@@ -75,34 +89,28 @@ namespace _Project.Scripts.Services
             return _items.GetValueOrDefault(itemType, 0);
         }
 
-        public Dictionary<ItemType, int> GetAllItems()
-        {
-            return new Dictionary<ItemType, int>(_items);
-        }
-
         public bool HasItem(ItemType itemType)
         {
             return _items.ContainsKey(itemType) && _items[itemType] > 0;
         }
 
-        public void EquipConsumableItem(ItemType itemType)
+        public void EquipConsumableItem(ItemData data)
         {
-            if (!HasItem(itemType))
+            if (data.Kind == ItemKind.Equipment)
+                return;
+
+            if (!HasItem(data.Type))
             {
                 UnequipConsumableItem();
                 return;
             }
 
-            ItemData data = GetEquippedItemData();
-
             if (data.Kind == ItemKind.Equipment)
                 return;
 
-            _equippedItemType = itemType;
+            _equippedItemType = data.Type;
 
-            int count = GetItemCount(itemType);
-            
-            OnEquippedConsumableItem?.Invoke(data.Type, count);
+            ShowCurrentEquippedConsumableItem();
 
             Save();
         }
@@ -161,11 +169,6 @@ namespace _Project.Scripts.Services
             _equippedItemType = ItemType.None;
             OnUnEquippedConsumableItem?.Invoke();
             Save();
-        }
-
-        private ItemData GetEquippedItemData()
-        {
-            return _shopService.GetItemDataByType(_equippedItemType);
         }
 
         private void Save()

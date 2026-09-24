@@ -1,6 +1,6 @@
 {
-  "Gold": 0,
-  "AcumulatedScore": 30,
+  "Gold": 680,
+  "AcumulatedScore": 185,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -12,12 +12,12 @@
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
   "EquippedItemType": 0,
-  "EquipedWeaponType": 0,
+  "EquipedWeaponType": 11,
   "EquipedArmorType": 0,
-  "EquipedRingType": 0,
+  "EquipedRingType": 7,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 100.0,
+    "TargetHealth": 86.39215,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -25,7 +25,10 @@
     "SpeedModifiers": [],
     "HealingModifier": null
   },
-  "InventoryItems": {},
+  "InventoryItems": {
+    "UnCommonSword": 1,
+    "CommonRingRegenerationHealth": 1
+  },
   "stringKeys": [],
   "stringValues": [],
   "floatKeys": [],
@@ -40,5 +43,5 @@
     false,
     false
   ],
-  "idSave": 56
+  "idSave": 17
 }

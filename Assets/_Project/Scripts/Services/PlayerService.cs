@@ -81,20 +81,17 @@ namespace _Project.Scripts.Services
         public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data)
         {
             var characteristics = YG2.saves.PlayerCharacteristics;
-
-            if (characteristics != null)
+            
+            if (characteristics == null || characteristics.MaxHealth <= MinValue)
             {
-                characteristics.SetCharacteristics(this);
-            }
-            else
-            {
-                characteristics = new PlayerCharacteristics();
+                characteristics ??= new PlayerCharacteristics();
                 characteristics.SetStartingData(data);
-                characteristics.SetCharacteristics(this);
             }
+
+            characteristics.SetCharacteristics(this);
+            YG2.saves.PlayerCharacteristics = characteristics;
 
             RecalculateEquipment();
-            YG2.saves.PlayerCharacteristics = characteristics;
 
             return characteristics;
         }

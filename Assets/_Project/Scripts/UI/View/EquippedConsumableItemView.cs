@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using _Project.Scripts.Audio.Sounds;
+﻿using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
@@ -42,12 +40,6 @@ namespace _Project.Scripts.UI.View
         private void Start()
         {
             _equippedItemType = YG2.saves.EquippedItemType;
-            
-            if (_equippedItemType != ItemType.None)
-            {
-                _inventoryService.EquipConsumableItem(_equippedItemType);
-                return;
-            }
 
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
@@ -55,6 +47,8 @@ namespace _Project.Scripts.UI.View
 
         public void Set(ItemType itemType, int count)
         {
+            if (itemType == ItemType.None) return;
+
             _iconImage.gameObject.SetActive(true);
             _count.gameObject.SetActive(true);
 
@@ -66,6 +60,10 @@ namespace _Project.Scripts.UI.View
 
         public void UnSet()
         {
+            _equippedItemType = ItemType.None;
+            YG2.saves.EquippedItemType = _equippedItemType;
+            YG2.SaveProgress();
+
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
         }
@@ -79,7 +77,7 @@ namespace _Project.Scripts.UI.View
 
             var characteristics = _playerService.Player.PlayerCharacteristics;
             bool effectApplied = false;
-            
+
             ItemData data = _shopService.GetItemDataByType(_equippedItemType);
 
             switch (_equippedItemType)

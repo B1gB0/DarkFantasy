@@ -2271,6 +2271,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6757422394919131631, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757422394919131631, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6757422394934909935, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0

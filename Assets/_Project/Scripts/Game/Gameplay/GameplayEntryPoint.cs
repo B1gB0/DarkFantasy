@@ -48,6 +48,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IPauseService _pauseService;
         private ICurrencyService _currencyService;
         private IInventoryService _inventoryService;
+        private IShopService _shopService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -71,7 +72,8 @@ namespace _Project.Scripts.Game.Gameplay
             IUILocalizationService uiLocalizationService,
             IPauseService pauseService,
             ICurrencyService currencyService,
-            IInventoryService inventoryService)
+            IInventoryService inventoryService,
+            IShopService shopService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -84,6 +86,7 @@ namespace _Project.Scripts.Game.Gameplay
             _pauseService = pauseService;
             _currencyService = currencyService;
             _inventoryService = inventoryService;
+            _shopService = shopService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -118,6 +121,8 @@ namespace _Project.Scripts.Game.Gameplay
             await _missionService.Init();
             await _uiLocalizationService.Init();
             await _currencyService.Init();
+            await _shopService.Init();
+            await _inventoryService.Init();
 
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 
@@ -211,6 +216,10 @@ namespace _Project.Scripts.Game.Gameplay
 
             _uiScene.ResetCountdownTutorialPointer();
             _uiScene.HandlePCTutorialButtons();
+
+            await _viewFactory.CreateInventoryRig();
+            
+            _inventoryService.ShowCurrentEquippedConsumableItem();
 
             return exitToSceneSignal;
         }

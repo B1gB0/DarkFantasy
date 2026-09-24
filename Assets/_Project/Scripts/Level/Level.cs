@@ -39,9 +39,7 @@ namespace _Project.Scripts.Level
         protected UIStateMachine UIStateMachine;
         protected UIRootView UIRootView;
         protected Enemy.Enemy Boss;
-
-        protected IShopService ShopService;
-        protected IInventoryService InventoryService;
+        
         protected NavMeshWaypointService NavMeshWaypointService;
 
         protected float LastSpawnTime;
@@ -75,8 +73,6 @@ namespace _Project.Scripts.Level
             IEnemyService enemyService,
             IPlayerService playerService,
             ParticleEffectsService particleEffectsService,
-            IShopService shopService,
-            IInventoryService inventoryService,
             AudioSoundsService audioSoundsService,
             IUILocalizationService uiLocalizationService,
             NavMeshWaypointService navMeshWaypointService,
@@ -85,8 +81,6 @@ namespace _Project.Scripts.Level
             _enemyService = enemyService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
-            ShopService = shopService;
-            InventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
             _uiLocalizationService = uiLocalizationService;
             NavMeshWaypointService = navMeshWaypointService;

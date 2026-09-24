@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.DataBase.Data;
+﻿using System;
+using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using Reflex.Attributes;
@@ -23,18 +24,23 @@ namespace _Project.Scripts.UI.View
         {
             _shopService = shopService;
             _inventoryService = inventoryService;
-            
-            _inventoryService.OnEquippedItem += Refresh;
-            _inventoryService.OnUnEquippedItem += Refresh;
         }
 
         private void OnEnable()
         {
-            Refresh();
+            if (_inventoryService == null) return;
+            
+            _inventoryService.OnEquippedItem += Refresh;
+            _inventoryService.OnUnEquippedItem += Refresh;
+            
+            if(_shopService.IsInitiated)
+                Refresh();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
+            if (_inventoryService == null) return;
+            
             _inventoryService.OnEquippedItem -= Refresh;
             _inventoryService.OnUnEquippedItem -= Refresh;
         }

@@ -269,12 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1f81c83de301b4d939518d8abedb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeLookCamera: {fileID: 0}
-  sensitivityX: 3
-  sensitivityY: 2
-  zoomSpeed: 2
-  minZoom: 2
-  maxZoom: 10
 --- !u!4 &856995670
 Transform:
   m_ObjectHideFlags: 0
@@ -729,6 +723,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 460821178966095209, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 463673908393257941, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 463673908393257941, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 464363666189946481, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}

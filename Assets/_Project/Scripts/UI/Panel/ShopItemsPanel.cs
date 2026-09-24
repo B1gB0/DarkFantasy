@@ -76,6 +76,12 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Hide()
         {
+            foreach (var itemView in _itemViews)
+            {
+                itemView.SetCurrencyColor(_currencyService.Gold);
+                itemView.OnButtonClicked -= ApplyPurchase;
+            }
+            
             _tweenAnimationService.AnimateScale(transform, true);
             _playerService.Player.InputController.UnlockPlayerMovement();
         }

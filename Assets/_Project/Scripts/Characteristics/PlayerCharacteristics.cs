@@ -23,6 +23,7 @@ namespace _Project.Scripts.Characteristics
         public float Damage;
         public float MoveSpeed;
         public float RotationSpeed;
+        private float _healthRegenInterval = 1f;
 
         [SerializeField] private List<SpeedModifier> _speedModifiers;
         [SerializeField] private HealingModifier _healingModifier;
@@ -42,7 +43,6 @@ namespace _Project.Scripts.Characteristics
         public float GetTotalArmor() => Armor + _equipmentArmorBonus;
         public float GetTotalDamage() => Damage + _equipmentDamageBonus;
         public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
-        public float GetHealthRegenPerSecond() => _equipmentHealthRegenBonus;
         public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
 
         public void SetStartingData(PlayerData data)
@@ -78,6 +78,7 @@ namespace _Project.Scripts.Characteristics
             _equipmentMaxHealthBonus = 0f;
             _equipmentHealthRegenBonus = 0f;
             _equipmentMoveSpeedBonus = 0f;
+            _healthRegenInterval = 0f;
 
             if (equippedItems == null) return;
 
@@ -98,6 +99,7 @@ namespace _Project.Scripts.Characteristics
                         break;
                     case BonusType.HealthRegen:
                         _equipmentHealthRegenBonus += item.Value;
+                        _healthRegenInterval = item.Duration;
                         break;
                     case BonusType.MoveSpeed:
                         _equipmentMoveSpeedBonus += item.Value;
@@ -132,6 +134,16 @@ namespace _Project.Scripts.Characteristics
 
             if (_healingModifier != null && _healingModifier.Tick(deltaTime))
                 _healingModifier = null;
+        }
+        
+        public float GetHealthRegenAmount()
+        {
+            return _equipmentHealthRegenBonus;
+        }
+
+        public float GetHealthRegenInterval()
+        {
+            return _healthRegenInterval;
         }
 
         public void SaveTargetHealth(float targetHealth)

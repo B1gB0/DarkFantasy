@@ -3,8 +3,8 @@ using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Services;
-using _Project.Scripts.UI.Panel;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
@@ -23,20 +23,28 @@ namespace _Project.Scripts.UI.View
 
         private AudioSoundsService _audioSoundsService;
         private IInventoryService _inventoryService;
+        private ITweenAnimationService _tweenAnimationService;
+        private IShopService _shopService;
         private ItemData _currentItem;
         
         public event Action OnEquippedItem;
 
         [Inject]
-        private void Construct(AudioSoundsService audioSoundsService, IInventoryService inventoryService)
+        private void Construct(
+            AudioSoundsService audioSoundsService,
+            IInventoryService inventoryService,
+            ITweenAnimationService tweenAnimationService,
+            IShopService shopService)
         {
             _audioSoundsService = audioSoundsService;
             _inventoryService = inventoryService;
+            _tweenAnimationService = tweenAnimationService;
+            _shopService =  shopService;
         }
         
         private void OnEnable()
         {
-            _backButton.onClick.AddListener(Deactivate);
+            _backButton.onClick.AddListener(Hide);
         }
 
         private void Start()
@@ -46,14 +54,25 @@ namespace _Project.Scripts.UI.View
         
         private void OnDisable()
         {
-            _backButton.onClick.RemoveListener(Deactivate);
+            _backButton.onClick.RemoveListener(Hide);
         }
 
         private void OnDestroy()
         {
             _equipButton.onClick.RemoveListener(OnEquippedButtonClicked);
+            transform.DOKill();
         }
-        
+
+        public override void Show()
+        {
+            _tweenAnimationService.AnimateScale(transform);
+        }
+
+        public override void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
+        }
+
         public void SetDescription(ItemData data)
         {
             _currentItem = data;
@@ -75,12 +94,14 @@ namespace _Project.Scripts.UI.View
                 LocalizationCode.Tr => data.DescriptionTr,
                 _ => _description.text
             };
+            
+            _icon.sprite = _shopService.GetItemSpriteByType(data.Type);
         }
 
         private void OnEquippedButtonClicked()
         {
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
-            _inventoryService.EquipConsumableItem(_currentItem.Type);
+            _inventoryService.EquipConsumableItem(_currentItem);
             _inventoryService.EquipItem(_currentItem.Type);
             
             OnEquippedItem?.Invoke();

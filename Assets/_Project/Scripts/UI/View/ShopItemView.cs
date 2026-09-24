@@ -60,8 +60,7 @@ namespace _Project.Scripts.UI.View
 
             if (_inventoryService.HasItem(itemData.Type) && itemData.Kind == ItemKind.Equipment)
             {
-                _buyButton.gameObject.SetActive(false);
-                _purchaisedText.gameObject.SetActive(true);
+                OnPurchased();
             }
             else
             {
@@ -127,7 +126,7 @@ namespace _Project.Scripts.UI.View
                 },
                 _ => throw new ArgumentOutOfRangeException()
             };
-            
+
             _rarity.color = _currentData.Rarity switch
             {
                 ItemRarity.Common => Colors.GetColor(ColorName.RarityCommon),
@@ -139,7 +138,16 @@ namespace _Project.Scripts.UI.View
 
         private void OnButtonClick()
         {
+            OnPurchased();
             OnButtonClicked?.Invoke(_currentData, this);
+        }
+
+        private void OnPurchased()
+        {
+            if (_currentData.Kind != ItemKind.Equipment) return;
+
+            _buyButton.gameObject.SetActive(false);
+            _purchaisedText.gameObject.SetActive(true);
         }
     }
 }

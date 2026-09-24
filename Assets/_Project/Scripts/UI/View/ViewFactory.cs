@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.DataBase.Data;
-using _Project.Scripts.Experience;
 using _Project.Scripts.Game.Gameplay;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
@@ -30,7 +29,10 @@ namespace _Project.Scripts.UI.View
         private const string ShopItemViewPath = "ShopItemView";
         private const string InventoryPanelPath = "InventoryPanel";
         private const string ModifierPanelPath = "ModifierPanel";
-
+        private const string InventoryRigPath = "InventoryRig";
+        
+        private readonly List<ShopItemView> _shopItemViews = new ();
+        
         private IResourceService _resourceService;
         private IPlayerService _playerService;
         private ICurrencyService _currencyService;
@@ -45,8 +47,8 @@ namespace _Project.Scripts.UI.View
         private EndGamePanel _endGamePanel;
         private ModifiersPanel _modifiersPanel;
         private InventoryPanel _inventoryPanel;
+        private InventoryRig _inventoryRig;
         
-        private List<ShopItemView> _shopItemViews = new ();
         private List<ItemData> _itemsData = new ();
         
         public UIGameplayRootBinder UIScene { get; private set; }
@@ -220,6 +222,18 @@ namespace _Project.Scripts.UI.View
             _inventoryPanel.gameObject.SetActive(false);
 
             return _inventoryPanel;
+        }
+
+        public async UniTask<InventoryRig> CreateInventoryRig()
+        {
+            if(_inventoryRig != null) return _inventoryRig;
+            
+            var inventoryRigTemplate = await _resourceService.Load<GameObject>(InventoryRigPath);
+            inventoryRigTemplate = Instantiate(inventoryRigTemplate);
+            DontDestroyOnLoad(inventoryRigTemplate);
+            
+            _inventoryRig = inventoryRigTemplate.GetComponent<InventoryRig>();
+            return _inventoryRig;
         }
 
 #if CHEATS

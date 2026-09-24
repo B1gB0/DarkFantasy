@@ -21,6 +21,7 @@ namespace _Project.Scripts
 
         private CancellationTokenSource _healthCts;
         private PlayerCharacteristics _characteristics;
+        private float _regenTimer;
 
         public event Action Die;
         public event Action<Health> DieHealth;
@@ -52,10 +53,24 @@ namespace _Project.Scripts
             var heal = _characteristics.HealingModifier;
             if (heal != null && heal.Timer.IsActive)
                 AddHealthSilent(heal.HealPerSecond * dt);
+            
+            float regenAmount   = _characteristics.GetHealthRegenAmount();
+            float regenInterval = _characteristics.GetHealthRegenInterval();
 
-            float regen = _characteristics.GetHealthRegenPerSecond();
-            if (regen > MinValue && TargetHealth < MaxHealth)
-                AddHealthSilent(regen * dt);
+            if (regenAmount > MinValue && regenInterval > MinValue && TargetHealth < MaxHealth)
+            {
+                _regenTimer += dt;
+
+                if (_regenTimer >= regenInterval)
+                {
+                    _regenTimer -= regenInterval;
+                    AddHealthSilent(regenAmount);
+                }
+            }
+            else
+            {
+                _regenTimer = MinValue;
+            }
         }
 
         private void OnDestroy()
