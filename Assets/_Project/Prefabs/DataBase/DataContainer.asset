@@ -343,7 +343,7 @@ MonoBehaviour:
       _isSold: 1
       _bonusType: 1
     - _id: Common_Ring_Regeneration_Health
-      _type: 0
+      _type: 7
       _value: 1
       _price: 150
       _duration: 1
@@ -363,7 +363,7 @@ MonoBehaviour:
       _isSold: 1
       _bonusType: 2
     - _id: UnCommon_Ring_Regeneration_Health
-      _type: 0
+      _type: 8
       _value: 2
       _price: 0
       _duration: 1
@@ -383,7 +383,7 @@ MonoBehaviour:
       _isSold: 0
       _bonusType: 2
     - _id: Rare_Ring_Regeneration_Health
-      _type: 0
+      _type: 9
       _value: 3
       _price: 0
       _duration: 1
