@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Experience;
 using _Project.Scripts.Game.Constant;
@@ -25,9 +24,8 @@ namespace _Project.Scripts.UI.Panel
 
         [SerializeField] private Button _goToVillageButton;
         [SerializeField] private Button _rebornPlayerButton;
-        // [SerializeField] private Button _nextLevelButton;
-
-        [SerializeField] private List<Image> _images;
+        [SerializeField] private Button _nextLevelButton;
+        
         [SerializeField] private GameObject _rootWindow;
 
         private IPauseService _pauseService;
@@ -38,14 +36,13 @@ namespace _Project.Scripts.UI.Panel
         private IPlayerService _playerService;
         private IExperiencePoints _experiencePoints;
         
-        // private WeaponPanel _weaponPanel;
         private UILocalizationData _uiLocalizationData;
 
         public event Action OnRewardAdSuccessShowed;
         public event Action OnSpawnPlayer;
 
         public Button GoToVillageButton => _goToVillageButton;
-        // public Button NextLevelButton => _nextLevelButton;
+        public Button NextLevelButton => _nextLevelButton;
 
         [Inject]
         public void Construct(
@@ -84,7 +81,7 @@ namespace _Project.Scripts.UI.Panel
             YG2.onShowWindowGame -= _pauseService.OnPlayGame;
             YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
             
-            // _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
+            _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
             _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
             
 #if UNITY_EDITOR
@@ -111,7 +108,7 @@ namespace _Project.Scripts.UI.Panel
             _experiencePoints.ResetAccumulatedValues();
             _currencyService.ResetAccumulatedGold();
             
-            // _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
+            _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             
 #if UNITY_EDITOR
@@ -127,7 +124,7 @@ namespace _Project.Scripts.UI.Panel
             if (_missionService.CurrentNumberLevel ==
                 _missionService.CurrentMission.Maps.Count - CountCorrectFactor)
             {
-                // _nextLevelButton.gameObject.SetActive(false);
+                _nextLevelButton.gameObject.SetActive(false);
 
                 switch (_missionService.CurrentMission.Id)
                 {
@@ -143,24 +140,20 @@ namespace _Project.Scripts.UI.Panel
             }
             else
             {
-                // _nextLevelButton.gameObject.SetActive(true);
+                _nextLevelButton.gameObject.SetActive(true);
             }
 
             _rebornPlayerButton.gameObject.SetActive(false);
 
             SetLocalizationData(UITextType.VictoryPanelTitle);
-
-            OnChangeColor(Colors.GetColor(ColorName.BlueUIPanelColor));
         }
 
         public void SetDefeatPanel()
         {
             _rebornPlayerButton.gameObject.SetActive(true);
-            // _nextLevelButton.gameObject.SetActive(false);
+            _nextLevelButton.gameObject.SetActive(false);
 
             SetLocalizationData(UITextType.DefeatPanelTitle);
-
-            OnChangeColor(Colors.GetColor(ColorName.RedUIPanelColor));
         }
 
         public void Show()
@@ -169,14 +162,12 @@ namespace _Project.Scripts.UI.Panel
             _accumulatedKillsText.text = _experiencePoints.AccumulatedKills.ToString();
             _accumulatedScoreText.text = _experiencePoints.AccumulatedScore.ToString();
             
-            // _weaponPanel.Hide();
             _tweenAnimationService.AnimateScale(transform);
         }
 
         public void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
-            // _weaponPanel.Show();
         }
 
         public void SetLabelText()
@@ -196,7 +187,6 @@ namespace _Project.Scripts.UI.Panel
         public void GetServices(ExperiencePoints experiencePoints)
         {
             _experiencePoints = experiencePoints;
-            // _weaponPanel = weaponPanel;
         }
 
         private void SetLocalizationData(UITextType type)
@@ -204,14 +194,6 @@ namespace _Project.Scripts.UI.Panel
             _uiLocalizationData = _uiLocalizationService.GetLevelTextData(type);
 
             SetLabelText();
-        }
-
-        private void OnChangeColor(Color color)
-        {
-            foreach (var image in _images)
-            {
-                image.color = color;
-            }
         }
 
 #if UNITY_EDITOR

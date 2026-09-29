@@ -9,6 +9,7 @@ namespace _Project.Scripts.Level
     {
         [SerializeField] private SpawnTrigger _spawnLastWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
+        [SerializeField] private LootTrigger _lootTrigger;
         
         private void OnEnable()
         {

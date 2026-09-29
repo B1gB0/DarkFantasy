@@ -51,6 +51,7 @@ namespace _Project.Scripts.DI
             builder.AddSingleton(typeof(TweenAnimationService), typeof(ITweenAnimationService));
             builder.AddSingleton(typeof(UILocalizationService), typeof(IUILocalizationService));
             builder.AddSingleton(typeof(InventoryService), typeof(IInventoryService));
+            builder.AddSingleton(typeof(LootService), typeof(ILootService));
         }
 
         private void CreateMonoServices()

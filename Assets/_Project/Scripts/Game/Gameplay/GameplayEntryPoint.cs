@@ -49,6 +49,7 @@ namespace _Project.Scripts.Game.Gameplay
         private ICurrencyService _currencyService;
         private IInventoryService _inventoryService;
         private IShopService _shopService;
+        private ILootService _lootService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -73,7 +74,8 @@ namespace _Project.Scripts.Game.Gameplay
             IPauseService pauseService,
             ICurrencyService currencyService,
             IInventoryService inventoryService,
-            IShopService shopService)
+            IShopService shopService,
+            ILootService lootService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -87,6 +89,7 @@ namespace _Project.Scripts.Game.Gameplay
             _currencyService = currencyService;
             _inventoryService = inventoryService;
             _shopService = shopService;
+            _lootService = lootService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -123,6 +126,7 @@ namespace _Project.Scripts.Game.Gameplay
             await _currencyService.Init();
             await _shopService.Init();
             await _inventoryService.Init();
+            await _lootService.Init();
 
             _playerService.GetSceneObjects(_container, _freeLookCamera);
 
@@ -184,7 +188,6 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryService.OnEquippedConsumableItem += _uiScene.EquippedConsumableItemView.Set;
             _inventoryService.OnUnEquippedConsumableItem += _uiScene.EquippedConsumableItemView.UnSet;
-            // _inventoryService.OnEquippedItem += _inventoryPanel.SetSlots;
             _uiScene.EquippedItemButton.onClick.AddListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
@@ -246,7 +249,6 @@ namespace _Project.Scripts.Game.Gameplay
 
             _inventoryService.OnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.Set;
             _inventoryService.OnUnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.UnSet;
-            // _inventoryService.OnEquippedItem -= _inventoryPanel.SetSlots;
             _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
 
             if (scene.name != Scenes.VillageHub)
