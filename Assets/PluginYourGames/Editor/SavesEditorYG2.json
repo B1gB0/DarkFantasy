@@ -1,23 +1,23 @@
 {
-  "Gold": 680,
-  "AcumulatedScore": 185,
+  "Gold": 435,
+  "AcumulatedScore": 675,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
-  "IsBanditCampUnlock": false,
+  "IsBanditCampUnlock": true,
   "IsCastleUnlock": false,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
-  "EquippedItemType": 0,
-  "EquipedWeaponType": 11,
-  "EquipedArmorType": 0,
+  "EquippedItemType": 2,
+  "EquipedWeaponType": 12,
+  "EquipedArmorType": 13,
   "EquipedRingType": 7,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 86.39215,
+    "TargetHealth": 100.0,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -27,7 +27,12 @@
   },
   "InventoryItems": {
     "UnCommonSword": 1,
-    "CommonRingRegenerationHealth": 1
+    "CommonRingRegenerationHealth": 1,
+    "RareSword": 1,
+    "CommonArmor": 1,
+    "HealthPotion": 1,
+    "Meat": 1,
+    "RareRingMaxHealth": 1
   },
   "stringKeys": [],
   "stringValues": [],
@@ -43,5 +48,5 @@
     false,
     false
   ],
-  "idSave": 17
+  "idSave": 62
 }

@@ -184,11 +184,6 @@ namespace _Project.Scripts.UI.Panel
             };
         }
 
-        public void GetServices(ExperiencePoints experiencePoints)
-        {
-            _experiencePoints = experiencePoints;
-        }
-
         private void SetLocalizationData(UITextType type)
         {
             _uiLocalizationData = _uiLocalizationService.GetLevelTextData(type);

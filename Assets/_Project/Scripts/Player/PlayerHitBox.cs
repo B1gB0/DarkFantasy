@@ -13,7 +13,7 @@ namespace _Project.Scripts.Player
 
         public void HandleEnemyAttack(float damage)
         {
-            _player.Health.TakeDamage(damage, false, _player.PlayerCharacteristics.Armor);
+            _player.Health.TakeDamage(damage, false, _player.PlayerCharacteristics.GetTotalArmor());
         }
     }
 }

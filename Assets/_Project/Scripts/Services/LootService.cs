@@ -11,27 +11,32 @@ namespace _Project.Scripts.Services
     public class LootService : ILootService
     {
         private const int MinValue = 0;
-        
-        private const float EquipmentChance  = 0.15f;
+
+        private const float EquipmentChance = 0.15f;
         private const float ConsumableChance = 0.35f;
-        
-        private const int LowGold  = 10;
+
+        private const int LowGold = 10;
         private const int HighGold = 50;
-        private const float HighGoldChance = 0.2f;   // 20% шанс 50, иначе 10
+        private const float HighGoldChance = 0.2f;
 
         private readonly List<ItemData> _equipment = new();
         private readonly List<ItemData> _consumables = new();
 
         private IDataBaseService _dataBaseService;
         private IInventoryService _inventoryService;
+        private ICurrencyService _currencyService;
 
         public bool IsInitiated { get; private set; }
 
         [Inject]
-        private void Construct(IDataBaseService dataBaseService, IInventoryService inventoryService)
+        private void Construct(
+            IDataBaseService dataBaseService,
+            IInventoryService inventoryService,
+            ICurrencyService currencyService)
         {
             _dataBaseService = dataBaseService;
             _inventoryService = inventoryService;
+            _currencyService = currencyService;
         }
 
         public UniTask Init()
@@ -40,7 +45,6 @@ namespace _Project.Scripts.Services
 
             foreach (var item in _dataBaseService.Content.ItemsData)
             {
-                // В луте участвуют только те, что НЕ продаются в магазине
                 if (item.IsSold && item.Kind == ItemKind.Equipment) continue;
 
                 switch (item.Kind)
@@ -58,49 +62,46 @@ namespace _Project.Scripts.Services
             return UniTask.CompletedTask;
         }
 
-        public LootResult TryGetReward()
+        public LootResult GetReward()
         {
-            if (!IsInitiated)
-                return LootResult.None();
+            if (!IsInitiated) return LootResult.None();
 
             float roll = Random.value;
 
-            // 1. Снаряга
             if (roll < EquipmentChance)
             {
                 if (TryGetRandomEquipment(out var equipment))
+                {
+                    _inventoryService.AddItem(equipment.Type);
                     return LootResult.Item(equipment.Type, LootType.Equipment);
+                }
 
-                // Снаряга закончилась — падаем в расходник
                 if (TryGetRandomConsumable(out var consumable))
-                    return LootResult.Item(consumable.Type, LootType.Consumable);
+                {
+                    _inventoryService.AddItem(consumable.Type);
+                    return LootResult.Item(equipment.Type, LootType.Consumable);
+                }
 
-                // И расходников нет — только золото
-                return LootResult.Gold(RollGold());
+                return RollGold();
             }
 
-            // 2. Расходник
             if (roll < EquipmentChance + ConsumableChance)
             {
                 if (TryGetRandomConsumable(out var consumable))
+                {
+                    _inventoryService.AddItem(consumable.Type);
                     return LootResult.Item(consumable.Type, LootType.Consumable);
-
-                return LootResult.Gold(RollGold());
+                }
             }
 
-            // 3. Золото (по умолчанию)
-            return LootResult.Gold(RollGold());
+            return RollGold();
         }
 
-        /// <summary>
-        /// Случайная снаряга, которой ещё НЕТ у игрока.
-        /// </summary>
         private bool TryGetRandomEquipment(out ItemData result)
         {
             result = null;
             if (_equipment.Count == MinValue) return false;
 
-            // Фильтруем те, что уже есть в инвентаре
             var available = _equipment
                 .Where(e => !_inventoryService.HasItem(e.Type))
                 .ToList();
@@ -112,9 +113,6 @@ namespace _Project.Scripts.Services
             return true;
         }
 
-        /// <summary>
-        /// Случайный расходник. Расходники могут повторяться.
-        /// </summary>
         private bool TryGetRandomConsumable(out ItemData result)
         {
             result = null;
@@ -125,9 +123,20 @@ namespace _Project.Scripts.Services
             return true;
         }
 
-        private static int RollGold()
+        private LootResult RollGold()
         {
-            return Random.value < HighGoldChance ? HighGold : LowGold;
+            int gold;
+
+            if (Random.value < HighGoldChance)
+            {
+                gold = HighGold;
+                _currencyService.AddGold(gold);
+                return LootResult.Gold(gold, true);
+            }
+
+            gold = LowGold;
+            _currencyService.AddGold(gold);
+            return LootResult.Gold(gold, false);
         }
     }
 }

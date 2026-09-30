@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Level.Triggers;
+﻿using _Project.Scripts.Items;
+using _Project.Scripts.Level.Triggers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
@@ -10,6 +11,7 @@ namespace _Project.Scripts.Level
         [SerializeField] private SpawnTrigger _spawnLastWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         [SerializeField] private LootTrigger _lootTrigger;
+        [SerializeField] private LootChest _lootChest;
         
         private void OnEnable()
         {
@@ -27,6 +29,8 @@ namespace _Project.Scripts.Level
         {
             EnemySpawner.OnAllEnemiesKilled -= _nextLevelTrigger.Activate;
             EnemySpawner.OnAllEnemiesKilled -= OnShowWaypointToNextLevel;
+            _lootChest.OnChestOpened -= ViewFactory.UIScene.RewardView.Show;
+            _lootTrigger.OnGotLoot -= _lootChest.OpenInstantly;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
             
             YG2.SaveProgress();
@@ -40,6 +44,9 @@ namespace _Project.Scripts.Level
             EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
             
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
+            
+            _lootChest.OnChestOpened += ViewFactory.UIScene.RewardView.Show;
+            _lootTrigger.OnGotLoot += _lootChest.OpenInstantly;
         }
 
         private void SpawnStartWaves()

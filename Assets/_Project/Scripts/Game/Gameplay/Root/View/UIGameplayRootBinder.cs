@@ -50,6 +50,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 #endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }
         [field: SerializeField] public EquippedConsumableItemView EquippedConsumableItemView { get; private set; }
+        [field: SerializeField] public RewardView RewardView { get; private set; }
 
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)

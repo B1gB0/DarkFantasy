@@ -6,10 +6,15 @@ namespace _Project.Scripts.Player.Combat
 {
     public class Sword : MonoBehaviour
     {
-        [SerializeField] private int _swordDamage = 10;
-
         [SerializeField] private Collider _collider;
         [SerializeField] [Range(0f, 1f)] private float _hitChance = 0.3f;
+        
+        private Core.Player _player;
+
+        private void Awake()
+        {
+            _player = GetComponentInParent<Core.Player>();
+        }
 
         private void Start()
         {
@@ -20,8 +25,8 @@ namespace _Project.Scripts.Player.Combat
         {
             if (!other.TryGetComponent(out Enemy.Enemy enemy))
                 return;
-
-            enemy.Health.TakeDamage(YG2.saves.PlayerCharacteristics.Damage, true, enemy.Armor);
+            
+            enemy.Health.TakeDamage(_player.PlayerCharacteristics.GetTotalDamage(), true, enemy.Armor);
 
             if (Random.value < _hitChance)
             {

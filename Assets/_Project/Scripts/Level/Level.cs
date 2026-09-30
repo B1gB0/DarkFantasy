@@ -23,15 +23,15 @@ namespace _Project.Scripts.Level
     {
         protected const float MinValue = 0f;
 
+        protected const int MinIndex = 0;
         protected const int FirstWaveEnemy = 0;
         protected const int SecondWaveEnemy = 1;
         protected const int ThirdWaveEnemy = 2;
         protected const int FourthWaveEnemy = 3;
         protected const int FifthWaveNumber = 4;
 
-        [Header("EnemyWaves")] [SerializeField]
-        protected float SpawnWaveOfEnemyDelay = 10f;
-
+        [Header("EnemyWaves")]
+        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
         [SerializeField] private List<EnemyWave> _enemyWaves;
         [SerializeField] private int _limitEnemies;
 
@@ -158,7 +158,7 @@ namespace _Project.Scripts.Level
 
         protected void CreateWaveOfEnemies(int numberWave)
         {
-            if (_enemyWaves.Count == 0)
+            if (_enemyWaves.Count == MinIndex)
                 return;
 
             EnemySpawner.SpawnWave(_enemyWaves[numberWave]);
@@ -248,7 +248,7 @@ namespace _Project.Scripts.Level
 
         private void InitEnemyWaves()
         {
-            for (int i = 0; i < _enemyWaves.Count; i++)
+            for (int i = MinIndex; i < _enemyWaves.Count; i++)
             {
                 switch (i)
                 {

@@ -9,7 +9,7 @@ namespace _Project.Scripts.Level
     {
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
-        [SerializeField] private LootTrigger _lootTrigger;
+        // [SerializeField] private LootTrigger _lootTrigger;
         
         [SerializeField] private GameObject[] _portals;
         

@@ -363,7 +363,7 @@ MonoBehaviour:
       _isSold: 1
       _bonusType: 2
     - _id: UnCommon_Ring_Regeneration_Health
-      _type: 8
+      _type: 5
       _value: 2
       _price: 0
       _duration: 4
@@ -383,7 +383,7 @@ MonoBehaviour:
       _isSold: 0
       _bonusType: 2
     - _id: Rare_Ring_Regeneration_Health
-      _type: 9
+      _type: 6
       _value: 3
       _price: 0
       _duration: 3
@@ -522,75 +522,7 @@ MonoBehaviour:
       _descriptionRu: 
       _descriptionEn: 
       _descriptionTr: 
-      _kind: 0
-      _slot: 0
-      _rarity: 0
-      _isSold: 0
-      _bonusType: 0
-    - _id: 
-      _type: 0
-      _value: 0
-      _price: 0
-      _duration: 0
-      _isMultiplier: 0
-      _nameRu: 
-      _nameEn: 
-      _nameTr: 
-      _descriptionRu: 
-      _descriptionEn: 
-      _descriptionTr: 
-      _kind: 0
-      _slot: 0
-      _rarity: 0
-      _isSold: 0
-      _bonusType: 0
-    - _id: 
-      _type: 0
-      _value: 0
-      _price: 0
-      _duration: 0
-      _isMultiplier: 0
-      _nameRu: 
-      _nameEn: 
-      _nameTr: 
-      _descriptionRu: 
-      _descriptionEn: 
-      _descriptionTr: 
-      _kind: 0
-      _slot: 0
-      _rarity: 0
-      _isSold: 0
-      _bonusType: 0
-    - _id: 
-      _type: 0
-      _value: 0
-      _price: 0
-      _duration: 0
-      _isMultiplier: 0
-      _nameRu: 
-      _nameEn: 
-      _nameTr: 
-      _descriptionRu: 
-      _descriptionEn: 
-      _descriptionTr: 
-      _kind: 0
-      _slot: 0
-      _rarity: 0
-      _isSold: 0
-      _bonusType: 0
-    - _id: 
-      _type: 0
-      _value: 0
-      _price: 0
-      _duration: 0
-      _isMultiplier: 0
-      _nameRu: 
-      _nameEn: 
-      _nameTr: 
-      _descriptionRu: 
-      _descriptionEn: 
-      _descriptionTr: 
-      _kind: 0
+      _kind: 1
       _slot: 0
       _rarity: 0
       _isSold: 0

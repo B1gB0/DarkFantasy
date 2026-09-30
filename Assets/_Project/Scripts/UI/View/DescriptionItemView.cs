@@ -1,5 +1,4 @@
-﻿using System;
-using _Project.Scripts.Audio.Sounds;
+﻿using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Services;
@@ -26,8 +25,6 @@ namespace _Project.Scripts.UI.View
         private ITweenAnimationService _tweenAnimationService;
         private IShopService _shopService;
         private ItemData _currentItem;
-        
-        public event Action OnEquippedItem;
 
         [Inject]
         private void Construct(
@@ -103,8 +100,6 @@ namespace _Project.Scripts.UI.View
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
             _inventoryService.EquipConsumableItem(_currentItem);
             _inventoryService.EquipItem(_currentItem.Type);
-            
-            OnEquippedItem?.Invoke();
         }
     }
 }

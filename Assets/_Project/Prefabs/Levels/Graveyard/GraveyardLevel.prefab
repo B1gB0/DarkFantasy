@@ -3219,6 +3219,8 @@ MonoBehaviour:
   _limitEnemies: 12
   _spawnLastWaveTrigger: {fileID: 7846765599973332702}
   _nextLevelTrigger: {fileID: 8433260242875858918}
+  _lootTrigger: {fileID: 0}
+  _lootChest: {fileID: 0}
 --- !u!114 &8440684264664594643
 MonoBehaviour:
   m_ObjectHideFlags: 0

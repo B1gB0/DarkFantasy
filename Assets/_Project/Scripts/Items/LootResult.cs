@@ -2,22 +2,24 @@
 {
     public struct LootResult
     {
-        private LootType _type;
-        private ItemType _item;
-        private int _gold;
+        public LootType Type { get; private set; }
+        public ItemType ItemType { get; private set; }
+        public int GoldValue { get; private set; }
+        public bool IsHighChance { get; private set; }
 
-        public static LootResult None() => new LootResult { _type = LootType.None };
+        public static LootResult None() => new LootResult { Type = LootType.None };
 
-        public static LootResult Gold(int amount) => new LootResult
+        public static LootResult Gold(int amount, bool isHighChance) => new LootResult
         {
-            _type = LootType.Gold,
-            _gold = amount,
+            Type = LootType.Gold,
+            GoldValue = amount,
+            IsHighChance =  isHighChance,
         };
 
         public static LootResult Item(ItemType type, LootType lootType) => new LootResult
         {
-            _type = lootType,
-            _item = type,
+            Type = lootType,
+            ItemType = type,
         };
     }
 }

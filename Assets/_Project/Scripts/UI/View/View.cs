@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace _Project.Scripts.UI.View
 {
@@ -14,8 +15,8 @@ namespace _Project.Scripts.UI.View
 
         public void Deactivate()
         {
+            EventSystem.current?.SetSelectedGameObject(null);
             gameObject.SetActive(false);
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }
