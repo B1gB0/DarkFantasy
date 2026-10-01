@@ -34,13 +34,13 @@ namespace _Project.Scripts.Camera
             {
                 var dir = input.CameraLookDirection;
                 cam.m_XAxis.m_InputAxisValue = dir.x;
-                cam.m_YAxis.m_InputAxisValue = -dir.y;
             }
             else
             {
                 cam.m_XAxis.m_InputAxisValue = MinValue;
-                cam.m_YAxis.m_InputAxisValue = MinValue;
             }
+
+            cam.m_YAxis.m_InputAxisValue = MinValue;
         }
 
         private bool TryGetDependencies(out CinemachineFreeLook cam, out InputController input)
@@ -62,6 +62,9 @@ namespace _Project.Scripts.Camera
         {
             cam.m_XAxis.m_InputAxisName = string.Empty;
             cam.m_YAxis.m_InputAxisName = string.Empty;
+            
+            cam.m_YAxis.m_MaxSpeed = MinValue;
+            
             cam.m_XAxis.m_InputAxisValue = MinValue;
             cam.m_YAxis.m_InputAxisValue = MinValue;
         }

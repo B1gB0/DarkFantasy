@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f675f836b6a28a428da88c2b639c447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordDamage: 10
   _collider: {fileID: 7424380016530795260}
   _hitChance: 0.3
 --- !u!1 &3377939940947086566
@@ -347,6 +346,8 @@ MonoBehaviour:
   _isAttackLocked: 0
   _isRollLocked: 0
   _rollCooldownDuration: 0.85
+  _cameraSensitivityX: 7
+  _cameraSensitivityY: 2
 --- !u!114 &6950887898748460312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 100
   _hitPoint: {fileID: 7767134548067797961}
 --- !u!114 &7825282103344790764
 MonoBehaviour:

@@ -10,6 +10,7 @@ namespace _Project.Scripts.Player.Input
     {
         private const float MinMagnitude = 0.01f;
         private const float MinValue = 0f;
+        private const float CameraDragMultiplier = 100f;
 
         [Header("Action Locks")] [SerializeField]
         private bool _isMovementLocked;
@@ -19,7 +20,8 @@ namespace _Project.Scripts.Player.Input
 
         [SerializeField] private float _rollCooldownDuration = 0.7f;
 
-        [Header("Camera")] [SerializeField] private float _cameraSensitivityX = 3f;
+        [Header("Camera")] 
+        [SerializeField] private float _cameraSensitivityX = 3f;
         [SerializeField] private float _cameraSensitivityY = 2f;
 
         private InputSystem _inputSystem;
@@ -193,9 +195,14 @@ namespace _Project.Scripts.Player.Input
             if (_inputSystem.PLayer.CameraDragButton.IsPressed())
             {
                 var delta = _inputSystem.PLayer.Look.ReadValue<Vector2>();
+                
+                float normalizedX = delta.x / Screen.width;
+                float normalizedY = delta.y / Screen.height;
+                
                 CameraLookDirection = new Vector2(
-                    delta.x * _cameraSensitivityX,
-                    delta.y * _cameraSensitivityY);
+                    normalizedX * _cameraSensitivityX * CameraDragMultiplier,
+                    normalizedY * _cameraSensitivityY * CameraDragMultiplier);
+                
                 IsCameraRotating = true;
                 return;
             }
