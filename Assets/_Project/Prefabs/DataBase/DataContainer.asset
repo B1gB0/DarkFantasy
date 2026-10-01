@@ -315,7 +315,7 @@ MonoBehaviour:
       _nameTr: "Sa\u011Fl\u0131k Halkas\u0131"
       _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
         \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435
-        \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u043D\u0430 3 \u043F\u0440\u043E\u0446\u0435\u043D\u0442"
+        \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u043D\u0430 3 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u0430"
       _descriptionEn: Increases maximum health by 3 percent
       _descriptionTr: "Maksimum sa\u011Fl\u0131\u011F\u0131 y\xFCzde 3 art\u0131r\u0131r"
       _kind: 1
@@ -334,7 +334,7 @@ MonoBehaviour:
       _nameTr: "Sa\u011Fl\u0131k Halkas\u0131"
       _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
         \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435
-        \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u043D\u0430 5 \u043F\u0440\u043E\u0446\u0435\u043D\u0442"
+        \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u043D\u0430 5 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432"
       _descriptionEn: Increases maximum health by 5 percent
       _descriptionTr: "Maksimum sa\u011Fl\u0131\u011F\u0131 y\xFCzde 5 art\u0131r\u0131r"
       _kind: 1
@@ -363,7 +363,7 @@ MonoBehaviour:
       _isSold: 1
       _bonusType: 2
     - _id: UnCommon_Ring_Regeneration_Health
-      _type: 5
+      _type: 8
       _value: 2
       _price: 0
       _duration: 4
@@ -383,7 +383,7 @@ MonoBehaviour:
       _isSold: 0
       _bonusType: 2
     - _id: Rare_Ring_Regeneration_Health
-      _type: 6
+      _type: 9
       _value: 3
       _price: 0
       _duration: 3
@@ -512,21 +512,22 @@ MonoBehaviour:
       _bonusType: 5
     - _id: 
       _type: 0
-      _value: 0
+      _value: 6
       _price: 0
       _duration: 0
       _isMultiplier: 0
-      _nameRu: 
-      _nameEn: 
-      _nameTr: 
-      _descriptionRu: 
-      _descriptionEn: 
-      _descriptionTr: 
+      _nameRu: "\u0411\u0440\u043E\u043D\u044F \u041A\u043E\u0440\u043E\u043B\u044F"
+      _nameEn: The King's Armor
+      _nameTr: "Kral\u0131n Z\u0131rh\u0131"
+      _descriptionRu: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+        \u0431\u0440\u043E\u043D\u044E \u043D\u0430 6 \u0435\u0434\u0438\u043D\u0438\u0446"
+      _descriptionEn: Increases armor by 6 units
+      _descriptionTr: "Z\u0131rh\u0131 6 birim art\u0131r\u0131r"
       _kind: 1
       _slot: 0
       _rarity: 0
       _isSold: 0
-      _bonusType: 0
+      _bonusType: 5
     PlayerAttributeLevelData:
     - _id: damage_1
       _type: 0
