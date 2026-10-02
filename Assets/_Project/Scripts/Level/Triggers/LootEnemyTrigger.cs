@@ -13,6 +13,7 @@ namespace _Project.Scripts.Level.Triggers
         
         private IInventoryService _inventoryService;
         private ICurrencyService _currencyService;
+        private ILootService _lootService;
 
         public event Action<LootResult> OnPickedUp;
 
@@ -34,12 +35,14 @@ namespace _Project.Scripts.Level.Triggers
             LootResult reward,
             LootSpawner lootSpawner,
             IInventoryService inventoryService,
-            ICurrencyService currencyService)
+            ICurrencyService currencyService,
+            ILootService lootService)
         {
             _reward = reward;
             _lootSpawner = lootSpawner;
             _inventoryService = inventoryService;
             _currencyService = currencyService;
+            _lootService = lootService;
         }
         
         public void Pickup()
@@ -47,6 +50,10 @@ namespace _Project.Scripts.Level.Triggers
             _lootSpawner.Unregister(this);
 
             ApplyReward();
+            
+            if (_reward.Type == LootType.Equipment || _reward.Type == LootType.Consumable)
+                _lootService.ReleaseReservation(_reward.ItemType);
+            
             Deactivate();
             OnPickedUp?.Invoke(_reward);
         }

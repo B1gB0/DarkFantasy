@@ -26,6 +26,8 @@ namespace _Project.Scripts.Services
         private readonly List<ItemData> _rareEquipment = new();
         
         private readonly List<ItemData> _consumables = new();
+        
+        private readonly HashSet<ItemType> _reservedItems = new();
 
         private IDataBaseService _dataBaseService;
         private IInventoryService _inventoryService;
@@ -108,6 +110,22 @@ namespace _Project.Scripts.Services
             return LootResult.Item(consumable.Type, LootType.Consumable);
         }
         
+        public void ReleaseReservation(ItemType type)
+        {
+            if (type == ItemType.None) return;
+            _reservedItems.Remove(type);
+        }
+        
+        public void ClearReservations()
+        {
+            _reservedItems.Clear();
+        }
+        
+        private bool IsItemAvailable(ItemType type)
+        {
+            return !_inventoryService.HasItem(type) && !_reservedItems.Contains(type);
+        }
+        
         private bool TryRollCommonEquipment(out ItemData result)
         {
             result = null;
@@ -153,11 +171,14 @@ namespace _Project.Scripts.Services
             result = null;
             if (pool == null || pool.Count == 0) return false;
             
-            var available = pool.Where(e => !_inventoryService.HasItem(e.Type)).ToList();
+            var available = pool.Where(e => IsItemAvailable(e.Type)).ToList();
             if (available.Count == 0) return false;
 
             int idx = Random.Range(0, available.Count);
             result = available[idx];
+            
+            _reservedItems.Add(result.Type);
+            
             return true;
         }
 

@@ -27,16 +27,19 @@ namespace _Project.Scripts.Level.Spawners
         private IInventoryService _inventoryService;
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
+        private ILootService _lootService;
 
         [Inject]
         private void Construct(
             IInventoryService inventoryService,
             ICurrencyService currencyService,
-            IPlayerService playerService)
+            IPlayerService playerService,
+            ILootService lootService)
         {
             _inventoryService = inventoryService;
             _currencyService = currencyService;
             _playerService = playerService;
+            _lootService = lootService;
         }
 
         private void Start()
@@ -57,6 +60,11 @@ namespace _Project.Scripts.Level.Spawners
                 _pickUpView?.Hide();
                 target.Pickup();
             }
+        }
+
+        private void OnDestroy()
+        {
+            _lootService?.ClearReservations();
         }
 
         public void Register(LootEnemyTrigger trigger)
@@ -88,7 +96,7 @@ namespace _Project.Scripts.Level.Spawners
             var lootEnemyTrigger = _pool.GetFreeElement();
             lootEnemyTrigger.transform.position = spawnPos;
             lootEnemyTrigger.OnPickedUp -= _rewardView.Show;
-            lootEnemyTrigger.Setup(reward, this, _inventoryService, _currencyService);
+            lootEnemyTrigger.Setup(reward, this, _inventoryService, _currencyService, _lootService);
             lootEnemyTrigger.OnPickedUp += _rewardView.Show;
         }
 
