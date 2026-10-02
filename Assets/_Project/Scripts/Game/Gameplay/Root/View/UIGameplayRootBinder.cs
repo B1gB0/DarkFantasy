@@ -93,6 +93,8 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 JoystickIcon.SetActive(false);
                 TutorialPointer.Deactivate();
             }
+            
+            CameraTutorialView.SetActive(false);
 
             CountdownToShowStoryButtonFoot().Forget();
         }
@@ -129,6 +131,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 return;
 
             KeyboardTutorialView.Activate();
+            CameraTutorialView.SetActive(true);
 
             _tweenAnimationService.AnimateMove(
                 KeyboardTutorialView.transform,
