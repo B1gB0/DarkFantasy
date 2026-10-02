@@ -62,7 +62,7 @@ namespace _Project.Scripts.UI.View
         
         public override void Show()
         {
-            _tweenAnimationService.AnimateScale(transform);
+            Activate();
             _pauseService.OnStopGameWithoutMusic();
         }
 
