@@ -134,7 +134,8 @@ namespace _Project.Scripts.Services
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton)
+            Button equippedItemButton,
+            Button pickUpButton)
         {
             Player.InputController.GetButtons(
                 moveJoystick,
@@ -142,7 +143,8 @@ namespace _Project.Scripts.Services
                 attackButton,
                 rollButton,
                 inventoryButton,
-                equippedItemButton);
+                equippedItemButton,
+                pickUpButton);
         }
         
         private void RecalculateEquipment()

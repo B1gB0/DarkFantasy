@@ -34,6 +34,7 @@ namespace _Project.Scripts.Enemy
         public int Experience { get; private set; }
         public int Score { get; private set; }
         public bool IsEnemy { get; private set; }
+        public bool IsBoss { get; private set; }
 
         public EnemyData Data { get; private set; }
         public Player.Core.Player Player { get; private set; }
@@ -111,6 +112,11 @@ namespace _Project.Scripts.Enemy
                 Health.TakeDamage(Health.MaxHealth);
             else
                 OnDie();
+        }
+
+        public void SetIsBoss(bool isBoss)
+        {
+            IsBoss = isBoss;
         }
 
         protected virtual void OnDie()

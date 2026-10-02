@@ -12,14 +12,19 @@ namespace _Project.Scripts.Services
     {
         private const int MinValue = 0;
 
-        private const float EquipmentChance = 0.15f;
+        private const float EnemyEquipmentChance = 0.3f;
         private const float ConsumableChance = 0.35f;
+        
+        private const float PrimaryWeight = 0.7f;
 
         private const int LowGold = 10;
         private const int HighGold = 50;
         private const float HighGoldChance = 0.2f;
-
-        private readonly List<ItemData> _equipment = new();
+        
+        private readonly List<ItemData> _commonEquipment = new();
+        private readonly List<ItemData> _uncommonEquipment = new();
+        private readonly List<ItemData> _rareEquipment = new();
+        
         private readonly List<ItemData> _consumables = new();
 
         private IDataBaseService _dataBaseService;
@@ -50,7 +55,15 @@ namespace _Project.Scripts.Services
                 switch (item.Kind)
                 {
                     case ItemKind.Equipment:
-                        _equipment.Add(item);
+                        switch (item.Rarity)
+                        {
+                            case ItemRarity.Common:   _commonEquipment.Add(item);
+                                break;
+                            case ItemRarity.Uncommon: _uncommonEquipment.Add(item);
+                                break;
+                            case ItemRarity.Rare:     _rareEquipment.Add(item);
+                                break;
+                        }
                         break;
                     case ItemKind.Consumable:
                         _consumables.Add(item);
@@ -61,54 +74,89 @@ namespace _Project.Scripts.Services
             IsInitiated = true;
             return UniTask.CompletedTask;
         }
+        
+        public LootResult GetEnemyReward(bool isBoss)
+        {
+            if (!IsInitiated) return LootResult.None();
 
-        public LootResult GetReward()
+            if (isBoss)
+            {
+                if (TryRollBossEquipment(out var bossItem))
+                    return LootResult.Item(bossItem.Type, LootType.Equipment);
+
+                return LootResult.None();
+            }
+            
+            if (Random.value > EnemyEquipmentChance)
+                return LootResult.None();
+
+            if (TryRollCommonEquipment(out var commonItem))
+                return LootResult.Item(commonItem.Type, LootType.Equipment);
+
+            return LootResult.None();
+        }
+
+        public LootResult GetChestReward()
         {
             if (!IsInitiated) return LootResult.None();
 
             float roll = Random.value;
 
-            if (roll < EquipmentChance)
-            {
-                if (TryGetRandomEquipment(out var equipment))
-                {
-                    _inventoryService.AddItem(equipment.Type);
-                    return LootResult.Item(equipment.Type, LootType.Equipment);
-                }
+            if (!(roll < ConsumableChance) || !TryGetRandomConsumable(out var consumable)) return RollGold();
 
-                if (TryGetRandomConsumable(out var consumable))
-                {
-                    _inventoryService.AddItem(consumable.Type);
-                    return LootResult.Item(equipment.Type, LootType.Consumable);
-                }
-
-                return RollGold();
-            }
-
-            if (roll < EquipmentChance + ConsumableChance)
-            {
-                if (TryGetRandomConsumable(out var consumable))
-                {
-                    _inventoryService.AddItem(consumable.Type);
-                    return LootResult.Item(consumable.Type, LootType.Consumable);
-                }
-            }
-
-            return RollGold();
+            _inventoryService.AddItem(consumable.Type);
+            return LootResult.Item(consumable.Type, LootType.Consumable);
         }
-
-        private bool TryGetRandomEquipment(out ItemData result)
+        
+        private bool TryRollCommonEquipment(out ItemData result)
         {
             result = null;
-            if (_equipment.Count == MinValue) return false;
+            
+            float roll = Random.value;
+            ItemRarity target = roll < PrimaryWeight ? ItemRarity.Common : ItemRarity.Uncommon;
+            
+            if (TryRollFrom(GetPool(target), out result)) return true;
+            
+            ItemRarity fallback = target == ItemRarity.Common
+                ? ItemRarity.Uncommon
+                : ItemRarity.Common;
 
-            var available = _equipment
-                .Where(e => !_inventoryService.HasItem(e.Type))
-                .ToList();
+            return TryRollFrom(GetPool(fallback), out result);
+        }
 
-            if (available.Count == MinValue) return false;
+        private bool TryRollBossEquipment(out ItemData result)
+        {
+            result = null;
 
-            int idx = Random.Range(MinValue, available.Count);
+            float roll = Random.value;
+            ItemRarity target = roll < PrimaryWeight ? ItemRarity.Uncommon : ItemRarity.Rare;
+
+            if (TryRollFrom(GetPool(target), out result)) return true;
+
+            ItemRarity fallback = target == ItemRarity.Uncommon
+                ? ItemRarity.Rare
+                : ItemRarity.Uncommon;
+
+            return TryRollFrom(GetPool(fallback), out result);
+        }
+        
+        private List<ItemData> GetPool(ItemRarity rarity) => rarity switch
+        {
+            ItemRarity.Common   => _commonEquipment,
+            ItemRarity.Uncommon => _uncommonEquipment,
+            ItemRarity.Rare     => _rareEquipment,
+            _ => null,
+        };
+
+        private bool TryRollFrom(List<ItemData> pool, out ItemData result)
+        {
+            result = null;
+            if (pool == null || pool.Count == 0) return false;
+            
+            var available = pool.Where(e => !_inventoryService.HasItem(e.Type)).ToList();
+            if (available.Count == 0) return false;
+
+            int idx = Random.Range(0, available.Count);
             result = available[idx];
             return true;
         }

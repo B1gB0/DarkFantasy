@@ -1351,6 +1351,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInitData: {fileID: 11400000, guid: 7c1a3c1fe85f9454f99508e684255823, type: 2}
+--- !u!114 &1409093915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409093910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupPrefab: {fileID: 980863824590353631, guid: 4f45c475d11069a4797af6377d5007ac, type: 3}
 --- !u!4 &1410937034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7488440926590417203, guid: c65283d4749c9ed4b89590f10fd6deee, type: 3}
@@ -2773,6 +2786,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: LootSpawner
+      value: 
+      objectReference: {fileID: 1409093915}
+    - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: _limitEnemies
       value: 5
       objectReference: {fileID: 0}
@@ -2781,9 +2798,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 141544009}
     - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: EnemyWaves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: _enemyWaves.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: EnemyWaves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d74e99d385817bd4aba0facc06ca9317, type: 2}
+    - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: EnemyWaves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05063dfce62e40f409c8cf5bc7febb15, type: 2}
     - target: {fileID: 4362821151698172745, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: _enemyWaves.Array.data[0]
       value: 
@@ -3585,6 +3614,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7045996144480693203, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1409093913}
+    - targetCorrespondingSourceObject: {fileID: 7045996144480693203, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1409093915}
     - targetCorrespondingSourceObject: {fileID: 1854048782486517776, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8888291123511788934}

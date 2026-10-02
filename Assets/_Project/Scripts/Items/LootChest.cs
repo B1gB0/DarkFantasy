@@ -62,7 +62,7 @@ namespace _Project.Scripts.Items
             }, cancellationToken: token);
 
 
-            OnChestOpened?.Invoke(_lootService.GetReward());
+            OnChestOpened?.Invoke(_lootService.GetChestReward());
         }
     }
 }

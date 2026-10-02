@@ -4,6 +4,7 @@ namespace _Project.Scripts.Services
 {
     public interface ILootService : IService
     {
-        public LootResult GetReward();
+        public LootResult GetEnemyReward(bool isBoss);
+        public LootResult GetChestReward();
     }
 }

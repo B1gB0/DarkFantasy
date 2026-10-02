@@ -31,6 +31,7 @@ namespace _Project.Scripts.Player.Input
         private Button _rollButton;
         private Button _inventoryButton;
         private Button _equippedItemButton;
+        private Button _pickUpButton;
 
         private bool _uiAttackPressed;
 
@@ -47,6 +48,7 @@ namespace _Project.Scripts.Player.Input
         public Vector2 CameraLookDirection { get; private set; }
         public bool IsMoveInputPerformed { get; private set; }
         public bool IsCameraRotating { get; private set; }
+        public bool IsPickUpPressed { get; private set; }
 
         public bool IsRollInputPerformed => _rollRequested;
 
@@ -57,12 +59,12 @@ namespace _Project.Scripts.Player.Input
 
         private void OnEnable()
         {
-            _inputSystem.PLayer.Enable();
+            _inputSystem.Player.Enable();
 
-            _inputSystem.PLayer.Move.performed += OnMove;
-            _inputSystem.PLayer.Move.canceled += OnMove;
+            _inputSystem.Player.Move.performed += OnMove;
+            _inputSystem.Player.Move.canceled += OnMove;
 
-            _inputSystem.PLayer.Roll.performed += OnRollPerformed;
+            _inputSystem.Player.Roll.performed += OnRollPerformed;
         }
 
         private void Update()
@@ -76,6 +78,7 @@ namespace _Project.Scripts.Player.Input
         private void LateUpdate()
         {
             UpdateAttackInput();
+            UpdateInteractInput();
 
             _uiAttackPressed = false;
             _rollRequested = false;
@@ -83,12 +86,12 @@ namespace _Project.Scripts.Player.Input
 
         private void OnDisable()
         {
-            _inputSystem.PLayer.Move.performed -= OnMove;
-            _inputSystem.PLayer.Move.canceled -= OnMove;
+            _inputSystem.Player.Move.performed -= OnMove;
+            _inputSystem.Player.Move.canceled -= OnMove;
 
-            _inputSystem.PLayer.Roll.performed -= OnRollPerformed;
+            _inputSystem.Player.Roll.performed -= OnRollPerformed;
 
-            _inputSystem.PLayer.Disable();
+            _inputSystem.Player.Disable();
         }
 
         private void OnDestroy()
@@ -98,6 +101,7 @@ namespace _Project.Scripts.Player.Input
             if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
             if (_inventoryButton != null) _inventoryButton.onClick.RemoveListener(OnInventoryButtonClicked);
             if (_equippedItemButton != null) _equippedItemButton.onClick.RemoveListener(OnEquippedItemButtonClicked);
+            if (_pickUpButton != null) _pickUpButton.onClick.RemoveListener(OnPickUpByButton);
         }
 
         public void GetButtons(
@@ -106,7 +110,8 @@ namespace _Project.Scripts.Player.Input
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton)
+            Button equippedItemButton,
+            Button pickUpButton)
         {
             _moveJoystick = moveJoystick;
             _cameraJoystick = cameraJoystick;
@@ -119,6 +124,8 @@ namespace _Project.Scripts.Player.Input
             _inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
             _equippedItemButton = equippedItemButton;
             _equippedItemButton.onClick.AddListener(OnEquippedItemButtonClicked);
+            _pickUpButton = pickUpButton;
+            _pickUpButton.onClick.AddListener(OnPickUpByButton);
         }
 
         public void LockPlayerMovement()
@@ -141,11 +148,17 @@ namespace _Project.Scripts.Player.Input
         {
             if (_isAttackLocked) return;
 
-            bool inputAttack = _inputSystem.PLayer.Attack.WasPressedThisFrame()
+            bool inputAttack = _inputSystem.Player.Attack.WasPressedThisFrame()
                                && !IsPointerOverUI();
 
             if (inputAttack || _uiAttackPressed)
                 OnAttackButtonPressed?.Invoke();
+        }
+        
+        private void UpdateInteractInput()
+        {
+            IsPickUpPressed = _inputSystem.Player.PickUp.WasPressedThisFrame()
+                                && !IsPointerOverUI();
         }
 
         private bool IsPointerOverUI()
@@ -192,9 +205,9 @@ namespace _Project.Scripts.Player.Input
                 return;
             }
 
-            if (_inputSystem.PLayer.CameraDragButton.IsPressed())
+            if (_inputSystem.Player.CameraDragButton.IsPressed())
             {
-                var delta = _inputSystem.PLayer.Look.ReadValue<Vector2>();
+                var delta = _inputSystem.Player.Look.ReadValue<Vector2>();
                 
                 float normalizedX = delta.x / Screen.width;
                 float normalizedY = delta.y / Screen.height;
@@ -265,6 +278,11 @@ namespace _Project.Scripts.Player.Input
                 return;
 
             _uiAttackPressed = true;
+        }
+
+        private void OnPickUpByButton()
+        {
+            IsPickUpPressed = true;
         }
 
         private void OnInventoryButtonClicked()

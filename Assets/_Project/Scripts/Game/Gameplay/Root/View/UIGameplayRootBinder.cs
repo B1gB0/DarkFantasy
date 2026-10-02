@@ -37,7 +37,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Joystick MoveJoystick { get; private set; }
         [field: SerializeField] public Joystick CameraJoystick { get; private set; }
         [field: SerializeField] public GameObject JoystickIcon { get; private set; }
-        [field: SerializeField] public GameObject CameraJoystickIcon { get; private set; }
+        [field: SerializeField] public GameObject CameraTutorialView { get; private set; }
         [field: SerializeField] public TutorialPointer TutorialPointer { get; private set; }
         [field: SerializeField] public KeyboardTutorialView KeyboardTutorialView { get; private set; }
         [field: SerializeField] public GameObject MouseTutorialView { get; private set; }
@@ -49,8 +49,10 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Button CheatButton { get; private set; }
 #endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }
+        [field: SerializeField] public Button PickUpButton { get; private set; }
         [field: SerializeField] public EquippedConsumableItemView EquippedConsumableItemView { get; private set; }
         [field: SerializeField] public RewardView RewardView { get; private set; }
+        [field: SerializeField] public PickUpView PickUpView { get; private set; }
 
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)
@@ -89,7 +91,6 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
             else
             {
                 JoystickIcon.SetActive(false);
-                CameraJoystickIcon.SetActive(false);
                 TutorialPointer.Deactivate();
             }
 
@@ -116,7 +117,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 return;
 
             JoystickIcon.gameObject.SetActive(true);
-            CameraJoystickIcon.SetActive(true);
+            CameraTutorialView.SetActive(true);
             TutorialPointer.Activate();
             TutorialPointer.transform.position = PointerPoint.transform.position;
             _tweenAnimationService.AnimatePointer(TutorialPointer.transform, PointerPoint);

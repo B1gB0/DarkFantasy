@@ -3,7 +3,7 @@
     "name": "InputSystem",
     "maps": [
         {
-            "name": "PLayer",
+            "name": "Player",
             "id": "c43f73c1-763b-4f18-95e1-595722c7098c",
             "actions": [
                 {
@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PickUp",
+                    "type": "Button",
+                    "id": "f42bad83-7749-4672-9b0c-2113e9832c22",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -360,6 +369,17 @@
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "13f06fb7-eee0-4ded-9bd7-5c57364d6126",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

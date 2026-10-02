@@ -4585,6 +4585,24 @@ Transform:
   - {fileID: 921595609}
   m_Father: {fileID: 1460934534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1875402635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6379663272835847441, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+  m_PrefabInstance: {fileID: 97353131357398114}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1875402636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875402635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupPrefab: {fileID: 980863824590353631, guid: 4f45c475d11069a4797af6377d5007ac, type: 3}
 --- !u!1 &1902282243
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,8 +6191,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: LootSpawner
+      value: 
+      objectReference: {fileID: 1875402636}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: _portals.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: SpawnWaveOfEnemyDelay
@@ -6196,6 +6222,26 @@ PrefabInstance:
       propertyPath: _portals.Array.data[2]
       value: 
       objectReference: {fileID: 1226260519}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 879505f33a6f45b42b77d4669985e617, type: 2}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 38bc6493c9800b843aa08689c578e331, type: 2}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: d01c46c471cebed4cb50b844413bfd20, type: 2}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4152dd075c385e14994aa9e1b0d11136, type: 2}
+    - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: EnemyWaves.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ad611c3e91874c47a5b50309046360a, type: 2}
     - target: {fileID: 8144597118662790227, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: _enemyWaves.Array.data[4]
       value: 
@@ -6375,6 +6421,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1168129898}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6379663272835847441, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1875402636}
     - targetCorrespondingSourceObject: {fileID: 8173179782623858236, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 97353131357398118}

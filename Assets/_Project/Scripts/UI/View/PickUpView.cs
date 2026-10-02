@@ -1,52 +1,55 @@
+﻿using System;
 using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using YG;
 
 namespace _Project.Scripts.UI.View
 {
-    public class GoldView : MonoBehaviour
+    public class PickUpView : View
     {
-        [SerializeField] private TMP_Text _text;
+        [SerializeField] private Button _mobileButton;
+        [SerializeField] private GameObject _desktopButton;
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
-
-        private ICurrencyService _currencyService;
+        
         private ITweenAnimationService _tweenAnimationService;
 
         [Inject]
-        private void Construct(ICurrencyService currencyService, ITweenAnimationService tweenAnimationService)
+        private void Construct(ITweenAnimationService tweenAnimationService)
         {
-            _currencyService = currencyService;
             _tweenAnimationService = tweenAnimationService;
         }
 
         private void Start()
         {
-            _text.text = _currencyService.Gold.ToString();
-            _currencyService.OnGoldValueChanged += SetValue;
+            if (YG2.envir.isDesktop)
+            {
+                _mobileButton.gameObject.SetActive(false);
+                _desktopButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                _mobileButton.gameObject.SetActive(true);
+                _desktopButton.gameObject.SetActive(false);
+            }
         }
 
         private void OnDestroy()
         {
-            _currencyService.OnGoldValueChanged -= SetValue;
             transform.DOKill();
         }
 
-        public void Show()
+        public override void Show()
         {
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
         }
 
-        public void Hide()
+        public override void Hide()
         {
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint, true);
-        }
-
-        private void SetValue(int value)
-        {
-            _text.text = _currencyService.Gold.ToString();
         }
     }
 }

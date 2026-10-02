@@ -23,6 +23,7 @@ namespace _Project.Scripts.Services
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton);
+            Button equippedItemButton,
+            Button pickUpButton);
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Level.Triggers
 {
-    public class LootTrigger : Trigger
+    public class LootChestTrigger : Trigger
     {
         public event Action OnGotLoot;
         

@@ -1160,9 +1160,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 319105418}
     - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: LootSpawner
+      value: 
+      objectReference: {fileID: 8446552419749054042}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       propertyPath: _lootTrigger
       value: 
       objectReference: {fileID: 388360406}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: _lootChestTrigger
+      value: 
+      objectReference: {fileID: 388360406}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: EnemyWaves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: EnemyWaves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ca87f59c4a4ea144883967804a7ace6b, type: 2}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: EnemyWaves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 655d57ad28183b7489f6c32bced20fb3, type: 2}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: EnemyWaves.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: ceeedf14a0052bc43bd2a8e1e0aab913, type: 2}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: EnemyWaves.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: acccb76a809a8a84daee187cd9bbb69c, type: 2}
     - target: {fileID: 1218255446254029260, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -2904,7 +2932,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4063938459765580891, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 388360407}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8094919491821553787, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8446552419749054042}
   m_SourcePrefab: {fileID: 100100000, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
 --- !u!4 &8446552419749054039 stripped
 Transform:
@@ -2916,6 +2947,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3391730541075976758, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
   m_PrefabInstance: {fileID: 8446552419749054038}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8446552419749054041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8094919491821553787, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+  m_PrefabInstance: {fileID: 8446552419749054038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8446552419749054042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8446552419749054041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupPrefab: {fileID: 980863824590353631, guid: 4f45c475d11069a4797af6377d5007ac, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

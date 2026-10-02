@@ -241,6 +241,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d9891907d0b1144ba024f32513ed39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &681960363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 360443432823647128, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+  m_PrefabInstance: {fileID: 6885978586469822541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &681960368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681960363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupPrefab: {fileID: 980863824590353631, guid: 4f45c475d11069a4797af6377d5007ac, type: 3}
 --- !u!1 &851182980
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,6 +2245,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5953121075063434209, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: LootSpawner
+      value: 
+      objectReference: {fileID: 681960368}
     - target: {fileID: 5968276946851714809, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -3142,7 +3164,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1710866097214475199, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1090328425}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 360443432823647128, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 681960368}
   m_SourcePrefab: {fileID: 100100000, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
 --- !u!4 &6885978586469822542 stripped
 Transform:

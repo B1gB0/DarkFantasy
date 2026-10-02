@@ -2844,6 +2844,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4105078001665906998, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6300273336773890275}
+    - targetCorrespondingSourceObject: {fileID: 4105078001665906998, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6300273336773890276}
   m_SourcePrefab: {fileID: 100100000, guid: 88ac5438db2aa164abbb13fda9ae132d, type: 3}
 --- !u!1 &6300273336773890271 stripped
 GameObject:
@@ -2874,15 +2877,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves:
+  EnemyWaves:
   - {fileID: 11400000, guid: ec44cdc17a92b7b409c0aca4d4843018, type: 2}
   - {fileID: 11400000, guid: a47ccf106402fd8428d604cbcc917af2, type: 2}
   - {fileID: 11400000, guid: 44c750fa6f1394d4ba2744529536d1dd, type: 2}
   - {fileID: 11400000, guid: 1a3ed63015d9e3d43aa59e06619e2043, type: 2}
+  LootSpawner: {fileID: 6300273336773890276}
   _limitEnemies: 12
   _spawnLastWaveTrigger: {fileID: 6300273336773890274}
   _nextLevelTrigger: {fileID: 6300273336773890272}
-  _lootTrigger: {fileID: 1836114773}
+  _lootChestTrigger: {fileID: 1836114773}
   _lootChest: {fileID: 798551670}
 --- !u!114 &6300273336773890274 stripped
 MonoBehaviour:
@@ -2908,6 +2912,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInitData: {fileID: 11400000, guid: 6822431181e266a46a2bc9bad43da49c, type: 2}
+--- !u!114 &6300273336773890276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6300273336773890271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupPrefab: {fileID: 980863824590353631, guid: 4f45c475d11069a4797af6377d5007ac, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
