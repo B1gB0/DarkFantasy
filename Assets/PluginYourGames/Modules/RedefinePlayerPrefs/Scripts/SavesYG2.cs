@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Items;
+using _Project.Scripts.Level;
 
 namespace YG
 {
@@ -22,13 +23,23 @@ namespace YG
         public bool IsInventoryShopVisited;
         public bool IsMissionPanelVisited;
 
+        public string EquippedWeaponId;
+        public string EquippedArmorId;
+        public string EquippedRingId;
+        
+        public Dictionary<ItemType, int> Consumables = new();
+        public List<Item> Equipment = new();
+        
         public ItemType EquippedItemType;
-        public ItemType EquipedWeaponType;
-        public ItemType EquipedArmorType;
-        public ItemType EquipedRingType;
+        
+        public LevelDifficulty CurrentDifficulty;
+        
+        // public ItemType EquipedWeaponType;
+        // public ItemType EquipedArmorType;
+        // public ItemType EquipedRingType;
         
         public PlayerCharacteristics PlayerCharacteristics;
-        public Dictionary<ItemType, int> InventoryItems = new ();
+        // public Dictionary<ItemType, int> InventoryItems = new ();
         
         public List<string> stringKeys = new List<string>();
         public List<string> stringValues = new List<string>();

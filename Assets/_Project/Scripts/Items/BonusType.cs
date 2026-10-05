@@ -8,5 +8,8 @@
         MoveSpeed = 3,
         Damage = 4,
         Armor = 5,
+        AttackSpeed = 6,
+        ReverseDamage = 7,
+        CritDamage = 8,
     }
 }

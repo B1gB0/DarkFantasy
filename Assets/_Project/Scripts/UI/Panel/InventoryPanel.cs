@@ -48,7 +48,7 @@ namespace _Project.Scripts.UI.Panel
             _inventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
         }
-        
+
         private void OnEnable()
         {
             _backSceneButton.onClick.AddListener(MoveBackToScene);
@@ -61,7 +61,7 @@ namespace _Project.Scripts.UI.Panel
                 itemView.OnSelectButtonPressed += SelectItem;
             }
         }
-        
+
         private void OnDisable()
         {
             _backSceneButton.onClick.RemoveListener(MoveBackToScene);
@@ -82,25 +82,41 @@ namespace _Project.Scripts.UI.Panel
             _playerService.Player.InputController.LockPlayerMovement();
 
             foreach (var itemView in _itemViews)
-            {
                 itemView.Set();
-            }
 
+            // 1. Сначала экипировка (уникальные экземпляры)
             int index = MinValue;
-            foreach (var item in YG2.saves.InventoryItems)
+
+            var equipment = _inventoryService.Equipment;
+            for (int i = 0; i < equipment.Count; i++)
             {
-                if (index >= _itemViews.Count)
-                    break;
+                if (index >= _itemViews.Count) break;
 
-                ItemType type = item.Key;
-                int count = item.Value;
+                var instance = equipment[i];
+                if (instance == null) continue;
 
-                ItemData itemData = GetItemDataByType(type);
-                if (itemData == null || count <= MinValue)
-                    continue;
+                var data = GetItemDataByType(instance.Type);
+                if (data == null) continue;
 
                 _itemViews[index].gameObject.SetActive(true);
-                _itemViews[index].Set(itemData, count);
+                _itemViews[index].SetEquipment(data, instance);
+                index++;
+            }
+
+            // 2. Затем расходники (стакаются)
+            foreach (var kvp in YG2.saves.Consumables)
+            {
+                if (index >= _itemViews.Count) break;
+
+                var type = kvp.Key;
+                int count = kvp.Value;
+                if (count <= MinValue) continue;
+
+                var data = GetItemDataByType(type);
+                if (data == null) continue;
+
+                _itemViews[index].gameObject.SetActive(true);
+                _itemViews[index].SetConsumable(data, count);
                 index++;
             }
 
@@ -118,31 +134,33 @@ namespace _Project.Scripts.UI.Panel
             OnBackToSceneButtonPressed?.Invoke();
         }
 
-        private void SelectItem(ItemType type, InventoryItemView selectedItemView)
+        private void SelectItem(InventoryItemView selectedItemView)
         {
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
 
-            ItemData itemData = GetItemDataByType(type);
-
-            if (itemData == null || !_inventoryService.HasItem(type))
-                return;
-
             foreach (var itemView in _itemViews)
-            {
                 itemView.HideHover();
+
+            selectedItemView.ShowHover();
+            
+            if (selectedItemView.HasEquipmentInstance)
+            {
+                var data = selectedItemView.ItemData;
+                var instance = selectedItemView.EquipmentInstance;
+                _descriptionItemView.SetEquipment(data, instance);
+            }
+            else
+            {
+                var data = selectedItemView.ItemData;
+                _descriptionItemView.SetConsumable(data);
             }
 
-            _descriptionItemView.SetDescription(itemData);
             _descriptionItemView.Show();
-            
-            selectedItemView.ShowHover();
 
-            EquippedItem = itemData;
+            EquippedItem = selectedItemView.ItemData;
         }
 
         private ItemData GetItemDataByType(ItemType type)
-        {
-            return _shopService.GetItemDataByType(type);
-        }
+            => _shopService.GetItemDataByType(type);
     }
 }

@@ -10,10 +10,11 @@ namespace _Project.Scripts.Level.Triggers
     {
         private LootResult _reward;
         private LootSpawner _lootSpawner;
-        
+
         private IInventoryService _inventoryService;
         private ICurrencyService _currencyService;
         private ILootService _lootService;
+        private IProgressionService _progression;
 
         public event Action<LootResult> OnPickedUp;
 
@@ -30,46 +31,50 @@ namespace _Project.Scripts.Level.Triggers
             if (!other.TryGetComponent(out Player.Core.Player _)) return;
             _lootSpawner.Unregister(this);
         }
-        
+
         public void Setup(
             LootResult reward,
             LootSpawner lootSpawner,
             IInventoryService inventoryService,
             ICurrencyService currencyService,
-            ILootService lootService)
+            ILootService lootService,
+            IProgressionService progression)
         {
             _reward = reward;
             _lootSpawner = lootSpawner;
             _inventoryService = inventoryService;
             _currencyService = currencyService;
             _lootService = lootService;
+            _progression = progression;
         }
-        
+
         public void Pickup()
         {
             _lootSpawner.Unregister(this);
 
-            ApplyReward();
-            
-            if (_reward.Type == LootType.Equipment || _reward.Type == LootType.Consumable)
-                _lootService.ReleaseReservation(_reward.ItemType);
-            
-            Deactivate();
-            OnPickedUp?.Invoke(_reward);
-        }
+            var difficulty = _progression.CurrentDifficulty;
 
-        private void ApplyReward()
-        {
             switch (_reward.Type)
             {
+                case LootType.Equipment:
+                {
+                    var instance = Item.Create(_reward.ItemType, difficulty);
+                    _inventoryService.AddEquipment(instance);
+                    _lootService.ReleaseReservation(_reward.ItemType, difficulty);
+                    break;
+                }
+
+                case LootType.Consumable:
+                    _inventoryService.AddItem(_reward.ItemType, 1);
+                    break;
+
                 case LootType.Gold:
                     _currencyService.AddGold(_reward.GoldValue);
                     break;
-                case LootType.Consumable:
-                case LootType.Equipment:
-                    _inventoryService.AddItem(_reward.ItemType);
-                    break;
             }
+
+            Deactivate();
+            OnPickedUp?.Invoke(_reward);
         }
     }
 }

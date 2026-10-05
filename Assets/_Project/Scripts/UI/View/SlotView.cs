@@ -1,11 +1,9 @@
-﻿using System;
-using _Project.Scripts.DataBase.Data;
+﻿using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 namespace _Project.Scripts.UI.View
 {
@@ -29,20 +27,52 @@ namespace _Project.Scripts.UI.View
         private void OnEnable()
         {
             if (_inventoryService == null) return;
-            
+
             _inventoryService.OnEquippedItem += Refresh;
             _inventoryService.OnUnEquippedItem += Refresh;
-            
-            if(_shopService.IsInitiated)
+
+            if (_shopService.IsInitiated)
                 Refresh();
         }
 
         private void OnDisable()
         {
             if (_inventoryService == null) return;
-            
+
             _inventoryService.OnEquippedItem -= Refresh;
             _inventoryService.OnUnEquippedItem -= Refresh;
+        }
+
+        private void Refresh()
+        {
+            // Получаем НАДЕТЫЙ ЭКЗЕМПЛЯР для своего слота
+            Item instance = GetEquippedInstanceForMySlot();
+
+            if (instance == null)
+            {
+                Set(null);
+                return;
+            }
+
+            var data = _shopService.GetItemDataByType(instance.Type);
+            if (data == null)
+            {
+                Set(null);
+                return;
+            }
+
+            Set(data);
+        }
+
+        private Item GetEquippedInstanceForMySlot()
+        {
+            return _equipmentType switch
+            {
+                EquipmentType.Weapon => _inventoryService.EquippedWeapon,
+                EquipmentType.Armor  => _inventoryService.EquippedArmor,
+                EquipmentType.Ring   => _inventoryService.EquippedRing,
+                _ => null,
+            };
         }
 
         private void Set(ItemData data)
@@ -56,34 +86,13 @@ namespace _Project.Scripts.UI.View
 
             _rarityBackground.color = data.Rarity switch
             {
-                ItemRarity.Common => Color.white,
+                ItemRarity.Common   => Color.white,
                 ItemRarity.Uncommon => Color.green,
-                ItemRarity.Rare => Color.blue,
+                ItemRarity.Rare     => Color.blue,
                 _ => Color.white,
             };
 
             _icon.sprite = _shopService.GetItemSpriteByType(data.Type);
-        }
-
-        private void Refresh()
-        {
-            ItemType type = GetEquippedTypeForMySlot();
-            ItemData data = type == ItemType.None
-                ? null
-                : _shopService.GetItemDataByType(type);
-
-            Set(data);
-        }
-
-        private ItemType GetEquippedTypeForMySlot()
-        {
-            return _equipmentType switch
-            {
-                EquipmentType.Weapon => YG2.saves.EquipedWeaponType,
-                EquipmentType.Armor  => YG2.saves.EquipedArmorType,
-                EquipmentType.Ring   => YG2.saves.EquipedRingType,
-                _ => ItemType.None,
-            };
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
-using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 namespace _Project.Scripts.UI.View
 {
@@ -19,10 +16,13 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private TMP_Text _count;
         [SerializeField] private Button _button;
 
-        private ItemData _itemData;
         private IShopService _shopService;
 
-        public event Action<ItemType, InventoryItemView> OnSelectButtonPressed;
+        public ItemData ItemData { get; private set; }
+        public Item EquipmentInstance { get; private set; }
+        public bool HasEquipmentInstance => EquipmentInstance != null;
+
+        public event Action<InventoryItemView> OnSelectButtonPressed;
 
         [Inject]
         private void Construct(IShopService shopService)
@@ -39,41 +39,77 @@ namespace _Project.Scripts.UI.View
         {
             _button.onClick.RemoveListener(OnSelectItem);
         }
-
-        public void Set(ItemData itemData = null, int count = 0)
+        
+        public void SetEquipment(ItemData template, Item instance)
         {
-            _itemData = itemData;
-            _count.text = count.ToString();
+            ItemData = template;
+            EquipmentInstance = instance;
 
             _hoverImage.gameObject.SetActive(false);
-            _iconImage.gameObject.SetActive(true);
-            _count.gameObject.SetActive(true);
 
-            if (itemData == null)
+            if (template == null || instance == null)
             {
-                _iconImage.gameObject.SetActive(false);
-                _count.gameObject.SetActive(false);
-
+                Clear();
                 return;
             }
 
-            _iconImage.sprite = _shopService.GetItemSpriteByType(_itemData.Type);
+            _iconImage.gameObject.SetActive(true);
+            _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
+            
+            _count.gameObject.SetActive(false);
         }
-
-        public void ShowHover()
+        
+        public void SetConsumable(ItemData template, int count)
         {
-            _hoverImage.gameObject.SetActive(true);
-        }
+            ItemData = template;
+            EquipmentInstance = null;
 
-        public void HideHover()
-        {
             _hoverImage.gameObject.SetActive(false);
+
+            if (template == null || count <= 0)
+            {
+                Clear();
+                return;
+            }
+
+            _iconImage.gameObject.SetActive(true);
+            _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
+
+            _count.gameObject.SetActive(true);
+            _count.text = count.ToString();
+        }
+        
+        public void Set(ItemData itemData = null, int count = 0)
+        {
+            if (itemData == null)
+            {
+                Clear();
+                return;
+            }
+
+            if (itemData.Kind == ItemKind.Equipment)
+                SetEquipment(itemData, null);
+            else
+                SetConsumable(itemData, count);
+        }
+
+        public void ShowHover() => _hoverImage.gameObject.SetActive(true);
+        public void HideHover() => _hoverImage.gameObject.SetActive(false);
+
+        private void Clear()
+        {
+            ItemData = null;
+            EquipmentInstance = null;
+
+            _hoverImage.gameObject.SetActive(false);
+            _iconImage.gameObject.SetActive(false);
+            _count.gameObject.SetActive(false);
         }
 
         private void OnSelectItem()
         {
-            if (_itemData != null)
-                OnSelectButtonPressed?.Invoke(_itemData.Type, this);
+            if (ItemData == null) return;
+            OnSelectButtonPressed?.Invoke(this);
         }
     }
 }

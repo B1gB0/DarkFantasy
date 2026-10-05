@@ -52,6 +52,7 @@ namespace _Project.Scripts.DI
             builder.AddSingleton(typeof(UILocalizationService), typeof(IUILocalizationService));
             builder.AddSingleton(typeof(InventoryService), typeof(IInventoryService));
             builder.AddSingleton(typeof(LootService), typeof(ILootService));
+            builder.AddSingleton(typeof(ProgressionService), typeof(IProgressionService));
         }
 
         private void CreateMonoServices()

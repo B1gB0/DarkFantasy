@@ -28,18 +28,21 @@ namespace _Project.Scripts.Level.Spawners
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
         private ILootService _lootService;
+        private IProgressionService  _progressionService;
 
         [Inject]
         private void Construct(
             IInventoryService inventoryService,
             ICurrencyService currencyService,
             IPlayerService playerService,
-            ILootService lootService)
+            ILootService lootService,
+            IProgressionService progressionService)
         {
             _inventoryService = inventoryService;
             _currencyService = currencyService;
             _playerService = playerService;
             _lootService = lootService;
+            _progressionService = progressionService;
         }
 
         private void Start()
@@ -96,7 +99,15 @@ namespace _Project.Scripts.Level.Spawners
             var lootEnemyTrigger = _pool.GetFreeElement();
             lootEnemyTrigger.transform.position = spawnPos;
             lootEnemyTrigger.OnPickedUp -= _rewardView.Show;
-            lootEnemyTrigger.Setup(reward, this, _inventoryService, _currencyService, _lootService);
+            
+            lootEnemyTrigger.Setup(
+                reward,
+                this,
+                _inventoryService,
+                _currencyService,
+                _lootService,
+                _progressionService);
+            
             lootEnemyTrigger.OnPickedUp += _rewardView.Show;
         }
 

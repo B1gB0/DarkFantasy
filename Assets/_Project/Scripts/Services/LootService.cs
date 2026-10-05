@@ -2,6 +2,7 @@
 using System.Linq;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
+using _Project.Scripts.Level;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
@@ -14,24 +15,22 @@ namespace _Project.Scripts.Services
 
         private const float EnemyEquipmentChance = 0.3f;
         private const float ConsumableChance = 0.35f;
-        
         private const float PrimaryWeight = 0.7f;
 
         private const int LowGold = 10;
         private const int HighGold = 50;
         private const float HighGoldChance = 0.2f;
-        
+
         private readonly List<ItemData> _commonEquipment = new();
         private readonly List<ItemData> _uncommonEquipment = new();
         private readonly List<ItemData> _rareEquipment = new();
-        
         private readonly List<ItemData> _consumables = new();
-        
-        private readonly HashSet<ItemType> _reservedItems = new();
+
+        private readonly HashSet<(ItemType, LevelDifficulty)> _reserved = new();
 
         private IDataBaseService _dataBaseService;
         private IInventoryService _inventoryService;
-        private ICurrencyService _currencyService;
+        private IProgressionService _progressionService;
 
         public bool IsInitiated { get; private set; }
 
@@ -39,11 +38,11 @@ namespace _Project.Scripts.Services
         private void Construct(
             IDataBaseService dataBaseService,
             IInventoryService inventoryService,
-            ICurrencyService currencyService)
+            IProgressionService progressionService)
         {
             _dataBaseService = dataBaseService;
             _inventoryService = inventoryService;
-            _currencyService = currencyService;
+            _progressionService = progressionService;
         }
 
         public UniTask Init()
@@ -59,14 +58,12 @@ namespace _Project.Scripts.Services
                     case ItemKind.Equipment:
                         switch (item.Rarity)
                         {
-                            case ItemRarity.Common:   _commonEquipment.Add(item);
-                                break;
-                            case ItemRarity.Uncommon: _uncommonEquipment.Add(item);
-                                break;
-                            case ItemRarity.Rare:     _rareEquipment.Add(item);
-                                break;
+                            case ItemRarity.Common:   _commonEquipment.Add(item); break;
+                            case ItemRarity.Uncommon: _uncommonEquipment.Add(item); break;
+                            case ItemRarity.Rare:     _rareEquipment.Add(item); break;
                         }
                         break;
+
                     case ItemKind.Consumable:
                         _consumables.Add(item);
                         break;
@@ -76,7 +73,7 @@ namespace _Project.Scripts.Services
             IsInitiated = true;
             return UniTask.CompletedTask;
         }
-        
+
         public LootResult GetEnemyReward(bool isBoss)
         {
             if (!IsInitiated) return LootResult.None();
@@ -88,7 +85,7 @@ namespace _Project.Scripts.Services
 
                 return LootResult.None();
             }
-            
+
             if (Random.value > EnemyEquipmentChance)
                 return LootResult.None();
 
@@ -104,37 +101,28 @@ namespace _Project.Scripts.Services
 
             float roll = Random.value;
 
-            if (!(roll < ConsumableChance) || !TryGetRandomConsumable(out var consumable)) return RollGold();
+            if (roll < ConsumableChance && TryGetRandomConsumable(out var consumable))
+                return LootResult.Item(consumable.Type, LootType.Consumable);
 
-            _inventoryService.AddItem(consumable.Type);
-            return LootResult.Item(consumable.Type, LootType.Consumable);
+            return RollGold();
         }
-        
-        public void ReleaseReservation(ItemType type)
+
+        public void ReleaseReservation(ItemType type, LevelDifficulty difficulty)
         {
-            if (type == ItemType.None) return;
-            _reservedItems.Remove(type);
+            _reserved.Remove((type, difficulty));
         }
-        
-        public void ClearReservations()
-        {
-            _reservedItems.Clear();
-        }
-        
-        private bool IsItemAvailable(ItemType type)
-        {
-            return !_inventoryService.HasItem(type) && !_reservedItems.Contains(type);
-        }
-        
+
+        public void ClearReservations() => _reserved.Clear();
+
         private bool TryRollCommonEquipment(out ItemData result)
         {
             result = null;
-            
+
             float roll = Random.value;
             ItemRarity target = roll < PrimaryWeight ? ItemRarity.Common : ItemRarity.Uncommon;
-            
+
             if (TryRollFrom(GetPool(target), out result)) return true;
-            
+
             ItemRarity fallback = target == ItemRarity.Common
                 ? ItemRarity.Uncommon
                 : ItemRarity.Common;
@@ -157,7 +145,7 @@ namespace _Project.Scripts.Services
 
             return TryRollFrom(GetPool(fallback), out result);
         }
-        
+
         private List<ItemData> GetPool(ItemRarity rarity) => rarity switch
         {
             ItemRarity.Common   => _commonEquipment,
@@ -170,15 +158,20 @@ namespace _Project.Scripts.Services
         {
             result = null;
             if (pool == null || pool.Count == 0) return false;
-            
-            var available = pool.Where(e => IsItemAvailable(e.Type)).ToList();
+
+            var difficulty = _progressionService.CurrentDifficulty;
+
+            var available = pool
+                .Where(e => !_inventoryService.HasEquipment(e.Type, difficulty))
+                .Where(e => !_reserved.Contains((e.Type, difficulty)))
+                .ToList();
+
             if (available.Count == 0) return false;
 
             int idx = Random.Range(0, available.Count);
             result = available[idx];
             
-            _reservedItems.Add(result.Type);
-            
+            _reserved.Add((result.Type, difficulty));
             return true;
         }
 
@@ -194,18 +187,10 @@ namespace _Project.Scripts.Services
 
         private LootResult RollGold()
         {
-            int gold;
-
             if (Random.value < HighGoldChance)
-            {
-                gold = HighGold;
-                _currencyService.AddGold(gold);
-                return LootResult.Gold(gold, true);
-            }
+                return LootResult.Gold(HighGold, true);
 
-            gold = LowGold;
-            _currencyService.AddGold(gold);
-            return LootResult.Gold(gold, false);
+            return LootResult.Gold(LowGold, false);
         }
     }
 }

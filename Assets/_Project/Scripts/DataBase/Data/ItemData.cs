@@ -10,6 +10,11 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private string _id;
         [SerializeField] private ItemType _type;
         [SerializeField] private float _value;
+        [SerializeField] private BonusType _bonusType;
+        [SerializeField] private float _value2;
+        [SerializeField] private BonusType _bonusType2;
+        [SerializeField] private float _value3;
+        [SerializeField] private BonusType _bonusType3;
         [SerializeField] private int _price;
         [SerializeField] private float _duration;
         [SerializeField] private bool _isMultiplier;
@@ -23,11 +28,15 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private EquipmentType _slot;
         [SerializeField] private ItemRarity _rarity;
         [SerializeField] private bool _isSold;
-        [SerializeField] private BonusType _bonusType;
 
         public string Id => _id;
         public ItemType Type => _type;
         public float Value => _value;
+        public BonusType BonusType => _bonusType;
+        public float Value2 => _value2;
+        public BonusType BonusType2 => _bonusType2;
+        public float Value3 => _value3;
+        public BonusType BonusType3 => _bonusType3;
         public int Price => _price;
         public float Duration => _duration;
         public bool IsMultiplier => _isMultiplier;
@@ -41,6 +50,5 @@ namespace _Project.Scripts.DataBase.Data
         public EquipmentType Slot => _slot;
         public ItemRarity Rarity => _rarity;
         public bool IsSold => _isSold;
-        public BonusType BonusType => _bonusType;
     }
 }

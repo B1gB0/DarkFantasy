@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
+using _Project.Scripts.Level;
 
 namespace _Project.Scripts.Services
 {
@@ -8,14 +10,21 @@ namespace _Project.Scripts.Services
     {
         public void ShowCurrentEquippedConsumableItem();
         public void AddItem(ItemType itemType, int amount = 1);
+        public void AddEquipment(Item instance);
         public void EquipConsumableItem(ItemData data);
-        public void EquipItem(ItemType itemType);
+        public IReadOnlyList<Item> GetEquippedItems();
         public void RemoveItem(ItemType itemType, int amount = 1);
         public bool HasItem(ItemType itemType);
+        public bool HasEquipment(ItemType type, LevelDifficulty difficulty);
         public int GetItemCount(ItemType itemType);
+        public void EquipItem(string instanceId);
         public event Action<ItemType, int> OnEquippedConsumableItem;
         public event Action OnUnEquippedConsumableItem;
         public event Action OnEquippedItem;
         public event Action OnUnEquippedItem;
+        public IReadOnlyList<Item> Equipment { get; }
+        public Item EquippedWeapon { get; }
+        public Item EquippedArmor { get; }
+        public Item EquippedRing { get; }
     }
 }

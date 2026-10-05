@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Items
@@ -7,14 +6,7 @@ namespace _Project.Scripts.Items
     [CreateAssetMenu(menuName = "Icons Config")]
     public class IconsConfig : ScriptableObject
     {
-        [Serializable]
-        public struct Entry
-        {
-            public ItemType ItemType;
-            public Sprite Icon;
-        }
-
-        [SerializeField] private List<Entry> _entries = new();
+        [SerializeField] private List<IconEntry> _entries = new();
 
         private Dictionary<ItemType, Sprite> _map;
 
