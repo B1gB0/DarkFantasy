@@ -36,6 +36,7 @@ namespace _Project.Scripts.Services
         private ParticleEffectsService _particleEffectsService;
         private IExperiencePoints _experiencePoints;
         private ICurrencyService _currencyService;
+        private IProgressionService _progressionService;
 
         private EnemyInitData _enemyInitData;
 
@@ -60,7 +61,8 @@ namespace _Project.Scripts.Services
             ParticleEffectsService particleEffectsService,
             IFloatingTextService floatingTextService,
             IExperiencePoints experiencePoints,
-            ICurrencyService currencyService)
+            ICurrencyService currencyService,
+            IProgressionService progressionService)
         {
             _dataBaseService = dataBaseService;
             _playerService = playerService;
@@ -69,20 +71,17 @@ namespace _Project.Scripts.Services
             _floatingTextService = floatingTextService;
             _experiencePoints = experiencePoints;
             _currencyService = currencyService;
+            _progressionService = progressionService;
         }
 
         public UniTask Init()
         {
-            if (IsInitiated)
-                return UniTask.CompletedTask;
+            if (IsInitiated) return UniTask.CompletedTask;
 
             foreach (var enemy in _dataBaseService.Content.Enemies)
-            {
                 _enemiesData.TryAdd(enemy.Type, enemy);
-            }
 
             IsInitiated = true;
-
             return UniTask.CompletedTask;
         }
 
@@ -91,25 +90,14 @@ namespace _Project.Scripts.Services
             CreateEnemySkeletonPool();
 
             var data = _enemiesData[EnemyType.Skeleton];
-            var skeleton = _skeletonPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _skeletonPool.GetFreeElement();
 
-            skeleton.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
-            
-            skeleton.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
+            enemy.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            if (skeleton.Health.TargetHealth <= MinValue)
-            {
-                skeleton.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return skeleton;
+            return enemy;
         }
 
         public SkeletonHeavyArmor CreateSkeletonHeavyArmor()
@@ -117,25 +105,14 @@ namespace _Project.Scripts.Services
             CreateHeavyArmorSkeletonPool();
 
             var data = _enemiesData[EnemyType.SkeletonHeavyArmor];
-            var skeletonHeavyArmor = _skeletonHeavyArmorPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _skeletonHeavyArmorPool.GetFreeElement();
 
-            skeletonHeavyArmor.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
-            
-            skeletonHeavyArmor.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
+            enemy.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            if (skeletonHeavyArmor.Health.TargetHealth <= MinValue)
-            {
-                skeletonHeavyArmor.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return skeletonHeavyArmor;
+            return enemy;
         }
 
         public SkeletonRanger CreateSkeletonRanger()
@@ -143,26 +120,16 @@ namespace _Project.Scripts.Services
             CreateRangerSkeletonPool();
 
             var data = _enemiesData[EnemyType.SkeletonRanger];
-            var skeletonRanger = _skeletonRangerPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _skeletonRangerPool.GetFreeElement();
 
-            skeletonRanger.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
 
-            skeletonRanger.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
-            skeletonRanger.Longbow.SetData(_playerService.Player.transform, data.Damage);
+            enemy.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
+            enemy.Longbow.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            if (skeletonRanger.Health.TargetHealth <= MinValue)
-            {
-                skeletonRanger.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return skeletonRanger;
+            return enemy;
         }
 
         public Priest CreatePriest()
@@ -170,122 +137,110 @@ namespace _Project.Scripts.Services
             CreatePriestPool();
 
             var data = _enemiesData[EnemyType.Priest];
-            var priest = _priestPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _priestPool.GetFreeElement();
 
-            priest.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
 
-            priest.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
-            priest.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
-            priest.FireballSpell.SetData(_playerService.Player.transform, data.Damage);
-            
-            priest.Coil.SetData(_playerService.Player.transform, data.Damage);
-            priest.Coil.GetServices(_audioSoundsService, _particleEffectsService);
-            
-            priest.Omni.SetData(_playerService.Player.transform, data.Damage);
-            priest.Omni.GetServices(_audioSoundsService, _particleEffectsService);
+            var target = _playerService.Player.transform;
+            float damage = data.Damage * dmgMul;
 
-            if (priest.Health.TargetHealth <= MinValue)
-            {
-                priest.Health.LoadHealth(data.Health, data.Health);
-            }
+            enemy.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
+            enemy.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
+            enemy.FireballSpell.SetData(target, damage);
 
-            return priest;
+            enemy.Coil.SetData(target, damage);
+            enemy.Coil.GetServices(_audioSoundsService, _particleEffectsService);
+
+            enemy.Omni.SetData(target, damage);
+            enemy.Omni.GetServices(_audioSoundsService, _particleEffectsService);
+
+            return enemy;
         }
-        
+
         public Bandit CreateBandit()
         {
             CreateEnemyBanditPool();
 
             var data = _enemiesData[EnemyType.BanditMelee];
-            var bandit = _banditPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _banditPool.GetFreeElement();
 
-            bandit.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
-            
-            bandit.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
+            enemy.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            if (bandit.Health.TargetHealth <= MinValue)
-            {
-                bandit.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return bandit;
+            return enemy;
         }
-        
+
         public BanditRanger CreateBanditRanger()
         {
             CreateEnemyBanditRangerPool();
 
             var data = _enemiesData[EnemyType.BanditRanger];
-            var bandit = _banditRangerPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _banditRangerPool.GetFreeElement();
 
-            bandit.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
-            
-            bandit.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
-            bandit.Longbow.SetData(_playerService.Player.transform, data.Damage);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
 
-            if (bandit.Health.TargetHealth <= MinValue)
-            {
-                bandit.Health.LoadHealth(data.Health, data.Health);
-            }
+            enemy.Longbow.SetProjectile(_arrowProjectilePool, data.SpeedProjectile);
+            enemy.Longbow.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            return bandit;
+            return enemy;
         }
-        
+
         public BanditLeader CreateBanditLeader()
         {
             CreateEnemyBanditLeaderPool();
 
             var data = _enemiesData[EnemyType.BanditLeader];
-            var banditLeader = _banditLeaderPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _banditLeaderPool.GetFreeElement();
 
-            banditLeader.Construct(
-                _playerService.Player,
-                data,
-                _floatingTextService,
-                _particleEffectsService,
-                _audioSoundsService,
-                _experiencePoints,
-                _currencyService);
-            
-            banditLeader.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
+            enemy.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage * dmgMul);
 
-            if (banditLeader.Health.TargetHealth <= MinValue)
-            {
-                banditLeader.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return banditLeader;
+            return enemy;
         }
-        
+
         public DarkLord CreateDarkLord()
         {
             CreateEnemyDarkLordPool();
 
             var data = _enemiesData[EnemyType.DarkLord];
-            var darkLord = _darkLordPool.GetFreeElement();
+            var (hpMul, dmgMul) = GetMultipliers();
+            var enemy = _darkLordPool.GetFreeElement();
 
-            darkLord.Construct(
+            ConstructBase(enemy, data);
+            ApplyHealth(enemy, data, hpMul);
+
+            var target = _playerService.Player.transform;
+            float damage = data.Damage * dmgMul;
+
+            enemy.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
+            enemy.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
+            enemy.FireballSpell.SetData(target, damage);
+
+            enemy.Coil.SetData(target, damage);
+            enemy.Coil.GetServices(_audioSoundsService, _particleEffectsService);
+
+            enemy.MeleeWeapon.SetData(target, damage);
+
+            return enemy;
+        }
+
+        private (float hp, float dmg) GetMultipliers()
+        {
+            return (_progressionService.GetEnemyHealthMultiplier(),
+                    _progressionService.GetEnemyDamageMultiplier());
+        }
+        
+        private void ConstructBase(Enemy.Enemy enemy, EnemyData data)
+        {
+            enemy.Construct(
                 _playerService.Player,
                 data,
                 _floatingTextService,
@@ -293,38 +248,23 @@ namespace _Project.Scripts.Services
                 _audioSoundsService,
                 _experiencePoints,
                 _currencyService);
-            
-            darkLord.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
-            darkLord.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
-            darkLord.FireballSpell.SetData(_playerService.Player.transform, data.Damage);
-            
-            darkLord.Coil.SetData(_playerService.Player.transform, data.Damage);
-            darkLord.Coil.GetServices(_audioSoundsService, _particleEffectsService);
-            
-            darkLord.MeleeWeapon.SetData(_playerService.Player.transform, data.Damage);
-
-            if (darkLord.Health.TargetHealth <= MinValue)
-            {
-                darkLord.Health.LoadHealth(data.Health, data.Health);
-            }
-
-            return darkLord;
         }
-
-        public void GetData(EnemyInitData enemyInitData)
+        
+        private void ApplyHealth(Enemy.Enemy enemy, EnemyData data, float hpMultiplier)
         {
-            _enemyInitData = enemyInitData;
+            if (enemy.Health.TargetHealth > MinValue) return;
+
+            float hp = data.Health * hpMultiplier;
+            enemy.Health.LoadHealth(hp, hp);
         }
 
-        public EnemyData GetEnemyDataByType(EnemyType type)
-        {
-            return _enemiesData[type];
-        }
+        public void GetData(EnemyInitData enemyInitData) => _enemyInitData = enemyInitData;
+
+        public EnemyData GetEnemyDataByType(EnemyType type) => _enemiesData[type];
 
         private void CreateEnemySkeletonPool()
         {
-            if (_skeletonPool != null)
-                return;
+            if (_skeletonPool != null) return;
 
             _skeletonPool = new ObjectPool<Skeleton>(
                 _enemyInitData.SkeletonPrefab,
@@ -337,8 +277,7 @@ namespace _Project.Scripts.Services
 
         private void CreateHeavyArmorSkeletonPool()
         {
-            if (_skeletonHeavyArmorPool != null)
-                return;
+            if (_skeletonHeavyArmorPool != null) return;
 
             _skeletonHeavyArmorPool = new ObjectPool<SkeletonHeavyArmor>(
                 _enemyInitData.SkeletonHeavyArmorPrefab,
@@ -351,8 +290,7 @@ namespace _Project.Scripts.Services
 
         private void CreateRangerSkeletonPool()
         {
-            if (_skeletonRangerPool != null)
-                return;
+            if (_skeletonRangerPool != null) return;
 
             _skeletonRangerPool = new ObjectPool<SkeletonRanger>(
                 _enemyInitData.SkeletonRangerPrefab,
@@ -361,14 +299,13 @@ namespace _Project.Scripts.Services
             {
                 AutoExpand = IsAutoExpand,
             };
-            
+
             CreateArrowPool();
         }
 
         private void CreatePriestPool()
         {
-            if (_magicBallProjectilePool != null)
-                return;
+            if (_priestPool != null) return;
 
             _priestPool = new ObjectPool<Priest>(
                 _enemyInitData.PriestPrefab,
@@ -378,19 +315,12 @@ namespace _Project.Scripts.Services
                 AutoExpand = IsAutoExpand,
             };
 
-            _magicBallProjectilePool = new ObjectPool<Fireball>(
-                _enemyInitData.FireballProjectilePrefab,
-                DefaultCountObjectsInPool,
-                new GameObject(MagicBallProjectilePool).transform)
-            {
-                AutoExpand = IsAutoExpand,
-            };
+            CreateMagicBallPool();
         }
-        
+
         private void CreateEnemyBanditPool()
         {
-            if (_banditPool != null)
-                return;
+            if (_banditPool != null) return;
 
             _banditPool = new ObjectPool<Bandit>(
                 _enemyInitData.BanditPrefab,
@@ -400,11 +330,10 @@ namespace _Project.Scripts.Services
                 AutoExpand = IsAutoExpand,
             };
         }
-        
+
         private void CreateEnemyBanditRangerPool()
         {
-            if (_banditRangerPool != null)
-                return;
+            if (_banditRangerPool != null) return;
 
             _banditRangerPool = new ObjectPool<BanditRanger>(
                 _enemyInitData.BanditRangerPrefab,
@@ -413,14 +342,13 @@ namespace _Project.Scripts.Services
             {
                 AutoExpand = IsAutoExpand,
             };
-            
+
             CreateArrowPool();
         }
-        
+
         private void CreateEnemyBanditLeaderPool()
         {
-            if (_banditLeaderPool != null)
-                return;
+            if (_banditLeaderPool != null) return;
 
             _banditLeaderPool = new ObjectPool<BanditLeader>(
                 _enemyInitData.BanditLeaderPrefab,
@@ -430,41 +358,43 @@ namespace _Project.Scripts.Services
                 AutoExpand = IsAutoExpand,
             };
         }
-        
+
         private void CreateEnemyDarkLordPool()
         {
-            if (_darkLordPool != null)
-                return;
+            if (_darkLordPool != null) return;
 
             _darkLordPool = new ObjectPool<DarkLord>(
                 _enemyInitData.DarkLordPrefab,
                 DefaultCountObjectsInPool,
-                new GameObject(BanditLeaderPool).transform)
+                new GameObject(DarkLordPool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };
-            
-            if(_magicBallProjectilePool != null)
-                return;
-            
-            _magicBallProjectilePool = new ObjectPool<Fireball>(
-                _enemyInitData.FireballProjectilePrefab,
-                DefaultCountObjectsInPool,
-                new GameObject(MagicBallProjectilePool).transform)
-            {
-                AutoExpand = IsAutoExpand,
-            };
+
+            CreateMagicBallPool();
         }
 
         private void CreateArrowPool()
         {
-            if(_arrowProjectilePool != null)
-                return;
+            if (_arrowProjectilePool != null) return;
 
             _arrowProjectilePool = new ObjectPool<Arrow>(
                 _enemyInitData.ArrowProjectilePrefab,
                 DefaultCountObjectsInPool,
                 new GameObject(ArrowProjectilePool).transform)
+            {
+                AutoExpand = IsAutoExpand,
+            };
+        }
+
+        private void CreateMagicBallPool()
+        {
+            if (_magicBallProjectilePool != null) return;
+
+            _magicBallProjectilePool = new ObjectPool<Fireball>(
+                _enemyInitData.FireballProjectilePrefab,
+                DefaultCountObjectsInPool,
+                new GameObject(MagicBallProjectilePool).transform)
             {
                 AutoExpand = IsAutoExpand,
             };
