@@ -228,14 +228,8 @@ namespace _Project.Scripts.Level
 
         private string GetLocalizedText(UITextType uiTextType)
         {
-            var data = _uiLocalizationService.GetLevelTextData(uiTextType);
-            return YG2.lang switch
-            {
-                LocalizationCode.Ru => data.NameRu,
-                LocalizationCode.En => data.NameEn,
-                LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn
-            };
+            var text = _uiLocalizationService.GetLocalizedText(uiTextType);
+            return text;
         }
 
         private void InitSpawners(IEnemyService enemyService)

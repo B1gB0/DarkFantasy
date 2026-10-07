@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using _Project.Scripts.Audio.Sounds;
+using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
@@ -18,6 +20,7 @@ namespace _Project.Scripts.UI.View
     {
         [SerializeField] private TMP_Text _description;
         [SerializeField] private TMP_Text _name;
+        [SerializeField] private TMP_Text _rarity;
         [SerializeField] private Image _icon;
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _backButton;
@@ -26,7 +29,8 @@ namespace _Project.Scripts.UI.View
         private IInventoryService _inventoryService;
         private ITweenAnimationService _tweenAnimationService;
         private IShopService _shopService;
-        private IProgressionService _progression;
+        private IProgressionService _progressionService;
+        private IUILocalizationService  _uiLocalizationService;
 
         private ItemData _currentTemplate;
         private Item _currentInstance;
@@ -37,13 +41,15 @@ namespace _Project.Scripts.UI.View
             IInventoryService inventoryService,
             ITweenAnimationService tweenAnimationService,
             IShopService shopService,
-            IProgressionService progression)
+            IProgressionService progressionService,
+            IUILocalizationService uiLocalizationService)
         {
             _audioSoundsService = audioSoundsService;
             _inventoryService = inventoryService;
             _tweenAnimationService = tweenAnimationService;
             _shopService = shopService;
-            _progression = progression;
+            _progressionService = progressionService;
+            _uiLocalizationService =  uiLocalizationService;
         }
 
         private void OnEnable()
@@ -76,6 +82,7 @@ namespace _Project.Scripts.UI.View
             _currentInstance = null;
 
             SetName(template);
+            SetRarity(template);
             SetIcon(template);
 
             _description.text = GetLocalizedDescription(template);
@@ -87,6 +94,7 @@ namespace _Project.Scripts.UI.View
             _currentInstance = instance;
 
             SetName(template);
+            SetRarity(template);
             SetIcon(template);
 
             _description.text = BuildEquipmentStats(template, instance);
@@ -125,42 +133,29 @@ namespace _Project.Scripts.UI.View
         {
             if (instance == null) return string.Empty;
 
-            float mul = _progression.GetItemMultiplier(instance.Difficulty);
+            float mul = _progressionService.GetItemMultiplier(instance.Difficulty);
 
             var sb = new StringBuilder();
 
-            AppendStat(sb, template.BonusType, template.Value * mul);
-            AppendStat(sb, template.BonusType2, template.Value2 * mul);
-            AppendStat(sb, template.BonusType3, template.Value3 * mul);
+            AppendStat(sb, template.CharacteristicType, template.Value * mul);
+            AppendStat(sb, template.CharacteristicType2, template.Value2 * mul);
+            AppendStat(sb, template.CharacteristicType3, template.Value3 * mul);
 
             return sb.ToString();
         }
 
-        private void AppendStat(StringBuilder sb, BonusType type, float value)
+        private void AppendStat(StringBuilder sb, CharacteristicType type, float value)
         {
-            if (type == BonusType.None) return;
+            if (type == CharacteristicType.None) return;
             if (value <= 0f) return;
 
-            string localized = GetLocalizedBonusName(type);
+            string localized = _shopService.GetLocalizedCharacteristicName(type);
             if (string.IsNullOrEmpty(localized)) return;
 
             sb.Append('+');
             sb.Append(value.ToString("0.#"));
             sb.Append(' ');
             sb.AppendLine(localized);
-        }
-
-        private string GetLocalizedBonusName(BonusType type)
-        {
-            return type switch
-            {
-                BonusType.Damage => "Урон",
-                BonusType.Armor => "Броня",
-                BonusType.MaxHealth => "Макс. HP",
-                BonusType.HealthRegen => "Реген HP",
-                BonusType.MoveSpeed => "Скорость",
-                _ => string.Empty,
-            };
         }
 
         private void OnEquippedButtonClicked()
@@ -176,8 +171,29 @@ namespace _Project.Scripts.UI.View
             else if (_currentTemplate.Kind == ItemKind.Equipment)
             {
                 if (_currentInstance == null) return;
-                _inventoryService.EquipItem(_currentInstance.Id); // ← guid экземпляра
+                _inventoryService.EquipItem(_currentInstance.Id);
             }
+        }
+        
+        private void SetRarity(ItemData data)
+        {
+            _rarity.gameObject.SetActive(true);
+
+            _rarity.text = data.Rarity switch
+            {
+                ItemRarity.Common => _uiLocalizationService.GetLocalizedText(UITextType.Common),
+                ItemRarity.Uncommon => _uiLocalizationService.GetLocalizedText(UITextType.Uncommon),
+                ItemRarity.Rare => _uiLocalizationService.GetLocalizedText(UITextType.Rare),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            _rarity.color = data.Rarity switch
+            {
+                ItemRarity.Common => Colors.GetColor(ColorName.RarityCommon),
+                ItemRarity.Uncommon => Colors.GetColor(ColorName.RarityUncommon),
+                ItemRarity.Rare => Colors.GetColor(ColorName.RarityRare),
+                _ => Colors.GetColor(ColorName.DefaultWhiteTextColor),
+            };
         }
     }
 }

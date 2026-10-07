@@ -83,8 +83,7 @@ namespace _Project.Scripts.UI.Panel
 
             foreach (var itemView in _itemViews)
                 itemView.Set();
-
-            // 1. Сначала экипировка (уникальные экземпляры)
+            
             int index = MinValue;
 
             var equipment = _inventoryService.Equipment;
@@ -102,8 +101,7 @@ namespace _Project.Scripts.UI.Panel
                 _itemViews[index].SetEquipment(data, instance);
                 index++;
             }
-
-            // 2. Затем расходники (стакаются)
+            
             foreach (var kvp in YG2.saves.Consumables)
             {
                 if (index >= _itemViews.Count) break;

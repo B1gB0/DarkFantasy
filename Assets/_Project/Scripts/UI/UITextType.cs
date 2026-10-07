@@ -9,5 +9,8 @@ namespace _Project.Scripts.UI
         PriestName = 4,
         BanditLeaderName = 5,
         DarkLordName = 6,
+        Common = 7,
+        Uncommon = 8,
+        Rare = 9,
     }
 }

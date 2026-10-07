@@ -283,6 +283,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Particles
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb247954fd86bd443aa9ce8111e23300
+    m_Address: DifficultyConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1871eaa3da924e498a54a74c28d628e
     m_Address: ExplosionFireball
     m_ReadOnly: 0

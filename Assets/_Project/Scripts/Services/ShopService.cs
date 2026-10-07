@@ -2,10 +2,12 @@
 using System.Linq;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
+using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Services
 {
@@ -74,6 +76,25 @@ namespace _Project.Scripts.Services
         public CharacteristicsLocalizationData GetLocalizationDataByType(CharacteristicType type)
         {
             return _characteristicsLocalizationData[type];
+        }
+        
+        public string GetLocalizedCharacteristicName(CharacteristicType type)
+        {
+            if (type == CharacteristicType.None) return string.Empty;
+
+            if (!_characteristicsLocalizationData.TryGetValue(type, out var data))
+            {
+                Debug.LogWarning($"[ShopService] Missing localization for {type}");
+                return type.ToString();
+            }
+
+            return YG2.lang switch
+            {
+                LocalizationCode.Ru => data.NameRu,
+                LocalizationCode.En => data.NameEn,
+                LocalizationCode.Tr => data.NameTr,
+                _ => data.NameEn,
+            };
         }
 
         public ItemData GetItemDataByType(ItemType type)

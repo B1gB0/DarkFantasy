@@ -34,12 +34,7 @@ namespace YG
         
         public LevelDifficulty CurrentDifficulty;
         
-        // public ItemType EquipedWeaponType;
-        // public ItemType EquipedArmorType;
-        // public ItemType EquipedRingType;
-        
         public PlayerCharacteristics PlayerCharacteristics;
-        // public Dictionary<ItemType, int> InventoryItems = new ();
         
         public List<string> stringKeys = new List<string>();
         public List<string> stringValues = new List<string>();

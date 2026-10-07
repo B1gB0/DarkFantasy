@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Characteristics;
 using _Project.Scripts.Items;
 using UnityEngine;
 
@@ -10,11 +11,11 @@ namespace _Project.Scripts.DataBase.Data
         [SerializeField] private string _id;
         [SerializeField] private ItemType _type;
         [SerializeField] private float _value;
-        [SerializeField] private BonusType _bonusType;
+        [SerializeField] private CharacteristicType _characteristicType;
         [SerializeField] private float _value2;
-        [SerializeField] private BonusType _bonusType2;
+        [SerializeField] private CharacteristicType _characteristicType2;
         [SerializeField] private float _value3;
-        [SerializeField] private BonusType _bonusType3;
+        [SerializeField] private CharacteristicType _characteristicType3;
         [SerializeField] private int _price;
         [SerializeField] private float _duration;
         [SerializeField] private bool _isMultiplier;
@@ -32,11 +33,11 @@ namespace _Project.Scripts.DataBase.Data
         public string Id => _id;
         public ItemType Type => _type;
         public float Value => _value;
-        public BonusType BonusType => _bonusType;
+        public CharacteristicType CharacteristicType => _characteristicType;
         public float Value2 => _value2;
-        public BonusType BonusType2 => _bonusType2;
+        public CharacteristicType CharacteristicType2 => _characteristicType2;
         public float Value3 => _value3;
-        public BonusType BonusType3 => _bonusType3;
+        public CharacteristicType CharacteristicType3 => _characteristicType3;
         public int Price => _price;
         public float Duration => _duration;
         public bool IsMultiplier => _isMultiplier;

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Items;
+using _Project.Scripts.Level;
 using _Project.Scripts.Services;
 using Reflex.Attributes;
 using TMPro;
@@ -26,14 +26,19 @@ namespace _Project.Scripts.UI.View
         private ItemData _currentData;
         private IShopService _shopService;
         private IInventoryService _inventoryService;
+        private IUILocalizationService _uiLocalizationService;
 
         public event Action<ItemData, ShopItemView> OnButtonClicked;
 
         [Inject]
-        public void Construct(IShopService shopService, IInventoryService inventoryService)
+        public void Construct(
+            IShopService shopService,
+            IInventoryService inventoryService,
+            IUILocalizationService uiLocalizationService)
         {
             _shopService = shopService;
             _inventoryService = inventoryService;
+            _uiLocalizationService = uiLocalizationService;
         }
 
         private void OnEnable()
@@ -58,7 +63,8 @@ namespace _Project.Scripts.UI.View
         {
             _currentData = itemData;
 
-            if (_inventoryService.HasItem(itemData.Type) && itemData.Kind == ItemKind.Equipment)
+            if (_inventoryService.HasEquipment(itemData.Type, LevelDifficulty.Easy) 
+                && itemData.Kind == ItemKind.Equipment)
             {
                 OnPurchased();
             }
@@ -100,30 +106,12 @@ namespace _Project.Scripts.UI.View
             }
 
             _rarity.gameObject.SetActive(true);
-
+            
             _rarity.text = _currentData.Rarity switch
             {
-                ItemRarity.Common => YG2.lang switch
-                {
-                    LocalizationCode.Ru => "Обычное",
-                    LocalizationCode.En => "Common",
-                    LocalizationCode.Tr => "Normal",
-                    _ => _rarity.text
-                },
-                ItemRarity.Uncommon => YG2.lang switch
-                {
-                    LocalizationCode.Ru => "Необычное",
-                    LocalizationCode.En => "Uncommon",
-                    LocalizationCode.Tr => "Olmadık",
-                    _ => _rarity.text
-                },
-                ItemRarity.Rare => YG2.lang switch
-                {
-                    LocalizationCode.Ru => "Редкое",
-                    LocalizationCode.En => "Rare",
-                    LocalizationCode.Tr => "Nadir",
-                    _ => _rarity.text
-                },
+                ItemRarity.Common => _uiLocalizationService.GetLocalizedText(UITextType.Common),
+                ItemRarity.Uncommon => _uiLocalizationService.GetLocalizedText(UITextType.Uncommon),
+                ItemRarity.Rare => _uiLocalizationService.GetLocalizedText(UITextType.Rare),
                 _ => throw new ArgumentOutOfRangeException()
             };
 

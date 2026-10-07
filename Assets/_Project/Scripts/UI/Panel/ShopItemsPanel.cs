@@ -15,14 +15,15 @@ namespace _Project.Scripts.UI.Panel
     public class ShopItemsPanel : View.View
     {
         [field: SerializeField] public Transform ItemContent { get; private set; }
-        
+
         [SerializeField] private Button _backSceneButton;
-        
+
         private ITweenAnimationService _tweenAnimationService;
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
-        
+        private IProgressionService _progressionService;
+
         private List<ShopItemView> _itemViews;
 
         public event Action OnBackToSceneButtonPressed;
@@ -33,12 +34,14 @@ namespace _Project.Scripts.UI.Panel
             IShopService shopService,
             ICurrencyService currencyService,
             IPlayerService playerService,
-            IInventoryService inventoryService)
+            IInventoryService inventoryService,
+            IProgressionService progressionService)
         {
             _tweenAnimationService = tweenAnimationService;
             _currencyService = currencyService;
             _playerService = playerService;
             _inventoryService = inventoryService;
+            _progressionService = progressionService;
         }
 
         private void Start()
@@ -60,7 +63,7 @@ namespace _Project.Scripts.UI.Panel
         {
             transform.DOKill();
         }
-        
+
         public override void Show()
         {
             foreach (var itemView in _itemViews)
@@ -68,9 +71,8 @@ namespace _Project.Scripts.UI.Panel
                 itemView.SetCurrencyColor(_currencyService.Gold);
                 itemView.OnButtonClicked += ApplyPurchase;
             }
-            
+
             _playerService.Player.InputController.LockPlayerMovement();
-            
             _tweenAnimationService.AnimateScale(transform);
         }
 
@@ -81,7 +83,7 @@ namespace _Project.Scripts.UI.Panel
                 itemView.SetCurrencyColor(_currencyService.Gold);
                 itemView.OnButtonClicked -= ApplyPurchase;
             }
-            
+
             _tweenAnimationService.AnimateScale(transform, true);
             _playerService.Player.InputController.UnlockPlayerMovement();
         }
@@ -94,25 +96,39 @@ namespace _Project.Scripts.UI.Panel
         public void OnChangeLanguage()
         {
             foreach (ShopItemView itemView in _itemViews)
-            {
                 itemView.SetLocalization();
-            }
         }
-        
+
         private void MoveBackToScene()
         {
             OnBackToSceneButtonPressed?.Invoke();
         }
 
-        private void ApplyPurchase(ItemData itemData,  ShopItemView itemView)
+        private void ApplyPurchase(ItemData itemData, ShopItemView itemView)
         {
-            if (itemData.Price > _currencyService.Gold)
-                return;
-            
+            if (itemData == null) return;
+            if (itemData.Price > _currencyService.Gold) return;
+
             _currencyService.SpendGold(itemData.Price);
-            
-            _inventoryService.AddItem(itemData.Type);
-            
+
+            switch (itemData.Kind)
+            {
+                case ItemKind.Equipment:
+                {
+                    var instance = Item.Create(itemData.Type, _progressionService.CurrentDifficulty);
+                    _inventoryService.AddEquipment(instance);
+                    break;
+                }
+
+                case ItemKind.Consumable:
+                {
+                    _inventoryService.AddItem(itemData.Type, 1);
+                    break;
+                }
+            }
+
+            itemView.Set(itemData);
+
             YG2.SaveProgress();
             _currencyService.SaveGold();
         }

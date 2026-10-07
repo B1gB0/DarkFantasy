@@ -50,6 +50,7 @@ namespace _Project.Scripts.Game.Gameplay
         private IInventoryService _inventoryService;
         private IShopService _shopService;
         private ILootService _lootService;
+        private IProgressionService _progressionService;
 
         private EnemyInitData _enemyInitData;
         private PlayerInitData _playerInitData;
@@ -75,7 +76,8 @@ namespace _Project.Scripts.Game.Gameplay
             ICurrencyService currencyService,
             IInventoryService inventoryService,
             IShopService shopService,
-            ILootService lootService)
+            ILootService lootService,
+            IProgressionService progressionService)
         {
             _enemyService = enemyService;
             _dataBaseService = dataBaseService;
@@ -90,6 +92,7 @@ namespace _Project.Scripts.Game.Gameplay
             _inventoryService = inventoryService;
             _shopService = shopService;
             _lootService = lootService;
+            _progressionService = progressionService;
         }
 
         public async UniTask<Observable<GameplayExitParameters>> Run(
@@ -118,6 +121,7 @@ namespace _Project.Scripts.Game.Gameplay
             await InitData();
 
             await _dataBaseService.Init();
+            await _progressionService.Init();
             await _enemyService.Init();
             await _playerService.Init();
             await _audioSoundsService.Init();

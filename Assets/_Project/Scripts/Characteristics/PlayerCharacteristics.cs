@@ -103,46 +103,46 @@ namespace _Project.Scripts.Characteristics
 
                 float mul = _progressionService.GetItemMultiplier(instance.Difficulty);
                 
-                if (template.BonusType != BonusType.None)
-                    ApplyBonus(template.BonusType, template.Value * mul);
+                if (template.CharacteristicType != CharacteristicType.None)
+                    ApplyBonus(template.CharacteristicType, template.Value * mul);
                 
-                if (template.BonusType2 != BonusType.None)
-                    ApplyBonus(template.BonusType2, template.Value2 * mul);
+                if (template.CharacteristicType2 != CharacteristicType.None)
+                    ApplyBonus(template.CharacteristicType2, template.Value2 * mul);
                 
-                if (template.BonusType3 != BonusType.None)
-                    ApplyBonus(template.BonusType3, template.Value3 * mul);
+                if (template.CharacteristicType3 != CharacteristicType.None)
+                    ApplyBonus(template.CharacteristicType3, template.Value3 * mul);
             }
         }
 
-        private void ApplyBonus(BonusType type, float value)
+        private void ApplyBonus(CharacteristicType type, float value)
         {
             switch (type)
             {
-                case BonusType.Armor: 
+                case CharacteristicType.Armor: 
                     _equipmentArmorBonus += value;
                     break;
-                case BonusType.Damage: 
+                case CharacteristicType.Damage: 
                     _equipmentDamageBonus += value;
                     break;
-                case BonusType.MaxHealth: 
+                case CharacteristicType.MaxHealth: 
                     _equipmentMaxHealthBonus += value;
                     break;
-                case BonusType.HealthRegen: 
+                case CharacteristicType.HealthRegen: 
                     _equipmentHealthRegenBonus += value;
                     break;
-                case BonusType.MoveSpeed:  
+                case CharacteristicType.MoveSpeed:  
                     _equipmentMoveSpeedBonus += value;
                     break;
-                case BonusType.AttackSpeed:
+                case CharacteristicType.AttackSpeed:
                     _equipmentAttackSpeedBonus += value;
                     break;
-                case BonusType.CritDamage:
+                case CharacteristicType.CritDamage:
                     _equipmentCritDamageBonus += value;
                     break;
-                case BonusType.ReverseDamage:
+                case CharacteristicType.ReverseDamage:
                     _equipmentReverseDamageBonus += value;
                     break;
-                case BonusType.None:
+                case CharacteristicType.None:
                     break;
                 default:
                     Debug.LogWarning($"[Characteristics] Unknown bonus: {type}");

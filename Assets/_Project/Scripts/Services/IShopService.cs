@@ -10,6 +10,7 @@ namespace _Project.Scripts.Services
     {
         public List<PlayerAttributeLevelData> GetAttributesByType(CharacteristicType type);
         public CharacteristicsLocalizationData GetLocalizationDataByType(CharacteristicType type);
+        public string GetLocalizedCharacteristicName(CharacteristicType type);
         public List<ItemData> GetItemsData();
         public ItemData GetItemDataByType(ItemType type);
         public Sprite GetItemSpriteByType(ItemType type);

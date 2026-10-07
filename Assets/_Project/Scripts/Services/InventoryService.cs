@@ -169,7 +169,7 @@ namespace _Project.Scripts.Services
 
         public bool HasItem(ItemType itemType)
             => _consumables.TryGetValue(itemType, out var count) && count > 0;
-
+        
         public void EquipConsumableItem(ItemData data)
         {
             if (data == null) return;
