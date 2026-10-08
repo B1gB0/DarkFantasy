@@ -33,7 +33,7 @@
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 75.49019,
+    "TargetHealth": 100.0,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -55,5 +55,5 @@
     false,
     false
   ],
-  "idSave": 9
+  "idSave": 11
 }
