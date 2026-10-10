@@ -17,7 +17,7 @@ namespace _Project.Scripts.Level
             _spawnCyclicWaveTrigger.OnSpawnEnemies += ShowPortals;
             OnBossHealthBarCreated += TryShowBossUI;
         }
-        
+
         private void FixedUpdate()
         {
             if (_spawnCyclicWaveTrigger.IsEnemySpawned)
@@ -43,10 +43,10 @@ namespace _Project.Scripts.Level
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
-            
+
             EnemySpawner.OnDarkLordKilled += OnDarkLordKilled;
             EnemySpawner.OnDarkLordKilled += OnShowWaypointToNextLevel;
-            
+
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
@@ -67,7 +67,7 @@ namespace _Project.Scripts.Level
         {
             IsBossTriggered = true;
             TryShowBossUI();
-            
+
             foreach (var portal in _portals)
             {
                 portal.SetActive(true);
@@ -83,23 +83,33 @@ namespace _Project.Scripts.Level
             EnemyWaves[SecondWaveEnemy].KillEnemies();
             EnemyWaves[ThirdWaveEnemy].KillEnemies();
             EnemyWaves[FourthWaveEnemy].KillEnemies();
-            
+
             foreach (var portal in _portals)
             {
                 portal.SetActive(false);
             }
-            
+
             BossHealthBar.Hide();
-            
+
+            switch (YG2.saves.CurrentDifficulty)
+            {
+                case LevelDifficulty.Low:
+                    YG2.saves.IsMediumDifficultyUnlock = true;
+                    break;
+                case LevelDifficulty.Medium:
+                    YG2.saves.IsHardDifficultyUnlock = true;
+                    break;
+            }
+
             YG2.SaveProgress();
         }
-        
+
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
-        
+
         private void OnShowWaypointToNextLevel()
         {
             NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);

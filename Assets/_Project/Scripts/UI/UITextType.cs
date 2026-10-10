@@ -12,5 +12,8 @@ namespace _Project.Scripts.UI
         Common = 7,
         Uncommon = 8,
         Rare = 9,
+        DifficultyLow = 10,
+        DifficultyMedium = 11,
+        DifficultyHigh = 12,
     }
 }

@@ -14,7 +14,7 @@ namespace _Project.Scripts.Services
         private IResourceService _resourceService;
 
         public bool IsInitiated { get; private set; }
-        public LevelDifficulty CurrentDifficulty { get; private set; } = LevelDifficulty.Easy;
+        public LevelDifficulty CurrentDifficulty { get; private set; } = LevelDifficulty.Low;
 
         [Inject]
         public void Construct(IResourceService resourceService)
@@ -53,6 +53,17 @@ namespace _Project.Scripts.Services
         public float GetEnemyDamageMultiplier()
         {
             return _config.Get(CurrentDifficulty).EnemyDamageMultiplier;
+        }
+        
+        public bool IsDifficultyUnlocked(LevelDifficulty difficulty)
+        {
+            return difficulty switch
+            {
+                LevelDifficulty.Low   => true,
+                LevelDifficulty.Medium => YG2.saves.IsMediumDifficultyUnlock,
+                LevelDifficulty.High   => YG2.saves.IsHardDifficultyUnlock,
+                _ => false,
+            };
         }
     }
 }

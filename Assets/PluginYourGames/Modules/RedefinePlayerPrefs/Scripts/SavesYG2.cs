@@ -19,6 +19,9 @@ namespace YG
         public bool IsBanditCampUnlock;
         public bool IsCastleUnlock;
 
+        public bool IsMediumDifficultyUnlock;
+        public bool IsHardDifficultyUnlock;
+
         public bool IsAttributeShopVisited;
         public bool IsInventoryShopVisited;
         public bool IsMissionPanelVisited;
@@ -26,16 +29,16 @@ namespace YG
         public string EquippedWeaponId;
         public string EquippedArmorId;
         public string EquippedRingId;
-        
+
         public Dictionary<ItemType, int> Consumables = new();
         public List<Item> Equipment = new();
-        
+
         public ItemType EquippedItemType;
-        
+
         public LevelDifficulty CurrentDifficulty;
-        
+
         public PlayerCharacteristics PlayerCharacteristics;
-        
+
         public List<string> stringKeys = new List<string>();
         public List<string> stringValues = new List<string>();
 

@@ -17,5 +17,8 @@ namespace _Project.Scripts.Game.Constant
         RarityCommon = 12,
         RarityUncommon = 13,
         RarityRare = 14,
+        LowColor = 15,
+        MediumColor = 16,
+        HighColor = 17,
     }
 }
