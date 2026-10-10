@@ -8,6 +8,8 @@
   "IsFirstLaunch": false,
   "IsBanditCampUnlock": false,
   "IsCastleUnlock": false,
+  "IsMediumDifficultyUnlock": false,
+  "IsHardDifficultyUnlock": false,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
@@ -53,5 +55,5 @@
     false,
     false
   ],
-  "idSave": 25
+  "idSave": 27
 }
