@@ -71,9 +71,12 @@ namespace _Project.Scripts.UI.View
         {
             if (_shopAttributePanel != null)
                 _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopAttributePanel.OnChangeLanguage;
-            
+
             if (_shopItemsPanel != null)
+            {
                 _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _shopItemsPanel.OnChangeLanguage;
+                _shopItemsPanel.OnInventoryIsFull -= UIScene.InventoryIsFullView.Show;
+            }
 
             foreach (var shopItemView in _shopItemViews.Where(shopItemView => shopItemView != null))
             {
@@ -159,6 +162,8 @@ namespace _Project.Scripts.UI.View
             
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopItemsPanel.OnChangeLanguage;
 
+            _shopItemsPanel.OnInventoryIsFull += UIScene.InventoryIsFullView.Show;
+            
             _itemsData = _shopService.GetItemsData();
             
             foreach (var itemData in _itemsData.Where(itemData => itemData.IsSold))

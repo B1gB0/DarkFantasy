@@ -60,6 +60,8 @@ namespace _Project.Scripts.UI.Panel
             {
                 itemView.OnSelectButtonPressed += SelectItem;
             }
+            
+            _descriptionItemView.OnItemDeleted += Refresh;
         }
 
         private void OnDisable()
@@ -73,6 +75,8 @@ namespace _Project.Scripts.UI.Panel
             {
                 itemView.OnSelectButtonPressed -= SelectItem;
             }
+            
+            _descriptionItemView.OnItemDeleted -= Refresh;
 
             transform.DOKill();
         }
@@ -81,6 +85,19 @@ namespace _Project.Scripts.UI.Panel
         {
             _playerService.Player.InputController.LockPlayerMovement();
 
+            Refresh();
+
+            _tweenAnimationService.AnimateScale(transform);
+        }
+
+        public override void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
+            _playerService.Player.InputController.UnlockPlayerMovement();
+        }
+
+        private void Refresh()
+        {
             foreach (var itemView in _itemViews)
                 itemView.Set();
             
@@ -117,14 +134,6 @@ namespace _Project.Scripts.UI.Panel
                 _itemViews[index].SetConsumable(data, count);
                 index++;
             }
-
-            _tweenAnimationService.AnimateScale(transform);
-        }
-
-        public override void Hide()
-        {
-            _tweenAnimationService.AnimateScale(transform, true);
-            _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
         private void MoveBackToScene()

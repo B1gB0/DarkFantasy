@@ -118,6 +118,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Music
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e2a44cbfc7b7f04aa697adb39014603
+    m_Address: BuyButtonSound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 564c6c42da1a92843931dad242a37b1e
     m_Address: BasicHit
     m_ReadOnly: 0

@@ -22,6 +22,7 @@ namespace _Project.Scripts.Level.Spawners
         private ObjectPool<LootEnemyTrigger> _pool;
         private RewardView _rewardView;
         private PickUpView _pickUpView;
+        private InventoryIsFullView _inventoryIsFullView;
         private LootEnemyTrigger _currentTarget;
 
         private IInventoryService _inventoryService;
@@ -29,6 +30,7 @@ namespace _Project.Scripts.Level.Spawners
         private IPlayerService _playerService;
         private ILootService _lootService;
         private IProgressionService  _progressionService;
+        private IShopService _shopService;
 
         [Inject]
         private void Construct(
@@ -36,13 +38,15 @@ namespace _Project.Scripts.Level.Spawners
             ICurrencyService currencyService,
             IPlayerService playerService,
             ILootService lootService,
-            IProgressionService progressionService)
+            IProgressionService progressionService,
+            IShopService shopService)
         {
             _inventoryService = inventoryService;
             _currencyService = currencyService;
             _playerService = playerService;
             _lootService = lootService;
             _progressionService = progressionService;
+            _shopService = shopService;
         }
 
         private void Start()
@@ -85,10 +89,11 @@ namespace _Project.Scripts.Level.Spawners
             RecalculateNearest();
         }
 
-        public void GetViews(RewardView rewardView, PickUpView pickUpView)
+        public void GetViews(RewardView rewardView, PickUpView pickUpView, InventoryIsFullView  inventoryIsFullView)
         {
             _rewardView = rewardView;
             _pickUpView = pickUpView;
+            _inventoryIsFullView = inventoryIsFullView;
         }
 
         public void SpawnLoot(LootResult reward, Vector3 position)
@@ -99,6 +104,7 @@ namespace _Project.Scripts.Level.Spawners
             var lootEnemyTrigger = _pool.GetFreeElement();
             lootEnemyTrigger.transform.position = spawnPos;
             lootEnemyTrigger.OnPickedUp -= _rewardView.Show;
+            lootEnemyTrigger.OnInventoryIsFull -= _inventoryIsFullView.Show;
             
             lootEnemyTrigger.Setup(
                 reward,
@@ -106,9 +112,11 @@ namespace _Project.Scripts.Level.Spawners
                 _inventoryService,
                 _currencyService,
                 _lootService,
-                _progressionService);
+                _progressionService,
+                _shopService);
             
             lootEnemyTrigger.OnPickedUp += _rewardView.Show;
+            lootEnemyTrigger.OnInventoryIsFull += _inventoryIsFullView.Show;
         }
 
         private void RecalculateNearest()

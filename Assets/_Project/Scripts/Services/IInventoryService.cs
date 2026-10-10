@@ -14,10 +14,14 @@ namespace _Project.Scripts.Services
         public void EquipConsumableItem(ItemData data);
         public IReadOnlyList<Item> GetEquippedItems();
         public void RemoveItem(ItemType itemType, int amount = 1);
+        public void RemoveEquipment(string id);
+        public void RemoveAllOfType(ItemType itemType);
         public bool HasItem(ItemType itemType);
+        public bool CanFit(ItemData itemData);
         public bool HasEquipment(ItemType type, LevelDifficulty difficulty);
         public int GetItemCount(ItemType itemType);
         public void EquipItem(string instanceId);
+        public bool IsFull();
         public event Action<ItemType, int> OnEquippedConsumableItem;
         public event Action OnUnEquippedConsumableItem;
         public event Action OnEquippedItem;

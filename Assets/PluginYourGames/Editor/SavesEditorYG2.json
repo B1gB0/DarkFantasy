@@ -1,6 +1,6 @@
 {
-  "Gold": 180,
-  "AcumulatedScore": 30,
+  "Gold": 10,
+  "AcumulatedScore": 90,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -11,21 +11,19 @@
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
-  "EquippedWeaponId": null,
+  "EquippedWeaponId": "95b6aad0-e74c-466e-89ca-2d7c1627215b",
   "EquippedArmorId": null,
   "EquippedRingId": null,
-  "Consumables": {
-    "UnCommonSword": 1
-  },
+  "Consumables": {},
   "Equipment": [
     {
-      "Id": "c44a35df-3290-49c0-9594-8189219afabf",
-      "Type": 4,
+      "Id": "95b6aad0-e74c-466e-89ca-2d7c1627215b",
+      "Type": 10,
       "Difficulty": 0
     },
     {
-      "Id": "a2e601c7-3149-48b2-8bbd-13bbfe56e8e3",
-      "Type": 10,
+      "Id": "e45c4103-f2da-4a9b-bfd1-628a2655f8f0",
+      "Type": 8,
       "Difficulty": 0
     }
   ],
@@ -55,5 +53,5 @@
     false,
     false
   ],
-  "idSave": 11
+  "idSave": 25
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
@@ -23,10 +25,12 @@ namespace _Project.Scripts.UI.Panel
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
         private IProgressionService _progressionService;
+        private AudioSoundsService _audioSoundsService;
 
         private List<ShopItemView> _itemViews;
 
         public event Action OnBackToSceneButtonPressed;
+        public event Action OnInventoryIsFull;
 
         [Inject]
         private void Construct(
@@ -35,13 +39,15 @@ namespace _Project.Scripts.UI.Panel
             ICurrencyService currencyService,
             IPlayerService playerService,
             IInventoryService inventoryService,
-            IProgressionService progressionService)
+            IProgressionService progressionService,
+            AudioSoundsService audioSoundsService)
         {
             _tweenAnimationService = tweenAnimationService;
             _currencyService = currencyService;
             _playerService = playerService;
             _inventoryService = inventoryService;
             _progressionService = progressionService;
+            _audioSoundsService = audioSoundsService;
         }
 
         private void Start()
@@ -108,23 +114,26 @@ namespace _Project.Scripts.UI.Panel
         {
             if (itemData == null) return;
             if (itemData.Price > _currencyService.Gold) return;
+            
+            if (!_inventoryService.CanFit(itemData))
+            {
+                OnInventoryIsFull?.Invoke();
+                return;
+            }
+
+            _audioSoundsService.PlaySound(SoundsType.BuyButtonSound).Forget();
 
             _currencyService.SpendGold(itemData.Price);
 
             switch (itemData.Kind)
             {
                 case ItemKind.Equipment:
-                {
                     var instance = Item.Create(itemData.Type, _progressionService.CurrentDifficulty);
                     _inventoryService.AddEquipment(instance);
                     break;
-                }
-
                 case ItemKind.Consumable:
-                {
                     _inventoryService.AddItem(itemData.Type, 1);
                     break;
-                }
             }
 
             itemView.Set(itemData);

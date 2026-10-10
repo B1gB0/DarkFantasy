@@ -11,11 +11,12 @@ namespace _Project.Scripts.Audio.Sounds
         PaperButton = 6,
         ExplosionMagic = 7,
         HeavyArmorHit = 8,
-        UIButtonClick = 9,
-        SkeletonHit = 10,
-        PotionSound = 11,
-        ActionMusic = 12,
-        MainMenuMusic = 13,
-        VillageMusic = 14,
+        PotionSound = 9,
+        UIButtonClick = 10,
+        SkeletonHit = 11,
+        BuyButtonSound = 12,
+        ActionMusic = 13,
+        MainMenuMusic = 14,
+        VillageMusic = 15,
     }
 }

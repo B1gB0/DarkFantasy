@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.View;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace _Project.Scripts.UI.Panel
         private IShopService _shopService;
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
+        private AudioSoundsService  _audioSoundsService;
 
         private List<PlayerAttributeLevelData> _healthAttributes;
         private List<PlayerAttributeLevelData> _damageAttributes;
@@ -33,12 +36,14 @@ namespace _Project.Scripts.UI.Panel
             ITweenAnimationService tweenAnimationService,
             IShopService shopService,
             ICurrencyService currencyService,
-            IPlayerService playerService)
+            IPlayerService playerService,
+            AudioSoundsService audioSoundsService)
         {
             _tweenAnimationService = tweenAnimationService;
             _shopService = shopService;
             _currencyService = currencyService;
             _playerService = playerService;
+            _audioSoundsService = audioSoundsService;
         }
 
         private void Start()
@@ -144,6 +149,8 @@ namespace _Project.Scripts.UI.Panel
                 return;
             
             _currencyService.SpendGold(data.Price);
+            
+            _audioSoundsService.PlaySound(SoundsType.BuyButtonSound).Forget();
             
             YG2.saves.PlayerCharacteristics.ApplyImprovement(data.Type, data.Value);
             

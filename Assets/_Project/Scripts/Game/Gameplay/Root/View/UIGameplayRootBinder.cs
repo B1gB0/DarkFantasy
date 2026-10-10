@@ -53,6 +53,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public EquippedConsumableItemView EquippedConsumableItemView { get; private set; }
         [field: SerializeField] public RewardView RewardView { get; private set; }
         [field: SerializeField] public PickUpView PickUpView { get; private set; }
+        [field: SerializeField] public InventoryIsFullView InventoryIsFullView { get; private set; }
 
         [Inject]
         public void Construct(ITweenAnimationService tweenAnimationService)

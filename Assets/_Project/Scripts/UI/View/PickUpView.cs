@@ -1,5 +1,4 @@
-﻿using System;
-using _Project.Scripts.Services;
+﻿using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private GameObject _desktopButton;
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
-        
+
         private ITweenAnimationService _tweenAnimationService;
 
         [Inject]

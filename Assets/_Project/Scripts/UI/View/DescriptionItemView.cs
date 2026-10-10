@@ -24,6 +24,7 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Image _icon;
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _backButton;
+        [SerializeField] private Button _removeButton;
 
         private AudioSoundsService _audioSoundsService;
         private IInventoryService _inventoryService;
@@ -34,6 +35,8 @@ namespace _Project.Scripts.UI.View
 
         private ItemData _currentTemplate;
         private Item _currentInstance;
+        
+        public event Action OnItemDeleted;
 
         [Inject]
         private void Construct(
@@ -60,6 +63,7 @@ namespace _Project.Scripts.UI.View
         private void Start()
         {
             _equipButton.onClick.AddListener(OnEquippedButtonClicked);
+            _removeButton.onClick.AddListener(OnRemoveButtonClicked);
         }
 
         private void OnDisable()
@@ -70,6 +74,7 @@ namespace _Project.Scripts.UI.View
         private void OnDestroy()
         {
             _equipButton.onClick.RemoveListener(OnEquippedButtonClicked);
+            _removeButton.onClick.RemoveListener(OnRemoveButtonClicked);
             transform.DOKill();
         }
 
@@ -80,9 +85,9 @@ namespace _Project.Scripts.UI.View
         {
             _currentTemplate = template;
             _currentInstance = null;
+            _rarity.gameObject.SetActive(false);
 
             SetName(template);
-            SetRarity(template);
             SetIcon(template);
 
             _description.text = GetLocalizedDescription(template);
@@ -173,6 +178,27 @@ namespace _Project.Scripts.UI.View
                 if (_currentInstance == null) return;
                 _inventoryService.EquipItem(_currentInstance.Id);
             }
+        }
+        
+        private void OnRemoveButtonClicked()
+        {
+            if (_currentTemplate == null) return;
+
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+
+            if (_currentTemplate.Kind == ItemKind.Equipment)
+            {
+                if (_currentInstance == null) return;
+                _inventoryService.RemoveEquipment(_currentInstance.Id);
+            }
+            else if (_currentTemplate.Kind == ItemKind.Consumable)
+            {
+                _inventoryService.RemoveAllOfType(_currentTemplate.Type);
+            }
+
+            Hide();
+
+            OnItemDeleted?.Invoke();
         }
         
         private void SetRarity(ItemData data)

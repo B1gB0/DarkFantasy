@@ -12,6 +12,8 @@ namespace _Project.Scripts.Services
 {
     public class InventoryService : IInventoryService
     {
+        private const int MaxSlots = 16;
+
         private Dictionary<ItemType, int> _consumables = new();
         private List<Item> _equipment = new();
 
@@ -23,6 +25,7 @@ namespace _Project.Scripts.Services
         private IShopService _shopService;
 
         public bool IsInitiated { get; private set; }
+        public int MaxSlotsCount => MaxSlots;
 
         public IReadOnlyList<Item> Equipment => _equipment;
         public Item EquippedWeapon => _equippedWeapon;
@@ -43,22 +46,18 @@ namespace _Project.Scripts.Services
         public UniTask Init()
         {
             if (IsInitiated) return UniTask.CompletedTask;
-            
-            if (YG2.saves.Consumables != null)
-                _consumables = YG2.saves.Consumables.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            else
-            {
-                _consumables = new Dictionary<ItemType, int>();
-                YG2.saves.Consumables = _consumables;
-            }
-            
+
+            _consumables = YG2.saves.Consumables != null
+                ? YG2.saves.Consumables.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                : new Dictionary<ItemType, int>();
+            YG2.saves.Consumables = _consumables;
+
             _equipment = YG2.saves.Equipment ?? new List<Item>();
             YG2.saves.Equipment = _equipment;
-            
+
             _equippedWeapon = GetEquipment(YG2.saves.EquippedWeaponId);
             _equippedArmor  = GetEquipment(YG2.saves.EquippedArmorId);
             _equippedRing   = GetEquipment(YG2.saves.EquippedRingId);
-            
             _equippedConsumableType = YG2.saves.EquippedItemType;
 
             IsInitiated = true;
@@ -71,17 +70,26 @@ namespace _Project.Scripts.Services
             _equipment.Add(instance);
             Save();
         }
-
+        
         public void RemoveEquipment(string id)
         {
             if (string.IsNullOrEmpty(id)) return;
+
+            bool wasEquipped =
+                _equippedWeapon?.Id == id ||
+                _equippedArmor?.Id == id ||
+                _equippedRing?.Id == id;
+
             _equipment.RemoveAll(i => i.Id == id);
-            
+
             if (_equippedWeapon?.Id == id) _equippedWeapon = null;
             if (_equippedArmor?.Id  == id) _equippedArmor  = null;
             if (_equippedRing?.Id   == id) _equippedRing   = null;
 
             Save();
+
+            if (wasEquipped)
+                OnUnEquippedItem?.Invoke();
         }
 
         public bool HasEquipment(ItemType type, LevelDifficulty difficulty)
@@ -151,15 +159,33 @@ namespace _Project.Scripts.Services
             _consumables[itemType] += amount;
             Save();
         }
-
+        
         public void RemoveItem(ItemType itemType, int amount = 1)
         {
-            if (!_consumables.ContainsKey(itemType) || _consumables[itemType] < amount)
-                return;
+            if (amount <= 0) return;
+            if (!_consumables.TryGetValue(itemType, out var current)) return;
 
-            _consumables[itemType] -= amount;
-            if (_consumables[itemType] <= 0)
+            int newCount = current - amount;
+
+            if (newCount > 0)
+                _consumables[itemType] = newCount;
+            else
+            {
                 _consumables.Remove(itemType);
+
+                if (_equippedConsumableType == itemType)
+                    UnequipConsumableItem();
+            }
+
+            Save();
+        }
+        
+        public void RemoveAllOfType(ItemType itemType)
+        {
+            if (!_consumables.Remove(itemType)) return;
+
+            if (_equippedConsumableType == itemType)
+                UnequipConsumableItem();
 
             Save();
         }
@@ -169,7 +195,7 @@ namespace _Project.Scripts.Services
 
         public bool HasItem(ItemType itemType)
             => _consumables.TryGetValue(itemType, out var count) && count > 0;
-        
+
         public void EquipConsumableItem(ItemData data)
         {
             if (data == null) return;
@@ -212,6 +238,29 @@ namespace _Project.Scripts.Services
             _equippedConsumableType = ItemType.None;
             OnUnEquippedConsumableItem?.Invoke();
             Save();
+        }
+
+        public bool IsFull()
+            => GetTotalItemCount() >= MaxSlots;
+        
+        public bool CanFit(ItemData itemData)
+        {
+            if (itemData == null) return false;
+            
+            if (itemData.Kind == ItemKind.Consumable && HasItem(itemData.Type))
+                return true;
+
+            return !IsFull();
+        }
+
+        public int GetTotalItemCount()
+        {
+            int count = _equipment.Count;
+
+            foreach (var kvp in _consumables)
+                if (kvp.Value > 0) count++;
+
+            return count;
         }
 
         private void Save()

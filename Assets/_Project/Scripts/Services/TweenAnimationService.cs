@@ -17,6 +17,10 @@ namespace _Project.Scripts.Services
 
         private const float SmallPause = 0.1f;
         private const float BigPause = 0.5f;
+        
+        private const float DefaultShowDuration = 0.25f;
+        private const float DefaultHoldDuration = 1.5f;
+        private const float DefaultHideDuration = 0.4f;
 
         public bool IsInitiated { get; private set; }
 
@@ -143,6 +147,38 @@ namespace _Project.Scripts.Services
             graphic.DOFade(targetAlpha, duration)
                 .SetEase(isFade ? Ease.OutSine : Ease.InSine)
                 .SetUpdate(true);
+        }
+        
+        public void AnimateTemporaryAppearance(Transform target)
+        {
+            if (!IsTargetValid(target)) return;
+
+            var graphic = target.GetComponent<Graphic>();
+            if (graphic == null)
+            {
+                Debug.LogWarning($"[Tween] AnimateTemporaryAppearance: '{target.name}' has no Graphic component.");
+                return;
+            }
+            
+            graphic.DOKill();
+            target.DOKill();
+
+            target.gameObject.SetActive(true);
+            
+            Color color = graphic.color;
+            color.a = 0f;
+            graphic.color = color;
+
+            DOTween.Sequence()
+                .Append(graphic.DOFade(1f, DefaultShowDuration).SetEase(Ease.OutSine))
+                .AppendInterval(DefaultHoldDuration)
+                .Append(graphic.DOFade(0f, DefaultHideDuration).SetEase(Ease.InSine))
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    if (IsTargetValid(target))
+                        target.gameObject.SetActive(false);
+                });
         }
 
         private void TryOffGameObject(Transform target, bool isDisableTarget)

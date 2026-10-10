@@ -243,7 +243,10 @@ namespace _Project.Scripts.Level
                 _particleEffectsService,
                 _lootService);
             
-            LootSpawner.GetViews(ViewFactory.UIScene.RewardView, ViewFactory.UIScene.PickUpView);
+            LootSpawner.GetViews(
+                ViewFactory.UIScene.RewardView,
+                ViewFactory.UIScene.PickUpView,
+                ViewFactory.UIScene.InventoryIsFullView);
             
             EnemySpawner.OnBossSpawned += OnBossSpawned;
             EnemySpawner.OnRewardDropped += LootSpawner.SpawnLoot;

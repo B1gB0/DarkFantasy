@@ -12,8 +12,8 @@ namespace _Project.Scripts.Player.Input
         private const float MinValue = 0f;
         private const float CameraDragMultiplier = 100f;
 
-        [Header("Action Locks")] [SerializeField]
-        private bool _isMovementLocked;
+        [Header("Action Locks")] 
+        [SerializeField] private bool _isMovementLocked;
 
         [SerializeField] private bool _isAttackLocked;
         [SerializeField] private bool _isRollLocked;
@@ -34,6 +34,7 @@ namespace _Project.Scripts.Player.Input
         private Button _pickUpButton;
 
         private bool _uiAttackPressed;
+        private bool _isPickUpLocked;
 
         private float _rollCooldownTimer;
         private bool _rollRequested;
@@ -143,6 +144,16 @@ namespace _Project.Scripts.Player.Input
 
             OnUnlockController?.Invoke();
         }
+        
+        public void LockPickUp()
+        {
+            _isPickUpLocked = true;
+        }
+        
+        public void UnLockPickUp()
+        {
+            _isPickUpLocked = false;
+        }
 
         private void UpdateAttackInput()
         {
@@ -154,11 +165,11 @@ namespace _Project.Scripts.Player.Input
             if (inputAttack || _uiAttackPressed)
                 OnAttackButtonPressed?.Invoke();
         }
-        
+
         private void UpdateInteractInput()
         {
             IsPickUpPressed = _inputSystem.Player.PickUp.WasPressedThisFrame()
-                                && !IsPointerOverUI();
+                              && !IsPointerOverUI() && !_isPickUpLocked;
         }
 
         private bool IsPointerOverUI()
@@ -208,14 +219,14 @@ namespace _Project.Scripts.Player.Input
             if (_inputSystem.Player.CameraDragButton.IsPressed())
             {
                 var delta = _inputSystem.Player.Look.ReadValue<Vector2>();
-                
+
                 float normalizedX = delta.x / Screen.width;
                 float normalizedY = delta.y / Screen.height;
-                
+
                 CameraLookDirection = new Vector2(
                     normalizedX * _cameraSensitivityX * CameraDragMultiplier,
                     normalizedY * _cameraSensitivityY * CameraDragMultiplier);
-                
+
                 IsCameraRotating = true;
                 return;
             }
@@ -282,6 +293,7 @@ namespace _Project.Scripts.Player.Input
 
         private void OnPickUpByButton()
         {
+            if (_isPickUpLocked) return;
             IsPickUpPressed = true;
         }
 
