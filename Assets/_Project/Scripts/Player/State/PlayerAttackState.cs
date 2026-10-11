@@ -9,6 +9,7 @@ namespace _Project.Scripts.Player
         private const int MaxCombo = 3;
         private const int MinValue = 0;
         private const int StartCounter = 1;
+        private const float DefaultAnimationSpeed = 1f;
         private const float FallbackEndThreshold = 0.95f;
 
         private readonly Core.Player _player;
@@ -32,7 +33,12 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
+            
+            float animationSpeed = _player.PlayerCharacteristics?.GetAttackSpeedMultiplier() ?? DefaultAnimationSpeed;
+            _anim.ChangeAnimationSpeed(animationSpeed);
+            
             StartCombo();
+            
             _fallbackEndInvoked = false;
         }
 
@@ -54,6 +60,7 @@ namespace _Project.Scripts.Player
         public void Exit()
         {
             _player.InputController.OnAttackButtonPressed -= OnAttackButtonPressed;
+            _anim.ChangeAnimationSpeed(DefaultAnimationSpeed);
             ResetCombo();
         }
 

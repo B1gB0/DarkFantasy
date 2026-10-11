@@ -6,6 +6,7 @@ namespace _Project.Scripts.Weapon.Enemy
     public class MeleeWeapon : Weapon
     {
         [SerializeField] private EnemyWeaponHitBox _hitBox;
+        [SerializeField] private Health _healthOwner;
 
         private void Start()
         {
@@ -30,7 +31,7 @@ namespace _Project.Scripts.Weapon.Enemy
 
         private void HandleAttack(PlayerHitBox hitBox)
         {
-            hitBox.HandleEnemyAttack(Damage);
+            hitBox.HandleEnemyAttack(Damage, _healthOwner);
             EndAttack();
         }
     }

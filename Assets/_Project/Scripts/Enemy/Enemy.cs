@@ -100,9 +100,7 @@ namespace _Project.Scripts.Enemy
             CurrencyService.AddGold(Data.Gold);
         }
 
-        public virtual void OnReactState(bool isEnteredToState)
-        {
-        }
+        public virtual void OnReactState(bool isEnteredToState) { }
 
         public void ForceKill()
         {

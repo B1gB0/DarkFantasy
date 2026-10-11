@@ -383,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 0
   _hitPoint: {fileID: 9055867029120600464}
 --- !u!114 &8616657164051281952
 MonoBehaviour:
@@ -410,6 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitBox: {fileID: 5946143027702664349}
+  _healthOwner: {fileID: 4561491724475573005}
 --- !u!114 &3772044643532246572
 MonoBehaviour:
   m_ObjectHideFlags: 0

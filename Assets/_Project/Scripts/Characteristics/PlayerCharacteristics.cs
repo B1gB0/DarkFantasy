@@ -15,7 +15,9 @@ namespace _Project.Scripts.Characteristics
         private const int CorrectFactor = 1;
         
         private const float BaseAttackSpeedMultiplier = 1f;
+        private const float BaseCritMultiplier  = 1.5f;
         private const float PercentFactor = 100f;
+        private const float CritChance = 0.15f;
 
         public float MaxHealth;
         public float TargetHealth;
@@ -49,6 +51,7 @@ namespace _Project.Scripts.Characteristics
         public float GetTotalDamage() => Damage + _equipmentDamageBonus;
         public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
         public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
+        public float GetCritChance() => CritChance;
 
         public void SetStartingData(PlayerData data)
         {
@@ -185,6 +188,41 @@ namespace _Project.Scripts.Characteristics
         {
             return _healthRegenInterval;
         }
+        
+        public float GetReverseDamageMultiplier()
+        {
+            return _equipmentReverseDamageBonus / PercentFactor;
+        }
+        
+        public float GetCurrentMoveSpeed()
+        {
+            float result = _baseMoveSpeed;
+            if (_speedModifiers == null) return result;
+
+            foreach (var mod in _speedModifiers)
+            {
+                if (!mod.IsMultiplier)
+                    result += mod.Value;
+            }
+
+            foreach (var mod in _speedModifiers)
+            {
+                if (mod.IsMultiplier)
+                    result += _baseMoveSpeed * mod.Value / PercentFactor;
+            }
+
+            return result;
+        }
+        
+        public float GetAttackSpeedMultiplier()
+        {
+            return BaseAttackSpeedMultiplier + _equipmentAttackSpeedBonus / PercentFactor;
+        }
+        
+        public float GetCritMultiplier()
+        {
+            return BaseCritMultiplier + _equipmentCritDamageBonus / PercentFactor;
+        }
 
         public void SaveTargetHealth(float targetHealth)
         {
@@ -248,30 +286,11 @@ namespace _Project.Scripts.Characteristics
             _healingModifier = new HealingModifier(totalAmount, duration);
             return true;
         }
-
-        public float GetCurrentMoveSpeed()
-        {
-            float result = _baseMoveSpeed;
-            if (_speedModifiers == null) return result;
-
-            foreach (var mod in _speedModifiers)
-            {
-                if (!mod.IsMultiplier)
-                    result += mod.Value;
-            }
-
-            foreach (var mod in _speedModifiers)
-            {
-                if (mod.IsMultiplier)
-                    result += _baseMoveSpeed * mod.Value / PercentFactor;
-            }
-
-            return result;
-        }
         
-        public float GetAttackSpeedMultiplier()
+        public float RollDamage(float baseDamage, out bool isCrit)
         {
-            return BaseAttackSpeedMultiplier + _equipmentAttackSpeedBonus / PercentFactor;
+            isCrit = UnityEngine.Random.value < CritChance;
+            return isCrit ? baseDamage * GetCritMultiplier() : baseDamage;
         }
 
         private void IncreaseHealth(float healthValue)

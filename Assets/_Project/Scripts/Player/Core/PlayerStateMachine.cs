@@ -6,7 +6,7 @@ namespace _Project.Scripts.Player.Core
 {
     public class PlayerStateMachine : MonoBehaviour
     {
-        private readonly Dictionary<StateId, IPlayerState> _states = new Dictionary<StateId, IPlayerState>();
+        private readonly Dictionary<StateId, IPlayerState> _states = new ();
 
         private Player _player;
         private InputController _inputController;

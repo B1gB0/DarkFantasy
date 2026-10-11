@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 0
   _hitPoint: {fileID: 3468724070417530159}
 --- !u!114 &7124174581953379129
 MonoBehaviour:
@@ -327,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitBox: {fileID: 8856038310323197572}
+  _healthOwner: {fileID: 6549745371098077742}
 --- !u!114 &7717611328589326490
 MonoBehaviour:
   m_ObjectHideFlags: 0

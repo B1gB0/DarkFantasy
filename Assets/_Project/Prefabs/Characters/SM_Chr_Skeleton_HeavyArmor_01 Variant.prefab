@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 100
   _hitPoint: {fileID: 4796089503633425623}
 --- !u!195 &6222718641175835822
 NavMeshAgent:
@@ -368,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitBox: {fileID: 1258666118167503777}
+  _healthOwner: {fileID: 3350875041654478630}
 --- !u!4 &4564627408236563548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4032658138706470389, guid: 7472f1051c156254781f50ed411e09f1, type: 3}

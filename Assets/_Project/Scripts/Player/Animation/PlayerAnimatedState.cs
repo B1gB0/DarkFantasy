@@ -32,5 +32,11 @@ namespace _Project.Scripts.Player.Animation
         {
             Animator.SetTrigger(PlayerAnimationId.Roll);
         }
+
+        public void ChangeAnimationSpeed(float speed)
+        {
+            Animator.speed = speed;
+        }
+        
     }
 }

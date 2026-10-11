@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820701359c650e241aa1b7b97c47819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 0
   _hitPoint: {fileID: 606282812100539384}
 --- !u!114 &884744937229373600
 MonoBehaviour:
@@ -346,6 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitBox: {fileID: 7820172971211360819}
+  _healthOwner: {fileID: 4597146208703341206}
 --- !u!1 &7777310786738202301 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5671466157577359703, guid: c75009d75a4e3b44cbb3790162d25d8b, type: 3}

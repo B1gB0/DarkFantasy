@@ -1,6 +1,5 @@
 using _Project.Scripts.Enemy.StateMachine.Behaviour.States;
 using UnityEngine;
-using YG;
 
 namespace _Project.Scripts.Player.Combat
 {
@@ -8,7 +7,7 @@ namespace _Project.Scripts.Player.Combat
     {
         [SerializeField] private Collider _collider;
         [SerializeField] [Range(0f, 1f)] private float _hitChance = 0.3f;
-        
+
         private Core.Player _player;
 
         private void Awake()
@@ -25,8 +24,12 @@ namespace _Project.Scripts.Player.Combat
         {
             if (!other.TryGetComponent(out Enemy.Enemy enemy))
                 return;
-            
-            enemy.Health.TakeDamage(_player.PlayerCharacteristics.GetTotalDamage(), true, enemy.Armor);
+
+            float damage = _player.PlayerCharacteristics.GetTotalDamage();
+
+            damage = _player.PlayerCharacteristics.RollDamage(damage, out bool isCrit);
+
+            enemy.Health.TakeDamage(damage, enemy.Armor, null, isCrit);
 
             if (Random.value < _hitChance)
             {

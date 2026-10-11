@@ -25,6 +25,7 @@ namespace _Project.Scripts
 
         public event Action Die;
         public event Action<Health> DieHealth;
+        public event Action<Health, float, bool> OnDamageTaken;
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
         public event Action IsDamaged;
@@ -49,12 +50,12 @@ namespace _Project.Scripts
             if (_characteristics == null) return;
 
             float dt = Time.deltaTime;
-            
+
             var heal = _characteristics.HealingModifier;
             if (heal != null && heal.Timer.IsActive)
                 AddHealthSilent(heal.HealPerSecond * dt);
-            
-            float regenAmount   = _characteristics.GetHealthRegenAmount();
+
+            float regenAmount = _characteristics.GetHealthRegenAmount();
             float regenInterval = _characteristics.GetHealthRegenInterval();
 
             if (regenAmount > MinValue && regenInterval > MinValue && TargetHealth < MaxHealth)
@@ -83,24 +84,32 @@ namespace _Project.Scripts
             _characteristics = characteristics;
         }
 
-        public void TakeDamage(float damage, bool isShowTextDamage = false, float armor = MinValue)
+        public void TakeDamage(
+            float damage,
+            float armor = MinValue,
+            Health attacker = null,
+            bool isCrit = false,
+            bool isReverse = false
+        )
         {
-            if (TargetHealth <= MinValue)
-                return;
+            if (TargetHealth <= MinValue) return;
 
             IsDamaged?.Invoke();
 
             float finalDamage = CalculateFinalDamage(damage, armor);
 
             IsSpawnedDamageText?.Invoke(
-                damage.ToString(),
+                damage.ToString("0"),
                 transform,
                 FloatingTextViewType.Damage,
-                Colors.GetColor(ColorName.DefaultWhiteTextColor));
+                isCrit
+                    ? Colors.GetColor(ColorName.RedCurrencyColor)
+                    : Colors.GetColor(ColorName.DefaultWhiteTextColor));
 
             TargetHealth -= finalDamage;
-
             OnChangeHealth();
+
+            OnDamageTaken?.Invoke(attacker, finalDamage, isReverse);
 
             if (TargetHealth == MinValue)
             {
@@ -145,7 +154,7 @@ namespace _Project.Scripts
             return _characteristics != null &&
                    _characteristics.TryStartHealing(totalAmount, duration);
         }
-        
+
         public void SetMaxHealth(float newMax)
         {
             if (Mathf.Approximately(MaxHealth, newMax)) return;
@@ -153,7 +162,7 @@ namespace _Project.Scripts
             float percent = MaxHealth > 0f ? TargetHealth / MaxHealth : 1f;
 
             MaxHealth = newMax;
-            
+
             float newTarget = Mathf.Clamp(MaxHealth * percent, MinValue, newMax);
             if (newTarget < MinAliveHealth && newMax >= MinAliveHealth)
                 newTarget = MinAliveHealth;

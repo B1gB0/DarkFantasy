@@ -52,7 +52,7 @@ namespace _Project.Scripts.Player.Core
         {
             if (Health == null)
                 return;
-            
+
             Health.Die += Die;
             Health.IsDamaged += OnPlayHitEffect;
         }
@@ -61,7 +61,7 @@ namespace _Project.Scripts.Player.Core
         {
             if (Health == null)
                 return;
-            
+
             Health.Die -= Die;
             Health.IsDamaged -= OnPlayHitEffect;
         }
@@ -70,7 +70,7 @@ namespace _Project.Scripts.Player.Core
         {
             if (PlayerCharacteristics != null && Health != null)
                 Health.TargetHealthChanged -= PlayerCharacteristics.SaveTargetHealth;
-            
+
             _inputController.OnUnlockController -= OnUnlockController;
             Health.IsSpawnedHealingText -= _floatingTextService.OnSpawnFloatingText;
         }
@@ -86,7 +86,7 @@ namespace _Project.Scripts.Player.Core
 
             if (Health != null && PlayerCharacteristics != null)
                 Health.TargetHealthChanged += PlayerCharacteristics.SaveTargetHealth;
-            
+
             Health.IsSpawnedHealingText += _floatingTextService.OnSpawnFloatingText;
         }
 
@@ -114,7 +114,7 @@ namespace _Project.Scripts.Player.Core
         {
             _playerAttackState.EndAttack();
         }
-        
+
         public void AnimationEvent_EndRoll()
         {
             _stateMachine.SwitchState(InputController.IsMoveInputPerformed ? StateId.Move : StateId.Idle);

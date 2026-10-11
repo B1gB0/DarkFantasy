@@ -11,9 +11,14 @@ namespace _Project.Scripts.Player
             _player = GetComponentInParent<Core.Player>();
         }
 
-        public void HandleEnemyAttack(float damage)
+        public void HandleEnemyAttack(float damage, Health healthOwner = null)
         {
-            _player.Health.TakeDamage(damage, false, _player.PlayerCharacteristics.GetTotalArmor());
+            _player.Health.TakeDamage(
+                damage,
+                _player.PlayerCharacteristics.GetTotalArmor(),
+                healthOwner,
+                false,
+                true);
         }
     }
 }
