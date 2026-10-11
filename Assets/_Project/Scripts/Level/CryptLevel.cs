@@ -90,9 +90,10 @@ namespace _Project.Scripts.Level
             }
             
             BossHealthBar.Hide();
-
-            YG2.saves.IsBanditCampUnlock = true;
-            YG2.SaveProgress();
+            
+            var missionId = MissionService.CurrentMission.Id;
+            var difficulty = ProgressionService.CurrentDifficulty;
+            YG2.saves.MarkMissionCompleted(missionId, difficulty);
         }
         
         private void HandleMissionTransition()

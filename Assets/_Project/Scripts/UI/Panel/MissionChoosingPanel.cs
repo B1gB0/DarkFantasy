@@ -89,26 +89,9 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Show()
         {
-            for (int i = 0; i < _missionService.Missions.Count; i++)
-            {
-                if (_missionService.Missions[i].Id == PrologueId)
-                    continue;
-
-                SetMission(_missionService.Missions[i], _missionViews[i]);
-
-                if (YG2.saves.IsBanditCampUnlock)
-                {
-                    _missionViews[1].gameObject.SetActive(true);
-                }
-
-                if (YG2.saves.IsCastleUnlock)
-                {
-                    _missionViews[2].gameObject.SetActive(true);
-                }
-            }
-
             _difficultyIndex = (int)_progressionService.CurrentDifficulty;
-            
+
+            RefreshMissions();
             UpdateDifficultyDisplay();
 
             _tweenAnimationService.AnimateScale(transform);
@@ -118,6 +101,66 @@ namespace _Project.Scripts.UI.Panel
         {
             _tweenAnimationService.AnimateScale(transform, true);
         }
+
+        private void RefreshMissions()
+        {
+            var difficulty = (LevelDifficulty)_difficultyIndex;
+
+            for (int i = 0; i < _missionService.Missions.Count; i++)
+            {
+                if (i >= _missionViews.Count) break;
+
+                var mission = _missionService.Missions[i];
+                if (mission.Id == PrologueId) continue;
+
+                var missionView = _missionViews[i];
+                SetMission(mission, missionView);
+
+                bool available = IsMissionAvailable(mission, i, difficulty);
+                missionView.gameObject.SetActive(available);
+            }
+        }
+
+        private bool IsMissionAvailable(Mission mission, int index, LevelDifficulty difficulty)
+        {
+            var prev = GetPreviousMission(index);
+            
+            if (prev == null) return true;
+            
+            return YG2.saves.IsMissionCompleted(prev.Id, difficulty);
+        }
+
+        private Mission GetPreviousMission(int index)
+        {
+            for (int i = index - 1; i >= 0; i--)
+            {
+                if (_missionService.Missions[i].Id == PrologueId) continue;
+                return _missionService.Missions[i];
+            }
+
+            return null;
+        }
+
+        private void UpdateDifficultyDisplay()
+        {
+            var difficulty = (LevelDifficulty)_difficultyIndex;
+            bool unlocked = _progressionService.IsDifficultyUnlocked(difficulty);
+
+            _locker.gameObject.SetActive(!unlocked);
+            _difficultyText.gameObject.SetActive(unlocked);
+
+            if (!unlocked) return;
+
+            var textType = GetDifficultyTextType(difficulty);
+            _difficultyText.text = _uiLocalizationService.GetLocalizedText(textType);
+            _difficultyText.color = GetDifficultyColor(difficulty);
+
+            if (_progressionService.CurrentDifficulty != difficulty)
+                _progressionService.SetDifficulty(difficulty);
+            
+            RefreshMissions();
+        }
+
 
         private void NextDifficulty()
         {
@@ -129,28 +172,6 @@ namespace _Project.Scripts.UI.Panel
         {
             _difficultyIndex = (_difficultyIndex - StepDifficulty + DifficultyCount) % DifficultyCount;
             UpdateDifficultyDisplay();
-        }
-
-        private void UpdateDifficultyDisplay()
-        {
-            var difficulty = (LevelDifficulty)_difficultyIndex;
-            bool unlocked = _progressionService.IsDifficultyUnlocked(difficulty);
-
-            _locker.gameObject.SetActive(!unlocked);
-            _difficultyText.gameObject.SetActive(unlocked);
-
-            if (!unlocked)
-            {
-                return;
-            }
-
-            var textType = GetDifficultyTextType(difficulty);
-            _difficultyText.text = _uiLocalizationService.GetLocalizedText(textType);
-
-            _difficultyText.color = GetDifficultyColor(difficulty);
-
-            if (_progressionService.CurrentDifficulty != difficulty)
-                _progressionService.SetDifficulty(difficulty);
         }
 
         private UITextType GetDifficultyTextType(LevelDifficulty difficulty)

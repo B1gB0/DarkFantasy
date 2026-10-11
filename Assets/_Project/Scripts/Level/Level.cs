@@ -30,8 +30,9 @@ namespace _Project.Scripts.Level
         private const float MinValue = 0f;
         private const int MinIndex = 0;
 
-        [Header("EnemyWaves")] 
-        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
+        [Header("EnemyWaves")] [SerializeField]
+        protected float SpawnWaveOfEnemyDelay = 10f;
+
         [SerializeField] protected List<EnemyWave> EnemyWaves;
         [SerializeField] protected LootSpawner LootSpawner;
         [SerializeField] private int _limitEnemies;
@@ -41,6 +42,8 @@ namespace _Project.Scripts.Level
         protected UIRootView UIRootView;
 
         protected NavMeshWaypointService NavMeshWaypointService;
+        protected MissionService MissionService;
+        protected IProgressionService ProgressionService;
 
         protected EnemySpawner EnemySpawner;
         protected BossHealthBar BossHealthBar;
@@ -77,16 +80,21 @@ namespace _Project.Scripts.Level
             IUILocalizationService uiLocalizationService,
             NavMeshWaypointService navMeshWaypointService,
             IFloatingTextService floatingTextService,
-            ILootService lootService)
+            ILootService lootService,
+            MissionService missionService,
+            IProgressionService progressionService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
             _particleEffectsService = particleEffectsService;
             _audioSoundsService = audioSoundsService;
             _uiLocalizationService = uiLocalizationService;
-            NavMeshWaypointService = navMeshWaypointService;
             _floatingTextService = floatingTextService;
             _lootService = lootService;
+            
+            NavMeshWaypointService = navMeshWaypointService;
+            MissionService =  missionService;
+            ProgressionService = progressionService;
         }
 
         private void OnDestroy()
@@ -242,12 +250,12 @@ namespace _Project.Scripts.Level
                 _audioSoundsService,
                 _particleEffectsService,
                 _lootService);
-            
+
             LootSpawner.GetViews(
                 ViewFactory.UIScene.RewardView,
                 ViewFactory.UIScene.PickUpView,
                 ViewFactory.UIScene.InventoryIsFullView);
-            
+
             EnemySpawner.OnBossSpawned += OnBossSpawned;
             EnemySpawner.OnRewardDropped += LootSpawner.SpawnLoot;
 

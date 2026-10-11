@@ -129,11 +129,9 @@ namespace _Project.Scripts.UI.Panel
                 switch (_missionService.CurrentMission.Id)
                 {
                     case Missions.Graveyard:
-                        YG2.saves.IsBanditCampUnlock = true;
                         YG2.SaveProgress();
                         break;
                     case Missions.BanditCamp:
-                        YG2.saves.IsCastleUnlock = true;
                         YG2.SaveProgress();
                         break;
                 }
