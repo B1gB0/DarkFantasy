@@ -1,78 +1,29 @@
 {
-  "Gold": 925,
-  "AcumulatedScore": 980,
+  "Gold": 30,
+  "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
-  "IsBanditCampUnlock": true,
-  "IsCastleUnlock": true,
-  "IsMediumDifficultyUnlock": true,
+  "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": true,
-  "IsInventoryShopVisited": true,
-  "IsMissionPanelVisited": true,
-  "EquippedWeaponId": "3bc87fa5-1d16-4119-8446-5d556f005bca",
-  "EquippedArmorId": "78e5f088-bf01-46b7-b30e-5c859341173a",
-  "EquippedRingId": "71caa0a0-cb73-4329-b17f-91be2c22203b",
-  "CompletedLow": [
-    "graveyard",
-    "banditCamp",
-    "castle"
-  ],
+  "IsAttributeShopVisited": false,
+  "IsInventoryShopVisited": false,
+  "IsMissionPanelVisited": false,
+  "EquippedWeaponId": null,
+  "EquippedArmorId": null,
+  "EquippedRingId": null,
+  "CompletedLow": [],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {
-    "SpeedPotion": 1
-  },
-  "Equipment": [
-    {
-      "Id": "ad032b2e-4540-4bc1-b9b8-e4cd39865e87",
-      "Type": 10,
-      "Difficulty": 0
-    },
-    {
-      "Id": "a8f7ec5f-9214-4d9b-bc24-91958d9ae215",
-      "Type": 5,
-      "Difficulty": 0
-    },
-    {
-      "Id": "71caa0a0-cb73-4329-b17f-91be2c22203b",
-      "Type": 8,
-      "Difficulty": 0
-    },
-    {
-      "Id": "441acff6-0e38-4f87-a368-7b9997aa81b7",
-      "Type": 4,
-      "Difficulty": 0
-    },
-    {
-      "Id": "97a6c5f6-994a-4352-be65-10583a261de1",
-      "Type": 14,
-      "Difficulty": 0
-    },
-    {
-      "Id": "78e5f088-bf01-46b7-b30e-5c859341173a",
-      "Type": 15,
-      "Difficulty": 0
-    },
-    {
-      "Id": "3bc87fa5-1d16-4119-8446-5d556f005bca",
-      "Type": 12,
-      "Difficulty": 0
-    },
-    {
-      "Id": "ed41bd52-c20f-448b-b0d4-4557c9b4ce06",
-      "Type": 9,
-      "Difficulty": 0
-    }
-  ],
+  "Consumables": {},
+  "Equipment": [],
   "EquippedItemType": 0,
-  "CurrentDifficulty": 1,
+  "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 68.92586,
+    "TargetHealth": 100.0,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -94,5 +45,5 @@
     false,
     false
   ],
-  "idSave": 36
+  "idSave": 11
 }

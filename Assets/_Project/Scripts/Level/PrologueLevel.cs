@@ -1,7 +1,6 @@
 ﻿using _Project.Scripts.Level.Triggers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -33,6 +32,8 @@ namespace _Project.Scripts.Level
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
             EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
+            
+            EnemySpawner.OnRewardDropped -= LootSpawner.SpawnLoot;
         }
 
         private void SpawnStartWaves()

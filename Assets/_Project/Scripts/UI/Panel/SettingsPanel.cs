@@ -12,6 +12,7 @@ namespace _Project.Scripts.UI.Panel
     {
         private const string MusicVolume = nameof(MusicVolume);
         private const string EffectsVolume = nameof(EffectsVolume);
+        private const string MouseInverted = nameof(MouseInverted);
 
         private const float StartValueSlider = 0.8f;
         private const float MinValueSlider = 0f;
@@ -26,6 +27,7 @@ namespace _Project.Scripts.UI.Panel
 
         [SerializeField] private Slider _musicVolumeSlider;
         [SerializeField] private Slider _effectsVolumeSlider;
+        [SerializeField] private Toggle _isMouseInverted;
 
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
@@ -46,11 +48,13 @@ namespace _Project.Scripts.UI.Panel
 
             _musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolume);
             _effectsVolumeSlider.onValueChanged.AddListener(ChangeEffectsVolume);
+            _isMouseInverted.onValueChanged.AddListener(ChangeMouseInverted);
         }
 
         private void Start()
         {
-            SetValuesVolume();
+            LoadValuesVolume();
+            LoadToggleMouseInverted();
             Deactivate();
         }
 
@@ -61,6 +65,7 @@ namespace _Project.Scripts.UI.Panel
 
             _musicVolumeSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
             _effectsVolumeSlider.onValueChanged.RemoveListener(ChangeEffectsVolume);
+            _isMouseInverted.onValueChanged.RemoveListener(ChangeMouseInverted);
         }
 
         private void OnDestroy()
@@ -76,12 +81,12 @@ namespace _Project.Scripts.UI.Panel
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
-            
-            if(_playerService.Player != null)
+
+            if (_playerService.Player != null)
                 _playerService.Player.InputController.UnlockPlayerMovement();
         }
 
-        private void SetValuesVolume()
+        private void LoadValuesVolume()
         {
             _musicVolumeSlider.value = PlayerPrefs.GetFloat(MusicVolume);
             _effectsVolumeSlider.value = PlayerPrefs.GetFloat(EffectsVolume);
@@ -97,6 +102,11 @@ namespace _Project.Scripts.UI.Panel
 
             ChangeMusicVolume(StartValueSlider);
             ChangeEffectsVolume(StartValueSlider);
+        }
+
+        private void LoadToggleMouseInverted()
+        {
+            _isMouseInverted.isOn = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
         }
 
         private void MoveBackToScene()
@@ -117,6 +127,12 @@ namespace _Project.Scripts.UI.Panel
             _mixer.audioMixer.SetFloat(EffectsVolume, Mathf.Lerp(_minVolume, _maxVolume, volume));
 
             PlayerPrefs.SetFloat(EffectsVolume, volume);
+        }
+
+        private void ChangeMouseInverted(bool isOn)
+        {
+            PlayerPrefs.SetInt(MouseInverted, isOn ? 1 : 0);
+            PlayerPrefs.Save();
         }
     }
 }

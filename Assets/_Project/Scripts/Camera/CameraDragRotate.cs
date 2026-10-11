@@ -3,11 +3,14 @@ using _Project.Scripts.Services;
 using Cinemachine;
 using Reflex.Attributes;
 using UnityEngine;
+using YG;
 
 namespace _Project.Scripts.Camera
 {
     public class CameraDragRotate : MonoBehaviour
     {
+        private const string MouseInverted = nameof(MouseInverted);
+        
         private const float MinValue = 0f;
 
         private IPlayerService _playerService;
@@ -33,7 +36,9 @@ namespace _Project.Scripts.Camera
             if (input.IsCameraRotating)
             {
                 var dir = input.CameraLookDirection;
-                cam.m_XAxis.m_InputAxisValue = dir.x;
+                bool inverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
+                float sign = inverted ? 1f : -1f;
+                cam.m_XAxis.m_InputAxisValue = dir.x * sign;
             }
             else
             {
