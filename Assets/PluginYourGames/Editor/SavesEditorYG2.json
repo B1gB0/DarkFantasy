@@ -1,6 +1,6 @@
 {
   "Gold": 905,
-  "AcumulatedScore": 1970,
+  "AcumulatedScore": 1980,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -15,7 +15,7 @@
   "IsMissionPanelVisited": true,
   "EquippedWeaponId": "24ce2a1b-dbdd-4194-ba7b-945897f89229",
   "EquippedArmorId": null,
-  "EquippedRingId": "4c0cf309-443b-4588-b486-3a4e0ef0eece",
+  "EquippedRingId": "3b762e75-2524-4cb6-91cd-8e13d331d681",
   "Consumables": {
     "SpeedPotion": 4
   },
@@ -100,7 +100,7 @@
   "CurrentDifficulty": 2,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 92.27273,
+    "TargetHealth": 64.70587,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -122,5 +122,5 @@
     false,
     false
   ],
-  "idSave": 141
+  "idSave": 146
 }

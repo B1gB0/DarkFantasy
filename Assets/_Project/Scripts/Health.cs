@@ -93,10 +93,12 @@ namespace _Project.Scripts
         )
         {
             if (TargetHealth <= MinValue) return;
+            if (damage <= MinValue) return;
 
             IsDamaged?.Invoke();
 
             float finalDamage = CalculateFinalDamage(damage, armor);
+            if (finalDamage <= MinValue) return;
 
             IsSpawnedDamageText?.Invoke(
                 damage.ToString("0"),

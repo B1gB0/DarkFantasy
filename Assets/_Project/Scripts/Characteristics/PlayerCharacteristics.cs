@@ -108,17 +108,17 @@ namespace _Project.Scripts.Characteristics
                 float mul = _progressionService.GetItemMultiplier(instance.Difficulty);
                 
                 if (template.CharacteristicType != CharacteristicType.None)
-                    ApplyBonus(template.CharacteristicType, template.Value * mul);
+                    ApplyBonus(template.CharacteristicType, template.Value * mul, template.Duration);
                 
                 if (template.CharacteristicType2 != CharacteristicType.None)
-                    ApplyBonus(template.CharacteristicType2, template.Value2 * mul);
+                    ApplyBonus(template.CharacteristicType2, template.Value2 * mul, template.Duration);
                 
                 if (template.CharacteristicType3 != CharacteristicType.None)
-                    ApplyBonus(template.CharacteristicType3, template.Value3 * mul);
+                    ApplyBonus(template.CharacteristicType3, template.Value3 * mul, template.Duration);
             }
         }
 
-        private void ApplyBonus(CharacteristicType type, float value)
+        private void ApplyBonus(CharacteristicType type, float value, float duration = 0f)
         {
             switch (type)
             {
@@ -133,6 +133,7 @@ namespace _Project.Scripts.Characteristics
                     break;
                 case CharacteristicType.HealthRegen: 
                     _equipmentHealthRegenBonus += value;
+                    _healthRegenInterval = duration;
                     break;
                 case CharacteristicType.MoveSpeed:  
                     _equipmentMoveSpeedBonus += value;
