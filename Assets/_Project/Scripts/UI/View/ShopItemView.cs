@@ -157,12 +157,27 @@ namespace _Project.Scripts.UI.View
             string localized = _shopService.GetLocalizedCharacteristicName(type);
             if (string.IsNullOrEmpty(localized)) return;
 
-            parts.Add($"+{value:0.#} {localized}");
+            bool isPercent = IsPercentStat(type);
+
+            parts.Add(isPercent
+                ? $"+{value:0.#}% {localized}"
+                : $"+{value:0.#} {localized}");
         }
 
         private void OnButtonClick()
         {
             OnButtonClicked?.Invoke(_currentData, this);
+        }
+        
+        private bool IsPercentStat(CharacteristicType type)
+        {
+            return type switch
+            {
+                CharacteristicType.MoveSpeed   => true,
+                CharacteristicType.AttackSpeed => true,
+                CharacteristicType.CritDamage  => true,
+                _ => false,
+            };
         }
     }
 }

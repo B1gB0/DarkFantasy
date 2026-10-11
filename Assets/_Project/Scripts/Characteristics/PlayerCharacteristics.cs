@@ -49,6 +49,7 @@ namespace _Project.Scripts.Characteristics
 
         public float GetTotalArmor() => Armor + _equipmentArmorBonus;
         public float GetTotalDamage() => Damage + _equipmentDamageBonus;
+        public float GetReverseDamage() => _equipmentReverseDamageBonus;
         public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
         public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
         public float GetCritChance() => CritChance;

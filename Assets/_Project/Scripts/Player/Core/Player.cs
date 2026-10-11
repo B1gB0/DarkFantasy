@@ -55,6 +55,7 @@ namespace _Project.Scripts.Player.Core
 
             Health.Die += Die;
             Health.IsDamaged += OnPlayHitEffect;
+            Health.OnDamageTaken += HandleDamageTaken;
         }
 
         private void OnDisable()
@@ -64,6 +65,7 @@ namespace _Project.Scripts.Player.Core
 
             Health.Die -= Die;
             Health.IsDamaged -= OnPlayHitEffect;
+            Health.OnDamageTaken -= HandleDamageTaken;
         }
 
         private void OnDestroy()
@@ -160,6 +162,22 @@ namespace _Project.Scripts.Player.Core
         private void Die()
         {
             gameObject.SetActive(false);
+        }
+        
+        private void HandleDamageTaken(Health attacker, float damage, bool isReverse)
+        {
+            if (isReverse) return;
+            if (Health.TargetHealth <= 0f) return;
+            if (attacker == null) return;
+            if (attacker.TargetHealth <= 0f) return;
+
+            float fixedDamage = PlayerCharacteristics.GetReverseDamage();
+
+            attacker.TakeDamage(
+                fixedDamage,
+                armor: 0f,
+                attacker: Health,
+                isReverse: true);
         }
     }
 }

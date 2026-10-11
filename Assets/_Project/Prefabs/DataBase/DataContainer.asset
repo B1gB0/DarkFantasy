@@ -754,3 +754,15 @@ MonoBehaviour:
       _nameRu: "\u0420\u0435\u0434\u043A\u043E\u0435"
       _nameEn: Rare
       _nameTr: Nadir
+    - _uiTextType: 10
+      _nameRu: "\u041D\u0438\u0437\u043A\u0430\u044F"
+      _nameEn: Low
+      _nameTr: "D\xFC\u015F\xFCk"
+    - _uiTextType: 11
+      _nameRu: "\u0421\u0440\u0435\u0434\u043D\u044F\u044F"
+      _nameEn: Medium
+      _nameTr: Ortalama
+    - _uiTextType: 12
+      _nameRu: "\u0412\u044B\u0441\u043E\u043A\u0430\u044F"
+      _nameEn: High
+      _nameTr: "Y\xFCksek"

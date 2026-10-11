@@ -16,9 +16,7 @@ namespace _Project.Scripts.Player
             _player.Health.TakeDamage(
                 damage,
                 _player.PlayerCharacteristics.GetTotalArmor(),
-                healthOwner,
-                false,
-                true);
+                healthOwner);
         }
     }
 }

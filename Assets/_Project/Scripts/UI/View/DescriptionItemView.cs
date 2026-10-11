@@ -156,6 +156,8 @@ namespace _Project.Scripts.UI.View
 
             string localized = _shopService.GetLocalizedCharacteristicName(type);
             if (string.IsNullOrEmpty(localized)) return;
+            
+            bool isPercent = IsPercentStat(type);
 
             sb.Append('+');
             sb.Append(value.ToString("0.#"));
@@ -219,6 +221,17 @@ namespace _Project.Scripts.UI.View
                 ItemRarity.Uncommon => Colors.GetColor(ColorName.RarityUncommon),
                 ItemRarity.Rare => Colors.GetColor(ColorName.RarityRare),
                 _ => Colors.GetColor(ColorName.DefaultWhiteTextColor),
+            };
+        }
+        
+        private bool IsPercentStat(CharacteristicType type)
+        {
+            return type switch
+            {
+                CharacteristicType.MoveSpeed   => true,
+                CharacteristicType.AttackSpeed => true,
+                CharacteristicType.CritDamage  => true,
+                _ => false,
             };
         }
     }
