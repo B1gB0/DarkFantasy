@@ -1,25 +1,23 @@
 {
-  "Gold": 370,
-  "AcumulatedScore": 1135,
+  "Gold": 905,
+  "AcumulatedScore": 1970,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
-  "IsBanditCampUnlock": false,
+  "IsBanditCampUnlock": true,
   "IsCastleUnlock": false,
   "IsMediumDifficultyUnlock": true,
-  "IsHardDifficultyUnlock": false,
+  "IsHardDifficultyUnlock": true,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
   "EquippedWeaponId": "24ce2a1b-dbdd-4194-ba7b-945897f89229",
-  "EquippedArmorId": "dfe3b1cf-6b6c-4314-8a50-558c5d7866cf",
+  "EquippedArmorId": null,
   "EquippedRingId": "4c0cf309-443b-4588-b486-3a4e0ef0eece",
   "Consumables": {
-    "Meat": 1,
-    "HealthPotion": 1,
-    "SpeedPotion": 1
+    "SpeedPotion": 4
   },
   "Equipment": [
     {
@@ -58,16 +56,6 @@
       "Difficulty": 0
     },
     {
-      "Id": "dfe3b1cf-6b6c-4314-8a50-558c5d7866cf",
-      "Type": 15,
-      "Difficulty": 0
-    },
-    {
-      "Id": "66132aa6-5ad5-4038-a090-4d13d234200d",
-      "Type": 10,
-      "Difficulty": 1
-    },
-    {
       "Id": "3f4ee420-67e9-4304-a032-ab2ba02f27fe",
       "Type": 8,
       "Difficulty": 1
@@ -86,13 +74,33 @@
       "Id": "57192fcd-393c-41c3-9ecf-9905bae6a4c2",
       "Type": 14,
       "Difficulty": 1
+    },
+    {
+      "Id": "acc5b3f7-76da-4d24-87a0-ca2e4ffd6703",
+      "Type": 12,
+      "Difficulty": 1
+    },
+    {
+      "Id": "f1d7dc9c-3efb-4c5a-8e8a-49e3d8c387a1",
+      "Type": 10,
+      "Difficulty": 1
+    },
+    {
+      "Id": "b4cfb5fa-88b5-424e-a351-c193e937a146",
+      "Type": 15,
+      "Difficulty": 1
+    },
+    {
+      "Id": "3b762e75-2524-4cb6-91cd-8e13d331d681",
+      "Type": 8,
+      "Difficulty": 2
     }
   ],
-  "EquippedItemType": 1,
-  "CurrentDifficulty": 1,
+  "EquippedItemType": 0,
+  "CurrentDifficulty": 2,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 86.09091,
+    "TargetHealth": 92.27273,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -114,5 +122,5 @@
     false,
     false
   ],
-  "idSave": 98
+  "idSave": 141
 }

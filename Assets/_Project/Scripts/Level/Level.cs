@@ -125,7 +125,7 @@ namespace _Project.Scripts.Level
 
         public void TryShowBossUI()
         {
-            if (!IsBossTriggered || BossHealthBar == null || _boss == null)
+            if (!IsBossTriggered || BossHealthBar == null || _boss == null || _boss.IsDead)
                 return;
 
             BossHealthBar.Show();

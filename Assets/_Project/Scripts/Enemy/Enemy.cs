@@ -21,7 +21,7 @@ namespace _Project.Scripts.Enemy
         protected ParticleEffectsService ParticleEffectsService;
         protected IExperiencePoints ExperiencePoints;
         protected ICurrencyService CurrencyService;
-        
+
         private bool _isDead;
 
         public event Action<Enemy> Die;
@@ -35,6 +35,7 @@ namespace _Project.Scripts.Enemy
         public int Score { get; private set; }
         public bool IsEnemy { get; private set; }
         public bool IsBoss { get; private set; }
+        public bool IsDead => _isDead;
 
         public EnemyData Data { get; private set; }
         public Player.Core.Player Player { get; private set; }
@@ -100,7 +101,9 @@ namespace _Project.Scripts.Enemy
             CurrencyService.AddGold(Data.Gold);
         }
 
-        public virtual void OnReactState(bool isEnteredToState) { }
+        public virtual void OnReactState(bool isEnteredToState)
+        {
+        }
 
         public void ForceKill()
         {
@@ -121,7 +124,7 @@ namespace _Project.Scripts.Enemy
         {
             if (_isDead) return;
             _isDead = true;
-            
+
             Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
 
             Die?.Invoke(this);

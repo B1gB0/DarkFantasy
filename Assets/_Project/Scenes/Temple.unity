@@ -796,8 +796,9 @@ GameObject:
   - component: {fileID: 2144513388}
   - component: {fileID: 2144513390}
   - component: {fileID: 2144513389}
+  - component: {fileID: 2144513391}
   m_Layer: 6
-  m_Name: FollowTrigger (1)
+  m_Name: FollowTriggerAndSpawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,7 +813,7 @@ Transform:
   m_GameObject: {fileID: 2144513387}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70762503, z: -0, w: 0.7065882}
-  m_LocalPosition: {x: 4.96, y: 1.053, z: 40.15}
+  m_LocalPosition: {x: 4.96, y: 1.053, z: 39.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -852,6 +853,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <NumberWaveOfEnemies>k__BackingField: 0300000004000000
+--- !u!114 &2144513391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144513387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8caa3a57b7644f538eb71dcac250271d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8688426425578970331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,7 +1352,7 @@ PrefabInstance:
     - target: {fileID: 1628756667268099193, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
       propertyPath: _spawnCyclicWaveTrigger
       value: 
-      objectReference: {fileID: 8688426425578970333}
+      objectReference: {fileID: 2144513391}
     - target: {fileID: 1628756667268099193, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
       propertyPath: EnemyWaves.Array.data[0]
       value: 
@@ -2014,6 +2027,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4050248045248498598, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050495651979266773, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4050495651979266773, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
@@ -3540,7 +3557,9 @@ PrefabInstance:
     - {fileID: 5662302816673051897, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
     - {fileID: 6238205450976081881, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
     - {fileID: 5134668957668572107, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
-    m_RemovedGameObjects: []
+    - {fileID: 643966122791803516, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 4074721995376695088, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5502691130036778335, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
       insertIndex: 11
@@ -3574,17 +3593,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0b39c34a4ab4a61a7b1efac74c2363d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8688426425578970333 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 643966122791803516, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
-  m_PrefabInstance: {fileID: 8688426425578970331}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8caa3a57b7644f538eb71dcac250271d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8688426425578970334 stripped
