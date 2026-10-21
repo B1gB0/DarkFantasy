@@ -8,6 +8,8 @@ namespace _Project.Scripts.UI.Panel
 {
     public class LocalizationLanguageSwitcher : MonoBehaviour
     {
+        private const string LanguagePrefsKey = "SelectedLanguage";
+        
         private readonly List<string> _languages = new () { "en", "ru", "tr" };
 
         [SerializeField] private Button _priviousButton;
@@ -23,9 +25,20 @@ namespace _Project.Scripts.UI.Panel
             _nextButton.onClick.AddListener(SetNextLanguage);
         }
 
-        private void Start()
+        private void Awake()
         {
-            YG2.SwitchLanguage(YG2.lang);
+            if (PlayerPrefs.HasKey(LanguagePrefsKey))
+            {
+                string savedLang = PlayerPrefs.GetString(LanguagePrefsKey);
+                YG2.SwitchLanguage(savedLang);
+            }
+            
+            string currentLang = YG2.lang.ToLower();
+            _currentIndex = _languages.IndexOf(currentLang);
+            
+            if (_currentIndex < 0) _currentIndex = 0;
+            
+            OnLanguageChanged?.Invoke();
         }
 
         private void OnDisable()
@@ -56,7 +69,13 @@ namespace _Project.Scripts.UI.Panel
 
         private void SetLanguage(int index)
         {
-            YG2.SwitchLanguage(_languages[index]);
+            string langCode = _languages[index];
+            
+            YG2.SwitchLanguage(langCode);
+            
+            PlayerPrefs.SetString(LanguagePrefsKey, langCode);
+            PlayerPrefs.Save();
+            
             OnLanguageChanged?.Invoke();
         }
     }

@@ -10,8 +10,10 @@ namespace _Project.Scripts.Camera
     public class CameraDragRotate : MonoBehaviour
     {
         private const string MouseInverted = nameof(MouseInverted);
+        private const string CameraSensitivity = nameof(CameraSensitivity);
         
         private const float MinValue = 0f;
+        private const float BaseMultiplier = 10; 
 
         private IPlayerService _playerService;
 
@@ -37,8 +39,13 @@ namespace _Project.Scripts.Camera
             {
                 var dir = input.CameraLookDirection;
                 bool inverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
-                float sign = inverted ? 1f : -1f;
-                cam.m_XAxis.m_InputAxisValue = dir.x * sign;
+                float sign = inverted ? -1f : 1f;
+                
+                float sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, 1.5f);
+                
+                float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * BaseMultiplier;
+                
+                cam.m_XAxis.Value += dir.x * pixelsToDegreesX * sensitivity * sign;
             }
             else
             {
@@ -69,6 +76,7 @@ namespace _Project.Scripts.Camera
             cam.m_YAxis.m_InputAxisName = string.Empty;
             
             cam.m_YAxis.m_MaxSpeed = MinValue;
+            cam.m_XAxis.m_MaxSpeed = MinValue;
             
             cam.m_XAxis.m_InputAxisValue = MinValue;
             cam.m_YAxis.m_InputAxisValue = MinValue;

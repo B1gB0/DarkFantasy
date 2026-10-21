@@ -10,11 +10,9 @@ namespace _Project.Scripts.Player.Input
     {
         private const float MinMagnitude = 0.01f;
         private const float MinValue = 0f;
-        private const float CameraDragMultiplier = 100f;
 
         [Header("Action Locks")] 
         [SerializeField] private bool _isMovementLocked;
-
         [SerializeField] private bool _isAttackLocked;
         [SerializeField] private bool _isRollLocked;
 
@@ -220,12 +218,7 @@ namespace _Project.Scripts.Player.Input
             {
                 var delta = _inputSystem.Player.Look.ReadValue<Vector2>();
 
-                float normalizedX = delta.x / Screen.width;
-                float normalizedY = delta.y / Screen.height;
-
-                CameraLookDirection = new Vector2(
-                    normalizedX * _cameraSensitivityX * CameraDragMultiplier,
-                    normalizedY * _cameraSensitivityY * CameraDragMultiplier);
+                CameraLookDirection = delta;
 
                 IsCameraRotating = true;
                 return;
@@ -253,6 +246,13 @@ namespace _Project.Scripts.Player.Input
         {
             if (context.performed)
             {
+                if (_isMovementLocked)
+                {
+                    MoveDirection = Vector2.zero;
+                    IsMoveInputPerformed = false;
+                    return;
+                }
+
                 MoveDirection = context.ReadValue<Vector2>();
                 IsMoveInputPerformed = MoveDirection.sqrMagnitude > MinMagnitude;
             }
@@ -262,7 +262,8 @@ namespace _Project.Scripts.Player.Input
                 IsMoveInputPerformed = false;
             }
 
-            if (IsMoveInputPerformed) OnMoveButtonsPressed?.Invoke();
+            if (IsMoveInputPerformed && !_isMovementLocked)
+                OnMoveButtonsPressed?.Invoke();
         }
 
         private void OnRollPerformed(InputAction.CallbackContext context)

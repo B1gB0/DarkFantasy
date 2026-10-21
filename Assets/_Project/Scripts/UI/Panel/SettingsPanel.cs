@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
@@ -12,10 +13,13 @@ namespace _Project.Scripts.UI.Panel
     {
         private const string MusicVolume = nameof(MusicVolume);
         private const string EffectsVolume = nameof(EffectsVolume);
+        private const string CameraSensitivity = nameof(CameraSensitivity);
         private const string MouseInverted = nameof(MouseInverted);
 
-        private const float StartValueSlider = 0.8f;
-        private const float MinValueSlider = 0f;
+        private const float StartVolumeSlider = 0.8f;
+        private const float StartSensitivitySlider = 1.5f;
+        
+        [SerializeField] private List<GameObject> _elements;
 
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _backToSceneButton;
@@ -27,6 +31,7 @@ namespace _Project.Scripts.UI.Panel
 
         [SerializeField] private Slider _musicVolumeSlider;
         [SerializeField] private Slider _effectsVolumeSlider;
+        [SerializeField] private Slider _cameraSensitivitySlider;
         [SerializeField] private Toggle _isMouseInverted;
 
         private ITweenAnimationService _tweenAnimationService;
@@ -49,12 +54,20 @@ namespace _Project.Scripts.UI.Panel
             _musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolume);
             _effectsVolumeSlider.onValueChanged.AddListener(ChangeEffectsVolume);
             _isMouseInverted.onValueChanged.AddListener(ChangeMouseInverted);
+            _cameraSensitivitySlider.onValueChanged.AddListener(ChangeCameraSensitivity);
+            
+            Application.focusChanged += OnFocusChanged;
         }
 
         private void Start()
         {
             LoadValuesVolume();
+            LoadSensitivityMouseVolume();
             LoadToggleMouseInverted();
+            
+            foreach (var element in _elements)
+                element.SetActive(true);
+            
             Deactivate();
         }
 
@@ -66,6 +79,9 @@ namespace _Project.Scripts.UI.Panel
             _musicVolumeSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
             _effectsVolumeSlider.onValueChanged.RemoveListener(ChangeEffectsVolume);
             _isMouseInverted.onValueChanged.RemoveListener(ChangeMouseInverted);
+            _cameraSensitivitySlider.onValueChanged.RemoveListener(ChangeCameraSensitivity);
+            
+            Application.focusChanged -= OnFocusChanged;
         }
 
         private void OnDestroy()
@@ -85,23 +101,25 @@ namespace _Project.Scripts.UI.Panel
             if (_playerService.Player != null)
                 _playerService.Player.InputController.UnlockPlayerMovement();
         }
+        
+        private void OnFocusChanged(bool hasFocus)
+        {
+            if (hasFocus)
+            {
+                ChangeMusicVolume(PlayerPrefs.GetFloat(MusicVolume, StartVolumeSlider));
+                ChangeEffectsVolume(PlayerPrefs.GetFloat(EffectsVolume, StartVolumeSlider));
+            }
+        }
 
         private void LoadValuesVolume()
         {
-            _musicVolumeSlider.value = PlayerPrefs.GetFloat(MusicVolume);
-            _effectsVolumeSlider.value = PlayerPrefs.GetFloat(EffectsVolume);
+            _musicVolumeSlider.value = PlayerPrefs.GetFloat(MusicVolume, StartVolumeSlider);
+            _effectsVolumeSlider.value = PlayerPrefs.GetFloat(EffectsVolume, StartVolumeSlider);
+        }
 
-            if (PlayerPrefs.GetFloat(MusicVolume) != MinValueSlider ||
-                PlayerPrefs.GetFloat(EffectsVolume) != MinValueSlider)
-            {
-                return;
-            }
-
-            _musicVolumeSlider.value = StartValueSlider;
-            _effectsVolumeSlider.value = StartValueSlider;
-
-            ChangeMusicVolume(StartValueSlider);
-            ChangeEffectsVolume(StartValueSlider);
+        private void LoadSensitivityMouseVolume()
+        {
+            _cameraSensitivitySlider.value = PlayerPrefs.GetFloat(CameraSensitivity, StartSensitivitySlider);
         }
 
         private void LoadToggleMouseInverted()
@@ -120,6 +138,7 @@ namespace _Project.Scripts.UI.Panel
             _mixer.audioMixer.SetFloat(MusicVolume, Mathf.Lerp(_minVolume, _maxVolume, volume));
 
             PlayerPrefs.SetFloat(MusicVolume, volume);
+            PlayerPrefs.Save();
         }
 
         private void ChangeEffectsVolume(float volume)
@@ -127,6 +146,13 @@ namespace _Project.Scripts.UI.Panel
             _mixer.audioMixer.SetFloat(EffectsVolume, Mathf.Lerp(_minVolume, _maxVolume, volume));
 
             PlayerPrefs.SetFloat(EffectsVolume, volume);
+            PlayerPrefs.Save();
+        }
+        
+        private void ChangeCameraSensitivity(float sensitivity)
+        {
+            PlayerPrefs.SetFloat(CameraSensitivity, sensitivity);
+            PlayerPrefs.Save();
         }
 
         private void ChangeMouseInverted(bool isOn)

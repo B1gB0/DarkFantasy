@@ -1,2 +1,12 @@
+# Firebase Native Plugins (LFS)
+Assets/Firebase/Plugins/**/*.bundle filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.so filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.dll filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.aar filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.jar filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.framework filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.xcframework filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/**/*.lib filter=lfs diff=lfs merge=lfs -text
+
 # Auto detect text files and perform LF normalization
 * text=auto
