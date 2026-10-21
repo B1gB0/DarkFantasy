@@ -28,6 +28,7 @@ namespace _Project.Scripts.UI.Panel
         private IPlayerService _playerService;
         private IInventoryService _inventoryService;
         private IShopService _shopService;
+        private IPauseService _pauseService;
         private AudioSoundsService _audioSoundsService;
 
         public event Action OnBackToSceneButtonPressed;
@@ -40,13 +41,15 @@ namespace _Project.Scripts.UI.Panel
             IShopService shopService,
             IPlayerService playerService,
             IInventoryService inventoryService,
-            AudioSoundsService audioSoundsService)
+            AudioSoundsService audioSoundsService,
+            IPauseService pauseService)
         {
             _tweenAnimationService = tweenAnimationService;
             _shopService = shopService;
             _playerService = playerService;
             _inventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
+            _pauseService =  pauseService;
         }
 
         private void OnEnable()
@@ -88,12 +91,14 @@ namespace _Project.Scripts.UI.Panel
             Refresh();
 
             _tweenAnimationService.AnimateScale(transform);
+            _pauseService.OnStopGameWithoutMusic();
         }
 
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
             _playerService.Player.InputController.UnlockPlayerMovement();
+            _pauseService.OnPlayGame();
         }
 
         private void Refresh()

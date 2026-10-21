@@ -32,6 +32,7 @@ namespace _Project.Scripts.UI.View
         private IShopService _shopService;
         private IProgressionService _progressionService;
         private IUILocalizationService  _uiLocalizationService;
+        private IPauseService _pauseService;
 
         private ItemData _currentTemplate;
         private Item _currentInstance;
@@ -45,7 +46,8 @@ namespace _Project.Scripts.UI.View
             ITweenAnimationService tweenAnimationService,
             IShopService shopService,
             IProgressionService progressionService,
-            IUILocalizationService uiLocalizationService)
+            IUILocalizationService uiLocalizationService,
+            IPauseService pauseService)
         {
             _audioSoundsService = audioSoundsService;
             _inventoryService = inventoryService;
@@ -53,6 +55,7 @@ namespace _Project.Scripts.UI.View
             _shopService = shopService;
             _progressionService = progressionService;
             _uiLocalizationService =  uiLocalizationService;
+            _pauseService = pauseService;
         }
 
         private void OnEnable()
@@ -78,8 +81,17 @@ namespace _Project.Scripts.UI.View
             transform.DOKill();
         }
 
-        public override void Show() => _tweenAnimationService.AnimateScale(transform);
-        public override void Hide() => _tweenAnimationService.AnimateScale(transform, true);
+        public override void Show()
+        {
+            _tweenAnimationService.AnimateScale(transform);
+            _pauseService.OnStopGameWithoutMusic();
+        }
+        
+        public override void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
+            _pauseService.OnPlayGame();
+        } 
 
         public void SetConsumable(ItemData template)
         {
@@ -161,6 +173,7 @@ namespace _Project.Scripts.UI.View
 
             sb.Append('+');
             sb.Append(value.ToString("0.#"));
+            if (isPercent) sb.Append("%");
             sb.Append(' ');
             sb.AppendLine(localized);
         }
