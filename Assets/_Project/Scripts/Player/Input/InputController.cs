@@ -18,10 +18,6 @@ namespace _Project.Scripts.Player.Input
 
         [SerializeField] private float _rollCooldownDuration = 0.7f;
 
-        [Header("Camera")] 
-        [SerializeField] private float _cameraSensitivityX = 3f;
-        [SerializeField] private float _cameraSensitivityY = 2f;
-
         private InputSystem _inputSystem;
         private Joystick _moveJoystick;
         private Joystick _cameraJoystick;

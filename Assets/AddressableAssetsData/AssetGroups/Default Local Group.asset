@@ -32,7 +32,8 @@ MonoBehaviour:
   - m_GUID: 057fde4115260864e819b54eb8d76058
     m_Address: IconData
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 05f1dd0b0a8c7914388467d965c4d4f1
     m_Address: ShopItemView
@@ -237,6 +238,12 @@ MonoBehaviour:
     m_Address: TextView
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4eaef73ffae5224398c655fc095b90f
+    m_Address: Assets/_Project/UIAtlas.spriteatlas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a98195e8fda6c03479668ff4ecb90a21
     m_Address: ExplosionMagic

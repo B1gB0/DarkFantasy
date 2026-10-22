@@ -229,22 +229,22 @@ namespace _Project.Scripts.UI.View
 
         public async UniTask<InventoryPanel> GetOrCreateInventoryPanel()
         {
-            var cached = _uiRoot.UISceneContainer.Get<InventoryPanel>(InventoryPanelPath);
-            if (cached != null) return cached;
+            _inventoryPanel = _uiRoot.UISceneContainer.Get<InventoryPanel>(InventoryPanelPath);
+            if (_inventoryPanel != null) return _inventoryPanel;
 
-            var panel = await _resourceService.InstantiateAsync<InventoryPanel>(
+            _inventoryPanel = await _resourceService.InstantiateAsync<InventoryPanel>(
                 InventoryPanelPath,
                 _uiRoot.UISceneContainer.PersistentContainer);
 
-            if (panel != null)
+            if (_inventoryPanel != null)
             {
-                GameObjectInjector.InjectRecursive(panel.gameObject, _container);
-                panel.gameObject.SetActive(false);
+                GameObjectInjector.InjectRecursive(_inventoryPanel.gameObject, _container);
+                _inventoryPanel.gameObject.SetActive(false);
 
-                _uiRoot.UISceneContainer.Register(InventoryPanelPath, panel);
+                _uiRoot.UISceneContainer.Register(InventoryPanelPath, _inventoryPanel);
             }
 
-            return panel;
+            return _inventoryPanel;
         }
 
         public async UniTask<InventoryRig> GetOrCreateInventoryRig()

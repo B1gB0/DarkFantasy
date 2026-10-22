@@ -45,7 +45,6 @@ namespace _Project.Scripts.UI.View
 
         private void Refresh()
         {
-            // Получаем НАДЕТЫЙ ЭКЗЕМПЛЯР для своего слота
             Item instance = GetEquippedInstanceForMySlot();
 
             if (instance == null)

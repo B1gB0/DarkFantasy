@@ -1,6 +1,6 @@
 {
   "Gold": 205,
-  "AcumulatedScore": 365,
+  "AcumulatedScore": 615,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -19,7 +19,9 @@
   ],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {},
+  "Consumables": {
+    "HealthPotion": 1
+  },
   "Equipment": [
     {
       "Id": "a708a18a-ccb4-4c52-9332-2cef8359daed",
@@ -78,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 89
+  "idSave": 136
 }

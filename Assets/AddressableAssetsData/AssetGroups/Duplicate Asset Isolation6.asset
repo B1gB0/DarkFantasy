@@ -20,12 +20,14 @@ MonoBehaviour:
   - m_GUID: 0cfcd658ad86c544984d12c2d8cf84a7
     m_Address: Assets/_Project/Sources/UI/Synty/InterfaceFantasyWarriorHUD/Samples/Sprites/SPR_HUD_FantasyWarrior_Example_Background.png
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f282473f0b8c9f4f964b37cf4ccec49
     m_Address: Assets/_Project/Sources/UI/Synty/InterfaceFantasyWarriorHUD/Sprites/FantasyWarrior/SPR_FantasyWarrior_Frame_Box16.png
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2fb5b5967b384164383b0c7210fc30ef
     m_Address: Assets/_Project/Sources/Fonts/ThirdPartyFonts/CattedraleRUSbyPenka220-Sliced_0
@@ -36,7 +38,8 @@ MonoBehaviour:
   - m_GUID: 5d240ed7694d87e4ab64dd21d7149998
     m_Address: Assets/_Project/Sources/UI/Synty/InterfaceFantasyWarriorHUD/Sprites/FantasyWarrior/SPR_FantasyWarrior_Box_Parchment02.png
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93571d1a926fd4849bf7ef6d796ea99d
     m_Address: Assets/_Project/Sources/UI/Synty/InterfaceFantasyWarriorHUD/Sprites/FantasyWarrior/SPR_FantasyWarrior_Box_Background_Shadowed.png
@@ -46,7 +49,8 @@ MonoBehaviour:
   - m_GUID: 9b89506703bc97342813efcf4a32b121
     m_Address: Assets/_Project/Sources/UI/Synty/InterfaceFantasyWarriorHUD/Sprites/FantasyWarrior/SPR_FantasyWarrior_Box_Segment01_Variant03.png
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UISprite
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d91a7ceceb48b6d4eb7da66199435d99
     m_Address: Assets/_Project/Sources/Effects/Epic Toon FX/Textures/cloud_2x2_soft.png

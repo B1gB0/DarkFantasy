@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 5b56d9fa0e8bd6e409ed188db38a692c
+labels:
+- UiSprites
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +125,7 @@ TextureImporter:
     buildTarget: WebGL
     maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: 65
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
