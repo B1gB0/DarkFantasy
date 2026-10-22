@@ -187,11 +187,11 @@ namespace _Project.Scripts.Services
 
         private async UniTask InitializeSoundDictionary()
         {
-            AudioConfig audioConfig = await _resourceService.Load<AudioConfig>(AudioConfigPath);
+            AudioConfig audioConfig = await _resourceService.LoadAsset<AudioConfig>(AudioConfigPath);
 
             foreach (var sound in audioConfig.Sounds)
             {
-                AudioClip clip = await _resourceService.Load<AudioClip>(sound.ClipName);
+                AudioClip clip = await _resourceService.LoadAsset<AudioClip>(sound.ClipName);
                 sound.Clip = clip;
                 Enum.TryParse(sound.ClipName, out SoundsType soundType);
                 _soundDictionary.TryAdd(soundType, sound);

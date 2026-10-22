@@ -41,9 +41,11 @@ namespace _Project.Scripts.UI.View
         private void OnDisable()
         {
             _button.onClick.RemoveListener(OnChooseMission);
-            
-            if (_hover != null)
+
+            if (_hover != null && _tweenAnimationService != null)
+            {
                 _tweenAnimationService.AnimateFade(_hover.transform, true);
+            }
         }
 
         public void GetMission(Mission mission)

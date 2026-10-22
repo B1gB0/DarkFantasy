@@ -202,10 +202,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves:
-  - {fileID: 11400000, guid: bab0f41ac48aa5649966c919f291fb36, type: 2}
-  - {fileID: 11400000, guid: 975049dca9cc4d94e8a813a7f54738be, type: 2}
+  EnemyWaves: []
+  LootSpawner: {fileID: 0}
   _limitEnemies: 10
+  _levelInitData: {fileID: 11400000, guid: 45d5349bea950e24babf49988d83c74f, type: 2}
+  _spawnCyclicWaveTrigger: {fileID: 0}
+  _nextLevelTrigger: {fileID: 0}
+  _portals: []
 --- !u!114 &5626868024508032854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1544,7 +1547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef80b52257c41b0b2d66ba6e9348469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <NumberWaveOfEnemies>k__BackingField: 0
+  <NumberWaveOfEnemies>k__BackingField: 
 --- !u!65 &4991455875382113447
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1748,7 +1751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef80b52257c41b0b2d66ba6e9348469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <NumberWaveOfEnemies>k__BackingField: 1
+  <NumberWaveOfEnemies>k__BackingField: 
 --- !u!65 &8072227024480510100
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1169,8 +1169,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves: []
+  EnemyWaves: []
+  LootSpawner: {fileID: 0}
   _limitEnemies: 0
+  _levelInitData: {fileID: 11400000, guid: e19297545aa7f234589daa965860ee8b, type: 2}
   _shopAttributePanelTrigger: {fileID: 6974814398971440113}
   _shopItemsPanelTrigger: {fileID: 7197435416375635382}
   _missionChoosingTrigger: {fileID: 4803024714728469121}

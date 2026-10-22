@@ -30,7 +30,7 @@ namespace _Project.Scripts.Services
             
             if (IsInitiated) return;
 
-            var waypointTemplate = await _resourceService.Load<GameObject>(NavMeshWaypointPath);
+            var waypointTemplate = await _resourceService.LoadAsset<GameObject>(NavMeshWaypointPath);
             waypointTemplate = Instantiate(waypointTemplate);
             
             _waypoint = waypointTemplate.GetComponent<NavMeshWaypoint>();

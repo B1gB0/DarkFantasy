@@ -46,7 +46,7 @@ namespace _Project.Scripts.Services
 
         private async UniTask LoadParticles()
         {
-            ParticlesConfig config = await _resourceService.Load<ParticlesConfig>(ParticlesConfigPath);
+            ParticlesConfig config = await _resourceService.LoadAsset<ParticlesConfig>(ParticlesConfigPath);
             if (config == null)
             {
                 Debug.LogError($"Failed to load ParticlesConfig at {ParticlesConfigPath}");
@@ -61,7 +61,7 @@ namespace _Project.Scripts.Services
                     continue;
                 }
 
-                GameObject prefab = await _resourceService.Load<GameObject>(effect.ParticleName);
+                GameObject prefab = await _resourceService.LoadAsset<GameObject>(effect.ParticleName);
                 if (prefab == null)
                 {
                     Debug.LogError($"Failed to load particle prefab with key: {effect.ParticleName}");

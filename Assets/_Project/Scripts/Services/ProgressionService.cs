@@ -28,7 +28,7 @@ namespace _Project.Scripts.Services
 
             CurrentDifficulty = YG2.saves.CurrentDifficulty;
             
-            _config = await _resourceService.Load<DifficultyConfig>(DifficultyConfigPath);
+            _config = await _resourceService.LoadAsset<DifficultyConfig>(DifficultyConfigPath);
             
             IsInitiated = true;
         }

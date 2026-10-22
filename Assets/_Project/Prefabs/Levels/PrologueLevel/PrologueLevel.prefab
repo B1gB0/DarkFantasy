@@ -488,11 +488,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  EnemyWaves: []
+  LootSpawner: {fileID: 0}
   _limitEnemies: 0
+  _levelInitData: {fileID: 11400000, guid: 7c1a3c1fe85f9454f99508e684255823, type: 2}
   _nextLevelTrigger: {fileID: 0}
 --- !u!1 &7102167077515127739
 GameObject:

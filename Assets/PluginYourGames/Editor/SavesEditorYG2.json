@@ -1,30 +1,63 @@
 {
-  "Gold": 30,
-  "AcumulatedScore": 60,
+  "Gold": 205,
+  "AcumulatedScore": 365,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 0,
+  "ArmorAttributeNumber": 1,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": false,
-  "IsInventoryShopVisited": false,
-  "IsMissionPanelVisited": false,
-  "EquippedWeaponId": null,
-  "EquippedArmorId": null,
-  "EquippedRingId": null,
-  "CompletedLow": [],
+  "IsAttributeShopVisited": true,
+  "IsInventoryShopVisited": true,
+  "IsMissionPanelVisited": true,
+  "EquippedWeaponId": "a708a18a-ccb4-4c52-9332-2cef8359daed",
+  "EquippedArmorId": "532ff5c1-4b7b-49a0-a8e7-b073013ffbb1",
+  "EquippedRingId": "c4818378-3efe-4d63-99eb-37defb69c3ee",
+  "CompletedLow": [
+    "graveyard"
+  ],
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {},
-  "Equipment": [],
+  "Equipment": [
+    {
+      "Id": "a708a18a-ccb4-4c52-9332-2cef8359daed",
+      "Type": 10,
+      "Difficulty": 0
+    },
+    {
+      "Id": "c4818378-3efe-4d63-99eb-37defb69c3ee",
+      "Type": 4,
+      "Difficulty": 0
+    },
+    {
+      "Id": "4ee5198c-ff0b-4d0d-956e-8dee439570aa",
+      "Type": 5,
+      "Difficulty": 0
+    },
+    {
+      "Id": "4d30cacb-d670-4cb5-9435-0a2ebff4abd4",
+      "Type": 14,
+      "Difficulty": 0
+    },
+    {
+      "Id": "a12f9335-37ba-4f36-b650-6526d19cad78",
+      "Type": 8,
+      "Difficulty": 0
+    },
+    {
+      "Id": "532ff5c1-4b7b-49a0-a8e7-b073013ffbb1",
+      "Type": 15,
+      "Difficulty": 0
+    }
+  ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 100.0,
-    "Armor": 2.0,
+    "TargetHealth": 91.82568,
+    "Armor": 3.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
@@ -45,5 +78,5 @@
     false,
     false
   ],
-  "idSave": 37
+  "idSave": 87
 }

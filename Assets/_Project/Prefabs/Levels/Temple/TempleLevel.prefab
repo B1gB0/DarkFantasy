@@ -15391,8 +15391,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves: []
+  EnemyWaves: []
+  LootSpawner: {fileID: 0}
   _limitEnemies: 0
+  _levelInitData: {fileID: 11400000, guid: adc5dca45d5487543a8443240d2fd2ac, type: 2}
   _spawnCyclicWaveTrigger: {fileID: 0}
   _nextLevelTrigger: {fileID: 0}
   _portals: []

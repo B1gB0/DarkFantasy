@@ -25800,15 +25800,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnWaveOfEnemyDelay: 10
-  _enemyWaves:
-  - {fileID: 11400000, guid: 879505f33a6f45b42b77d4669985e617, type: 2}
-  - {fileID: 11400000, guid: 38bc6493c9800b843aa08689c578e331, type: 2}
-  - {fileID: 11400000, guid: d01c46c471cebed4cb50b844413bfd20, type: 2}
-  - {fileID: 11400000, guid: 4152dd075c385e14994aa9e1b0d11136, type: 2}
-  - {fileID: 11400000, guid: 5ad611c3e91874c47a5b50309046360a, type: 2}
+  EnemyWaves: []
+  LootSpawner: {fileID: 0}
   _limitEnemies: 12
+  _levelInitData: {fileID: 11400000, guid: ce6e3ea4a29dacc45aee2fffb45ba150, type: 2}
   _spawnCyclicWaveTrigger: {fileID: 5593725729152694233}
   _nextLevelTrigger: {fileID: 3107001852424543075}
+  _portals: []
 --- !u!1 &6396190842316205562
 GameObject:
   m_ObjectHideFlags: 0

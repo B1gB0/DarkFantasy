@@ -44,11 +44,6 @@ namespace _Project.Scripts.UI.Panel
             _currencyService = currencyService;
             _playerService = playerService;
             _audioSoundsService = audioSoundsService;
-        }
-
-        private void Start()
-        {
-            Deactivate();
             
             _healthAttributes = _shopService.GetAttributesByType(CharacteristicType.Health);
             _damageAttributes = _shopService.GetAttributesByType(CharacteristicType.Damage);
@@ -58,6 +53,11 @@ namespace _Project.Scripts.UI.Panel
             {
                 _currencyService.OnGoldValueChanged += attributeView.SetCurrencyColor;
             }
+        }
+
+        private void Start()
+        {
+            Deactivate();
         }
 
         private void OnEnable()

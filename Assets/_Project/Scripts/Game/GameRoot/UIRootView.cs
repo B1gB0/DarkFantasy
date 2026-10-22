@@ -35,6 +35,7 @@ namespace _Project.Scripts.Game.GameRoot
         public Button LeaderboardButton => _leaderboardButton;
         public GoldView GoldView => _goldView;
         public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
+        public UISceneContainer UISceneContainer => _uiSceneContainer;
 
         [Inject]
         private void Construct(AudioSoundsService audioSoundsService, IPauseService pauseService)
@@ -82,9 +83,9 @@ namespace _Project.Scripts.Game.GameRoot
 
         public void AttachSceneUI(GameObject sceneUI)
         {
-            ClearSceneUI();
+            _uiSceneContainer.ClearTemporaryUI();
 
-            sceneUI.transform.SetParent(_uiSceneContainer.transform, false);
+            sceneUI.transform.SetParent(_uiSceneContainer.TemporaryContainer, false);
         }
         
         private void ShowLeaderboardPanel()
@@ -126,16 +127,6 @@ namespace _Project.Scripts.Game.GameRoot
 
             if (sceneName != Scenes.MainMenu)
                 UIStateMachine.EnterIn<GameplayState>();
-        }
-
-        private void ClearSceneUI()
-        {
-            var childCount = _uiSceneContainer.transform.childCount;
-
-            for (int i = 0; i < childCount; i++)
-            {
-                Destroy(_uiSceneContainer.transform.GetChild(i).gameObject);
-            }
         }
     }
 }

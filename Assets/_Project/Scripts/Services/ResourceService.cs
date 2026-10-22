@@ -1,25 +1,42 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace _Project.Scripts.Services
 {
     public class ResourceService : IResourceService
     {
-        public async UniTask<T> Load<T>(string assetName)
+        public async UniTask<T> LoadAsset<T>(string assetName)
         {
-            try
+            var handle = Addressables.LoadAssetAsync<T>(assetName);
+            await handle.Task;
+            
+            if (handle.Status != AsyncOperationStatus.Succeeded)
             {
-                return await Addressables.LoadAssetAsync<T>(assetName);
+                Debug.LogError($"[Resource] Failed to load: {assetName}");
+                return default;
             }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                Debug.LogError("Cant load " + assetName);
-            }
+            
+            return handle.Result;
+        }
 
-            return default;
+        public async UniTask<T> InstantiateAsync<T>(string assetName, Transform parent = null) where T : Component
+        {
+            var gameObject = await InstantiateAsync(assetName, parent);
+            return gameObject != null ? gameObject.GetComponent<T>() : null;
+        }
+        
+        private async UniTask<GameObject> InstantiateAsync(string assetName, Transform parent = null)
+        {
+            var handle = Addressables.InstantiateAsync(assetName, parent);
+            await handle.Task;
+            if (handle.Status != AsyncOperationStatus.Succeeded)
+            {
+                Debug.LogError($"[Resource] Failed to instantiate: {assetName}");
+                return null;
+            }
+            return handle.Result;
         }
     }
 }

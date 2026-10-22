@@ -27,8 +27,6 @@ namespace _Project.Scripts.Game.Gameplay
 
         [SerializeField] private CinemachineFreeLook _freeLookCamera;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
-        [SerializeField] private DataFactory _dataFactory;
-        [SerializeField] private LevelInitData _levelInitData;
         [SerializeField] private ViewFactory _viewFactory;
 
         private Level.Level _level;
@@ -51,9 +49,6 @@ namespace _Project.Scripts.Game.Gameplay
         private IShopService _shopService;
         private ILootService _lootService;
         private IProgressionService _progressionService;
-
-        private EnemyInitData _enemyInitData;
-        private PlayerInitData _playerInitData;
 
         private EndGamePanel _endGamePanel;
         private InventoryPanel _inventoryPanel;
@@ -118,8 +113,6 @@ namespace _Project.Scripts.Game.Gameplay
             // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
             //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
 
-            await InitData();
-
             await _dataBaseService.Init();
             await _progressionService.Init();
             await _enemyService.Init();
@@ -137,11 +130,9 @@ namespace _Project.Scripts.Game.Gameplay
             _level = FindObjectOfType<Level.Level>();
             GameObjectInjector.InjectObject(_level.gameObject, _container);
 
-            _enemyService.GetData(_enemyInitData);
+            _enemyService.GetData(_dataBaseService.EnemyInitData);
 
             _level.GetDependencies(
-                _levelInitData,
-                _playerInitData,
                 _freeLookCamera,
                 _viewFactory,
                 _uiRoot.UIStateMachine,
@@ -173,7 +164,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             var scene = SceneManager.GetActiveScene();
 
-            _inventoryPanel = await _viewFactory.CreateInventoryPanel();
+            _inventoryPanel = await _viewFactory.GetOrCreateInventoryPanel();
 
 #if CHEATS
             _cheatPanel = await _viewFactory.CreateCheatPanel();
@@ -197,7 +188,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             if (scene.name != Scenes.VillageHub)
             {
-                _endGamePanel = await _viewFactory.CreateEndGamePanel();
+                _endGamePanel = await _viewFactory.GetOrCreateEndGamePanel();
                 _endGamePanel.GoToVillageButton.onClick.AddListener(GetVillageHubExitParameters);
                 _endGamePanel.GoToVillageButton.onClick.AddListener(_uiScene.HandleGoToNextScene);
                 _playerService.Player.Health.Die += _endGamePanel.Show;
@@ -225,7 +216,7 @@ namespace _Project.Scripts.Game.Gameplay
             _uiScene.ResetCountdownTutorialPointer();
             _uiScene.HandlePCTutorialButtons();
 
-            await _viewFactory.CreateInventoryRig();
+            await _viewFactory.GetOrCreateInventoryRig();
             
             _inventoryService.ShowCurrentEquippedConsumableItem();
 
@@ -317,13 +308,6 @@ namespace _Project.Scripts.Game.Gameplay
 
             var mainMenuEnterParameters = new MainMenuEnterParameters();
             _exitParameters = new GameplayExitParameters(mainMenuEnterParameters);
-        }
-
-        private async UniTask InitData()
-        {
-            _levelInitData = Instantiate(_levelInitData);
-            _enemyInitData = await _dataFactory.CreateSkeletonInitData();
-            _playerInitData = await _dataFactory.CreatePlayerInitData();
         }
 
         private void OnShowJoystickWithMobileButtons()

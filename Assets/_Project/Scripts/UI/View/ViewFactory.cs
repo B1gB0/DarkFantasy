@@ -30,17 +30,16 @@ namespace _Project.Scripts.UI.View
         private const string InventoryPanelPath = "InventoryPanel";
         private const string ModifierPanelPath = "ModifierPanel";
         private const string InventoryRigPath = "InventoryRig";
-        
-        private readonly List<ShopItemView> _shopItemViews = new ();
-        
+
+        private readonly List<ShopItemView> _shopItemViews = new();
+
         private IResourceService _resourceService;
-        private IPlayerService _playerService;
         private ICurrencyService _currencyService;
         private IShopService _shopService;
 
         private UIRootView _uiRoot;
         private Container _container;
-        
+
         private ShopAttributePanel _shopAttributePanel;
         private ShopItemsPanel _shopItemsPanel;
         private MissionChoosingPanel _missionChoosingPanel;
@@ -48,21 +47,19 @@ namespace _Project.Scripts.UI.View
         private ModifiersPanel _modifiersPanel;
         private InventoryPanel _inventoryPanel;
         private InventoryRig _inventoryRig;
-        
-        private List<ItemData> _itemsData = new ();
-        
+
+        private List<ItemData> _itemsData = new();
+
         public UIGameplayRootBinder UIScene { get; private set; }
         public GameplayEntryPoint GameplayEntryPoint { get; private set; }
-        
+
         [Inject]
         public void Construct(
             IResourceService resourceService,
-            IPlayerService playerService,
             ICurrencyService currencyService,
             IShopService shopService)
         {
             _resourceService = resourceService;
-            _playerService = playerService;
             _currencyService = currencyService;
             _shopService = shopService;
         }
@@ -93,178 +90,200 @@ namespace _Project.Scripts.UI.View
             _uiRoot = uiRoot;
             UIScene = uiScene;
             _container = container;
-            
+
             GameplayEntryPoint = gameplayEntryPoint;
 
             GameObjectInjector.InjectRecursive(UIScene.gameObject, _container);
         }
 
-        public async UniTask<HealthBar> CreateHealthBar(Health health)
-        {
-            var healthBarTemplate = await _resourceService.Load<GameObject>(HealthBarPath);
-            healthBarTemplate = Instantiate(healthBarTemplate);
-
-            HealthBar healthBar = healthBarTemplate.GetComponent<HealthBar>();
-            GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
-            healthBar.Construct(health);
-            healthBar.transform.SetParent(UIScene.transform, false);
-            healthBar.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
-
-            return healthBar;
-        }
-        
         public async UniTask<BossHealthBar> CreateBossHealthBar(Health health)
         {
-            var healthBarTemplate = await _resourceService.Load<GameObject>(BossHealthBarPath);
-            healthBarTemplate = Instantiate(healthBarTemplate);
-
-            BossHealthBar healthBar = healthBarTemplate.GetComponent<BossHealthBar>();
+            BossHealthBar healthBar = await _resourceService.InstantiateAsync<BossHealthBar>(
+                BossHealthBarPath,
+                _uiRoot.UISceneContainer.TemporaryContainer);
+            
             GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
-            healthBar.transform.SetParent(UIScene.transform, false);
             healthBar.GetPoints(UIScene.ShowBossHealthPoint, UIScene.HideBossHealthPoint, UIScene.WeaponPoint);
             healthBar.gameObject.SetActive(false);
 
             return healthBar;
         }
-        
+
         public async UniTask<FloatingTextView> CreateFloatingTextView()
         {
-            var textViewTemplate = await _resourceService.Load<GameObject>(TextViewPath);
-            textViewTemplate = Instantiate(textViewTemplate);
-        
-            FloatingTextView textView = textViewTemplate.GetComponent<FloatingTextView>();
+            FloatingTextView textView =
+                await _resourceService.InstantiateAsync<FloatingTextView>(TextViewPath);
+            
             return textView;
         }
 
         public async UniTask<ShopAttributePanel> CreateShopAttributePanel()
         {
-            var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopAttributePanelPath);
-            shopPanelTemplate = Instantiate(shopPanelTemplate);
-
-            _shopAttributePanel = shopPanelTemplate.GetComponent<ShopAttributePanel>();
-            GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
-            _shopAttributePanel.transform.SetParent(UIScene.transform, false);
+            _shopAttributePanel = await _resourceService.InstantiateAsync<ShopAttributePanel>(
+                ShopAttributePanelPath,
+                _uiRoot.UISceneContainer.TemporaryContainer);
             
+            GameObjectInjector.InjectRecursive(_shopAttributePanel.gameObject, _container);
+
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopAttributePanel.OnChangeLanguage;
 
             return _shopAttributePanel;
         }
-        
+
         public async UniTask<ShopItemsPanel> CreateShopItemsPanel()
         {
-            var shopPanelTemplate = await _resourceService.Load<GameObject>(ShopItemsPanelPath);
-            shopPanelTemplate = Instantiate(shopPanelTemplate);
-
-            _shopItemsPanel = shopPanelTemplate.GetComponent<ShopItemsPanel>();
-            GameObjectInjector.InjectRecursive(_shopItemsPanel.gameObject, _container);
-            _shopItemsPanel.transform.SetParent(UIScene.transform, false);
+            _shopItemsPanel = await _resourceService.InstantiateAsync<ShopItemsPanel>(
+                ShopItemsPanelPath,
+                _uiRoot.UISceneContainer.TemporaryContainer);
             
+            _shopItemsPanel.gameObject.SetActive(false);
+            
+            GameObjectInjector.InjectRecursive(_shopItemsPanel.gameObject, _container);
+
             _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged += _shopItemsPanel.OnChangeLanguage;
 
             _shopItemsPanel.OnInventoryIsFull += UIScene.InventoryIsFullView.Show;
-            
+
             _itemsData = _shopService.GetItemsData();
-            
+
             foreach (var itemData in _itemsData.Where(itemData => itemData.IsSold))
             {
                 ShopItemView itemView = await CreateShopItemView(_shopItemsPanel.ItemContent);
                 itemView.Set(itemData);
                 GameObjectInjector.InjectRecursive(itemView.gameObject, _container);
             }
-            
+
             _shopItemsPanel.GetItemViews(_shopItemViews);
 
             return _shopItemsPanel;
         }
-        
+
         public async UniTask<MissionChoosingPanel> CreateMissionChoosingPanel()
         {
-            var missionPanelTemplate = await _resourceService.Load<GameObject>(MissionChoosingPanelPath);
-            missionPanelTemplate = Instantiate(missionPanelTemplate);
-
-            _missionChoosingPanel = missionPanelTemplate.GetComponent<MissionChoosingPanel>();
+            _missionChoosingPanel =
+                await _resourceService.InstantiateAsync<MissionChoosingPanel>(
+                    MissionChoosingPanelPath,
+                    _uiRoot.UISceneContainer.TemporaryContainer);
+            
             GameObjectInjector.InjectRecursive(_missionChoosingPanel.gameObject, _container);
-            _missionChoosingPanel.transform.SetParent(UIScene.transform, false);
 
             return _missionChoosingPanel;
         }
         
-        public async UniTask<EndGamePanel> CreateEndGamePanel()
-        {
-            var endGamePanelTemplate = await _resourceService.Load<GameObject>(EndGamePanelPath);
-            endGamePanelTemplate = Instantiate(endGamePanelTemplate);
-
-            _endGamePanel = endGamePanelTemplate.GetComponent<EndGamePanel>();
-            GameObjectInjector.InjectObject(_endGamePanel.gameObject, _container);
-            _endGamePanel.transform.SetParent(UIScene.transform, false);
-            _endGamePanel.gameObject.SetActive(false);
-
-            return _endGamePanel;
-        }
-        
         public async UniTask<ModifiersPanel> CreateModifiersPanel()
         {
-            var modifiersPanelTemplate = await _resourceService.Load<GameObject>(ModifierPanelPath);
-            modifiersPanelTemplate = Instantiate(modifiersPanelTemplate);
-
-            _modifiersPanel = modifiersPanelTemplate.GetComponent<ModifiersPanel>();
+            _modifiersPanel = await _resourceService.InstantiateAsync<ModifiersPanel>(
+                ModifierPanelPath, 
+                _uiRoot.UISceneContainer.TemporaryContainer);
+            
             GameObjectInjector.InjectObject(_modifiersPanel.gameObject, _container);
-            _modifiersPanel.transform.SetParent(UIScene.transform, false);
             _modifiersPanel.GetPoints(UIScene.ShowModifiersPanel, UIScene.HideModifiersPanel);
 
             return _modifiersPanel;
         }
         
-        public async UniTask<InventoryPanel> CreateInventoryPanel()
+        public async UniTask<HealthBar> GetOrCreateHealthBar(Health health)
         {
-            var inventoryPanelTemplate = await _resourceService.Load<GameObject>(InventoryPanelPath);
-            inventoryPanelTemplate = Instantiate(inventoryPanelTemplate);
+            var cached = _uiRoot.UISceneContainer.Get<HealthBar>(HealthBarPath);
+            
+            if (cached != null)
+            {
+                cached.Construct(health);
+                cached.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
+                return cached;
+            }
+            
+            HealthBar healthBar = await _resourceService.InstantiateAsync<HealthBar>(
+                HealthBarPath,
+                _uiRoot.UISceneContainer.PersistentContainer);
+            
+            GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
+            healthBar.Construct(health);
+            healthBar.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
+            
+            _uiRoot.UISceneContainer.Register(HealthBarPath, healthBar);
 
-            _inventoryPanel = inventoryPanelTemplate.GetComponent<InventoryPanel>();
-            GameObjectInjector.InjectRecursive(_inventoryPanel.gameObject, _container);
-            _inventoryPanel.transform.SetParent(UIScene.transform, false);
-            _inventoryPanel.gameObject.SetActive(false);
-
-            return _inventoryPanel;
+            return healthBar;
         }
 
-        public async UniTask<InventoryRig> CreateInventoryRig()
+        public async UniTask<EndGamePanel> GetOrCreateEndGamePanel()
         {
-            if(_inventoryRig != null) return _inventoryRig;
-            
-            var inventoryRigTemplate = await _resourceService.Load<GameObject>(InventoryRigPath);
-            inventoryRigTemplate = Instantiate(inventoryRigTemplate);
-            DontDestroyOnLoad(inventoryRigTemplate);
-            
-            _inventoryRig = inventoryRigTemplate.GetComponent<InventoryRig>();
-            return _inventoryRig;
+            var cached = _uiRoot.UISceneContainer.Get<EndGamePanel>(EndGamePanelPath);
+            if (cached != null) return cached;
+
+            var panel = await _resourceService.InstantiateAsync<EndGamePanel>(
+                EndGamePanelPath, 
+                _uiRoot.UISceneContainer.PersistentContainer);
+
+            if (panel != null)
+            {
+                GameObjectInjector.InjectRecursive(panel.gameObject, _container);
+                panel.gameObject.SetActive(false);
+
+                _uiRoot.UISceneContainer.Register(EndGamePanelPath, panel);
+            }
+
+            return panel;
+        }
+
+        public async UniTask<InventoryPanel> GetOrCreateInventoryPanel()
+        {
+            var cached = _uiRoot.UISceneContainer.Get<InventoryPanel>(InventoryPanelPath);
+            if (cached != null) return cached;
+
+            var panel = await _resourceService.InstantiateAsync<InventoryPanel>(
+                InventoryPanelPath,
+                _uiRoot.UISceneContainer.PersistentContainer);
+
+            if (panel != null)
+            {
+                GameObjectInjector.InjectRecursive(panel.gameObject, _container);
+                panel.gameObject.SetActive(false);
+
+                _uiRoot.UISceneContainer.Register(InventoryPanelPath, panel);
+            }
+
+            return panel;
+        }
+
+        public async UniTask<InventoryRig> GetOrCreateInventoryRig()
+        {
+            var cached = _uiRoot.UISceneContainer.Get<InventoryRig>(InventoryRigPath);
+            if (cached != null) return cached;
+
+            var rig = await _resourceService.InstantiateAsync<InventoryRig>(InventoryRigPath);
+
+            if (rig == null) return null;
+
+            DontDestroyOnLoad(rig.gameObject);
+            rig.transform.localScale = Vector3.one;
+
+            _uiRoot.UISceneContainer.Register(InventoryRigPath, rig);
+            return rig;
         }
 
 #if CHEATS
         public async UniTask<CheatPanel> CreateCheatPanel()
         {
-            var cheatPanelTemplate = await _resourceService.Load<GameObject>(CheatPanelPath);
-            cheatPanelTemplate = Instantiate(cheatPanelTemplate);
-
-            CheatPanel cheatPanel = cheatPanelTemplate.GetComponent<CheatPanel>();
+            CheatPanel cheatPanel = await _resourceService.InstantiateAsync<CheatPanel>(
+                CheatPanelPath,
+                UIScene.transform);
+            
             GameObjectInjector.InjectObject(cheatPanel.gameObject, _container);
-            cheatPanel.transform.SetParent(UIScene.transform, false);
             return cheatPanel;
         }
 #endif
-        
+
         private async UniTask<ShopItemView> CreateShopItemView(Transform content)
         {
-            var shopItemViewTemplate = await _resourceService.Load<GameObject>(ShopItemViewPath);
-            shopItemViewTemplate = Instantiate(shopItemViewTemplate);
-
-            ShopItemView shopItemView = shopItemViewTemplate.GetComponent<ShopItemView>();
+            ShopItemView shopItemView =
+                await _resourceService.InstantiateAsync<ShopItemView>(ShopItemViewPath, content);
+            
             GameObjectInjector.InjectRecursive(shopItemView.gameObject, _container);
-            shopItemView.transform.SetParent(content, false);
-            
+
             _currencyService.OnGoldValueChanged += shopItemView.SetCurrencyColor;
-            
+
             _shopItemViews.Add(shopItemView);
 
             return shopItemView;

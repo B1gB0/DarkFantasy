@@ -54,7 +54,7 @@ namespace _Project.Scripts.UI.Panel
 
             SyncViews();
         }
-        
+
         public override void Show()
         {
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
@@ -64,7 +64,7 @@ namespace _Project.Scripts.UI.Panel
         {
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint, true);
         }
-        
+
         public void GetPoints(Transform showPoint, Transform hidePoint)
         {
             _showPoint = showPoint;
@@ -73,8 +73,9 @@ namespace _Project.Scripts.UI.Panel
 
         private void SyncViews()
         {
-            if (!_playerService.IsInitiated || !_shopService.IsInitiated) return;
-
+            if (_shopService is not { IsInitiated: true } || _playerService is not { IsInitiated: true }) 
+                return;
+            
             var data = CollectActiveModifiers();
 
             while (_active.Count < data.Count)
@@ -90,7 +91,7 @@ namespace _Project.Scripts.UI.Panel
             for (int i = 0; i < data.Count; i++)
             {
                 var viewData = data[i];
-                
+
                 switch (viewData.Type)
                 {
                     case ModifierType.Health:
@@ -102,7 +103,7 @@ namespace _Project.Scripts.UI.Panel
                         _active[i].SetColor(Colors.GetColor(ColorName.SpeedColorBar));
                         break;
                 }
-                
+
                 _active[i].SetProgress(viewData.RemainingTime, viewData.TotalDuration);
             }
         }
@@ -125,7 +126,7 @@ namespace _Project.Scripts.UI.Panel
             {
                 if (!speedModifier.Timer.IsActive)
                     continue;
-                
+
                 _buffer.Add(new ModifierViewData(
                     ModifierType.Speed,
                     speedModifier.Timer.RemainingTime,

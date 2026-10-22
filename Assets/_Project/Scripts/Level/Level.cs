@@ -35,7 +35,9 @@ namespace _Project.Scripts.Level
 
         [SerializeField] protected List<EnemyWave> EnemyWaves;
         [SerializeField] protected LootSpawner LootSpawner;
+        
         [SerializeField] private int _limitEnemies;
+        [SerializeField] private LevelInitData _levelInitData;
 
         protected ViewFactory ViewFactory;
         protected UIStateMachine UIStateMachine;
@@ -56,11 +58,10 @@ namespace _Project.Scripts.Level
         private AudioSoundsService _audioSoundsService;
         private IFloatingTextService _floatingTextService;
         private ILootService _lootService;
+        private IDataBaseService _dataBaseService;
 
         private Enemy.Enemy _boss;
         private float _lastSpawnTime;
-        private LevelInitData _levelInitData;
-        private PlayerInitData _playerInitData;
         private CinemachineFreeLook _cinemachineFreeLook;
 
         public event Action IsInitiatedSpawners;
@@ -82,7 +83,8 @@ namespace _Project.Scripts.Level
             IFloatingTextService floatingTextService,
             ILootService lootService,
             MissionService missionService,
-            IProgressionService progressionService)
+            IProgressionService progressionService,
+            IDataBaseService dataBaseService)
         {
             _enemyService = enemyService;
             _playerService = playerService;
@@ -91,6 +93,7 @@ namespace _Project.Scripts.Level
             _uiLocalizationService = uiLocalizationService;
             _floatingTextService = floatingTextService;
             _lootService = lootService;
+            _dataBaseService = dataBaseService;
             
             NavMeshWaypointService = navMeshWaypointService;
             MissionService =  missionService;
@@ -105,16 +108,12 @@ namespace _Project.Scripts.Level
         }
 
         public void GetDependencies(
-            LevelInitData levelInitData,
-            PlayerInitData playerInitData,
             CinemachineFreeLook cinemachineFreeLook,
             ViewFactory viewFactory,
             UIStateMachine uiStateMachine,
             UIRootView uiRootView
         )
         {
-            _levelInitData = levelInitData;
-            _playerInitData = playerInitData;
             _cinemachineFreeLook = cinemachineFreeLook;
 
             ViewFactory = viewFactory;
@@ -185,13 +184,13 @@ namespace _Project.Scripts.Level
             var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
 
             Player.Core.Player player = _playerService.CreatePlayerByPrefab(
-                _playerInitData.CommonHero,
+                _dataBaseService.PlayerInitData.CommonHero,
                 _levelInitData.PlayerSpawnPosition);
 
             var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
             player.Construct(playerCharacteristics, _particleEffectsService, _floatingTextService);
 
-            HealthBar = await ViewFactory.CreateHealthBar(player.Health);
+            HealthBar = await ViewFactory.GetOrCreateHealthBar(player.Health);
             HealthBar.Show();
 
             ModifiersPanel = await ViewFactory.CreateModifiersPanel();

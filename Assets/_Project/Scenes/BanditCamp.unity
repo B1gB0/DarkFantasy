@@ -940,7 +940,6 @@ MonoBehaviour:
   _freeLookCamera: {fileID: 1074674598}
   _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
   _dataFactory: {fileID: 979533352}
-  _levelInitData: {fileID: 11400000, guid: 6822431181e266a46a2bc9bad43da49c, type: 2}
   _viewFactory: {fileID: 979533353}
 --- !u!114 &979533352
 MonoBehaviour:
@@ -2884,6 +2883,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a3ed63015d9e3d43aa59e06619e2043, type: 2}
   LootSpawner: {fileID: 6300273336773890276}
   _limitEnemies: 12
+  _levelInitData: {fileID: 11400000, guid: 6822431181e266a46a2bc9bad43da49c, type: 2}
   _spawnLastWaveTrigger: {fileID: 6300273336773890274}
   _nextLevelTrigger: {fileID: 6300273336773890272}
   _lootChestTrigger: {fileID: 1836114773}

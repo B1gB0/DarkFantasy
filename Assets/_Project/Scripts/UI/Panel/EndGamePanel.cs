@@ -61,6 +61,16 @@ namespace _Project.Scripts.UI.Panel
             _tweenAnimationService = tweenAnimationService;
             _playerService = playerService;
             _experiencePoints = experiencePoints;
+            
+            YG2.onShowWindowGame -= _pauseService.OnPlayGame;
+            YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
+            
+            _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
+            _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
+            
+#if UNITY_EDITOR
+            _rebornPlayerButton.onClick.AddListener(_pauseService.OnPlayGame);
+#endif
         }
 
         private void OnEnable()
@@ -77,16 +87,6 @@ namespace _Project.Scripts.UI.Panel
         private void Start()
         {
             OnRewardAdSuccessShowed += OnRewardSuccess;
-            
-            YG2.onShowWindowGame -= _pauseService.OnPlayGame;
-            YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
-            
-            _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
-            _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
-            
-#if UNITY_EDITOR
-            _rebornPlayerButton.onClick.AddListener(_pauseService.OnPlayGame);
-#endif
         }
 
         private void OnDisable()

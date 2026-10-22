@@ -55,7 +55,7 @@ namespace _Project.Scripts.Services
                 _itemsData.TryAdd(itemData.Type, itemData);
             }
 
-            _iconsConfig = await _resourceService.Load<IconsConfig>(IconsConfigPath);
+            _iconsConfig = await _resourceService.LoadAsset<IconsConfig>(IconsConfigPath);
 
             IsInitiated = true;
         }
