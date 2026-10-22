@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 468676551}
   - component: {fileID: 468676554}
   - component: {fileID: 468676553}
-  - component: {fileID: 468676552}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: Untagged
@@ -582,18 +581,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &468676552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 468676550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 206f50648c0d4a06af223406ca7fb9dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &468676553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,8 +607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 775883835}
   _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
-  _dataFactory: {fileID: 468676552}
-  _levelInitData: {fileID: 11400000, guid: 7c1a3c1fe85f9454f99508e684255823, type: 2}
   _viewFactory: {fileID: 468676553}
 --- !u!4 &498608367 stripped
 Transform:

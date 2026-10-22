@@ -177,7 +177,6 @@ GameObject:
   - component: {fileID: 628014391}
   - component: {fileID: 628014392}
   - component: {fileID: 628014394}
-  - component: {fileID: 628014393}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: Untagged
@@ -214,21 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 2100196689}
   _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
-  _dataFactory: {fileID: 628014393}
-  _levelInitData: {fileID: 11400000, guid: e19297545aa7f234589daa965860ee8b, type: 2}
   _viewFactory: {fileID: 628014394}
---- !u!114 &628014393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628014390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 206f50648c0d4a06af223406ca7fb9dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &628014394
 MonoBehaviour:
   m_ObjectHideFlags: 0
