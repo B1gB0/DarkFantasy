@@ -8,6 +8,7 @@ using _Project.Scripts.UI.View;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Reflex.Attributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -23,6 +24,10 @@ namespace _Project.Scripts.UI.Panel
         [SerializeField] private List<InventoryItemView> _itemViews;
         [SerializeField] private DescriptionItemView _descriptionItemView;
         [SerializeField] private List<SlotView> _slotViews;
+        
+        [SerializeField] private TMP_Text _healthText;
+        [SerializeField] private TMP_Text _damageText;
+        [SerializeField] private TMP_Text _armorText;
 
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
@@ -139,6 +144,10 @@ namespace _Project.Scripts.UI.Panel
                 _itemViews[index].SetConsumable(data, count);
                 index++;
             }
+
+            _healthText.text = _playerService.Player.PlayerCharacteristics.GetTotalMaxHealth().ToString();
+            _damageText.text = _playerService.Player.PlayerCharacteristics.GetTotalDamage().ToString();
+            _armorText.text = _playerService.Player.PlayerCharacteristics.GetTotalArmor().ToString();
         }
 
         private void MoveBackToScene()

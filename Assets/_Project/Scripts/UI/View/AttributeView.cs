@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
+using _Project.Scripts.Services;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,12 +19,20 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Image _iconAttribute;
         
         [SerializeField] private TMP_Text _title;
-        [SerializeField] private TMP_Text _value;
         [SerializeField] private TMP_Text _price;
+        [SerializeField] private TMP_Text _nextValue;
+        [SerializeField] private TMP_Text _currentValue;
 
         private PlayerAttributeLevelData _currentData;
+        private IPlayerService _playerService;
         
         public event Action<PlayerAttributeLevelData, AttributeView> OnButtonClicked;
+        
+        [Inject]
+        private void Construct(IPlayerService playerService)
+        {
+            _playerService = playerService;
+        }
         
         private void OnEnable()
         {
@@ -48,12 +58,15 @@ namespace _Project.Scripts.UI.View
             switch (localizationData.Type)
             {
                 case CharacteristicType.Health:
+                    _currentValue.text = _playerService.Player.PlayerCharacteristics.MaxHealth.ToString();
                     _iconAttribute.sprite = _icons[0];
                     break;
                 case CharacteristicType.Damage:
+                    _currentValue.text = _playerService.Player.PlayerCharacteristics.Damage.ToString();
                     _iconAttribute.sprite = _icons[1];
                     break;
                 case CharacteristicType.Armor:
+                    _currentValue.text = _playerService.Player.PlayerCharacteristics.Armor.ToString();
                     _iconAttribute.sprite = _icons[2];
                     break;
                 default:
@@ -63,8 +76,8 @@ namespace _Project.Scripts.UI.View
             SetLocalization(localizationData);
 
             _currentData = attributeData;
-
-            _value.text = attributeData.Value.ToString();
+            
+            _nextValue.text = '+' + attributeData.Value.ToString();
             _price.text = attributeData.Price.ToString();
         }
 

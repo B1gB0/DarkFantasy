@@ -36,7 +36,7 @@ SpriteAtlas:
       m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 4096
+      m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 1
@@ -223,11 +223,13 @@ SpriteAtlas:
     - baed252e444b42549bf92caefd5ce11a: 21300000
     - 2342063e50132c6409a7b5eafbe716b2: 21300000
     - 5eacea6e3c56a8f418e9cb70882c6eea: 21300000
+    - e073b08e870c8ec4f8c02b4f2d34765e: 21300000
     - be0584ae55514ba4ebf1d91158ad99ec: 21300000
     - 35e4ceee666464b0ab5525eef8ac4e24: 21300000
     - 0c6e3d0fdae0f094db193aaa7439ce52: 21300000
     - 3c2b017f2a0e3e64bb7aa744996d557e: 21300000
     - 0357d37ff2ce1443485aa680e89d82f0: 21300000
+    - 329e48afd7a991f43b313db2e322bc91: 21300000
     - 465ebeefb15a5164ea0ef8dfa2f895e4: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -312,11 +314,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: baed252e444b42549bf92caefd5ce11a, type: 3}
   - {fileID: 21300000, guid: 2342063e50132c6409a7b5eafbe716b2, type: 3}
   - {fileID: 21300000, guid: 5eacea6e3c56a8f418e9cb70882c6eea, type: 3}
+  - {fileID: 21300000, guid: e073b08e870c8ec4f8c02b4f2d34765e, type: 3}
   - {fileID: 21300000, guid: be0584ae55514ba4ebf1d91158ad99ec, type: 3}
   - {fileID: 21300000, guid: 35e4ceee666464b0ab5525eef8ac4e24, type: 3}
   - {fileID: 21300000, guid: 0c6e3d0fdae0f094db193aaa7439ce52, type: 3}
   - {fileID: 21300000, guid: 3c2b017f2a0e3e64bb7aa744996d557e, type: 3}
   - {fileID: 21300000, guid: 0357d37ff2ce1443485aa680e89d82f0, type: 3}
+  - {fileID: 21300000, guid: 329e48afd7a991f43b313db2e322bc91, type: 3}
   - {fileID: 21300000, guid: 465ebeefb15a5164ea0ef8dfa2f895e4, type: 3}
   m_PackedSpriteNamesToIndex:
   - SPR_FantasyWarrior_Greeble_Curlicue43_Left
@@ -401,11 +405,13 @@ SpriteAtlas:
   - SPR_FantasyWarrior_Greeble_Swords01
   - SPR_HUD_FantasyWarrior_LoadingRing01_Underlay
   - SPR_HUD_FantasyWarrior_Box_White01
+  - Bar
   - FortHover
   - mission_list_reward_gold
   - ICON_SM_Wep_Sword_16
   - SPR_HUD_FantasyWarrior_LoadingRing01_Clean
   - clan_info_bg
+  - Group 1175
   - ICON_FantasyWarrior_Inventory_Rings01_Underlay
   m_RenderDataMap: {}
   m_Tag: UIAtlas
