@@ -80,6 +80,8 @@ SpriteAtlas:
     - {fileID: 21300000, guid: d535ffb65bf754dda95c3181d7389600, type: 3}
     - {fileID: 21300000, guid: 2340e003a4a6745a8929491f3b365cea, type: 3}
     - {fileID: 21300000, guid: 0cfcd658ad86c544984d12c2d8cf84a7, type: 3}
+    - {fileID: 21300000, guid: 87540dc2769d1c846862f80e07e2c153, type: 3}
+    - {fileID: 21300000, guid: 789683ee3c5282f499389be6a927abfb, type: 3}
     - {fileID: 21300000, guid: c0fa701a17901954a881ea26088dc343, type: 3}
     - {fileID: 21300000, guid: acb88dfa171df3c44b54c930b7c37f30, type: 3}
     - {fileID: 21300000, guid: 1503dda0f1118c241b2ebbdcaee296cf, type: 3}
@@ -87,12 +89,16 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 93571d1a926fd4849bf7ef6d796ea99d, type: 3}
     - {fileID: 21300000, guid: 5d240ed7694d87e4ab64dd21d7149998, type: 3}
     - {fileID: 21300000, guid: 9b89506703bc97342813efcf4a32b121, type: 3}
+    - {fileID: 21300000, guid: 11cd96b35f484284385c8a8b6568d385, type: 3}
     - {fileID: 21300000, guid: 6a89d00680d679d48aa5ebabc3b39182, type: 3}
+    - {fileID: 21300000, guid: a8e3d345e9283604799176ff643765e0, type: 3}
     - {fileID: 21300000, guid: 1f282473f0b8c9f4f964b37cf4ccec49, type: 3}
+    - {fileID: 21300000, guid: 76f2e1805f40b1a48aec93d497e605e1, type: 3}
     - {fileID: 21300000, guid: 6ab469a50b1c2cb49a74448af946389d, type: 3}
     - {fileID: 21300000, guid: f3086e4c44717b746b0b7aedd8c15c0c, type: 3}
     - {fileID: 21300000, guid: 6f4b6fb5815acb041a21a98b74cc5afa, type: 3}
     - {fileID: 21300000, guid: 77a43d462c8ae4844811f91f6df95130, type: 3}
+    - {fileID: 21300000, guid: 5af0f88811eea0842a78903413dd8d72, type: 3}
     - {fileID: 21300000, guid: 6346fb20e9fbde147aaa0bbc4c1b8563, type: 3}
     - {fileID: 21300000, guid: 9cf01f3203300b24683dcf01fbcd5679, type: 3}
     - {fileID: 21300000, guid: 716e103321009e6488cc9843003978a3, type: 3}
@@ -144,6 +150,7 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 6346fb20e9fbde147aaa0bbc4c1b8563: 21300000
     - 519eac60d31840640bd3a3327d57e2b3: 21300000
+    - 76f2e1805f40b1a48aec93d497e605e1: 21300000
     - 47f290a00b1f4e948813b2286db65343: 21300000
     - 1503dda0f1118c241b2ebbdcaee296cf: 21300000
     - 1d34fda0600184b93b781476a2a336a3: 21300000
@@ -159,16 +166,19 @@ SpriteAtlas:
     - 626f1122650d7b344a394cf52ebb14ec: 21300000
     - 9cf01f3203300b24683dcf01fbcd5679: 21300000
     - cf0c1182179679f40901aaedda0dd996: 21300000
+    - 87540dc2769d1c846862f80e07e2c153: 21300000
     - 52066fc285ffc4bb0b9fc98f1d840149: 21300000
     - e4c08cf2360e4b347959f4d4dba3ffc3: 21300000
     - 2340e003a4a6745a8929491f3b365cea: 21300000
     - 716e103321009e6488cc9843003978a3: 21300000
     - 1f282473f0b8c9f4f964b37cf4ccec49: 21300000
+    - 11cd96b35f484284385c8a8b6568d385: 21300000
     - 712c11e322828a34f9d9915f67fc6741: 21300000
     - e3e3e404eb08546488e88db3c3f93a03: 21300000
     - 8272e6940368ae64bafa3a7091c567ad: 21300000
     - 252672e43e9285b49855f83d0e021540: 21300000
     - 180379f4434312f49b4e7215c5fd3807: 21300000
+    - a8e3d345e9283604799176ff643765e0: 21300000
     - dd77367546bf4433dbbb2317a935df54: 21300000
     - c0a11685bce4f4da7a56b3b5ba8d3c43: 21300000
     - 6ab469a50b1c2cb49a74448af946389d: 21300000
@@ -194,6 +204,7 @@ SpriteAtlas:
     - 29394448796c7e74d8a923414b0cc9a0: 21300000
     - 0cfcd658ad86c544984d12c2d8cf84a7: 21300000
     - 59e53768711c5234e913a2ef11f9cb9a: 21300000
+    - 5af0f88811eea0842a78903413dd8d72: 21300000
     - c720139856ac0f44d894498956e1b55f: 21300000
     - 475638d85b2a92348927fdb0c6a7a798: 21300000
     - 5353aae8e5b400044be8de3b3cf82ae4: 21300000
@@ -225,6 +236,7 @@ SpriteAtlas:
     - 5eacea6e3c56a8f418e9cb70882c6eea: 21300000
     - e073b08e870c8ec4f8c02b4f2d34765e: 21300000
     - be0584ae55514ba4ebf1d91158ad99ec: 21300000
+    - 789683ee3c5282f499389be6a927abfb: 21300000
     - 35e4ceee666464b0ab5525eef8ac4e24: 21300000
     - 0c6e3d0fdae0f094db193aaa7439ce52: 21300000
     - 3c2b017f2a0e3e64bb7aa744996d557e: 21300000
@@ -235,6 +247,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 6346fb20e9fbde147aaa0bbc4c1b8563, type: 3}
   - {fileID: 21300000, guid: 519eac60d31840640bd3a3327d57e2b3, type: 3}
+  - {fileID: 21300000, guid: 76f2e1805f40b1a48aec93d497e605e1, type: 3}
   - {fileID: 21300000, guid: 47f290a00b1f4e948813b2286db65343, type: 3}
   - {fileID: 21300000, guid: 1503dda0f1118c241b2ebbdcaee296cf, type: 3}
   - {fileID: 21300000, guid: 1d34fda0600184b93b781476a2a336a3, type: 3}
@@ -250,16 +263,19 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 626f1122650d7b344a394cf52ebb14ec, type: 3}
   - {fileID: 21300000, guid: 9cf01f3203300b24683dcf01fbcd5679, type: 3}
   - {fileID: 21300000, guid: cf0c1182179679f40901aaedda0dd996, type: 3}
+  - {fileID: 21300000, guid: 87540dc2769d1c846862f80e07e2c153, type: 3}
   - {fileID: 21300000, guid: 52066fc285ffc4bb0b9fc98f1d840149, type: 3}
   - {fileID: 21300000, guid: e4c08cf2360e4b347959f4d4dba3ffc3, type: 3}
   - {fileID: 21300000, guid: 2340e003a4a6745a8929491f3b365cea, type: 3}
   - {fileID: 21300000, guid: 716e103321009e6488cc9843003978a3, type: 3}
   - {fileID: 21300000, guid: 1f282473f0b8c9f4f964b37cf4ccec49, type: 3}
+  - {fileID: 21300000, guid: 11cd96b35f484284385c8a8b6568d385, type: 3}
   - {fileID: 21300000, guid: 712c11e322828a34f9d9915f67fc6741, type: 3}
   - {fileID: 21300000, guid: e3e3e404eb08546488e88db3c3f93a03, type: 3}
   - {fileID: 21300000, guid: 8272e6940368ae64bafa3a7091c567ad, type: 3}
   - {fileID: 21300000, guid: 252672e43e9285b49855f83d0e021540, type: 3}
   - {fileID: 21300000, guid: 180379f4434312f49b4e7215c5fd3807, type: 3}
+  - {fileID: 21300000, guid: a8e3d345e9283604799176ff643765e0, type: 3}
   - {fileID: 21300000, guid: dd77367546bf4433dbbb2317a935df54, type: 3}
   - {fileID: 21300000, guid: c0a11685bce4f4da7a56b3b5ba8d3c43, type: 3}
   - {fileID: 21300000, guid: 6ab469a50b1c2cb49a74448af946389d, type: 3}
@@ -285,6 +301,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 29394448796c7e74d8a923414b0cc9a0, type: 3}
   - {fileID: 21300000, guid: 0cfcd658ad86c544984d12c2d8cf84a7, type: 3}
   - {fileID: 21300000, guid: 59e53768711c5234e913a2ef11f9cb9a, type: 3}
+  - {fileID: 21300000, guid: 5af0f88811eea0842a78903413dd8d72, type: 3}
   - {fileID: 21300000, guid: c720139856ac0f44d894498956e1b55f, type: 3}
   - {fileID: 21300000, guid: 475638d85b2a92348927fdb0c6a7a798, type: 3}
   - {fileID: 21300000, guid: 5353aae8e5b400044be8de3b3cf82ae4, type: 3}
@@ -316,6 +333,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5eacea6e3c56a8f418e9cb70882c6eea, type: 3}
   - {fileID: 21300000, guid: e073b08e870c8ec4f8c02b4f2d34765e, type: 3}
   - {fileID: 21300000, guid: be0584ae55514ba4ebf1d91158ad99ec, type: 3}
+  - {fileID: 21300000, guid: 789683ee3c5282f499389be6a927abfb, type: 3}
   - {fileID: 21300000, guid: 35e4ceee666464b0ab5525eef8ac4e24, type: 3}
   - {fileID: 21300000, guid: 0c6e3d0fdae0f094db193aaa7439ce52, type: 3}
   - {fileID: 21300000, guid: 3c2b017f2a0e3e64bb7aa744996d557e, type: 3}
@@ -325,6 +343,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - SPR_FantasyWarrior_Greeble_Curlicue43_Left
   - ICON_FantasyWarrior_Inventory_Backpack01_Underlay
+  - SPR_FantasyWarrior_Frame_Box20_Mask01
   - SPR_FantasyWarrior_Greeble_HealingFlask01
   - SPR_FantasyWarrior_Bar_Horizontal10
   - btn_icon_globe
@@ -340,16 +359,19 @@ SpriteAtlas:
   - SPR_HUD_FantasyWarrior_Gradient_Vertical_Solid01
   - SPR_FantasyWarrior_Greeble_Curlicue43_Right
   - ICON_FantasyWarrior_Input_SteamDeck_Button_Trackpad_Master_Underlay
+  - SPR_FantasyWarrior_Banner01
   - btn_icon_gold
   - ICON_SM_Item_Ring_04
   - shop_img_gold_1
   - SPR_FantasyWarrior_Greeble_Demon02
   - SPR_FantasyWarrior_Frame_Box16
+  - SPR_FantasyWarrior_Bracket03
   - ICON_FantasyWarrior_Input_SteamDeck_ButtonRing_Master_Clean
   - SPR_HUD_FantasyWarrior_Icon_InactiveItem01
   - SPR_FantasyWarrior_Tracery_Vertical08
   - SPR_HUD_FantasyWarrior_Circle_Small02_Underlay
   - ICON_FantasyWarrior_Inventory_Armor01_Underlay
+  - SPR_FantasyWarrior_Frame_Box06
   - equipment_frame_brown
   - btn_icon_control_stop
   - SPR_FantasyWarrior_Frame_Box21_Variant03
@@ -375,6 +397,7 @@ SpriteAtlas:
   - Group 1162
   - SPR_HUD_FantasyWarrior_Example_Background
   - ICON_FantasyWarrior_Input_PC_Space_Underlay
+  - SPR_FantasyWarrior_Greeble_Curlicue09
   - 01_plate_chest_E_nobg
   - SPR_HUD_FantasyWarrior_Mask_Trapezoid01
   - acetone-20261015-18119-406
@@ -407,6 +430,7 @@ SpriteAtlas:
   - SPR_HUD_FantasyWarrior_Box_White01
   - Bar
   - FortHover
+  - SPR_FantasyWarrior_Banner03
   - mission_list_reward_gold
   - ICON_SM_Wep_Sword_16
   - SPR_HUD_FantasyWarrior_LoadingRing01_Clean
