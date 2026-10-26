@@ -21,6 +21,8 @@ namespace _Project.Scripts.Services
         public bool HasEquipment(ItemType type, LevelDifficulty difficulty);
         public int GetItemCount(ItemType itemType);
         public void EquipItem(string instanceId);
+        public void UnequipItemByInstanceId(string instanceId);
+        public void UnequipConsumableItem();
         public bool IsFull();
         public event Action<ItemType, int> OnEquippedConsumableItem;
         public event Action OnUnEquippedConsumableItem;
@@ -30,5 +32,6 @@ namespace _Project.Scripts.Services
         public Item EquippedWeapon { get; }
         public Item EquippedArmor { get; }
         public Item EquippedRing { get; }
+        public ItemType EquippedConsumableType { get; }
     }
 }

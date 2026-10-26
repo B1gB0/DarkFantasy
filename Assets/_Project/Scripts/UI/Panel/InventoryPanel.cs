@@ -70,6 +70,7 @@ namespace _Project.Scripts.UI.Panel
             }
             
             _descriptionItemView.OnItemDeleted += Refresh;
+            _descriptionItemView.OnRefreshEquip += Refresh;
         }
 
         private void OnDisable()
@@ -85,6 +86,7 @@ namespace _Project.Scripts.UI.Panel
             }
             
             _descriptionItemView.OnItemDeleted -= Refresh;
+            _descriptionItemView.OnRefreshEquip -= Refresh;
 
             transform.DOKill();
         }

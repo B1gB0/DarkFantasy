@@ -21,7 +21,11 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private TMP_Text _description;
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _rarity;
+        [SerializeField] private TMP_Text _equipText;
+        [SerializeField] private TMP_Text _unEquipText;
+        
         [SerializeField] private Image _icon;
+        
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _removeButton;
@@ -38,6 +42,7 @@ namespace _Project.Scripts.UI.View
         private Item _currentInstance;
         
         public event Action OnItemDeleted;
+        public event Action OnRefreshEquip;
 
         [Inject]
         private void Construct(
@@ -103,6 +108,7 @@ namespace _Project.Scripts.UI.View
             SetIcon(template);
 
             _description.text = GetLocalizedDescription(template);
+            UpdateEquipButtonState();
         }
 
         public void SetEquipment(ItemData template, Item instance)
@@ -115,6 +121,7 @@ namespace _Project.Scripts.UI.View
             SetIcon(template);
 
             _description.text = BuildEquipmentStats(template, instance);
+            UpdateEquipButtonState();
         }
 
         private void SetName(ItemData data)
@@ -184,6 +191,20 @@ namespace _Project.Scripts.UI.View
 
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
 
+            if (IsCurrentlyEquipped())
+            {
+                UnequipCurrentItem();
+            }
+            else
+            {
+                EquipCurrentItem();
+            }
+            
+            OnRefreshEquip?.Invoke();
+        }
+        
+        private void EquipCurrentItem()
+        {
             if (_currentTemplate.Kind == ItemKind.Consumable)
             {
                 _inventoryService.EquipConsumableItem(_currentTemplate);
@@ -193,6 +214,54 @@ namespace _Project.Scripts.UI.View
                 if (_currentInstance == null) return;
                 _inventoryService.EquipItem(_currentInstance.Id);
             }
+    
+            UpdateEquipButtonState();
+        }
+        
+        private void UnequipCurrentItem()
+        {
+            if (_currentTemplate.Kind == ItemKind.Consumable)
+            {
+                _inventoryService.UnequipConsumableItem();
+            }
+            else if (_currentTemplate.Kind == ItemKind.Equipment)
+            {
+                if (_currentInstance == null) return;
+                _inventoryService.UnequipItemByInstanceId(_currentInstance.Id);
+            }
+    
+            UpdateEquipButtonState();
+        }
+        
+        private void UpdateEquipButtonState()
+        {
+            bool equipped = IsCurrentlyEquipped();
+            
+            if (equipped)
+            {
+                _equipText.gameObject.SetActive(false);
+                _unEquipText.gameObject.SetActive(true);
+            }
+            else
+            {
+                _equipText.gameObject.SetActive(true);
+                _unEquipText.gameObject.SetActive(false);
+            }
+        }
+        
+        private bool IsCurrentlyEquipped()
+        {
+            if (_currentTemplate == null) return false;
+
+            return _currentTemplate.Kind switch
+            {
+                ItemKind.Equipment when _currentInstance == null => false,
+                ItemKind.Equipment => _inventoryService.EquippedWeapon?.Id == _currentInstance.Id ||
+                                      _inventoryService.EquippedArmor?.Id == _currentInstance.Id ||
+                                      _inventoryService.EquippedRing?.Id == _currentInstance.Id,
+                ItemKind.Consumable => _inventoryService.EquippedConsumableType == _currentTemplate.Type,
+                _ => false
+            };
         }
         
         private void OnRemoveButtonClicked()

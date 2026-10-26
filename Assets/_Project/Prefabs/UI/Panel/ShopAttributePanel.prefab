@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -940,6 +940,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttributeView
       objectReference: {fileID: 0}
+    - target: {fileID: 5198299970780973202, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6527595787932982530, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1111,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136122736755345629, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -260
       objectReference: {fileID: 0}
     - target: {fileID: 2136122736755345629, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1135,7 +1139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136122736755345629, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 35
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 2136122736755345629, guid: d6741f2e04bdb7b40a013105e5780b2f, type: 3}
       propertyPath: m_ConstrainProportionsScale
