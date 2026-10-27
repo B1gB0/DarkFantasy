@@ -1,6 +1,6 @@
 {
-  "Gold": 5,
-  "AcumulatedScore": 695,
+  "Gold": 215,
+  "AcumulatedScore": 785,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 7,
   "DamageAttributeNumber": 4,
@@ -20,7 +20,7 @@
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {
-    "HealthPotion": 1
+    "HealthPotion": 2
   },
   "Equipment": [
     {
@@ -58,7 +58,7 @@
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 128.0,
-    "TargetHealth": 116.7194,
+    "TargetHealth": 98.08546,
     "Armor": 17.0,
     "Damage": 15.0,
     "MoveSpeed": 6.0,
@@ -80,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 228
+  "idSave": 260
 }

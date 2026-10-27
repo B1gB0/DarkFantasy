@@ -163,11 +163,6 @@ namespace _Project.Scripts.UI.Panel
             _tweenAnimationService.AnimateScale(transform);
         }
 
-        public void Hide()
-        {
-            _tweenAnimationService.AnimateScale(transform, true);
-        }
-
         public void SetLabelText()
         {
             if (_uiLocalizationData == null)
@@ -180,6 +175,11 @@ namespace _Project.Scripts.UI.Panel
                 LocalizationCode.Tr => _uiLocalizationData.NameTr,
                 _ => _labelText.text
             };
+        }
+        
+        private void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
         }
 
         private void SetLocalizationData(UITextType type)

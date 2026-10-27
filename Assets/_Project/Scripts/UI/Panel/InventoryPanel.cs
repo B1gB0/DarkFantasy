@@ -64,6 +64,8 @@ namespace _Project.Scripts.UI.Panel
 
         private void Start()
         {
+            Deactivate();
+            
             foreach (var itemView in _itemViews)
             {
                 itemView.OnSelectButtonPressed += SelectItem;
