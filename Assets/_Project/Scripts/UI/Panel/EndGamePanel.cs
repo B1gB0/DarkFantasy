@@ -12,7 +12,7 @@ using YG;
 
 namespace _Project.Scripts.UI.Panel
 {
-    public class EndGamePanel : MonoBehaviour
+    public class EndGamePanel : View.View
     {
         private const int CountCorrectFactor = 1;
         private const string RewardAdRebornId = "RebornPlayer";
@@ -87,6 +87,7 @@ namespace _Project.Scripts.UI.Panel
         private void Start()
         {
             OnRewardAdSuccessShowed += OnRewardSuccess;
+            Deactivate();
         }
 
         private void OnDisable()
@@ -154,13 +155,18 @@ namespace _Project.Scripts.UI.Panel
             SetLocalizationData(UITextType.DefeatPanelTitle);
         }
 
-        public void Show()
+        public override void Show()
         {
             _accumulatedGoldText.text = _currencyService.AccumulatedGold.ToString();
             _accumulatedKillsText.text = _experiencePoints.AccumulatedKills.ToString();
             _accumulatedScoreText.text = _experiencePoints.AccumulatedScore.ToString();
             
             _tweenAnimationService.AnimateScale(transform);
+        }
+        
+        public override void Hide()
+        {
+            _tweenAnimationService.AnimateScale(transform, true);
         }
 
         public void SetLabelText()
@@ -175,11 +181,6 @@ namespace _Project.Scripts.UI.Panel
                 LocalizationCode.Tr => _uiLocalizationData.NameTr,
                 _ => _labelText.text
             };
-        }
-        
-        private void Hide()
-        {
-            _tweenAnimationService.AnimateScale(transform, true);
         }
 
         private void SetLocalizationData(UITextType type)
