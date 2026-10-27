@@ -161,6 +161,7 @@ namespace _Project.Scripts.Player.Core
 
         private void Die()
         {
+            Health.SetHealthValue(0);
             gameObject.SetActive(false);
         }
         

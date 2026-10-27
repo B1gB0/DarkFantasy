@@ -1,66 +1,52 @@
 {
-  "Gold": 215,
-  "AcumulatedScore": 785,
+  "Gold": 180,
+  "AcumulatedScore": 120,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 7,
-  "DamageAttributeNumber": 4,
-  "ArmorAttributeNumber": 5,
+  "HealthAttributeNumber": 0,
+  "DamageAttributeNumber": 0,
+  "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
-  "EquippedWeaponId": "a708a18a-ccb4-4c52-9332-2cef8359daed",
+  "EquippedWeaponId": "d9e24222-dd39-4adb-9b1b-41ef04f7ffdf",
   "EquippedArmorId": null,
-  "EquippedRingId": null,
-  "CompletedLow": [
-    "graveyard"
-  ],
+  "EquippedRingId": "68154ab6-e505-4494-b911-014663a8f77a",
+  "CompletedLow": [],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {
-    "HealthPotion": 2
-  },
+  "Consumables": {},
   "Equipment": [
     {
-      "Id": "a708a18a-ccb4-4c52-9332-2cef8359daed",
-      "Type": 10,
+      "Id": "68154ab6-e505-4494-b911-014663a8f77a",
+      "Type": 6,
       "Difficulty": 0
     },
     {
-      "Id": "c4818378-3efe-4d63-99eb-37defb69c3ee",
+      "Id": "a64bcffe-4fbe-48a3-8678-b0ff570c5d80",
       "Type": 4,
       "Difficulty": 0
     },
     {
-      "Id": "4ee5198c-ff0b-4d0d-956e-8dee439570aa",
-      "Type": 5,
+      "Id": "d9e24222-dd39-4adb-9b1b-41ef04f7ffdf",
+      "Type": 10,
       "Difficulty": 0
     },
     {
-      "Id": "4d30cacb-d670-4cb5-9435-0a2ebff4abd4",
+      "Id": "6ddd6bc1-0c1f-40d9-9244-c23f9e41c933",
       "Type": 14,
-      "Difficulty": 0
-    },
-    {
-      "Id": "a12f9335-37ba-4f36-b650-6526d19cad78",
-      "Type": 8,
-      "Difficulty": 0
-    },
-    {
-      "Id": "532ff5c1-4b7b-49a0-a8e7-b073013ffbb1",
-      "Type": 15,
       "Difficulty": 0
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 128.0,
-    "TargetHealth": 98.08546,
-    "Armor": 17.0,
-    "Damage": 15.0,
+    "MaxHealth": 100.0,
+    "TargetHealth": 56.92308,
+    "Armor": 2.0,
+    "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [],
@@ -80,5 +66,5 @@
     false,
     false
   ],
-  "idSave": 260
+  "idSave": 12
 }

@@ -107,14 +107,14 @@ namespace _Project.Scripts.Services
             return Player;
         }
 
-        public void SpawnPlayer()
+        public void SpawnPlayer(bool isRevive = false)
         {
             Player.gameObject.SetActive(true);
 
             var characteristics = YG2.saves.PlayerCharacteristics;
             characteristics?.BindToPlayer(Player);
 
-            if (Player.Health.TargetHealth <= MinValue)
+            if (isRevive || Player.Health.TargetHealth <= MinValue)
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);
 
             Player.StateMachine.SwitchState(StateId.Idle);

@@ -202,7 +202,7 @@ namespace _Project.Scripts.UI.Panel
             Hide();
             _pauseService.OnPlayGame();
             _pauseService.EnableEventSystem();
-            _playerService.SpawnPlayer();
+            _playerService.SpawnPlayer(true);
             OnSpawnPlayer?.Invoke();
         }
 

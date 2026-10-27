@@ -291,7 +291,14 @@ namespace _Project.Scripts.Characteristics
         
         public float RollDamage(float baseDamage, out bool isCrit)
         {
+            if (_equipmentCritDamageBonus <= 0f)
+            {
+                isCrit = false;
+                return baseDamage;
+            }
+            
             isCrit = UnityEngine.Random.value < CritChance;
+            
             return isCrit ? baseDamage * GetCritMultiplier() : baseDamage;
         }
 

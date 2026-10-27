@@ -43,7 +43,6 @@ namespace _Project.Scripts.UI.View
         private ShopAttributePanel _shopAttributePanel;
         private ShopItemsPanel _shopItemsPanel;
         private MissionChoosingPanel _missionChoosingPanel;
-        private EndGamePanel _endGamePanel;
         private ModifiersPanel _modifiersPanel;
         private InventoryPanel _inventoryPanel;
         private InventoryRig _inventoryRig;
