@@ -1,6 +1,6 @@
 {
-  "Gold": 35,
-  "AcumulatedScore": 615,
+  "Gold": 5,
+  "AcumulatedScore": 695,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 7,
   "DamageAttributeNumber": 4,
@@ -12,8 +12,8 @@
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
   "EquippedWeaponId": "a708a18a-ccb4-4c52-9332-2cef8359daed",
-  "EquippedArmorId": "532ff5c1-4b7b-49a0-a8e7-b073013ffbb1",
-  "EquippedRingId": "c4818378-3efe-4d63-99eb-37defb69c3ee",
+  "EquippedArmorId": null,
+  "EquippedRingId": null,
   "CompletedLow": [
     "graveyard"
   ],
@@ -58,7 +58,7 @@
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 128.0,
-    "TargetHealth": 129.0,
+    "TargetHealth": 116.7194,
     "Armor": 17.0,
     "Damage": 15.0,
     "MoveSpeed": 6.0,
@@ -80,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 207
+  "idSave": 228
 }

@@ -8,9 +8,9 @@ namespace _Project.Scripts.Characteristics
         public ModifierTimer Timer;
         public float HealPerSecond;
 
-        public HealingModifier(float totalAmount, float duration)
+        public HealingModifier(float healPerSecond, float duration)
         {
-            HealPerSecond = duration > 0f ? totalAmount / duration : 0f;
+            HealPerSecond = healPerSecond;
             Timer = new ModifierTimer(duration);
         }
 
