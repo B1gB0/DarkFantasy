@@ -6,19 +6,40 @@ namespace _Project.Scripts.UI.View
         
         private void OnEnable()
         {
-            _health.Die += OnDie;
-            _health.HealthChanged += OnChangedValues;
+            Subscribe();
         }
 
         private void OnDisable()
         {
-            _health.Die -= OnDie;
-            _health.HealthChanged -= OnChangedValues;
+            Unsubscribe();
         }
 
         public void Construct(Health health)
         {
+            Unsubscribe();
+            
             _health = health;
+            
+            Subscribe();
+        }
+        
+        private void Subscribe()
+        {
+            if (_health == null) return;
+            
+            _health.Die -= OnDie;
+            _health.Die += OnDie;
+            
+            _health.HealthChanged -= OnChangedValues;
+            _health.HealthChanged += OnChangedValues;
+        }
+
+        private void Unsubscribe()
+        {
+            if (_health == null) return;
+            
+            _health.Die -= OnDie;
+            _health.HealthChanged -= OnChangedValues;
         }
 
         private void OnDie()
@@ -29,7 +50,10 @@ namespace _Project.Scripts.UI.View
         public override void Show()
         {
             base.Show();
-            OnChangedValues(_health.CurrentHealth, _health.MaxHealth, _health.TargetHealth);
+            if (_health != null)
+            {
+                OnChangedValues(_health.CurrentHealth, _health.MaxHealth, _health.TargetHealth);
+            }
         }
 
         private void OnChangedValues(float currentHealth, float maxHealth, float targetHealth)

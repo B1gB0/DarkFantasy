@@ -163,22 +163,22 @@ namespace _Project.Scripts.Level
 
         private void OnShowCampfire()
         {
+            YG2.saves.IsInventoryShopVisited = true;
+            
             if (YG2.saves.IsCampfireVisited) return;
 
             NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
             _campfireTrigger.Activate();
-
-            YG2.saves.IsInventoryShopVisited = true;
         }
 
         private void OnShowMissionChoosingPanel()
         {
+            YG2.saves.IsCampfireVisited = true;
+            
             if (YG2.saves.IsMissionPanelVisited) return;
 
             _missionChoosingTrigger.Activate();
             NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
-
-            YG2.saves.IsCampfireVisited = true;
         }
 
         private void OnShowStandUpView()
