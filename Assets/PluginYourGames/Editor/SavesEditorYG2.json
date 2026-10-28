@@ -1,5 +1,5 @@
 {
-  "Gold": 250,
+  "Gold": 220,
   "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 1,
@@ -11,7 +11,7 @@
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": false,
-  "IsCampfireVisited": false,
+  "IsCampfireVisited": true,
   "EquippedWeaponId": "52d4bfbc-56db-4482-8748-cf228a8723f5",
   "EquippedArmorId": "a4345c06-6104-4f08-aa8a-b9e9621fa38a",
   "EquippedRingId": "116f7cc6-20ac-4f7a-b9bf-5bece82e4ca4",
@@ -19,9 +19,8 @@
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {
-    "Meat": 1,
-    "SpeedPotion": 1,
-    "HealthPotion": 1
+    "Meat": 2,
+    "SpeedPotion": 1
   },
   "Equipment": [
     {
@@ -40,17 +39,25 @@
       "Difficulty": 0
     }
   ],
-  "EquippedItemType": 1,
+  "EquippedItemType": 3,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 101.0,
-    "TargetHealth": 106.0,
+    "TargetHealth": 26.0,
     "Armor": 3.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [],
-    "HealingModifier": null
+    "HealingModifier": {
+      "Timer": {
+        "TotalDuration": 5.0,
+        "RemainingTime": 5.0,
+        "IsActive": true,
+        "Progress01": 1.0
+      },
+      "HealPerSecond": 5.0
+    }
   },
   "stringKeys": [],
   "stringValues": [],
@@ -66,5 +73,5 @@
     false,
     false
   ],
-  "idSave": 109
+  "idSave": 129
 }
