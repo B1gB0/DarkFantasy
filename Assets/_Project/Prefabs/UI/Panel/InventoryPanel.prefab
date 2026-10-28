@@ -3831,9 +3831,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6601600156759178194}
     m_Modifications:
+    - target: {fileID: 1325361499082172293, guid: f939ff25440931e4292a159a577ab265, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325361499082172293, guid: f939ff25440931e4292a159a577ab265, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 27
+      objectReference: {fileID: 0}
     - target: {fileID: 3467664846961667130, guid: f939ff25440931e4292a159a577ab265, type: 3}
       propertyPath: m_Name
       value: InventoryItemView
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080769743127968755, guid: f939ff25440931e4292a159a577ab265, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6240456359538615212, guid: f939ff25440931e4292a159a577ab265, type: 3}
       propertyPath: m_Pivot.x
@@ -3913,6 +3925,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6240456359538615212, guid: f939ff25440931e4292a159a577ab265, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604207676465032532, guid: f939ff25440931e4292a159a577ab265, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
