@@ -105,15 +105,6 @@ namespace _Project.Scripts.Level
             _missionChoosingTrigger.OnOpenMissionPanel += ModifiersPanel.Hide;
             _missionChoosingPanel.OnBackToSceneButtonPressed += HealthBar.Show;
             _missionChoosingPanel.OnBackToSceneButtonPressed += ModifiersPanel.Show;
-            
-            if (YG2.saves.IsMissionPanelVisited)
-            {
-                YG2.saves.IsAttributeShopVisited = true;
-                YG2.saves.IsInventoryShopVisited = true;
-                YG2.saves.IsCampfireVisited = true;
-                
-                YG2.SaveProgress(); 
-            }
 
             if (!YG2.saves.IsAttributeShopVisited)
             {
@@ -121,6 +112,11 @@ namespace _Project.Scripts.Level
                 _shopItemsPanelTrigger.Deactivate();
                 _missionChoosingTrigger.Deactivate();
                 _campfireTrigger.Deactivate();
+                
+                YG2.saves.IsInventoryShopVisited = false;
+                YG2.saves.IsCampfireVisited = false;
+                YG2.saves.IsMissionPanelVisited = false;
+                
                 return;
             }
 
@@ -128,6 +124,10 @@ namespace _Project.Scripts.Level
             {
                 NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
                 _campfireTrigger.Deactivate();
+                
+                YG2.saves.IsCampfireVisited = false;
+                YG2.saves.IsMissionPanelVisited = false;
+                
                 return;
             }
 
@@ -135,6 +135,9 @@ namespace _Project.Scripts.Level
             {
                 NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
                 _missionChoosingTrigger.Deactivate();
+                
+                YG2.saves.IsMissionPanelVisited = false;
+                
                 return;
             }
 
