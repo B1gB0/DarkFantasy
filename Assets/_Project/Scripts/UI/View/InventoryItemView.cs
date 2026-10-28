@@ -13,6 +13,7 @@ namespace _Project.Scripts.UI.View
     {
         [SerializeField] private Image _iconImage;
         [SerializeField] private Image _hoverImage;
+        [SerializeField] private Image _equipIcon;
         [SerializeField] private TMP_Text _count;
         [SerializeField] private Button _button;
 
@@ -57,6 +58,14 @@ namespace _Project.Scripts.UI.View
             _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
             
             _count.gameObject.SetActive(false);
+        }
+        
+        public void SetEquippedState(bool isEquipped)
+        {
+            if (_equipIcon != null)
+            {
+                _equipIcon.gameObject.SetActive(isEquipped);
+            }
         }
         
         public void SetConsumable(ItemData template, int count)
@@ -104,6 +113,7 @@ namespace _Project.Scripts.UI.View
             _hoverImage.gameObject.SetActive(false);
             _iconImage.gameObject.SetActive(false);
             _count.gameObject.SetActive(false);
+            _equipIcon.gameObject.SetActive(false);
         }
 
         private void OnSelectItem()

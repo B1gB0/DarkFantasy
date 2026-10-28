@@ -24,7 +24,7 @@ namespace _Project.Scripts.UI.Panel
         [SerializeField] private List<InventoryItemView> _itemViews;
         [SerializeField] private DescriptionItemView _descriptionItemView;
         [SerializeField] private List<SlotView> _slotViews;
-        
+
         [SerializeField] private TMP_Text _healthText;
         [SerializeField] private TMP_Text _damageText;
         [SerializeField] private TMP_Text _armorText;
@@ -54,7 +54,7 @@ namespace _Project.Scripts.UI.Panel
             _playerService = playerService;
             _inventoryService = inventoryService;
             _audioSoundsService = audioSoundsService;
-            _pauseService =  pauseService;
+            _pauseService = pauseService;
         }
 
         private void OnEnable()
@@ -65,12 +65,12 @@ namespace _Project.Scripts.UI.Panel
         private void Start()
         {
             Deactivate();
-            
+
             foreach (var itemView in _itemViews)
             {
                 itemView.OnSelectButtonPressed += SelectItem;
             }
-            
+
             _descriptionItemView.OnItemDeleted += Refresh;
             _descriptionItemView.OnRefreshEquip += Refresh;
         }
@@ -86,7 +86,7 @@ namespace _Project.Scripts.UI.Panel
             {
                 itemView.OnSelectButtonPressed -= SelectItem;
             }
-            
+
             _descriptionItemView.OnItemDeleted -= Refresh;
             _descriptionItemView.OnRefreshEquip -= Refresh;
 
@@ -114,7 +114,7 @@ namespace _Project.Scripts.UI.Panel
         {
             foreach (var itemView in _itemViews)
                 itemView.Set();
-            
+
             int index = MinValue;
 
             var equipment = _inventoryService.Equipment;
@@ -130,9 +130,10 @@ namespace _Project.Scripts.UI.Panel
 
                 _itemViews[index].gameObject.SetActive(true);
                 _itemViews[index].SetEquipment(data, instance);
+                _itemViews[index].SetEquippedState(IsItemEquipped(data.Type, instance));
                 index++;
             }
-            
+
             foreach (var kvp in YG2.saves.Consumables)
             {
                 if (index >= _itemViews.Count) break;
@@ -146,6 +147,7 @@ namespace _Project.Scripts.UI.Panel
 
                 _itemViews[index].gameObject.SetActive(true);
                 _itemViews[index].SetConsumable(data, count);
+                _itemViews[index].SetEquippedState(IsItemEquipped(data.Type));
                 index++;
             }
 
@@ -167,7 +169,7 @@ namespace _Project.Scripts.UI.Panel
                 itemView.HideHover();
 
             selectedItemView.ShowHover();
-            
+
             if (selectedItemView.HasEquipmentInstance)
             {
                 var data = selectedItemView.ItemData;
@@ -183,6 +185,18 @@ namespace _Project.Scripts.UI.Panel
             _descriptionItemView.Show();
 
             EquippedItem = selectedItemView.ItemData;
+        }
+
+        private bool IsItemEquipped(ItemType type, Item instance = null)
+        {
+            if (instance != null)
+            {
+                return _inventoryService.EquippedWeapon?.Id == instance.Id ||
+                       _inventoryService.EquippedArmor?.Id == instance.Id ||
+                       _inventoryService.EquippedRing?.Id == instance.Id;
+            }
+            
+            return _inventoryService.EquippedConsumableType == type;
         }
 
         private ItemData GetItemDataByType(ItemType type)

@@ -3831,21 +3831,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6601600156759178194}
     m_Modifications:
-    - target: {fileID: 1148036746062758115, guid: f939ff25440931e4292a159a577ab265, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3340314030486774655, guid: f939ff25440931e4292a159a577ab265, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3467664846961667130, guid: f939ff25440931e4292a159a577ab265, type: 3}
       propertyPath: m_Name
       value: InventoryItemView
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816631965618824615, guid: f939ff25440931e4292a159a577ab265, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6240456359538615212, guid: f939ff25440931e4292a159a577ab265, type: 3}
       propertyPath: m_Pivot.x

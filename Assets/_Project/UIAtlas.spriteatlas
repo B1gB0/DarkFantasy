@@ -78,6 +78,7 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 35e4ceee666464b0ab5525eef8ac4e24, type: 3}
     - {fileID: 21300000, guid: 9d8678ca05b1a4c318a8be7f99604567, type: 3}
     - {fileID: 21300000, guid: d535ffb65bf754dda95c3181d7389600, type: 3}
+    - {fileID: 21300000, guid: 482701d7fe23a4094b9fa72ba3be7ccd, type: 3}
     - {fileID: 21300000, guid: 2340e003a4a6745a8929491f3b365cea, type: 3}
     - {fileID: 21300000, guid: 0cfcd658ad86c544984d12c2d8cf84a7, type: 3}
     - {fileID: 21300000, guid: 87540dc2769d1c846862f80e07e2c153, type: 3}
@@ -199,6 +200,7 @@ SpriteAtlas:
     - 48c0d4d6bebaa934384b07aa1e2f8184: 21300000
     - e07131572d8a0436186236dc02fbab54: 21300000
     - 9b89506703bc97342813efcf4a32b121: 21300000
+    - 482701d7fe23a4094b9fa72ba3be7ccd: 21300000
     - 5d240ed7694d87e4ab64dd21d7149998: 21300000
     - c5e89d08241b54ec7bc004a7b9bcd16b: 21300000
     - 29394448796c7e74d8a923414b0cc9a0: 21300000
@@ -296,6 +298,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
   - {fileID: 21300000, guid: e07131572d8a0436186236dc02fbab54, type: 3}
   - {fileID: 21300000, guid: 9b89506703bc97342813efcf4a32b121, type: 3}
+  - {fileID: 21300000, guid: 482701d7fe23a4094b9fa72ba3be7ccd, type: 3}
   - {fileID: 21300000, guid: 5d240ed7694d87e4ab64dd21d7149998, type: 3}
   - {fileID: 21300000, guid: c5e89d08241b54ec7bc004a7b9bcd16b, type: 3}
   - {fileID: 21300000, guid: 29394448796c7e74d8a923414b0cc9a0, type: 3}
@@ -392,6 +395,7 @@ SpriteAtlas:
   - AllAxis_Outline_Arrows
   - btn_icon_volume_on
   - SPR_FantasyWarrior_Box_Segment01_Variant03
+  - check_green
   - SPR_FantasyWarrior_Box_Parchment02
   - equipment_tab_icon_2_f
   - Group 1162
