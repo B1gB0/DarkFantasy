@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Level.Triggers;
+using _Project.Scripts.UI;
 using _Project.Scripts.UI.Panel;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -40,9 +41,11 @@ namespace _Project.Scripts.Level
             _shopItemsPanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
             _shopItemsPanel.OnBackToSceneButtonPressed -= OnShowCampfire;
 
-            _campfireTrigger.OnPlayerInside -= ViewFactory.UIScene.PickUpView.Show;
-            _campfireTrigger.OnPlayerOutside -= ViewFactory.UIScene.PickUpView.Hide;
-            _campfireTrigger.OnCampfireVisited -= OnShowMissionChoosingPanel;
+            _campfireTrigger.OnPlayerInside -= OnShowSitDownView;
+            _campfireTrigger.OnPlayerOutside -= ViewFactory.UIScene.InteractView.Hide;
+            _campfireTrigger.OnPlayerSatDown -= OnShowStandUpView;
+            _campfireTrigger.OnPlayerStoodUp -= OnShowSitDownView;
+            _campfireTrigger.OnPlayerSatDown -= OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel -= _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel -= UIRootView.UIRootButtons.Deactivate;
@@ -71,10 +74,12 @@ namespace _Project.Scripts.Level
             _shopItemsPanelTrigger.OnOpenShop += UIRootView.UIRootButtons.Deactivate;
             _shopItemsPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
             _shopItemsPanel.OnBackToSceneButtonPressed += _shopItemsPanel.Hide;
-            
-            _campfireTrigger.OnPlayerInside += ViewFactory.UIScene.PickUpView.Show;
-            _campfireTrigger.OnPlayerOutside += ViewFactory.UIScene.PickUpView.Hide;
-            _campfireTrigger.OnCampfireVisited += OnShowMissionChoosingPanel;
+
+            _campfireTrigger.OnPlayerInside += OnShowSitDownView;
+            _campfireTrigger.OnPlayerOutside += ViewFactory.UIScene.InteractView.Hide;
+            _campfireTrigger.OnPlayerSatDown += OnShowStandUpView;
+            _campfireTrigger.OnPlayerStoodUp += OnShowSitDownView;
+            _campfireTrigger.OnPlayerSatDown += OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel += _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel += UIRootView.UIRootButtons.Deactivate;
@@ -123,7 +128,7 @@ namespace _Project.Scripts.Level
                 _missionChoosingTrigger.Deactivate();
                 return;
             }
-            
+
             if (!YG2.saves.IsMissionPanelVisited)
             {
                 NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
@@ -136,7 +141,7 @@ namespace _Project.Scripts.Level
             {
                 YG2.saves.IsMissionPanelVisited = true;
             }
-            
+
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
@@ -144,14 +149,14 @@ namespace _Project.Scripts.Level
         private void OnShowAttributePanel()
         {
             if (YG2.saves.IsAttributeShopVisited) return;
-            
+
             YG2.saves.IsAttributeShopVisited = true;
         }
 
         private void OnShowInventoryShop()
         {
             if (YG2.saves.IsInventoryShopVisited) return;
-            
+
             NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
             _shopItemsPanelTrigger.Activate();
         }
@@ -159,10 +164,10 @@ namespace _Project.Scripts.Level
         private void OnShowCampfire()
         {
             if (YG2.saves.IsCampfireVisited) return;
-            
+
             NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
             _campfireTrigger.Activate();
-            
+
             YG2.saves.IsInventoryShopVisited = true;
         }
 
@@ -172,8 +177,18 @@ namespace _Project.Scripts.Level
 
             _missionChoosingTrigger.Activate();
             NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
-            
+
             YG2.saves.IsCampfireVisited = true;
+        }
+
+        private void OnShowStandUpView()
+        {
+            ViewFactory.UIScene.InteractView.Show(InteractViewType.StandUp);
+        }
+
+        private void OnShowSitDownView()
+        {
+            ViewFactory.UIScene.InteractView.Show(InteractViewType.SitDown);
         }
     }
 }

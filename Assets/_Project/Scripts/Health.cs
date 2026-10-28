@@ -178,6 +178,12 @@ namespace _Project.Scripts
             TargetHealth = healthValue;
             OnChangeHealth();
         }
+        
+        public void AddHealthSilent(float value)
+        {
+            TargetHealth += value;
+            OnChangeHealth();
+        }
 
         private float CalculateFinalDamage(float damage, float armor)
         {
@@ -186,12 +192,6 @@ namespace _Project.Scripts
 
             float reduction = armor / (armor + DamageFirstFactor);
             return Mathf.Max(MinValue, damage * (DamageSecondFactor - reduction));
-        }
-
-        private void AddHealthSilent(float value)
-        {
-            TargetHealth += value;
-            OnChangeHealth();
         }
 
         private void OnChangeHealth()

@@ -13,11 +13,13 @@ namespace _Project.Scripts.UI.Panel
         private const int _goldValue = 50;
         private const int _healthValue = 60;
         private const int _expValue = 100;
+        private const int _damage = 20;
 
         [SerializeField] private Button _addGold;
         [SerializeField] private Button _addHealth;
         [SerializeField] private Button _addExp;
         [SerializeField] private Button _exitButton;
+        [SerializeField] private Button _takeDamageButton;
 
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
@@ -38,6 +40,7 @@ namespace _Project.Scripts.UI.Panel
             _addHealth.onClick.AddListener(OnAddHealthButtonClicked);
             _addExp.onClick.AddListener(OnAddExpButtonClicked);
             _exitButton.onClick.AddListener(Deactivate);
+            _takeDamageButton.onClick.AddListener(OnTakeDamageButtonClicked);
         }
 
         private void OnDisable()
@@ -46,6 +49,7 @@ namespace _Project.Scripts.UI.Panel
             _addHealth.onClick.RemoveListener(OnAddHealthButtonClicked);
             _addExp.onClick.RemoveListener(OnAddExpButtonClicked);
             _exitButton.onClick.RemoveListener(Deactivate);
+            _takeDamageButton.onClick.RemoveListener(OnTakeDamageButtonClicked);
         }
 
         public override void Show()
@@ -76,6 +80,11 @@ namespace _Project.Scripts.UI.Panel
         private void OnAddHealthButtonClicked()
         {
             _playerService.Player.Health.AddHealth(_healthValue);
+        }
+
+        private void OnTakeDamageButtonClicked()
+        {
+            _playerService.Player.Health.TakeDamage(_damage);
         }
 
         private void OnAddExpButtonClicked()

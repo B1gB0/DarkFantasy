@@ -622,6 +622,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854dc4c40fc84ada900f4421e7d5bdde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healAmountPerTick: 2
+  _healInterval: 1
+  _maxHealPercent: 0.5
 --- !u!65 &1318055741
 BoxCollider:
   m_ObjectHideFlags: 0

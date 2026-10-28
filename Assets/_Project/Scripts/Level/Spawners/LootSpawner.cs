@@ -2,6 +2,7 @@
 using _Project.Scripts.Items;
 using _Project.Scripts.Level.Triggers;
 using _Project.Scripts.Services;
+using _Project.Scripts.UI;
 using _Project.Scripts.UI.View;
 using Reflex.Attributes;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace _Project.Scripts.Level.Spawners
         private EnemySpawner _enemySpawner;
         private ObjectPool<LootEnemyTrigger> _pool;
         private RewardView _rewardView;
-        private PickUpView _pickUpView;
+        private InteractView _interactView;
         private InventoryIsFullView _inventoryIsFullView;
         private LootEnemyTrigger _currentTarget;
 
@@ -64,7 +65,7 @@ namespace _Project.Scripts.Level.Spawners
                 var target = _currentTarget;
                 _currentTarget = null;
 
-                _pickUpView?.Hide();
+                _interactView?.Hide();
                 target.Pickup();
             }
         }
@@ -89,10 +90,10 @@ namespace _Project.Scripts.Level.Spawners
             RecalculateNearest();
         }
 
-        public void GetViews(RewardView rewardView, PickUpView pickUpView, InventoryIsFullView  inventoryIsFullView)
+        public void GetViews(RewardView rewardView, InteractView interactView, InventoryIsFullView  inventoryIsFullView)
         {
             _rewardView = rewardView;
-            _pickUpView = pickUpView;
+            _interactView = interactView;
             _inventoryIsFullView = inventoryIsFullView;
         }
 
@@ -128,9 +129,9 @@ namespace _Project.Scripts.Level.Spawners
             _currentTarget = nearest;
 
             if (_currentTarget != null)
-                _pickUpView?.Show();
+                _interactView?.Show(InteractViewType.PickUp);
             else
-                _pickUpView?.Hide();
+                _interactView?.Hide();
         }
 
         private LootEnemyTrigger FindNearest()

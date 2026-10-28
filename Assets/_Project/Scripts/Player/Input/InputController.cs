@@ -25,7 +25,7 @@ namespace _Project.Scripts.Player.Input
         private Button _rollButton;
         private Button _inventoryButton;
         private Button _equippedItemButton;
-        private Button _pickUpButton;
+        private Button _interactButton;
 
         private bool _uiAttackPressed;
         private bool _isPickUpLocked;
@@ -96,7 +96,7 @@ namespace _Project.Scripts.Player.Input
             if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
             if (_inventoryButton != null) _inventoryButton.onClick.RemoveListener(OnInventoryButtonClicked);
             if (_equippedItemButton != null) _equippedItemButton.onClick.RemoveListener(OnEquippedItemButtonClicked);
-            if (_pickUpButton != null) _pickUpButton.onClick.RemoveListener(OnPickUpByButton);
+            if (_interactButton != null) _interactButton.onClick.RemoveListener(OnPickUpByButton);
         }
 
         public void GetButtons(
@@ -106,7 +106,7 @@ namespace _Project.Scripts.Player.Input
             Button rollButton,
             Button inventoryButton,
             Button equippedItemButton,
-            Button pickUpButton)
+            Button interactButton)
         {
             _moveJoystick = moveJoystick;
             _cameraJoystick = cameraJoystick;
@@ -119,8 +119,8 @@ namespace _Project.Scripts.Player.Input
             _inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
             _equippedItemButton = equippedItemButton;
             _equippedItemButton.onClick.AddListener(OnEquippedItemButtonClicked);
-            _pickUpButton = pickUpButton;
-            _pickUpButton.onClick.AddListener(OnPickUpByButton);
+            _interactButton = interactButton;
+            _interactButton.onClick.AddListener(OnPickUpByButton);
         }
 
         public void LockPlayerMovement()

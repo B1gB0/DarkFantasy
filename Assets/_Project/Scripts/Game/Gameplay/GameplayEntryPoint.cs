@@ -158,7 +158,7 @@ namespace _Project.Scripts.Game.Gameplay
                 _uiScene.RollButton,
                 _uiScene.InventoryButton,
                 _uiScene.EquippedItemButton,
-                _uiScene.PickUpButton);
+                _uiScene.InteractButton);
             
             OnShowJoystickWithMobileButtons();
 

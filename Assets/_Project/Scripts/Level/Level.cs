@@ -252,7 +252,7 @@ namespace _Project.Scripts.Level
 
             LootSpawner.GetViews(
                 ViewFactory.UIScene.RewardView,
-                ViewFactory.UIScene.PickUpView,
+                ViewFactory.UIScene.InteractView,
                 ViewFactory.UIScene.InventoryIsFullView);
 
             EnemySpawner.OnBossSpawned += OnBossSpawned;

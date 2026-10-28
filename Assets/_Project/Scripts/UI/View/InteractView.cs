@@ -1,18 +1,25 @@
 ﻿using _Project.Scripts.Services;
 using DG.Tweening;
 using Reflex.Attributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
 namespace _Project.Scripts.UI.View
 {
-    public class PickUpView : View
+    public class InteractView : View
     {
         [SerializeField] private Button _mobileButton;
         [SerializeField] private GameObject _desktopButton;
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
+        
+        [Header("Texts")]
+        [SerializeField] private TMP_Text _pickUpText;
+        [SerializeField] private TMP_Text _standUpText;
+        [SerializeField] private TMP_Text _sitDownText;
+        [SerializeField] private TMP_Text _descriptionText;
 
         private ITweenAnimationService _tweenAnimationService;
 
@@ -40,10 +47,34 @@ namespace _Project.Scripts.UI.View
         {
             transform.DOKill();
         }
+        
+        public void Show(InteractViewType type)
+        {
+            _pickUpText.gameObject.SetActive(false);
+            _standUpText.gameObject.SetActive(false);
+            _sitDownText.gameObject.SetActive(false);
+            _descriptionText.gameObject.SetActive(false);
+            
+            switch (type)
+            {
+                case InteractViewType.PickUp:
+                    _pickUpText.gameObject.SetActive(true);
+                    break;
+                case InteractViewType.SitDown:
+                    _sitDownText.gameObject.SetActive(true);
+                    _descriptionText.gameObject.SetActive(true);
+                    break;
+                case InteractViewType.StandUp:
+                    _standUpText.gameObject.SetActive(true);
+                    break;
+            }
+            
+            _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
+        }
 
         public override void Show()
         {
-            _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
+            Show(InteractViewType.PickUp);
         }
 
         public override void Hide()

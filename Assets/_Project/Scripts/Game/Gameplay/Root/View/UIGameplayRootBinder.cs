@@ -49,10 +49,10 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Button CheatButton { get; private set; }
 #endif
         [field: SerializeField] public Button EquippedItemButton { get; private set; }
-        [field: SerializeField] public Button PickUpButton { get; private set; }
+        [field: SerializeField] public Button InteractButton { get; private set; }
         [field: SerializeField] public EquippedConsumableItemView EquippedConsumableItemView { get; private set; }
         [field: SerializeField] public RewardView RewardView { get; private set; }
-        [field: SerializeField] public PickUpView PickUpView { get; private set; }
+        [field: SerializeField] public InteractView InteractView { get; private set; }
         [field: SerializeField] public InventoryIsFullView InventoryIsFullView { get; private set; }
 
         [Inject]
