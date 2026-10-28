@@ -1,0 +1,52 @@
+{
+  "Gold": 0,
+  "AcumulatedScore": 30,
+  "ExperiencePointsValue": 0,
+  "HealthAttributeNumber": 1,
+  "DamageAttributeNumber": 0,
+  "ArmorAttributeNumber": 1,
+  "IsFirstLaunch": false,
+  "IsMediumDifficultyUnlock": false,
+  "IsHardDifficultyUnlock": false,
+  "IsAttributeShopVisited": true,
+  "IsInventoryShopVisited": true,
+  "IsMissionPanelVisited": false,
+  "IsCampfireVisited": false,
+  "EquippedWeaponId": null,
+  "EquippedArmorId": null,
+  "EquippedRingId": null,
+  "CompletedLow": [],
+  "CompletedMedium": [],
+  "CompletedHigh": [],
+  "Consumables": {
+    "Meat": 1
+  },
+  "Equipment": [],
+  "EquippedItemType": 0,
+  "CurrentDifficulty": 0,
+  "PlayerCharacteristics": {
+    "MaxHealth": 101.0,
+    "TargetHealth": 101.0,
+    "Armor": 3.0,
+    "Damage": 5.0,
+    "MoveSpeed": 6.0,
+    "RotationSpeed": 7.0,
+    "SpeedModifiers": [],
+    "HealingModifier": null
+  },
+  "stringKeys": [],
+  "stringValues": [],
+  "floatKeys": [],
+  "floatValues": [],
+  "intKeys": [],
+  "intValues": [],
+  "intExample": 5,
+  "strExample": "Hello!",
+  "boolExample": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "idSave": 32
+}

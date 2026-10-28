@@ -6,5 +6,6 @@
         Idle = 1,
         Move = 2,
         Roll = 3,
+        Sit = 4,
     }
 }

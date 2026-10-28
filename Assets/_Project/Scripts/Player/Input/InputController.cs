@@ -132,11 +132,16 @@ namespace _Project.Scripts.Player.Input
 
         public void UnlockPlayerMovement()
         {
-            _isMovementLocked = false;
-            _isAttackLocked = false;
-            _isRollLocked = false;
+            SetMovementLock(false);
 
             OnUnlockController?.Invoke();
+        }
+        
+        public void SetMovementLock(bool isLocked)
+        {
+            _isMovementLocked = isLocked;
+            _isAttackLocked = isLocked;
+            _isRollLocked = isLocked;
         }
         
         public void LockPickUp()

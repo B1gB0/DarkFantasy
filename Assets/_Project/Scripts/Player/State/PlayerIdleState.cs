@@ -20,12 +20,11 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.PlayerAnimatedState.OnMove(MinValue);
+            _player.InputController.OnAttackButtonPressed += EnterAttack;
         }
 
         public void Update()
         {
-            _player.InputController.OnAttackButtonPressed += EnterAttack;
-
             if (_player.InputController.IsRollInputPerformed)
             {
                 _stateMachine.SwitchState(StateId.Roll);

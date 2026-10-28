@@ -31,6 +31,7 @@ namespace _Project.Scripts.Player.Core
         private PlayerAttackState _playerAttackState;
         private PlayerMoveState _playerMoveState;
         private PlayerRollState _playerRollState;
+        private PlayerSitState _playerSitState;
 
         public Animator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
@@ -143,11 +144,13 @@ namespace _Project.Scripts.Player.Core
             _playerAttackState = new PlayerAttackState(this);
             _playerMoveState = new PlayerMoveState(this);
             _playerRollState = new PlayerRollState(this);
+            _playerSitState = new PlayerSitState(this);
 
             _stateMachine.AddState(_playerIdleState);
             _stateMachine.AddState(_playerMoveState);
             _stateMachine.AddState(_playerRollState);
             _stateMachine.AddState(_playerAttackState);
+            _stateMachine.AddState(_playerSitState);
 
             _stateMachine.SwitchState(StateId.Idle);
 

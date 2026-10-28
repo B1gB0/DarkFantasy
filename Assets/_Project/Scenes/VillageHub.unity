@@ -577,6 +577,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 127938795821076326, guid: c9143427ba4afc241b609fc8f5923733, type: 3}
   m_PrefabInstance: {fileID: 1090328424}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1318055738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1318055739}
+  - component: {fileID: 1318055741}
+  - component: {fileID: 1318055740}
+  m_Layer: 0
+  m_Name: CampfireTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1318055739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318055738}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.05, y: 0.441, z: 7.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6885978586469822543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1318055740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318055738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854dc4c40fc84ada900f4421e7d5bdde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1318055741
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318055738}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.69537, y: 1, z: 2.9155674}
+  m_Center: {x: 0.047825232, y: 0, z: -0.10618296}
 --- !u!114 &2100196689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
@@ -2234,6 +2300,10 @@ PrefabInstance:
       propertyPath: LootSpawner
       value: 
       objectReference: {fileID: 681960368}
+    - target: {fileID: 5953121075063434209, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: _campfireTrigger
+      value: 
+      objectReference: {fileID: 1318055740}
     - target: {fileID: 5968276946851714809, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -3149,6 +3219,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1710866097214475199, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1090328425}
+    - targetCorrespondingSourceObject: {fileID: 8463812017621258703, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1318055739}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 360443432823647128, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       insertIndex: -1
@@ -3157,6 +3230,11 @@ PrefabInstance:
 --- !u!4 &6885978586469822542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1710866097214475199, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+  m_PrefabInstance: {fileID: 6885978586469822541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6885978586469822543 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8463812017621258703, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
   m_PrefabInstance: {fileID: 6885978586469822541}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

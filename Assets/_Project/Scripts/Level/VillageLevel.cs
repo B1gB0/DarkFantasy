@@ -11,6 +11,7 @@ namespace _Project.Scripts.Level
         [SerializeField] private ShopTrigger _shopAttributePanelTrigger;
         [SerializeField] private ShopTrigger _shopItemsPanelTrigger;
         [SerializeField] private MissionChoosingTrigger _missionChoosingTrigger;
+        [SerializeField] private CampfireTrigger _campfireTrigger;
 
         private ShopAttributePanel _shopAttributePanel;
         private ShopItemsPanel _shopItemsPanel;
@@ -37,7 +38,11 @@ namespace _Project.Scripts.Level
             _shopItemsPanel.OnBackToSceneButtonPressed -= _shopItemsPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
             _shopItemsPanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
-            _shopItemsPanel.OnBackToSceneButtonPressed -= OnShowMissionChoosingPanel;
+            _shopItemsPanel.OnBackToSceneButtonPressed -= OnShowCampfire;
+
+            _campfireTrigger.OnPlayerInside -= ViewFactory.UIScene.PickUpView.Show;
+            _campfireTrigger.OnPlayerOutside -= ViewFactory.UIScene.PickUpView.Hide;
+            _campfireTrigger.OnCampfireVisited -= OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel -= _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel -= UIRootView.UIRootButtons.Deactivate;
@@ -66,6 +71,10 @@ namespace _Project.Scripts.Level
             _shopItemsPanelTrigger.OnOpenShop += UIRootView.UIRootButtons.Deactivate;
             _shopItemsPanel.OnBackToSceneButtonPressed += UIRootView.UIRootButtons.Activate;
             _shopItemsPanel.OnBackToSceneButtonPressed += _shopItemsPanel.Hide;
+            
+            _campfireTrigger.OnPlayerInside += ViewFactory.UIScene.PickUpView.Show;
+            _campfireTrigger.OnPlayerOutside += ViewFactory.UIScene.PickUpView.Hide;
+            _campfireTrigger.OnCampfireVisited += OnShowMissionChoosingPanel;
 
             _missionChoosingTrigger.OnOpenMissionPanel += _missionChoosingPanel.Show;
             _missionChoosingTrigger.OnOpenMissionPanel += UIRootView.UIRootButtons.Deactivate;
@@ -85,7 +94,7 @@ namespace _Project.Scripts.Level
             _shopItemsPanelTrigger.OnOpenShop += ModifiersPanel.Hide;
             _shopItemsPanel.OnBackToSceneButtonPressed += HealthBar.Show;
             _shopItemsPanel.OnBackToSceneButtonPressed += ModifiersPanel.Show;
-            _shopItemsPanel.OnBackToSceneButtonPressed += OnShowMissionChoosingPanel;
+            _shopItemsPanel.OnBackToSceneButtonPressed += OnShowCampfire;
 
             _missionChoosingTrigger.OnOpenMissionPanel += HealthBar.Hide;
             _missionChoosingTrigger.OnOpenMissionPanel += ModifiersPanel.Hide;
@@ -97,12 +106,20 @@ namespace _Project.Scripts.Level
                 NavMeshWaypointService.ShowWaypoint(_shopAttributePanelTrigger.transform);
                 _shopItemsPanelTrigger.Deactivate();
                 _missionChoosingTrigger.Deactivate();
+                _campfireTrigger.Deactivate();
                 return;
             }
 
             if (!YG2.saves.IsInventoryShopVisited)
             {
                 NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
+                _campfireTrigger.Deactivate();
+                return;
+            }
+
+            if (!YG2.saves.IsCampfireVisited)
+            {
+                NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
                 _missionChoosingTrigger.Deactivate();
                 return;
             }
@@ -127,7 +144,7 @@ namespace _Project.Scripts.Level
         private void OnShowAttributePanel()
         {
             if (YG2.saves.IsAttributeShopVisited) return;
-
+            
             YG2.saves.IsAttributeShopVisited = true;
         }
 
@@ -137,7 +154,15 @@ namespace _Project.Scripts.Level
             
             NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
             _shopItemsPanelTrigger.Activate();
+        }
 
+        private void OnShowCampfire()
+        {
+            if (YG2.saves.IsCampfireVisited) return;
+            
+            NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
+            _campfireTrigger.Activate();
+            
             YG2.saves.IsInventoryShopVisited = true;
         }
 
@@ -147,6 +172,8 @@ namespace _Project.Scripts.Level
 
             _missionChoosingTrigger.Activate();
             NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
+            
+            YG2.saves.IsCampfireVisited = true;
         }
     }
 }

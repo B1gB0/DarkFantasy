@@ -23,6 +23,7 @@ namespace YG
         public bool IsAttributeShopVisited;
         public bool IsInventoryShopVisited;
         public bool IsMissionPanelVisited;
+        public bool IsCampfireVisited;
 
         public string EquippedWeaponId;
         public string EquippedArmorId;

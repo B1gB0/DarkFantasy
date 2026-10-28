@@ -8,5 +8,7 @@ namespace _Project.Scripts.Player.Animation
         public readonly int Attack = Animator.StringToHash(nameof(Attack));
         public readonly int ComboStep = Animator.StringToHash(nameof(ComboStep));
         public readonly int Roll = Animator.StringToHash(nameof(Roll));
+        public readonly int SitDown = Animator.StringToHash(nameof(SitDown));
+        public readonly int StandUp = Animator.StringToHash(nameof(StandUp));
     }
 }

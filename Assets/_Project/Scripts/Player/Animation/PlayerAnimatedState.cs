@@ -38,5 +38,14 @@ namespace _Project.Scripts.Player.Animation
             Animator.speed = speed;
         }
         
+        public void OnSitDown()
+        {
+            Animator.SetTrigger(PlayerAnimationId.SitDown);
+        }
+
+        public void OnStandUp()
+        {
+            Animator.SetTrigger(PlayerAnimationId.StandUp);
+        }
     }
 }
