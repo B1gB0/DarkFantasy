@@ -15,7 +15,11 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 {
     public class UIGameplayRootBinder : MonoBehaviour
     {
-        private const int DelayToShowTutorial = 5;
+        private const float ShortTutorialDelay = 5f;
+        private const float LongTutorialDelay = 15f;
+        private const int MaxShortTutorials = 3;
+        
+        private int _tutorialShowCount = 0;
 
         private Subject<Unit> _exitSceneSignalSubject;
         private UIStateMachine _uiStateMachine;
@@ -81,22 +85,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 
         public void ResetCountdownTutorialPointer()
         {
-            if (YG2.envir.isDesktop)
-            {
-                _tweenAnimationService.AnimateMove(
-                    KeyboardTutorialView.transform,
-                    ShowKeyboardTutorialPoint,
-                    HideKeyboardTutorialPoint,
-                    true);
-            }
-            else
-            {
-                JoystickIcon.SetActive(false);
-                TutorialPointer.Deactivate();
-            }
-            
-            CameraTutorialView.SetActive(false);
-
+            HideTutorialImmediately();
             CountdownToShowStoryButtonFoot().Forget();
         }
 
@@ -112,6 +101,29 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
                 MouseTutorialView.SetActive(false);
                 SpaceTutorialView.SetActive(false);
             }
+        }
+        
+        public void HideTutorialImmediately()
+        {
+            _tutorialCancellationToken?.Cancel();
+            _tutorialCancellationToken?.Dispose();
+            _tutorialCancellationToken = null;
+            
+            if (YG2.envir.isDesktop)
+            {
+                _tweenAnimationService.AnimateMove(
+                    KeyboardTutorialView.transform,
+                    ShowKeyboardTutorialPoint,
+                    HideKeyboardTutorialPoint,
+                    true);
+            }
+            else
+            {
+                JoystickIcon.SetActive(false);
+                TutorialPointer.Deactivate();
+            }
+            
+            CameraTutorialView.SetActive(false);
         }
 
         private void ShowTutorialPointer()
@@ -145,16 +157,22 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
             _tutorialCancellationToken?.Cancel();
             _tutorialCancellationToken?.Dispose();
             _tutorialCancellationToken = new CancellationTokenSource();
+            
+            float currentDelay = _tutorialShowCount < MaxShortTutorials 
+                ? ShortTutorialDelay 
+                : LongTutorialDelay;
 
             try
             {
                 var completedTask = await UniTask.WhenAny(
-                    UniTask.Delay(TimeSpan.FromSeconds(DelayToShowTutorial),
+                    UniTask.Delay(TimeSpan.FromSeconds(currentDelay),
                         DelayType.DeltaTime,
                         cancellationToken: _tutorialCancellationToken.Token));
 
                 if (completedTask == 0)
                 {
+                    _tutorialShowCount++;
+                    
                     if (YG2.envir.isDesktop)
                         ShowTutorialKeyboardView();
                     else

@@ -184,11 +184,15 @@ namespace _Project.Scripts.Level
         private void OnShowStandUpView()
         {
             ViewFactory.UIScene.InteractView.Show(InteractViewType.StandUp);
+            
+            ViewFactory.UIScene.HideTutorialImmediately();
         }
 
         private void OnShowSitDownView()
         {
             ViewFactory.UIScene.InteractView.Show(InteractViewType.SitDown);
+            
+            ViewFactory.UIScene.ResetCountdownTutorialPointer();
         }
     }
 }
