@@ -5975,6 +5975,10 @@ PrefabInstance:
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: f360373d4d0157e4c820124c728426cf, type: 2}
+    - target: {fileID: 6558748817073510688, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: m_UseGeometry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6563891069348421257, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0

@@ -1,74 +1,31 @@
 {
-  "Gold": 220,
-  "AcumulatedScore": 280,
+  "Gold": 30,
+  "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 1,
+  "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 1,
+  "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": true,
-  "IsInventoryShopVisited": true,
-  "IsMissionPanelVisited": true,
-  "IsCampfireVisited": true,
-  "EquippedWeaponId": "52d4bfbc-56db-4482-8748-cf228a8723f5",
-  "EquippedArmorId": "a4345c06-6104-4f08-aa8a-b9e9621fa38a",
-  "EquippedRingId": "116f7cc6-20ac-4f7a-b9bf-5bece82e4ca4",
+  "IsAttributeShopVisited": false,
+  "IsInventoryShopVisited": false,
+  "IsMissionPanelVisited": false,
+  "IsCampfireVisited": false,
+  "EquippedWeaponId": null,
+  "EquippedArmorId": null,
+  "EquippedRingId": null,
   "CompletedLow": [],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {
-    "SpeedPotion": 1
-  },
-  "Equipment": [
-    {
-      "Id": "116f7cc6-20ac-4f7a-b9bf-5bece82e4ca4",
-      "Type": 6,
-      "Difficulty": 0
-    },
-    {
-      "Id": "52d4bfbc-56db-4482-8748-cf228a8723f5",
-      "Type": 11,
-      "Difficulty": 0
-    },
-    {
-      "Id": "a4345c06-6104-4f08-aa8a-b9e9621fa38a",
-      "Type": 13,
-      "Difficulty": 0
-    },
-    {
-      "Id": "b653385e-e056-4650-a192-4e4c20806dfd",
-      "Type": 4,
-      "Difficulty": 0
-    },
-    {
-      "Id": "fee0c39e-48b5-4739-9c51-8505601b505a",
-      "Type": 10,
-      "Difficulty": 0
-    },
-    {
-      "Id": "62c36e3b-9bd9-494d-a2fd-15636527958b",
-      "Type": 8,
-      "Difficulty": 0
-    },
-    {
-      "Id": "d73aa96a-7bdf-44ce-b17c-5af4e8fe1bbe",
-      "Type": 14,
-      "Difficulty": 0
-    },
-    {
-      "Id": "568527d6-7f3a-4c6c-9994-8d50104ae185",
-      "Type": 5,
-      "Difficulty": 0
-    }
-  ],
+  "Consumables": {},
+  "Equipment": [],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 101.0,
-    "TargetHealth": 51.159977,
-    "Armor": 3.0,
+    "MaxHealth": 100.0,
+    "TargetHealth": 70.58823,
+    "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
@@ -89,5 +46,5 @@
     false,
     false
   ],
-  "idSave": 147
+  "idSave": 3
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9205900792784588723}
   - component: {fileID: 5755846046503441044}
   - component: {fileID: 6006505750250180362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 4975714894235110941}
   - component: {fileID: 5663650441787189052}
   - component: {fileID: 138590659398331228}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lantern_Street_Fixed_Halloween
   m_TagString: Untagged
   m_Icon: {fileID: 0}

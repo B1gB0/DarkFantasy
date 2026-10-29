@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7974176577472278595}
   - component: {fileID: 7537849888698325622}
   - component: {fileID: 8910087441742082509}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 127938795821076326}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +218,10 @@ PrefabInstance:
       value: SM_Prop_Post_01
       objectReference: {fileID: 0}
     - target: {fileID: 876757560519835232, guid: a63af264fdc527246aa967c7e6156615, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 876757560519835232, guid: a63af264fdc527246aa967c7e6156615, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -302,6 +306,10 @@ PrefabInstance:
     - target: {fileID: 7508625403262129973, guid: aab20c158f4dcec41b042ff7007dd34e, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Lamp_Hanging_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508625403262129973, guid: aab20c158f4dcec41b042ff7007dd34e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7508625403262129973, guid: aab20c158f4dcec41b042ff7007dd34e, type: 3}
       propertyPath: m_StaticEditorFlags
