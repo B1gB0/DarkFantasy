@@ -92,8 +92,6 @@ namespace _Project.Scripts.Services
             characteristics.SetCharacteristics(this, _shopService, _progressionService);
             YG2.saves.PlayerCharacteristics = characteristics;
 
-            RecalculateEquipment();
-
             return characteristics;
         }
 
@@ -113,6 +111,8 @@ namespace _Project.Scripts.Services
 
             var characteristics = YG2.saves.PlayerCharacteristics;
             characteristics?.BindToPlayer(Player);
+            
+            RecalculateEquipment();
 
             if (isRevive || Player.Health.TargetHealth <= MinValue)
                 Player.Health.SetHealthValue(Player.Health.MaxHealth);

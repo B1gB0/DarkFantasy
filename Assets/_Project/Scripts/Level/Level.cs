@@ -189,13 +189,7 @@ namespace _Project.Scripts.Level
 
             var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
             player.Construct(playerCharacteristics, _particleEffectsService, _floatingTextService);
-
-            HealthBar = await ViewFactory.GetOrCreateHealthBar(player.Health);
-            HealthBar.Show();
-
-            ModifiersPanel = await ViewFactory.CreateModifiersPanel();
-            ModifiersPanel.Show();
-
+            
             var playerTransform = player.transform;
 
             _cinemachineFreeLook.LookAt = playerTransform;
@@ -204,8 +198,14 @@ namespace _Project.Scripts.Level
             PlayerIsSpawned?.Invoke();
 
             _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(EnemyWaves);
-
+            
             _playerService.SpawnPlayer();
+
+            HealthBar = await ViewFactory.GetOrCreateHealthBar(player.Health);
+            HealthBar.Show();
+
+            ModifiersPanel = await ViewFactory.CreateModifiersPanel();
+            ModifiersPanel.Show();
         }
 
         private void SetBossNameLocalization()

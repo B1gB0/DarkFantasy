@@ -1,6 +1,6 @@
 {
   "Gold": 220,
-  "AcumulatedScore": 30,
+  "AcumulatedScore": 280,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 1,
   "DamageAttributeNumber": 0,
@@ -10,7 +10,7 @@
   "IsHardDifficultyUnlock": false,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
-  "IsMissionPanelVisited": false,
+  "IsMissionPanelVisited": true,
   "IsCampfireVisited": true,
   "EquippedWeaponId": "52d4bfbc-56db-4482-8748-cf228a8723f5",
   "EquippedArmorId": "a4345c06-6104-4f08-aa8a-b9e9621fa38a",
@@ -19,7 +19,6 @@
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {
-    "Meat": 2,
     "SpeedPotion": 1
   },
   "Equipment": [
@@ -37,27 +36,44 @@
       "Id": "a4345c06-6104-4f08-aa8a-b9e9621fa38a",
       "Type": 13,
       "Difficulty": 0
+    },
+    {
+      "Id": "b653385e-e056-4650-a192-4e4c20806dfd",
+      "Type": 4,
+      "Difficulty": 0
+    },
+    {
+      "Id": "fee0c39e-48b5-4739-9c51-8505601b505a",
+      "Type": 10,
+      "Difficulty": 0
+    },
+    {
+      "Id": "62c36e3b-9bd9-494d-a2fd-15636527958b",
+      "Type": 8,
+      "Difficulty": 0
+    },
+    {
+      "Id": "d73aa96a-7bdf-44ce-b17c-5af4e8fe1bbe",
+      "Type": 14,
+      "Difficulty": 0
+    },
+    {
+      "Id": "568527d6-7f3a-4c6c-9994-8d50104ae185",
+      "Type": 5,
+      "Difficulty": 0
     }
   ],
-  "EquippedItemType": 3,
+  "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 101.0,
-    "TargetHealth": 26.0,
+    "TargetHealth": 51.159977,
     "Armor": 3.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [],
-    "HealingModifier": {
-      "Timer": {
-        "TotalDuration": 5.0,
-        "RemainingTime": 5.0,
-        "IsActive": true,
-        "Progress01": 1.0
-      },
-      "HealPerSecond": 5.0
-    }
+    "HealingModifier": null
   },
   "stringKeys": [],
   "stringValues": [],
@@ -73,5 +89,5 @@
     false,
     false
   ],
-  "idSave": 129
+  "idSave": 147
 }
