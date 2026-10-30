@@ -74,15 +74,29 @@ namespace _Project.Scripts.Player
 
         private void Move(Vector3 moveDirection)
         {
-            Vector3 velocity = moveDirection * _player.PlayerCharacteristics.GetCurrentMoveSpeed();
+            float currentSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
+            Vector3 velocity = moveDirection * currentSpeed;
             
             float rayLength = RayLength; 
             Vector3 rayStart = _player.transform.position + Vector3.up * HeightOffset;
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
             {
-                velocity = Vector3.ProjectOnPlane(velocity, hit.normal);
+                // Проецируем скорость на плоскость
+                Vector3 projectedVelocity = Vector3.ProjectOnPlane(velocity, hit.normal);
                 
+                // ВАЖНО: Если мы куда-то движемся (а не просто падаем), 
+                // восстанавливаем исходную скорость движения по склону.
+                if (projectedVelocity.sqrMagnitude > MinMagnitude)
+                {
+                    velocity = projectedVelocity.normalized * currentSpeed;
+                }
+                else
+                {
+                    velocity = projectedVelocity;
+                }
+                
+                // Добавляем гравитацию, чтобы игрок прилипал к земле
                 if (velocity.y < MinValue)
                 {
                     velocity.y -= Gravity;
@@ -108,7 +122,7 @@ namespace _Project.Scripts.Player
                     Time.fixedDeltaTime * _player.PlayerCharacteristics.RotationSpeed);
             }
         }
-        
+
         private void EnterAttack()
         {
             _stateMachine.SwitchState(StateId.Attack);

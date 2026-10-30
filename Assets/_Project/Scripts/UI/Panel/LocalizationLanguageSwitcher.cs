@@ -10,6 +10,9 @@ namespace _Project.Scripts.UI.Panel
     {
         private const string LanguagePrefsKey = "SelectedLanguage";
         
+        private const int MinIndex = 0;
+        private const int IndexFactor = 1;
+        
         private readonly List<string> _languages = new () { "en", "ru", "tr" };
 
         [SerializeField] private Button _priviousButton;
@@ -29,21 +32,14 @@ namespace _Project.Scripts.UI.Panel
         {
             string savedLang = PlayerPrefs.GetString(LanguagePrefsKey, string.Empty);
 
-            if (!string.IsNullOrEmpty(savedLang))
-            {
-                YG2.SwitchLanguage(savedLang);
-            }
-            else
-            {
-                YG2.SwitchLanguage(YG2.lang);
-            }
-            
+            YG2.SwitchLanguage(!string.IsNullOrEmpty(savedLang) ? savedLang : YG2.lang);
+
             string currentLang = YG2.lang.ToLower();
             _currentIndex = _languages.IndexOf(currentLang);
             
-            if (_currentIndex < 0) 
+            if (_currentIndex < MinIndex) 
             {
-                _currentIndex = 0;
+                _currentIndex = MinIndex;
                 YG2.SwitchLanguage(_languages[_currentIndex]);
             }
             
@@ -58,8 +54,8 @@ namespace _Project.Scripts.UI.Panel
 
         private void SetNextLanguage()
         {
-            if (_currentIndex == _languages.Count - 1)
-                _currentIndex = 0;
+            if (_currentIndex == _languages.Count - IndexFactor)
+                _currentIndex = MinIndex;
             else
                 _currentIndex++;
 
@@ -68,8 +64,8 @@ namespace _Project.Scripts.UI.Panel
 
         private void SetPreviousLanguage()
         {
-            if (_currentIndex == 0)
-                _currentIndex = _languages.Count - 1;
+            if (_currentIndex == MinIndex)
+                _currentIndex = _languages.Count - IndexFactor;
             else
                 _currentIndex--;
 

@@ -1036,6 +1036,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 830422710020974198, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 850247463356895956, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
