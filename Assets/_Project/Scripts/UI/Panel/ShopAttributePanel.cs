@@ -175,6 +175,11 @@ namespace _Project.Scripts.UI.Panel
             
             YG2.SaveProgress();
             _currencyService.SaveGold();
+            
+            foreach (var view in _attributeViews)
+            {
+                view.SetCurrencyColor(_currencyService.Gold);
+            }
         }
     }
 }

@@ -153,6 +153,7 @@ MonoBehaviour:
   _smoothingAngle: 30
   _transitionSpeed: 4
   _heightOffset: 0.5
+  _startOffset: 0.3
+  _endOffset: 0.05
   _scrollSpeed: 0.8
   _lineWidth: 0.3
-  _arrowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

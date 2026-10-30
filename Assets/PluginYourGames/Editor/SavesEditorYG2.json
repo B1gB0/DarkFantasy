@@ -1,73 +1,31 @@
 {
-  "Gold": 515,
-  "AcumulatedScore": 1105,
+  "Gold": 30,
+  "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
-  "IsMediumDifficultyUnlock": true,
+  "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": true,
-  "IsInventoryShopVisited": true,
-  "IsMissionPanelVisited": true,
-  "IsCampfireVisited": true,
-  "IsCampfireHealed": true,
-  "EquippedWeaponId": "cd43e13f-24e8-4ee7-a153-fa8bf00492c4",
+  "IsAttributeShopVisited": false,
+  "IsInventoryShopVisited": false,
+  "IsMissionPanelVisited": false,
+  "IsCampfireVisited": false,
+  "IsCampfireHealed": false,
+  "EquippedWeaponId": null,
   "EquippedArmorId": null,
   "EquippedRingId": null,
-  "CompletedLow": [
-    "graveyard",
-    "banditCamp",
-    "castle"
-  ],
+  "CompletedLow": [],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {
-    "SpeedPotion": 2
-  },
-  "Equipment": [
-    {
-      "Id": "060907a1-7e82-4c4f-83b2-930a9d2e9b1d",
-      "Type": 8,
-      "Difficulty": 0
-    },
-    {
-      "Id": "7582cdc3-82d6-4d1f-bb46-c42e7368caec",
-      "Type": 5,
-      "Difficulty": 0
-    },
-    {
-      "Id": "7019c813-d214-4940-8500-1852154d4339",
-      "Type": 4,
-      "Difficulty": 0
-    },
-    {
-      "Id": "305cb3d1-8fd1-4da7-8639-715f12bb8143",
-      "Type": 10,
-      "Difficulty": 0
-    },
-    {
-      "Id": "536c1c06-55ac-4ca4-bec9-cb26bcfff676",
-      "Type": 14,
-      "Difficulty": 0
-    },
-    {
-      "Id": "193bdd29-98a0-452c-81ac-f467272c3d1d",
-      "Type": 15,
-      "Difficulty": 0
-    },
-    {
-      "Id": "cd43e13f-24e8-4ee7-a153-fa8bf00492c4",
-      "Type": 12,
-      "Difficulty": 0
-    }
-  ],
+  "Consumables": {},
+  "Equipment": [],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 75.27562,
+    "TargetHealth": 75.49019,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -89,5 +47,5 @@
     false,
     false
   ],
-  "idSave": 55
+  "idSave": 7
 }

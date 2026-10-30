@@ -13,6 +13,10 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private float _smoothingAngle = 30f;
         [SerializeField] private float _transitionSpeed = 4f;
         [SerializeField] private float _heightOffset = 0.5f;
+        
+        [Header("Offset Settings")]
+        [SerializeField] private float _startOffset = 1.5f;
+        [SerializeField] private float _endOffset = 0.5f;
 
         [Header("Arrow Animation")]
         [SerializeField] private float _scrollSpeed = 0.8f;
@@ -115,6 +119,17 @@ namespace _Project.Scripts.UI.View
                     _lineRenderer.enabled = false;
                     return;
                 }
+                
+                Vector3 start = _path.corners[0];
+                Vector3 next = _path.corners[1];
+                _path.corners[0] = Vector3.MoveTowards(start, next, _startOffset);
+                
+                if (_path.corners.Length > 2)
+                {
+                    Vector3 end = _path.corners[^1];
+                    Vector3 prev = _path.corners[^2];
+                    _path.corners[^1] = Vector3.MoveTowards(end, prev, _endOffset);
+                }
 
                 _smoothedPath.Clear();
                 _smoothedPath.Add(_path.corners[0]);
@@ -123,7 +138,7 @@ namespace _Project.Scripts.UI.View
                 {
                     Vector3 prev = _path.corners[i - 1];
                     Vector3 curr = _path.corners[i];
-                    Vector3 next = _path.corners[i + 1];
+                    next = _path.corners[i + 1];
 
                     Vector3 dir1 = (curr - prev).normalized;
                     Vector3 dir2 = (next - curr).normalized;
