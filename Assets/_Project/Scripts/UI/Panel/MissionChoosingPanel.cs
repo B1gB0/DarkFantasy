@@ -32,6 +32,7 @@ namespace _Project.Scripts.UI.Panel
         private ICurrencyService _currencyService;
         private IProgressionService _progressionService;
         private IUILocalizationService _uiLocalizationService;
+        private IPlayerService _playerService;
 
         private int _difficultyIndex;
 
@@ -44,13 +45,15 @@ namespace _Project.Scripts.UI.Panel
             MissionService missionService,
             ICurrencyService currencyService,
             IProgressionService progressionService,
-            IUILocalizationService uiLocalizationService)
+            IUILocalizationService uiLocalizationService,
+            IPlayerService playerService)
         {
             _tweenAnimationService = tweenAnimationService;
             _missionService = missionService;
             _currencyService = currencyService;
             _progressionService = progressionService;
             _uiLocalizationService = uiLocalizationService;
+            _playerService = playerService;
         }
 
         private void Start()
@@ -89,6 +92,8 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Show()
         {
+            _playerService.Player.InputController.LockPlayerMovement();
+            
             _difficultyIndex = (int)_progressionService.CurrentDifficulty;
 
             RefreshMissions();
@@ -99,6 +104,7 @@ namespace _Project.Scripts.UI.Panel
 
         public override void Hide()
         {
+            _playerService.Player.InputController.UnlockPlayerMovement();
             _tweenAnimationService.AnimateScale(transform, true);
         }
 
