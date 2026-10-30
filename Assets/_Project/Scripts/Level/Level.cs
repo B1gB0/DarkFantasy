@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
-using _Project.Scripts.Game.Constant;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Level.Spawners;
 using _Project.Scripts.Player;
@@ -15,7 +14,6 @@ using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
-using YG;
 
 namespace _Project.Scripts.Level
 {
@@ -30,8 +28,8 @@ namespace _Project.Scripts.Level
         private const float MinValue = 0f;
         private const int MinIndex = 0;
 
-        [Header("EnemyWaves")] [SerializeField]
-        protected float SpawnWaveOfEnemyDelay = 10f;
+        [Header("EnemyWaves")] 
+        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
 
         [SerializeField] protected List<EnemyWave> EnemyWaves;
         [SerializeField] protected LootSpawner LootSpawner;
@@ -188,7 +186,13 @@ namespace _Project.Scripts.Level
                 _levelInitData.PlayerSpawnPosition);
 
             var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
-            player.Construct(playerCharacteristics, _particleEffectsService, _floatingTextService);
+            
+            player.Construct(
+                playerCharacteristics,
+                _particleEffectsService,
+                _floatingTextService);
+            
+            player.Initialize();
             
             var playerTransform = player.transform;
 

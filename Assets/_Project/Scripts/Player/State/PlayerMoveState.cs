@@ -15,6 +15,7 @@ namespace _Project.Scripts.Player
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
+        private readonly Transform _cameraTransform;
 
         private float _currentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
@@ -27,6 +28,7 @@ namespace _Project.Scripts.Player
             _player = player;
             _stateMachine = _player.StateMachine;
             _playerAnimatedState = _player.PlayerAnimatedState;
+            _cameraTransform = UnityEngine.Camera.main.transform;
         }
 
         public StateId IdState => StateId.Move;
@@ -46,8 +48,8 @@ namespace _Project.Scripts.Player
 
         public void FixedUpdate()
         {
-            Vector3 camForward = UnityEngine.Camera.main.transform.forward;
-            Vector3 camRight = UnityEngine.Camera.main.transform.right;
+            Vector3 camForward = _cameraTransform.forward;
+            Vector3 camRight = _cameraTransform.right;
 
             camForward.y = MinValue;
             camRight.y = MinValue;
@@ -82,11 +84,8 @@ namespace _Project.Scripts.Player
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
             {
-                // Проецируем скорость на плоскость
                 Vector3 projectedVelocity = Vector3.ProjectOnPlane(velocity, hit.normal);
                 
-                // ВАЖНО: Если мы куда-то движемся (а не просто падаем), 
-                // восстанавливаем исходную скорость движения по склону.
                 if (projectedVelocity.sqrMagnitude > MinMagnitude)
                 {
                     velocity = projectedVelocity.normalized * currentSpeed;
@@ -96,7 +95,6 @@ namespace _Project.Scripts.Player
                     velocity = projectedVelocity;
                 }
                 
-                // Добавляем гравитацию, чтобы игрок прилипал к земле
                 if (velocity.y < MinValue)
                 {
                     velocity.y -= Gravity;

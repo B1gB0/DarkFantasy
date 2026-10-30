@@ -32,6 +32,8 @@ namespace _Project.Scripts.Player.Core
         private PlayerMoveState _playerMoveState;
         private PlayerRollState _playerRollState;
         private PlayerSitState _playerSitState;
+        
+        private Transform  _cameraTransform;
 
         public Animator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
@@ -43,11 +45,6 @@ namespace _Project.Scripts.Player.Core
         public PlayerCharacteristics PlayerCharacteristics { get; private set; }
 
         public bool CanFollow { get; private set; } = true;
-
-        private void Awake()
-        {
-            Initialize();
-        }
 
         private void OnEnable()
         {
@@ -92,6 +89,34 @@ namespace _Project.Scripts.Player.Core
 
             Health.IsSpawnedHealingText += _floatingTextService.OnSpawnFloatingText;
         }
+        
+        public void Initialize()
+        {
+            _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
+            _inputController = GetComponent<InputController>();
+            _stateMachine = GetComponent<PlayerStateMachine>();
+
+            _stateMachine.Initialize(this);
+
+            _playerAnimatedState = new PlayerAnimatedState(Animator);
+
+            _playerIdleState = new PlayerIdleState(this);
+            _playerAttackState = new PlayerAttackState(this);
+            _playerMoveState = new PlayerMoveState(this);
+            _playerRollState = new PlayerRollState(this);
+            _playerSitState = new PlayerSitState(this);
+
+            _stateMachine.AddState(_playerIdleState);
+            _stateMachine.AddState(_playerMoveState);
+            _stateMachine.AddState(_playerRollState);
+            _stateMachine.AddState(_playerAttackState);
+            _stateMachine.AddState(_playerSitState);
+
+            _stateMachine.SwitchState(StateId.Idle);
+
+            _inputController.OnUnlockController += OnUnlockController;
+        }
 
         public void ChangeFollowEnemyState(bool canFollow)
         {
@@ -127,34 +152,6 @@ namespace _Project.Scripts.Player.Core
         {
             if (_particleEffectsService != null && Health != null && Health.HitPoint != null)
                 _particleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
-        }
-
-        private void Initialize()
-        {
-            _animator = GetComponent<Animator>();
-            _rigidbody = GetComponent<Rigidbody>();
-            _inputController = GetComponent<InputController>();
-            _stateMachine = GetComponent<PlayerStateMachine>();
-
-            _stateMachine.Initialize(this);
-
-            _playerAnimatedState = new PlayerAnimatedState(Animator);
-
-            _playerIdleState = new PlayerIdleState(this);
-            _playerAttackState = new PlayerAttackState(this);
-            _playerMoveState = new PlayerMoveState(this);
-            _playerRollState = new PlayerRollState(this);
-            _playerSitState = new PlayerSitState(this);
-
-            _stateMachine.AddState(_playerIdleState);
-            _stateMachine.AddState(_playerMoveState);
-            _stateMachine.AddState(_playerRollState);
-            _stateMachine.AddState(_playerAttackState);
-            _stateMachine.AddState(_playerSitState);
-
-            _stateMachine.SwitchState(StateId.Idle);
-
-            _inputController.OnUnlockController += OnUnlockController;
         }
 
         private void OnUnlockController()
