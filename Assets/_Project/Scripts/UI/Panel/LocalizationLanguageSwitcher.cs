@@ -24,19 +24,28 @@ namespace _Project.Scripts.UI.Panel
             _priviousButton.onClick.AddListener(SetPreviousLanguage);
             _nextButton.onClick.AddListener(SetNextLanguage);
         }
-
+        
         private void Awake()
         {
-            if (PlayerPrefs.HasKey(LanguagePrefsKey))
+            string savedLang = PlayerPrefs.GetString(LanguagePrefsKey, string.Empty);
+
+            if (!string.IsNullOrEmpty(savedLang))
             {
-                string savedLang = PlayerPrefs.GetString(LanguagePrefsKey);
                 YG2.SwitchLanguage(savedLang);
+            }
+            else
+            {
+                YG2.SwitchLanguage(YG2.lang);
             }
             
             string currentLang = YG2.lang.ToLower();
             _currentIndex = _languages.IndexOf(currentLang);
             
-            if (_currentIndex < 0) _currentIndex = 0;
+            if (_currentIndex < 0) 
+            {
+                _currentIndex = 0;
+                YG2.SwitchLanguage(_languages[_currentIndex]);
+            }
             
             OnLanguageChanged?.Invoke();
         }
