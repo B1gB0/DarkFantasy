@@ -1,14 +1,14 @@
 {
-  "Gold": 30,
+  "Gold": 0,
   "AcumulatedScore": 30,
   "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 0,
-  "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 0,
+  "HealthAttributeNumber": 1,
+  "DamageAttributeNumber": 1,
+  "ArmorAttributeNumber": 1,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": false,
+  "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": false,
   "IsMissionPanelVisited": false,
   "IsCampfireVisited": false,
@@ -24,10 +24,10 @@
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 100.0,
-    "TargetHealth": 75.49019,
-    "Armor": 2.0,
-    "Damage": 5.0,
+    "MaxHealth": 101.0,
+    "TargetHealth": 76.24509,
+    "Armor": 3.0,
+    "Damage": 6.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [],
@@ -47,5 +47,5 @@
     false,
     false
   ],
-  "idSave": 7
+  "idSave": 19
 }

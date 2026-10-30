@@ -2469,7 +2469,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Difficulty
+  m_text: Zorluk
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2effcdb6285e74845a93ceca4f875bff, type: 2}
@@ -3532,7 +3532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Graveyard
+  m_text: "\u041A\u043B\u0430\u0434\u0431\u0438\u0449\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0494460a70a1a1240ba1623f3bd46837, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2effcdb6285e74845a93ceca4f875bff, type: 2}
