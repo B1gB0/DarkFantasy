@@ -62,7 +62,7 @@ namespace _Project.Scripts.UI.View
                     break;
                 case InteractViewType.SitDown:
                     _sitDownText.gameObject.SetActive(true);
-                    _descriptionText.gameObject.SetActive(true);
+                    _descriptionText.gameObject.SetActive(!YG2.saves.IsCampfireHealed);
                     break;
                 case InteractViewType.StandUp:
                     _standUpText.gameObject.SetActive(true);

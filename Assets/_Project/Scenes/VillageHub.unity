@@ -2459,6 +2459,14 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6318683689405585893, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318683689405585893, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6368226623104823146, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_CastShadows
       value: 0

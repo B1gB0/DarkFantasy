@@ -154,6 +154,7 @@ namespace _Project.Scripts.Level
                 YG2.saves.IsMissionPanelVisited = true;
             }
 
+            YG2.saves.IsCampfireHealed = false;
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }

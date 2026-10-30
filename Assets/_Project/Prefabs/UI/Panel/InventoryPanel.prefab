@@ -2734,6 +2734,22 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 304105773277355320, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 304105773277355320, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 304105773277355320, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 304105773277355320, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -294
+      objectReference: {fileID: 0}
     - target: {fileID: 322181638567831978, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -2777,6 +2793,22 @@ PrefabInstance:
     - target: {fileID: 3730558885210725464, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908317095906455129, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908317095906455129, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908317095906455129, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1355
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908317095906455129, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -142.0566
       objectReference: {fileID: 0}
     - target: {fileID: 4200734339280639318, guid: 0f1d8c273452064459c92e54471ea755, type: 3}
       propertyPath: m_RaycastTarget
