@@ -106,7 +106,13 @@ namespace _Project.Scripts.Player
             }
 
             _player.Rigidbody.velocity = velocity;
-            _playerAnimatedState.OnMove(_currentSpeed);
+            
+            float maxSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
+            float safeMaxSpeed = Mathf.Max(0.01f, maxSpeed);
+            
+            float normalizedSpeed = _currentSpeed / safeMaxSpeed;
+            
+            _playerAnimatedState.OnMove(normalizedSpeed); 
         }
 
         private void Rotate(Vector3 moveDirection)

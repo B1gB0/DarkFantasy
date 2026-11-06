@@ -32,6 +32,7 @@ namespace _Project.Scripts.Player
 
         public void Enter()
         {
+            _anim.OnMove(0f); 
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
             
             float animationSpeed = _player.PlayerCharacteristics?.GetAttackSpeedMultiplier() ?? DefaultAnimationSpeed;
@@ -44,6 +45,8 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
+            _anim.OnMove(0f);
+            
             AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(MinValue);
             if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
             {

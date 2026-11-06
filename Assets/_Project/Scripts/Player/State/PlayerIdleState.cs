@@ -25,6 +25,8 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
+            _player.PlayerAnimatedState.OnMove(MinValue);
+            
             if (_player.InputController.IsRollInputPerformed)
             {
                 _stateMachine.SwitchState(StateId.Roll);

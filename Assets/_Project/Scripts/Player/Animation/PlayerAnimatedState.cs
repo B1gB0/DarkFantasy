@@ -4,48 +4,57 @@ namespace _Project.Scripts.Player.Animation
 {
     public class PlayerAnimatedState
     {
-        protected readonly Animator Animator;
-        protected readonly PlayerAnimationId PlayerAnimationId;
+        private const float MultiplierSpeed = 5f;
+
+        private readonly Animator _animator;
+        private readonly PlayerAnimationId _playerAnimationId;
 
         public PlayerAnimatedState(Animator animator)
         {
-            Animator = animator;
-            PlayerAnimationId = new PlayerAnimationId();
+            _animator = animator;
+            _playerAnimationId = new PlayerAnimationId();
         }
 
         public void OnMove(float speed)
         {
-            Animator.SetFloat(PlayerAnimationId.Run, speed);
+            float currentSpeed = _animator.GetFloat(_playerAnimationId.Run);
+            
+            float smoothedSpeed = Mathf.MoveTowards(
+                currentSpeed, 
+                speed,
+                Time.deltaTime * MultiplierSpeed);
+    
+            _animator.SetFloat(_playerAnimationId.Run, smoothedSpeed);
         }
 
         public void OnAttack(bool isAttacking)
         {
-            Animator.SetBool(PlayerAnimationId.Attack, isAttacking);
+            _animator.SetBool(_playerAnimationId.Attack, isAttacking);
         }
 
         public void OnComboChanged(int step)
         {
-            Animator.SetInteger(PlayerAnimationId.ComboStep, step);
+            _animator.SetInteger(_playerAnimationId.ComboStep, step);
         }
 
         public void OnRoll()
         {
-            Animator.SetTrigger(PlayerAnimationId.Roll);
+            _animator.SetTrigger(_playerAnimationId.Roll);
         }
 
         public void ChangeAnimationSpeed(float speed)
         {
-            Animator.speed = speed;
+            _animator.speed = speed;
         }
         
         public void OnSitDown()
         {
-            Animator.SetTrigger(PlayerAnimationId.SitDown);
+            _animator.SetTrigger(_playerAnimationId.SitDown);
         }
 
         public void OnStandUp()
         {
-            Animator.SetTrigger(PlayerAnimationId.StandUp);
+            _animator.SetTrigger(_playerAnimationId.StandUp);
         }
     }
 }

@@ -28,6 +28,7 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.HitBox.enabled = false;
+            
             Vector2 moveInput = _player.InputController.MoveDirection;
 
             Vector3 camForward = UnityEngine.Camera.main.transform.forward;
@@ -64,7 +65,17 @@ namespace _Project.Scripts.Player
             _animationSystem.OnRoll();
         }
 
-        public void Update() { }
+        public void Update()
+        {
+            AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Roll") && stateInfo.normalizedTime >= 0.8f)
+            {
+                if (_player.InputController.IsMoveInputPerformed)
+                {
+                    _player.StateMachine.SwitchState(StateId.Move);
+                }
+            }
+        }
 
         public void FixedUpdate()
         {

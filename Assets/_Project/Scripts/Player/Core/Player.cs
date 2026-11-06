@@ -144,7 +144,7 @@ namespace _Project.Scripts.Player.Core
         }
 
         public void AnimationEvent_EndRoll()
-        {
+        { 
             _stateMachine.SwitchState(InputController.IsMoveInputPerformed ? StateId.Move : StateId.Idle);
         }
 
