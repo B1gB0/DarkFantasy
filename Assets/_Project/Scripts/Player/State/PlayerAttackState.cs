@@ -9,13 +9,18 @@ namespace _Project.Scripts.Player
         private const int MaxCombo = 3;
         private const int MinValue = 0;
         private const int StartCounter = 1;
+        
         private const float DefaultAnimationSpeed = 1f;
         private const float FallbackEndThreshold = 0.95f;
+        private const float LungeForce = 7f;
+        private const float MultiplierLungeForce = 20f;
 
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _anim;
         private readonly PlayerStateMachine _stateMachine;
+        private readonly Transform _cameraTransform;
 
+        private float _currentLungeForce;
         private bool _isComboWindowOpen;
         private bool _isAttackBuffered;
         private int _comboCounter;
@@ -26,14 +31,38 @@ namespace _Project.Scripts.Player
             _player = player;
             _anim = player.PlayerAnimatedState;
             _stateMachine = player.StateMachine;
+            
+            _cameraTransform = UnityEngine.Camera.main.transform;
         }
 
         public StateId IdState => StateId.Attack;
 
         public void Enter()
         {
-            _anim.OnMove(0f); 
+            _anim.OnMove(MinValue); 
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
+            
+            Vector2 input = _player.InputController.MoveDirection;
+            
+            if (input.sqrMagnitude > 0.01f)
+            {
+                _currentLungeForce = LungeForce;
+                
+                Vector3 camForward = _cameraTransform.forward;
+                camForward.y = MinValue;
+                camForward.Normalize();
+                
+                Vector3 camRight = _cameraTransform.right;
+                camRight.y = MinValue;
+                camRight.Normalize();
+        
+                Vector3 attackDir = camForward * input.y + camRight * input.x;
+                _player.transform.rotation = Quaternion.LookRotation(attackDir);
+            }
+            else
+            {
+                _currentLungeForce = MinValue; 
+            }
             
             float animationSpeed = _player.PlayerCharacteristics?.GetAttackSpeedMultiplier() ?? DefaultAnimationSpeed;
             _anim.ChangeAnimationSpeed(animationSpeed);
@@ -45,7 +74,7 @@ namespace _Project.Scripts.Player
 
         public void Update()
         {
-            _anim.OnMove(0f);
+            _anim.OnMove(MinValue);
             
             AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(MinValue);
             if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
@@ -58,7 +87,21 @@ namespace _Project.Scripts.Player
                 _stateMachine.SwitchState(StateId.Roll);
         }
 
-        public void FixedUpdate() { }
+        public void FixedUpdate()
+        {
+            if (_currentLungeForce > 0.1f)
+            {
+                _player.Rigidbody.velocity =
+                    _player.transform.forward *
+                    _currentLungeForce +
+                    new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
+                
+                _currentLungeForce = Mathf.MoveTowards(
+                        _currentLungeForce,
+                        MinValue,
+                        Time.fixedDeltaTime * MultiplierLungeForce);
+            }
+        }
 
         public void Exit()
         {

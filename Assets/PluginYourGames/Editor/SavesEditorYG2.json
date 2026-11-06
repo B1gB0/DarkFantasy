@@ -1,6 +1,6 @@
 {
   "Gold": 255,
-  "AcumulatedScore": 430,
+  "AcumulatedScore": 660,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -58,7 +58,7 @@
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 104.0,
+    "TargetHealth": 57.8852463,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -80,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 94
+  "idSave": 108
 }
