@@ -1,31 +1,64 @@
 {
-  "Gold": 0,
-  "AcumulatedScore": 15,
+  "Gold": 255,
+  "AcumulatedScore": 430,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
-  "IsFirstLaunch": true,
+  "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": false,
   "IsHardDifficultyUnlock": false,
-  "IsAttributeShopVisited": false,
-  "IsInventoryShopVisited": false,
-  "IsMissionPanelVisited": false,
-  "IsCampfireVisited": false,
+  "IsAttributeShopVisited": true,
+  "IsInventoryShopVisited": true,
+  "IsMissionPanelVisited": true,
+  "IsCampfireVisited": true,
   "IsCampfireHealed": false,
-  "EquippedWeaponId": null,
-  "EquippedArmorId": null,
-  "EquippedRingId": null,
-  "CompletedLow": [],
+  "EquippedWeaponId": "8d357574-55ff-4c11-bc2b-f6542d5c8787",
+  "EquippedArmorId": "f09f32c7-e239-4b47-9b64-0d146a5737c9",
+  "EquippedRingId": "33cbf0b3-38a4-43f4-81d3-3d5f8288308c",
+  "CompletedLow": [
+    "graveyard"
+  ],
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {},
-  "Equipment": [],
+  "Equipment": [
+    {
+      "Id": "e206b220-9544-477a-b402-8483c8bb5fea",
+      "Type": 4,
+      "Difficulty": 0
+    },
+    {
+      "Id": "8d357574-55ff-4c11-bc2b-f6542d5c8787",
+      "Type": 10,
+      "Difficulty": 0
+    },
+    {
+      "Id": "f09f32c7-e239-4b47-9b64-0d146a5737c9",
+      "Type": 14,
+      "Difficulty": 0
+    },
+    {
+      "Id": "33cbf0b3-38a4-43f4-81d3-3d5f8288308c",
+      "Type": 8,
+      "Difficulty": 0
+    },
+    {
+      "Id": "19ba0de5-5f52-4ea8-a003-610bb818eb55",
+      "Type": 5,
+      "Difficulty": 0
+    },
+    {
+      "Id": "8f9b4cc9-1646-46ef-a327-ccbaaa35529c",
+      "Type": 12,
+      "Difficulty": 0
+    }
+  ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 83.33333,
+    "TargetHealth": 71.77359,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -47,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 5
+  "idSave": 38
 }
