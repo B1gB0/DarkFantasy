@@ -18,17 +18,22 @@ namespace _Project.Scripts.UI.View
 {
     public class DescriptionItemView : View
     {
+        private const float FactorPrice = 0.5f;
+        private const int MinValue = 0;
+        
         [SerializeField] private TMP_Text _description;
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _rarity;
         [SerializeField] private TMP_Text _equipText;
         [SerializeField] private TMP_Text _unEquipText;
+        [SerializeField] private TMP_Text _sellButtonText;
         
         [SerializeField] private Image _icon;
         
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _removeButton;
+        [SerializeField] private Button _sellButton;
 
         private AudioSoundsService _audioSoundsService;
         private IInventoryService _inventoryService;
@@ -37,6 +42,7 @@ namespace _Project.Scripts.UI.View
         private IProgressionService _progressionService;
         private IUILocalizationService  _uiLocalizationService;
         private IPauseService _pauseService;
+        private ICurrencyService _currencyService;
 
         private ItemData _currentTemplate;
         private Item _currentInstance;
@@ -52,7 +58,8 @@ namespace _Project.Scripts.UI.View
             IShopService shopService,
             IProgressionService progressionService,
             IUILocalizationService uiLocalizationService,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            ICurrencyService currencyService)
         {
             _audioSoundsService = audioSoundsService;
             _inventoryService = inventoryService;
@@ -61,6 +68,7 @@ namespace _Project.Scripts.UI.View
             _progressionService = progressionService;
             _uiLocalizationService =  uiLocalizationService;
             _pauseService = pauseService;
+            _currencyService = currencyService;
         }
 
         private void OnEnable()
@@ -72,6 +80,7 @@ namespace _Project.Scripts.UI.View
         {
             _equipButton.onClick.AddListener(OnEquippedButtonClicked);
             _removeButton.onClick.AddListener(OnRemoveButtonClicked);
+            _sellButton.onClick.AddListener(OnSellButtonClicked);
         }
 
         private void OnDisable()
@@ -83,6 +92,7 @@ namespace _Project.Scripts.UI.View
         {
             _equipButton.onClick.RemoveListener(OnEquippedButtonClicked);
             _removeButton.onClick.RemoveListener(OnRemoveButtonClicked);
+            _sellButton.onClick.RemoveListener(OnSellButtonClicked);
             transform.DOKill();
         }
 
@@ -109,6 +119,7 @@ namespace _Project.Scripts.UI.View
 
             _description.text = GetLocalizedDescription(template);
             UpdateEquipButtonState();
+            UpdateSellButtonText(template);
         }
 
         public void SetEquipment(ItemData template, Item instance)
@@ -122,6 +133,7 @@ namespace _Project.Scripts.UI.View
 
             _description.text = BuildEquipmentStats(template, instance);
             UpdateEquipButtonState();
+            UpdateSellButtonText(template);
         }
 
         private void SetName(ItemData data)
@@ -151,6 +163,22 @@ namespace _Project.Scripts.UI.View
                 LocalizationCode.Tr => data.DescriptionTr,
                 _ => data.DescriptionEn
             };
+        }
+        
+        private void UpdateSellButtonText(ItemData template)
+        {
+            if (template == null) return;
+            
+            int sellPrice = Mathf.RoundToInt(template.Price * FactorPrice);
+            
+            if (sellPrice <= MinValue)
+            {
+                _sellButton.gameObject.SetActive(false);
+                return;
+            }
+            
+            _sellButtonText.SetText(sellPrice.ToString());
+            _sellButton.gameObject.SetActive(true);
         }
 
         private string BuildEquipmentStats(ItemData template, Item instance)
@@ -282,6 +310,37 @@ namespace _Project.Scripts.UI.View
 
             Hide();
 
+            OnItemDeleted?.Invoke();
+        }
+        
+        private void OnSellButtonClicked()
+        {
+            if (_currentTemplate == null) return;
+            
+            int sellPrice = Mathf.RoundToInt(_currentTemplate.Price * FactorPrice);
+            
+            if (sellPrice <= MinValue) 
+            {
+                Debug.LogWarning("Этот предмет нельзя продать за ноль монет.");
+                return; 
+            }
+
+            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            
+            _currencyService.AddGold(sellPrice);
+            _currencyService.SaveGold();
+            
+            if (_currentTemplate.Kind == ItemKind.Equipment)
+            {
+                if (_currentInstance == null) return;
+                _inventoryService.RemoveEquipment(_currentInstance.Id);
+            }
+            else if (_currentTemplate.Kind == ItemKind.Consumable)
+            {
+                _inventoryService.RemoveAllOfType(_currentTemplate.Type);
+            }
+            
+            Hide();
             OnItemDeleted?.Invoke();
         }
         
