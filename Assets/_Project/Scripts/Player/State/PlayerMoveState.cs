@@ -16,6 +16,8 @@ namespace _Project.Scripts.Player
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
         private readonly Transform _cameraTransform;
+        
+        private Vector3 _cachedMoveDirection;
 
         private float _currentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
@@ -41,28 +43,36 @@ namespace _Project.Scripts.Player
         public void Update()
         {
             if (_player.InputController.IsRollInputPerformed)
+            {
                 _stateMachine.SwitchState(StateId.Roll);
-            if (_player.InputController.IsMoveInputPerformed == false)
-                _stateMachine.SwitchState(StateId.Idle);
-        }
+                return;
+            }
 
-        public void FixedUpdate()
-        {
+            if (_player.InputController.IsMoveInputPerformed == false)
+            {
+                _stateMachine.SwitchState(StateId.Idle);
+                return;
+            }
+            
             Vector3 camForward = _cameraTransform.forward;
             Vector3 camRight = _cameraTransform.right;
 
             camForward.y = MinValue;
             camRight.y = MinValue;
-
+            
             camForward.Normalize();
             camRight.Normalize();
 
-            Vector3 moveDirection =
-                camForward * _player.InputController.MoveDirection.y
+            _cachedMoveDirection = 
+                camForward * _player.InputController.MoveDirection.y 
                 + camRight * _player.InputController.MoveDirection.x;
+            
+        }
 
-            Move(moveDirection);
-            Rotate(moveDirection);
+        public void FixedUpdate()
+        {
+            Move(_cachedMoveDirection);
+            Rotate(_cachedMoveDirection);
         }
 
         public void Exit()
