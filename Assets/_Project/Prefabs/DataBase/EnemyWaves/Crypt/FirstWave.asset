@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SkeletonEnemyCount>k__BackingField: 1
   <SkeletonHeavyArmorCount>k__BackingField: 0
-  <SkeletonRangerCount>k__BackingField: 0
+  <SkeletonRangerCount>k__BackingField: 1
   <PriestCount>k__BackingField: 0
+  <BanditCount>k__BackingField: 0
+  <BanditRangerCount>k__BackingField: 0
+  <BanditLeaderCount>k__BackingField: 0
+  <DarkLordCount>k__BackingField: 0
+  <PriestIsBoss>k__BackingField: 0
+  <BanditLeaderIsBoss>k__BackingField: 0
+  <DarkLordIsBoss>k__BackingField: 0
