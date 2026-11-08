@@ -1,6 +1,6 @@
 {
-  "Gold": 335,
-  "AcumulatedScore": 695,
+  "Gold": 615,
+  "AcumulatedScore": 1070,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -47,13 +47,18 @@
       "Id": "ec0a4a27-925d-42b6-8fd1-7819b4504461",
       "Type": 5,
       "Difficulty": 0
+    },
+    {
+      "Id": "1b29112c-a14d-406d-a4e1-0a64da2328d9",
+      "Type": 15,
+      "Difficulty": 0
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 86.31895,
+    "TargetHealth": 70.67542,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -75,5 +80,5 @@
     false,
     false
   ],
-  "idSave": 134
+  "idSave": 149
 }

@@ -25,6 +25,8 @@ namespace _Project.Scripts.Player
         private bool _isAttackBuffered;
         private int _comboCounter;
         private bool _fallbackEndInvoked;
+        
+        private Vector3 _lockedAttackDirection; 
 
         public PlayerAttackState(Core.Player player)
         {
@@ -44,24 +46,27 @@ namespace _Project.Scripts.Player
             
             Vector2 input = _player.InputController.MoveDirection;
             
-            if (input.sqrMagnitude > 0.01f)
+            if (input.sqrMagnitude > 0.01f || _player.InputController.IsMoveInputPerformed)
             {
                 _currentLungeForce = LungeForce;
                 
-                Vector3 camForward = _cameraTransform.forward;
-                camForward.y = MinValue;
-                camForward.Normalize();
+                // Берем направление от камеры
+                Vector3 attackDir = _cameraTransform.forward;
+                attackDir.y = 0f; 
+                attackDir.Normalize();
                 
-                Vector3 camRight = _cameraTransform.right;
-                camRight.y = MinValue;
-                camRight.Normalize();
-        
-                Vector3 attackDir = camForward * input.y + camRight * input.x;
-                _player.transform.rotation = Quaternion.LookRotation(attackDir);
+                if (attackDir.sqrMagnitude > 0.01f)
+                {
+                    _lockedAttackDirection = attackDir;
+                    
+                    _player.Rigidbody.rotation = Quaternion.LookRotation(_lockedAttackDirection);
+                    _player.Rigidbody.angularVelocity = Vector3.zero;
+                }
             }
             else
             {
                 _currentLungeForce = MinValue; 
+                _lockedAttackDirection = _player.transform.forward;
             }
             
             float animationSpeed = _player.PlayerCharacteristics?.GetAttackSpeedMultiplier() ?? DefaultAnimationSpeed;
@@ -92,8 +97,7 @@ namespace _Project.Scripts.Player
             if (_currentLungeForce > 0.1f)
             {
                 _player.Rigidbody.velocity =
-                    _player.transform.forward *
-                    _currentLungeForce +
+                    _lockedAttackDirection * _currentLungeForce +
                     new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
                 
                 _currentLungeForce = Mathf.MoveTowards(
