@@ -193,11 +193,9 @@ namespace _Project.Scripts.Level
                 _floatingTextService);
             
             player.Initialize();
-            
-            var playerTransform = player.transform;
 
-            _cinemachineFreeLook.LookAt = playerTransform;
-            _cinemachineFreeLook.Follow = playerTransform;
+            _cinemachineFreeLook.LookAt = player.CameraTarget;
+            _cinemachineFreeLook.Follow = player.CameraTarget;;
 
             PlayerIsSpawned?.Invoke();
 

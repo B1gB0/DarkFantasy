@@ -17183,6 +17183,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6620108802706336708, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_YDamping
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620108802706336708, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_ZDamping
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7547450375561724139, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_Lens.FarClipPlane
       value: 40
@@ -17248,13 +17256,13 @@ MonoBehaviour:
   m_MinimumDistanceFromTarget: 0.1
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
-  m_MinimumOcclusionTime: 0.2
+  m_MinimumOcclusionTime: 0.3
   m_CameraRadius: 0.1
   m_Strategy: 1
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 0.2
-  m_DampingWhenOccluded: 0.2
+  m_Damping: 0.3
+  m_DampingWhenOccluded: 0.3
   m_OptimalTargetDistance: 0
 --- !u!1001 &1946632558
 PrefabInstance:

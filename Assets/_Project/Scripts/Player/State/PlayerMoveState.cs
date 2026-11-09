@@ -130,10 +130,13 @@ namespace _Project.Scripts.Player
             if (moveDirection.sqrMagnitude > MinMagnitude)
             {
                 Quaternion target = Quaternion.LookRotation(moveDirection);
-                _player.transform.rotation = Quaternion.Slerp(
-                    _player.transform.rotation,
+                
+                Quaternion newRotation = Quaternion.Slerp(
+                    _player.Rigidbody.rotation,
                     target,
                     Time.fixedDeltaTime * _player.PlayerCharacteristics.RotationSpeed);
+            
+                _player.Rigidbody.MoveRotation(newRotation);
             }
         }
 

@@ -316,6 +316,7 @@ MonoBehaviour:
   <PlayerCollisionHandler>k__BackingField: {fileID: 7825282103344790764}
   <Sword>k__BackingField: {fileID: 7338495321699086787}
   <HitBox>k__BackingField: {fileID: 6367916540295168249}
+  <CameraTarget>k__BackingField: {fileID: 2312175108944572357}
   <RollSpeed>k__BackingField: 6
   <RollDistance>k__BackingField: 3
 --- !u!114 &608013755043256510

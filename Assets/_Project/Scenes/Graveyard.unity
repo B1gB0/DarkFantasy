@@ -4440,6 +4440,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FreeLook Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3917690313631845128, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_Damping
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3917690313631845128, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_DampingWhenOccluded
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3917690313631845128, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_MinimumOcclusionTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4212883452062109388, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4479,6 +4491,14 @@ PrefabInstance:
     - target: {fileID: 4212883452062109388, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620108802706336708, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_YDamping
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620108802706336708, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+      propertyPath: m_ZDamping
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
