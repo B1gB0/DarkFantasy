@@ -13,11 +13,16 @@ namespace _Project.Scripts.Camera
         private const string CameraSensitivity = nameof(CameraSensitivity);
         
         private const float MinValue = 0f;
-        private const float BaseMultiplier = 10; 
+        private const float MouseMultiplier = 10f; 
+        private const float JoystickMultiplier = 100f; 
 
         private IPlayerService _playerService;
 
         private bool _isConfigured;
+        
+        private bool _isInverted;
+        private float _sensitivity = 1.5f;
+        private bool _isMobile;
         
         [Inject]
         public void Construct(IPlayerService playerService)
@@ -25,9 +30,18 @@ namespace _Project.Scripts.Camera
             _playerService = playerService;
         }
 
+        private void Start()
+        {
+            ReloadSettings();
+            
+            _isMobile = YG2.envir.isMobile; 
+        }
+
         private void LateUpdate()
         {
             if (!TryGetDependencies(out var cam, out var input)) return;
+            
+            if (Time.timeScale == MinValue) return;
 
             if (!_isConfigured)
             {
@@ -38,14 +52,22 @@ namespace _Project.Scripts.Camera
             if (input.IsCameraRotating)
             {
                 var dir = input.CameraLookDirection;
-                bool inverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
-                float sign = inverted ? -1f : 1f;
+                float sign = _isInverted ? -1f : 1f;
                 
-                float sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, 1.5f);
+                float rotationDelta = 0f;
                 
-                float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * BaseMultiplier;
+                if (_isMobile)
+                {
+                    rotationDelta = dir.x * JoystickMultiplier * _sensitivity * sign * Time.deltaTime;
+                }
+                else
+                {
+                    float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * MouseMultiplier;
+                    
+                    rotationDelta = dir.x * pixelsToDegreesX * _sensitivity * sign;
+                }
                 
-                cam.m_XAxis.Value += dir.x * pixelsToDegreesX * sensitivity * sign;
+                cam.m_XAxis.Value += rotationDelta;
             }
             else
             {
@@ -53,6 +75,12 @@ namespace _Project.Scripts.Camera
             }
 
             cam.m_YAxis.m_InputAxisValue = MinValue;
+        }
+        
+        public void ReloadSettings()
+        {
+            _isInverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
+            _sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, 1.5f);
         }
 
         private bool TryGetDependencies(out CinemachineFreeLook cam, out InputController input)

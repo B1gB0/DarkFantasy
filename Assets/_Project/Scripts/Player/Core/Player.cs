@@ -14,7 +14,6 @@ namespace _Project.Scripts.Player.Core
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
         [field: SerializeField] public Sword Sword { get; private set; }
         [field: SerializeField] public Collider HitBox { get; private set; }
-        [field: SerializeField] public Transform CameraTarget { get; private set; }
         [field: SerializeField] public float RollSpeed { get; private set; } = 6f;
         [field: SerializeField] public float RollDistance { get; private set; } = 3f;
 

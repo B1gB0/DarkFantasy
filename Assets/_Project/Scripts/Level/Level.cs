@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Camera;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Enemy;
 using _Project.Scripts.Game.GameRoot;
@@ -27,15 +28,14 @@ namespace _Project.Scripts.Level
 
         private const float MinValue = 0f;
         private const int MinIndex = 0;
-
-        [Header("EnemyWaves")] 
+        
         [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
-
         [SerializeField] protected List<EnemyWave> EnemyWaves;
         [SerializeField] protected LootSpawner LootSpawner;
         
         [SerializeField] private int _limitEnemies;
         [SerializeField] private LevelInitData _levelInitData;
+        [SerializeField] private CameraTargetFollower _cameraTargetFollower;
 
         protected ViewFactory ViewFactory;
         protected UIStateMachine UIStateMachine;
@@ -194,8 +194,8 @@ namespace _Project.Scripts.Level
             
             player.Initialize();
 
-            _cinemachineFreeLook.LookAt = player.CameraTarget;
-            _cinemachineFreeLook.Follow = player.CameraTarget;;
+            _cinemachineFreeLook.LookAt = _cameraTargetFollower.transform;
+            _cinemachineFreeLook.Follow = _cameraTargetFollower.transform;
 
             PlayerIsSpawned?.Invoke();
 

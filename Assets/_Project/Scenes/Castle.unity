@@ -518,6 +518,74 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &630983124
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734225731402995559, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350567179385779697, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+      propertyPath: m_Name
+      value: CameraTargetFollower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+--- !u!114 &630983125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1903863993757969462, guid: d5ef0a4c9cbb6b149bc825bbd700ead4, type: 3}
+  m_PrefabInstance: {fileID: 630983124}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfeeb1d1b6164d0fbdec61b4f4033dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &684094723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1832,6 +1900,10 @@ PrefabInstance:
       propertyPath: EnemyWaves.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
+      propertyPath: _cameraTargetFollower
+      value: 
+      objectReference: {fileID: 630983125}
     - target: {fileID: 1196773012211167763, guid: 8f120daba21ce6d42b68f442e75c58a1, type: 3}
       propertyPath: EnemyWaves.Array.data[0]
       value: 
@@ -3672,3 +3744,4 @@ SceneRoots:
   - {fileID: 979533350}
   - {fileID: 856995670}
   - {fileID: 2134244795}
+  - {fileID: 630983124}
