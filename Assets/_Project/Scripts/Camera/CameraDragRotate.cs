@@ -13,7 +13,7 @@ namespace _Project.Scripts.Camera
         private const string CameraSensitivity = nameof(CameraSensitivity);
         
         private const float MinValue = 0f;
-        private const float MouseMultiplier = 10f; 
+        private const float MouseMultiplier = 0.3f; 
         private const float JoystickMultiplier = 100f; 
 
         private IPlayerService _playerService;
@@ -32,7 +32,7 @@ namespace _Project.Scripts.Camera
 
         private void Start()
         {
-            ReloadSettings();
+            LoadSettings();
             
             _isMobile = YG2.envir.isMobile; 
         }
@@ -62,9 +62,10 @@ namespace _Project.Scripts.Camera
                 }
                 else
                 {
-                    float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * MouseMultiplier;
+                    // float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * MouseMultiplier;
                     
-                    rotationDelta = dir.x * pixelsToDegreesX * _sensitivity * sign;
+                    rotationDelta = dir.x * MouseMultiplier * _sensitivity * sign;
+                    rotationDelta = Mathf.Clamp(rotationDelta, -10f, 10f);
                 }
                 
                 cam.m_XAxis.Value += rotationDelta;
@@ -76,8 +77,18 @@ namespace _Project.Scripts.Camera
 
             cam.m_YAxis.m_InputAxisValue = MinValue;
         }
+
+        public void ChangeMouseSensitivity(float value)
+        {
+            _sensitivity = value;
+        }
+
+        public void ChangeMouseInversion(bool isOn)
+        {
+            _isInverted = isOn;
+        }
         
-        public void ReloadSettings()
+        private void LoadSettings()
         {
             _isInverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
             _sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, 1.5f);

@@ -3125,6 +3125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 1943846510}
+  _cameraDragRotate: {fileID: 1943846511}
   _sceneUIRootPrefab: {fileID: 8280632318840729260, guid: 7946e8b4ea0712d4ea96dd45b0624cb1, type: 3}
   _viewFactory: {fileID: 409857819}
 --- !u!114 &409857819
@@ -17243,6 +17244,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 319d2fe34a804e245819465c9505ea59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1943846511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6923072638241832386, guid: 5e3f9ca071c98cd439857deb84e56ec7, type: 3}
+  m_PrefabInstance: {fileID: 1943846509}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315414289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1f81c83de301b4d939518d8abedb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1943846513

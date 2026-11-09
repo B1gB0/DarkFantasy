@@ -36,6 +36,7 @@ namespace _Project.Scripts.Game.GameRoot
         public GoldView GoldView => _goldView;
         public LocalizationLanguageSwitcher LocalizationLanguageSwitcher => _localizationLanguageSwitcher;
         public UISceneContainer UISceneContainer => _uiSceneContainer;
+        public SettingsPanel SettingsPanel => _settingsPanel;
 
         [Inject]
         private void Construct(AudioSoundsService audioSoundsService, IPauseService pauseService)

@@ -37,6 +37,8 @@ namespace _Project.Scripts.UI.Panel
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
 
+        public event Action<float> OnMouseSensitivityChanged;
+        public event Action<bool> OnMouseInversionChanged;
         public event Action OnBackToSceneButtonPressed;
 
         [Inject]
@@ -153,12 +155,16 @@ namespace _Project.Scripts.UI.Panel
         {
             PlayerPrefs.SetFloat(CameraSensitivity, sensitivity);
             PlayerPrefs.Save();
+            
+            OnMouseSensitivityChanged?.Invoke(sensitivity);
         }
 
         private void ChangeMouseInverted(bool isOn)
         {
             PlayerPrefs.SetInt(MouseInverted, isOn ? 1 : 0);
             PlayerPrefs.Save();
+            
+            OnMouseInversionChanged?.Invoke(isOn);
         }
     }
 }

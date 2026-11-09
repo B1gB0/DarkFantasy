@@ -1,4 +1,5 @@
 using _Project.Scripts.Audio.Sounds;
+using _Project.Scripts.Camera;
 using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
@@ -26,6 +27,7 @@ namespace _Project.Scripts.Game.Gameplay
         private const int NextOperationStep = 1;
 
         [SerializeField] private CinemachineFreeLook _freeLookCamera;
+        [SerializeField] private CameraDragRotate _cameraDragRotate;
         [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
         [SerializeField] private ViewFactory _viewFactory;
 
@@ -170,7 +172,9 @@ namespace _Project.Scripts.Game.Gameplay
             _cheatPanel = await _viewFactory.CreateCheatPanel();
             _uiScene.CheatButton.onClick.AddListener(_cheatPanel.Show);
 #endif
-
+            _uiRoot.SettingsPanel.OnMouseInversionChanged += _cameraDragRotate.ChangeMouseInversion;
+            _uiRoot.SettingsPanel.OnMouseSensitivityChanged += _cameraDragRotate.ChangeMouseSensitivity;
+            
             _playerService.Player.InputController.OnInventoryButtonPressed += _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed += uiRoot.UIRootButtons.Deactivate;
             _playerService.Player.InputController.OnInventoryButtonPressed += _level.HealthBar.Hide;
@@ -229,6 +233,8 @@ namespace _Project.Scripts.Game.Gameplay
 #if CHEATS
             _uiScene.CheatButton.onClick.RemoveListener(_cheatPanel.Show);
 #endif
+            _uiRoot.SettingsPanel.OnMouseInversionChanged -= _cameraDragRotate.ChangeMouseInversion;
+            _uiRoot.SettingsPanel.OnMouseSensitivityChanged -= _cameraDragRotate.ChangeMouseSensitivity;
             
             var scene = SceneManager.GetActiveScene();
 
