@@ -1,6 +1,6 @@
 {
-  "Gold": 320,
-  "AcumulatedScore": 965,
+  "Gold": 760,
+  "AcumulatedScore": 2245,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
@@ -16,11 +16,14 @@
   "EquippedWeaponId": null,
   "EquippedArmorId": null,
   "EquippedRingId": null,
-  "CompletedLow": [],
+  "CompletedLow": [
+    "graveyard"
+  ],
   "CompletedMedium": [],
   "CompletedHigh": [],
   "Consumables": {
-    "Meat": 1
+    "Meat": 1,
+    "SpeedPotion": 1
   },
   "Equipment": [
     {
@@ -57,13 +60,18 @@
       "Id": "45a828f7-e8b3-400b-893d-8364010d8eb5",
       "Type": 15,
       "Difficulty": 0
+    },
+    {
+      "Id": "65697818-0e32-471a-a570-2dcb7a985157",
+      "Type": 9,
+      "Difficulty": 0
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 41.17646,
+    "TargetHealth": 60.7843,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -85,5 +93,5 @@
     false,
     false
   ],
-  "idSave": 23
+  "idSave": 50
 }
