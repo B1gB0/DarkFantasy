@@ -325,7 +325,7 @@ namespace _Project.Scripts.UI.View
                 return; 
             }
 
-            _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
+            _audioSoundsService.PlaySound(SoundsType.BuyButtonSound).Forget();
             
             _currencyService.AddGold(sellPrice);
             _currencyService.SaveGold();

@@ -1,55 +1,60 @@
 {
-  "Gold": 615,
-  "AcumulatedScore": 1070,
+  "Gold": 320,
+  "AcumulatedScore": 965,
   "ExperiencePointsValue": 0,
   "HealthAttributeNumber": 0,
   "DamageAttributeNumber": 0,
   "ArmorAttributeNumber": 0,
   "IsFirstLaunch": false,
-  "IsMediumDifficultyUnlock": false,
+  "IsMediumDifficultyUnlock": true,
   "IsHardDifficultyUnlock": false,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
   "IsCampfireVisited": true,
   "IsCampfireHealed": false,
-  "EquippedWeaponId": "8d357574-55ff-4c11-bc2b-f6542d5c8787",
-  "EquippedArmorId": "f09f32c7-e239-4b47-9b64-0d146a5737c9",
-  "EquippedRingId": "33cbf0b3-38a4-43f4-81d3-3d5f8288308c",
-  "CompletedLow": [
-    "graveyard"
-  ],
+  "EquippedWeaponId": null,
+  "EquippedArmorId": null,
+  "EquippedRingId": null,
+  "CompletedLow": [],
   "CompletedMedium": [],
   "CompletedHigh": [],
-  "Consumables": {},
+  "Consumables": {
+    "Meat": 1
+  },
   "Equipment": [
     {
-      "Id": "e206b220-9544-477a-b402-8483c8bb5fea",
-      "Type": 4,
-      "Difficulty": 0
-    },
-    {
-      "Id": "8d357574-55ff-4c11-bc2b-f6542d5c8787",
+      "Id": "08733bf0-07db-4f29-b91c-88093016ec99",
       "Type": 10,
       "Difficulty": 0
     },
     {
-      "Id": "f09f32c7-e239-4b47-9b64-0d146a5737c9",
-      "Type": 14,
-      "Difficulty": 0
-    },
-    {
-      "Id": "33cbf0b3-38a4-43f4-81d3-3d5f8288308c",
+      "Id": "4c92b26f-47e9-4255-b07d-36c5bc298cd4",
       "Type": 8,
       "Difficulty": 0
     },
     {
-      "Id": "ec0a4a27-925d-42b6-8fd1-7819b4504461",
+      "Id": "1080f285-9538-4a36-a34b-659b47f43c4b",
+      "Type": 4,
+      "Difficulty": 0
+    },
+    {
+      "Id": "8958dd75-49cb-49a3-9052-3a92c9e961fe",
+      "Type": 14,
+      "Difficulty": 0
+    },
+    {
+      "Id": "eda59d7e-38b0-4925-b0df-2917c962867b",
       "Type": 5,
       "Difficulty": 0
     },
     {
-      "Id": "1b29112c-a14d-406d-a4e1-0a64da2328d9",
+      "Id": "35ffdabb-93ff-4674-beee-a0510542e563",
+      "Type": 12,
+      "Difficulty": 0
+    },
+    {
+      "Id": "45a828f7-e8b3-400b-893d-8364010d8eb5",
       "Type": 15,
       "Difficulty": 0
     }
@@ -58,7 +63,7 @@
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
     "MaxHealth": 100.0,
-    "TargetHealth": 104.0,
+    "TargetHealth": 41.17646,
     "Armor": 2.0,
     "Damage": 5.0,
     "MoveSpeed": 6.0,
@@ -80,5 +85,5 @@
     false,
     false
   ],
-  "idSave": 194
+  "idSave": 23
 }

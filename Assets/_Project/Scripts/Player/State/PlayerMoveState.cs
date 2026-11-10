@@ -18,7 +18,6 @@ namespace _Project.Scripts.Player
         private readonly Transform _cameraTransform;
         
         private Vector3 _cachedMoveDirection;
-        private Vector2 _lastInput; // Запоминаем прошлый ввод
 
         private float _currentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
@@ -39,7 +38,6 @@ namespace _Project.Scripts.Player
         public void Enter()
         {
             _player.InputController.OnAttackButtonPressed += EnterAttack;
-            _lastInput = Vector2.zero;
         }
 
         public void Update()
@@ -56,22 +54,19 @@ namespace _Project.Scripts.Player
                 return;
             }
             
-            Vector2 input = _player.InputController.MoveDirection;
+            Vector3 camForward = _cameraTransform.forward;
+            Vector3 camRight = _cameraTransform.right;
+
+            camForward.y = MinValue;
+            camRight.y = MinValue;
             
-            if (_lastInput == Vector2.zero || Vector2.Distance(input, _lastInput) > 0.1f)
-            {
-                Vector3 camForward = _cameraTransform.forward;
-                Vector3 camRight = _cameraTransform.right;
+            camForward.Normalize();
+            camRight.Normalize();
 
-                camForward.y = MinValue;
-                camRight.y = MinValue;
-                
-                camForward.Normalize();
-                camRight.Normalize();
-
-                _cachedMoveDirection = camForward * input.y + camRight * input.x;
-                _lastInput = input;
-            }
+            _cachedMoveDirection = 
+                camForward * _player.InputController.MoveDirection.y 
+                + camRight * _player.InputController.MoveDirection.x;
+            
         }
 
         public void FixedUpdate()
@@ -83,7 +78,9 @@ namespace _Project.Scripts.Player
         public void Exit()
         {
             _player.InputController.OnAttackButtonPressed -= EnterAttack;
+            
             _player.Rigidbody.velocity = Vector3.zero;
+            
             _playerAnimatedState.OnMove(MinValue); 
         }
 
@@ -122,6 +119,7 @@ namespace _Project.Scripts.Player
             
             float maxSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
             float safeMaxSpeed = Mathf.Max(0.01f, maxSpeed);
+            
             float normalizedSpeed = _currentSpeed / safeMaxSpeed;
             
             _playerAnimatedState.OnMove(normalizedSpeed); 
@@ -132,6 +130,7 @@ namespace _Project.Scripts.Player
             if (moveDirection.sqrMagnitude > MinMagnitude)
             {
                 Quaternion target = Quaternion.LookRotation(moveDirection);
+                
                 Quaternion newRotation = Quaternion.Slerp(
                     _player.Rigidbody.rotation,
                     target,

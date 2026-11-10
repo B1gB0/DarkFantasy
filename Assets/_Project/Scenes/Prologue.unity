@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 1}
+  m_FogColor: {r: 0.11698109, g: 0.11698109, b: 0.11698109, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.06
   m_LinearFogStart: 0
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1573759121}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1883,13 +1883,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573759120}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9659135, y: -0.0013100213, z: -0.2588157, w: 0.004889067}
+  m_LocalRotation: {x: -0.9997426, y: 0, z: 0, w: -0.022687184}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -179.42, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: -182.6, y: 0, z: 0}
 --- !u!4 &1631096415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7685812653837307404, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
@@ -3192,6 +3192,10 @@ PrefabInstance:
     - target: {fileID: 5131080242183834062, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148641664687752422, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5148641664687752422, guid: da8531f991e6e914f8ccd5e6025457d6, type: 3}
       propertyPath: m_StaticEditorFlags
