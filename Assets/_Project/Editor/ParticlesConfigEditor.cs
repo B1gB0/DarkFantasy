@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using _Project.Scripts.Effects;
 using UnityEditor;
@@ -67,7 +68,8 @@ namespace _Project.Editor
 
                 config.Particles.Sort((a, b) => string.Compare(
                     a.ParticleName,
-                    b.ParticleName));
+                    b.ParticleName,
+                    StringComparison.Ordinal));
 
                 EditorUtility.SetDirty(config);
             }

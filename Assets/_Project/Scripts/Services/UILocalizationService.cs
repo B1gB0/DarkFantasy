@@ -17,21 +17,13 @@ namespace _Project.Scripts.Services
 
         public bool IsInitiated { get; private set; }
 
-        [Inject]
-        public void Construct(IDataBaseService dataBaseService)
-        {
-            _dataBaseService = dataBaseService;
-        }
-
         public UniTask Init()
         {
             if (IsInitiated)
                 return UniTask.CompletedTask;
 
             foreach (var data in _dataBaseService.Content.UILocalizationData)
-            {
                 _uiLocalizationData.TryAdd(data.UITextType, data);
-            }
 
             IsInitiated = true;
 
@@ -42,7 +34,7 @@ namespace _Project.Scripts.Services
         {
             return _uiLocalizationData[type];
         }
-        
+
         public string GetLocalizedText(UITextType type)
         {
             if (!_uiLocalizationData.TryGetValue(type, out var data))
@@ -56,8 +48,14 @@ namespace _Project.Scripts.Services
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn,
+                _ => data.NameEn
             };
+        }
+
+        [Inject]
+        public void Construct(IDataBaseService dataBaseService)
+        {
+            _dataBaseService = dataBaseService;
         }
     }
 }

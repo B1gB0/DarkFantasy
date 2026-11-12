@@ -28,51 +28,30 @@ namespace _Project.Scripts.Services
         private const int DefaultCountObjectsInPool = 3;
 
         private readonly Dictionary<EnemyType, EnemyData> _enemiesData = new();
-
-        private IDataBaseService _dataBaseService;
-        private IPlayerService _playerService;
-        private IFloatingTextService _floatingTextService;
+        private ObjectPool<Arrow> _arrowProjectilePool;
         private AudioSoundsService _audioSoundsService;
-        private ParticleEffectsService _particleEffectsService;
-        private IExperiencePoints _experiencePoints;
-        private ICurrencyService _currencyService;
-        private IProgressionService _progressionService;
-
-        private EnemyInitData _enemyInitData;
-
-        private ObjectPool<Skeleton> _skeletonPool;
-        private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
-        private ObjectPool<SkeletonRanger> _skeletonRangerPool;
-        private ObjectPool<Priest> _priestPool;
+        private ObjectPool<BanditLeader> _banditLeaderPool;
         private ObjectPool<Bandit> _banditPool;
         private ObjectPool<BanditRanger> _banditRangerPool;
-        private ObjectPool<BanditLeader> _banditLeaderPool;
+        private ICurrencyService _currencyService;
         private ObjectPool<DarkLord> _darkLordPool;
-        private ObjectPool<Arrow> _arrowProjectilePool;
+
+        private IDataBaseService _dataBaseService;
+
+        private EnemyInitData _enemyInitData;
+        private IExperiencePoints _experiencePoints;
+        private IFloatingTextService _floatingTextService;
         private ObjectPool<Fireball> _magicBallProjectilePool;
+        private ParticleEffectsService _particleEffectsService;
+        private IPlayerService _playerService;
+        private ObjectPool<Priest> _priestPool;
+        private IProgressionService _progressionService;
+        private ObjectPool<SkeletonHeavyArmor> _skeletonHeavyArmorPool;
+
+        private ObjectPool<Skeleton> _skeletonPool;
+        private ObjectPool<SkeletonRanger> _skeletonRangerPool;
 
         public bool IsInitiated { get; private set; }
-
-        [Inject]
-        public void Construct(
-            IDataBaseService dataBaseService,
-            IPlayerService playerService,
-            AudioSoundsService audioSoundsService,
-            ParticleEffectsService particleEffectsService,
-            IFloatingTextService floatingTextService,
-            IExperiencePoints experiencePoints,
-            ICurrencyService currencyService,
-            IProgressionService progressionService)
-        {
-            _dataBaseService = dataBaseService;
-            _playerService = playerService;
-            _audioSoundsService = audioSoundsService;
-            _particleEffectsService = particleEffectsService;
-            _floatingTextService = floatingTextService;
-            _experiencePoints = experiencePoints;
-            _currencyService = currencyService;
-            _progressionService = progressionService;
-        }
 
         public UniTask Init()
         {
@@ -144,7 +123,7 @@ namespace _Project.Scripts.Services
             ApplyHealth(enemy, data, hpMul);
 
             var target = _playerService.Player.transform;
-            float damage = data.Damage * dmgMul;
+            var damage = data.Damage * dmgMul;
 
             enemy.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
             enemy.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
@@ -218,7 +197,7 @@ namespace _Project.Scripts.Services
             ApplyHealth(enemy, data, hpMul);
 
             var target = _playerService.Player.transform;
-            float damage = data.Damage * dmgMul;
+            var damage = data.Damage * dmgMul;
 
             enemy.FireballSpell.GetServices(_audioSoundsService, _particleEffectsService);
             enemy.FireballSpell.SetProjectile(_magicBallProjectilePool, data.SpeedProjectile);
@@ -232,12 +211,43 @@ namespace _Project.Scripts.Services
             return enemy;
         }
 
+        public void GetData(EnemyInitData enemyInitData)
+        {
+            _enemyInitData = enemyInitData;
+        }
+
+        public EnemyData GetEnemyDataByType(EnemyType type)
+        {
+            return _enemiesData[type];
+        }
+
+        [Inject]
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IPlayerService playerService,
+            AudioSoundsService audioSoundsService,
+            ParticleEffectsService particleEffectsService,
+            IFloatingTextService floatingTextService,
+            IExperiencePoints experiencePoints,
+            ICurrencyService currencyService,
+            IProgressionService progressionService)
+        {
+            _dataBaseService = dataBaseService;
+            _playerService = playerService;
+            _audioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
+            _floatingTextService = floatingTextService;
+            _experiencePoints = experiencePoints;
+            _currencyService = currencyService;
+            _progressionService = progressionService;
+        }
+
         private (float hp, float dmg) GetMultipliers()
         {
             return (_progressionService.GetEnemyHealthMultiplier(),
-                    _progressionService.GetEnemyDamageMultiplier());
+                _progressionService.GetEnemyDamageMultiplier());
         }
-        
+
         private void ConstructBase(Enemy.Enemy enemy, EnemyData data)
         {
             enemy.Construct(
@@ -249,18 +259,14 @@ namespace _Project.Scripts.Services
                 _experiencePoints,
                 _currencyService);
         }
-        
+
         private void ApplyHealth(Enemy.Enemy enemy, EnemyData data, float hpMultiplier)
         {
             if (enemy.Health.TargetHealth > MinValue) return;
 
-            float hp = data.Health * hpMultiplier;
+            var hp = data.Health * hpMultiplier;
             enemy.Health.LoadHealth(hp, hp);
         }
-
-        public void GetData(EnemyInitData enemyInitData) => _enemyInitData = enemyInitData;
-
-        public EnemyData GetEnemyDataByType(EnemyType type) => _enemiesData[type];
 
         private void CreateEnemySkeletonPool()
         {
@@ -271,7 +277,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
 
@@ -284,7 +290,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonHeavyArmorPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
 
@@ -297,7 +303,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonRangerPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
 
             CreateArrowPool();
@@ -312,7 +318,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(PriestPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
 
             CreateMagicBallPool();
@@ -327,7 +333,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
 
@@ -340,7 +346,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditRangerPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
 
             CreateArrowPool();
@@ -355,7 +361,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditLeaderPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
 
@@ -368,7 +374,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(DarkLordPool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
 
             CreateMagicBallPool();
@@ -383,7 +389,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(ArrowProjectilePool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
 
@@ -396,7 +402,7 @@ namespace _Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(MagicBallProjectilePool).transform)
             {
-                AutoExpand = IsAutoExpand,
+                AutoExpand = IsAutoExpand
             };
         }
     }

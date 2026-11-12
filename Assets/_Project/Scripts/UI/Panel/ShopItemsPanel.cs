@@ -132,7 +132,7 @@ namespace _Project.Scripts.UI.Panel
                     _inventoryService.AddEquipment(instance);
                     break;
                 case ItemKind.Consumable:
-                    _inventoryService.AddItem(itemData.Type, 1);
+                    _inventoryService.AddItem(itemData.Type);
                     break;
             }
 

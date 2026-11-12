@@ -129,6 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d1d495583a348f098d0122b15293fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layers:
+  - serializedVersion: 2
+    m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 512
   <LifeTime>k__BackingField: 4
 --- !u!54 &5249257248029589324
 Rigidbody:

@@ -11,9 +11,9 @@ namespace _Project.Scripts.Weapon.Enemy
         private const float Radius = 4f;
         private const float OffsetHeight = 0.3f;
 
-        [SerializeField] private LayerMask _playerLayerMask;
-        
         private readonly Collider[] _results = new Collider[10];
+        
+        [SerializeField] private LayerMask _playerLayerMask;
         
         public override void Attack()
         {

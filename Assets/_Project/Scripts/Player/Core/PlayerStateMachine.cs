@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using _Project.Scripts.Player.Input;
 using _Project.Scripts.Player.State;
 using UnityEngine;
 
@@ -9,18 +8,9 @@ namespace _Project.Scripts.Player.Core
     {
         private readonly Dictionary<StateId, IPlayerState> _states = new ();
 
-        private Player _player;
-        private InputController _inputController;
-
         private IPlayerState _currentState;
 
-        public IPlayerState CurentState => _currentState;
-
-        public void Initialize(Player player)
-        {
-            _player = player;
-            _inputController = _player.InputController;
-        }
+        public IPlayerState CurrentState => _currentState;
 
         private void Update()
         {

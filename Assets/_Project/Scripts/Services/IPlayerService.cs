@@ -17,6 +17,7 @@ namespace _Project.Scripts.Services
         public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data);
         public void SpawnPlayer(bool isRevive = false);
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
+
         public void GetButtons(
             Joystick moveJoystick,
             Joystick cameraJoystick,

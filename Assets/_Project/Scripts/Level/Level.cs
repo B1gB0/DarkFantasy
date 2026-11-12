@@ -38,7 +38,6 @@ namespace _Project.Scripts.Level
         [SerializeField] private CameraTargetFollower _cameraTargetFollower;
 
         protected ViewFactory ViewFactory;
-        protected UIStateMachine UIStateMachine;
         protected UIRootView UIRootView;
 
         protected NavMeshWaypointService NavMeshWaypointService;
@@ -64,8 +63,6 @@ namespace _Project.Scripts.Level
 
         public event Action IsInitiatedSpawners;
         public event Action OnBossHealthBarCreated;
-        public event Action PlayerIsSpawned;
-        public event Action OnGoToNextScene;
 
         public HealthBar HealthBar { get; private set; }
         public ModifiersPanel ModifiersPanel { get; private set; }
@@ -108,14 +105,12 @@ namespace _Project.Scripts.Level
         public void GetDependencies(
             CinemachineFreeLook cinemachineFreeLook,
             ViewFactory viewFactory,
-            UIStateMachine uiStateMachine,
             UIRootView uiRootView
         )
         {
             _cinemachineFreeLook = cinemachineFreeLook;
 
             ViewFactory = viewFactory;
-            UIStateMachine = uiStateMachine;
             UIRootView = uiRootView;
         }
 
@@ -172,11 +167,6 @@ namespace _Project.Scripts.Level
             EnemySpawner.SpawnWave(EnemyWaves[numberWave]);
         }
 
-        protected void GoToNextScene()
-        {
-            OnGoToNextScene?.Invoke();
-        }
-
         private async UniTask CreatePlayer()
         {
             var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
@@ -196,8 +186,6 @@ namespace _Project.Scripts.Level
 
             _cinemachineFreeLook.LookAt = _cameraTargetFollower.transform;
             _cinemachineFreeLook.Follow = _cameraTargetFollower.transform;
-
-            PlayerIsSpawned?.Invoke();
 
             _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(EnemyWaves);
             

@@ -98,8 +98,6 @@ namespace _Project.Scripts.Player.Core
             _inputController = GetComponent<InputController>();
             _stateMachine = GetComponent<PlayerStateMachine>();
 
-            _stateMachine.Initialize(this);
-
             _playerAnimatedState = new PlayerAnimatedState(Animator);
 
             _playerIdleState = new PlayerIdleState(this);
@@ -157,7 +155,7 @@ namespace _Project.Scripts.Player.Core
 
         private void OnUnlockController()
         {
-            if (_stateMachine.CurentState.IdState != StateId.Sit)
+            if (_stateMachine.CurrentState.IdState != StateId.Sit)
             {
                 _stateMachine.SwitchState(StateId.Idle);
             }

@@ -13,20 +13,35 @@ namespace _Project.Scripts.Services
         private const string ParticleEffects = nameof(ParticleEffects);
 
         private readonly Dictionary<ParticleType, ParticleSystem> _particles = new();
-
-        private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
         private Dictionary<ParticleType, HashSet<ParticleSystem>> _activeParticles;
-
-        private IResourceService _resourceService;
         private Transform _particleParent;
 
-        public bool IsInitiated { get; private set; }
+        private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
 
-        [Inject]
-        private void Construct(IResourceService resourceService)
+        private IResourceService _resourceService;
+
+        private void OnDestroy()
         {
-            _resourceService = resourceService;
+            if (_activeParticles != null)
+            {
+                foreach (var set in _activeParticles.Values)
+                foreach (var particleEffect in set)
+                    if (particleEffect != null)
+                        Destroy(particleEffect.gameObject);
+                _activeParticles.Clear();
+            }
+
+            if (_particlePool != null)
+            {
+                foreach (var pool in _particlePool.Values)
+                foreach (var particleEffect in pool)
+                    if (particleEffect != null)
+                        Destroy(particleEffect.gameObject);
+                _particlePool.Clear();
+            }
         }
+
+        public bool IsInitiated { get; private set; }
 
         public async UniTask Init()
         {
@@ -44,9 +59,15 @@ namespace _Project.Scripts.Services
             IsInitiated = true;
         }
 
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
+
         private async UniTask LoadParticles()
         {
-            ParticlesConfig config = await _resourceService.LoadAsset<ParticlesConfig>(ParticlesConfigPath);
+            var config = await _resourceService.LoadAsset<ParticlesConfig>(ParticlesConfigPath);
             if (config == null)
             {
                 Debug.LogError($"Failed to load ParticlesConfig at {ParticlesConfigPath}");
@@ -61,14 +82,14 @@ namespace _Project.Scripts.Services
                     continue;
                 }
 
-                GameObject prefab = await _resourceService.LoadAsset<GameObject>(effect.ParticleName);
+                var prefab = await _resourceService.LoadAsset<GameObject>(effect.ParticleName);
                 if (prefab == null)
                 {
                     Debug.LogError($"Failed to load particle prefab with key: {effect.ParticleName}");
                     continue;
                 }
 
-                ParticleSystem particle = prefab.GetComponent<ParticleSystem>();
+                var particle = prefab.GetComponent<ParticleSystem>();
                 if (particle == null)
                 {
                     Debug.LogError(
@@ -111,18 +132,16 @@ namespace _Project.Scripts.Services
             if (particleEffect != null && particleEffect.gameObject.activeSelf)
                 ReturnParticleSystemToPool(effectType, particleEffect);
         }
-        
+
         public void StopEffect(ParticleType effectType)
         {
             if (!_activeParticles.TryGetValue(effectType, out var activeSet))
                 return;
-            
+
             var toStop = new List<ParticleSystem>(activeSet);
             foreach (var particleEffect in toStop)
-            {
                 if (particleEffect != null)
                     ReturnParticleSystemToPool(effectType, particleEffect);
-            }
         }
 
         private ParticleSystem GetOrCreateParticleSystem(ParticleType effectType)
@@ -170,53 +189,27 @@ namespace _Project.Scripts.Services
             _activeParticles[type].Add(ps);
         }
 
-        private void ReturnParticleSystemToPool(ParticleType effectType, ParticleSystem particleSystem)
+        private void ReturnParticleSystemToPool(ParticleType effectType, ParticleSystem system)
         {
-            if (particleSystem == null)
+            if (system == null)
                 return;
 
             if (_activeParticles.TryGetValue(effectType, out var activeSet))
-                activeSet.Remove(particleSystem);
+                activeSet.Remove(system);
 
-            particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            particleSystem.gameObject.SetActive(false);
-            particleSystem.Clear(true);
+            system.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            system.gameObject.SetActive(false);
+            system.Clear(true);
 
-            if (_particlePool.TryGetValue(effectType, out var queueEffects))
-            {
-                queueEffects.Enqueue(particleSystem);
-            }
+            if (_particlePool.TryGetValue(effectType, out var queueEffects)) queueEffects.Enqueue(system);
         }
 
-        private async UniTask WaitForParticleSystem(ParticleSystem particleSystem)
+        private async UniTask WaitForParticleSystem(ParticleSystem system)
         {
-            if (particleSystem == null)
+            if (system == null)
                 return;
 
-            await UniTask.WaitUntil(() => particleSystem == null || !particleSystem.IsAlive(true));
-        }
-
-        private void OnDestroy()
-        {
-            if (_activeParticles != null)
-            {
-                foreach (var set in _activeParticles.Values)
-                {
-                    foreach (var particleEffect in set)
-                        if (particleEffect != null) Destroy(particleEffect.gameObject);
-                }
-                _activeParticles.Clear();
-            }
-
-            if (_particlePool != null)
-            {
-                foreach (var pool in _particlePool.Values)
-                {
-                    foreach (var particleEffect in pool)
-                        if (particleEffect != null) Destroy(particleEffect.gameObject);
-                }
-                _particlePool.Clear();
-            }
+            await UniTask.WaitUntil(() => system == null || !system.IsAlive(true));
         }
     }
 }

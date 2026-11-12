@@ -17,7 +17,7 @@ namespace _Project.Scripts.Services
 
         private const float SmallPause = 0.1f;
         private const float BigPause = 0.5f;
-        
+
         private const float DefaultShowDuration = 0.25f;
         private const float DefaultHoldDuration = 1.5f;
         private const float DefaultHideDuration = 0.4f;
@@ -29,7 +29,7 @@ namespace _Project.Scripts.Services
             if (IsInitiated)
                 return UniTask.CompletedTask;
 
-            DOTween.Init(recycleAllByDefault: true, useSafeMode: true, logBehaviour: LogBehaviour.Default);
+            DOTween.Init(true, true, LogBehaviour.Default);
 
             IsInitiated = true;
 
@@ -40,24 +40,21 @@ namespace _Project.Scripts.Services
         {
             if (!IsTargetValid(target))
                 return;
-            
-            if(!isDisableTarget)
+
+            if (!isDisableTarget)
                 target.gameObject.SetActive(true);
 
             var scaleSequence = CreateScaleSequence(target, isDisableTarget);
 
-            scaleSequence.OnComplete(() =>
-            {
-                TryOffGameObject(target, isDisableTarget);
-            });
+            scaleSequence.OnComplete(() => { TryOffGameObject(target, isDisableTarget); });
         }
 
         public async UniTask AnimateScaleAsync(Transform target, bool isDisableTarget = false)
         {
             if (!IsTargetValid(target))
                 return;
-            
-            if(!isDisableTarget)
+
+            if (!isDisableTarget)
                 target.gameObject.SetActive(true);
 
             var scaleSequence = CreateScaleSequence(target, isDisableTarget);
@@ -82,7 +79,7 @@ namespace _Project.Scripts.Services
                 target.localPosition = hidePoint.localPosition;
             }
 
-            Sequence _ = DOTween.Sequence()
+            var _ = DOTween.Sequence()
                 .Append(!isDisableTarget
                     ? target.DOMove(showPoint.position, DurationShow)
                     : target.DOMove(hidePoint.position, DurationHide))
@@ -92,10 +89,7 @@ namespace _Project.Scripts.Services
                 {
                     TryOffGameObject(target, isDisableTarget);
 
-                    if (isSetParentToPoint)
-                    {
-                        target.SetParent(isDisableTarget ? hidePoint : showPoint);
-                    }
+                    if (isSetParentToPoint) target.SetParent(isDisableTarget ? hidePoint : showPoint);
                 });
         }
 
@@ -105,11 +99,11 @@ namespace _Project.Scripts.Services
 
             target.position = pointerPoint.position;
 
-            float originalY = target.localPosition.y;
-            float topY = originalY + MoveDistance;
-            float bottomY = originalY - MoveDistance;
+            var originalY = target.localPosition.y;
+            var topY = originalY + MoveDistance;
+            var bottomY = originalY - MoveDistance;
 
-            Sequence _ = DOTween.Sequence()
+            var _ = DOTween.Sequence()
                 .Append(target.DOLocalMoveY(bottomY, DurationHide).SetEase(Ease.Linear))
                 .AppendInterval(SmallPause)
                 .Append(target.DOLocalMoveY(topY, DurationHide).SetEase(Ease.OutSine))
@@ -127,28 +121,25 @@ namespace _Project.Scripts.Services
             if (!IsTargetValid(target))
                 return;
 
-            Graphic graphic = target.GetComponent<Graphic>();
+            var graphic = target.GetComponent<Graphic>();
             if (graphic == null)
             {
                 Debug.LogWarning($"AnimateFade: Target '{target.name}' does not have a Graphic component.");
                 return;
             }
-            
+
             graphic.DOKill();
 
-            if (!isFade)
-            {
-                graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, 0f);
-            }
+            if (!isFade) graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, 0f);
 
-            float targetAlpha = isFade ? 0f : 1f;
-            float duration = isFade ? DurationHide : DurationShow;
+            var targetAlpha = isFade ? 0f : 1f;
+            var duration = isFade ? DurationHide : DurationShow;
 
             graphic.DOFade(targetAlpha, duration)
                 .SetEase(isFade ? Ease.OutSine : Ease.InSine)
                 .SetUpdate(true);
         }
-        
+
         public void AnimateTemporaryAppearance(Transform target)
         {
             if (!IsTargetValid(target)) return;
@@ -159,13 +150,13 @@ namespace _Project.Scripts.Services
                 Debug.LogWarning($"[Tween] AnimateTemporaryAppearance: '{target.name}' has no Graphic component.");
                 return;
             }
-            
+
             graphic.DOKill();
             target.DOKill();
 
             target.gameObject.SetActive(true);
-            
-            Color color = graphic.color;
+
+            var color = graphic.color;
             color.a = 0f;
             graphic.color = color;
 
@@ -194,7 +185,7 @@ namespace _Project.Scripts.Services
             if (!isDisableTarget)
                 target.localScale = Vector3.zero;
 
-            Sequence scaleSequence = DOTween.Sequence()
+            var scaleSequence = DOTween.Sequence()
                 .Append(!isDisableTarget
                     ? target.DOScale(ShowScale, DurationShow)
                     : target.DOScale(HideScale, DurationHide))

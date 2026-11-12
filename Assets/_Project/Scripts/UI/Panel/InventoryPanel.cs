@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Items;
@@ -37,8 +38,6 @@ namespace _Project.Scripts.UI.Panel
         private AudioSoundsService _audioSoundsService;
 
         public event Action OnBackToSceneButtonPressed;
-
-        public ItemData EquippedItem { get; private set; }
 
         [Inject]
         private void Construct(
@@ -151,9 +150,12 @@ namespace _Project.Scripts.UI.Panel
                 index++;
             }
 
-            _healthText.text = _playerService.Player.PlayerCharacteristics.GetTotalMaxHealth().ToString();
-            _damageText.text = _playerService.Player.PlayerCharacteristics.GetTotalDamage().ToString();
-            _armorText.text = _playerService.Player.PlayerCharacteristics.GetTotalArmor().ToString();
+            _healthText.text =
+                _playerService.Player.PlayerCharacteristics.GetTotalMaxHealth().ToString(CultureInfo.CurrentCulture);
+            _damageText.text =
+                _playerService.Player.PlayerCharacteristics.GetTotalDamage().ToString(CultureInfo.CurrentCulture);
+            _armorText.text =
+                _playerService.Player.PlayerCharacteristics.GetTotalArmor().ToString(CultureInfo.CurrentCulture);
         }
 
         private void MoveBackToScene()
@@ -183,8 +185,6 @@ namespace _Project.Scripts.UI.Panel
             }
 
             _descriptionItemView.Show();
-
-            EquippedItem = selectedItemView.ItemData;
         }
 
         private bool IsItemEquipped(ItemType type, Item instance = null)

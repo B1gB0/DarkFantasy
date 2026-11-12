@@ -129,7 +129,7 @@ namespace _Project.Scripts.Game.GameRoot
             await LoadScene(enterParameters.SceneName);
 
             var sceneEntryPoint = FindFirstObjectByType<GameplayEntryPoint>();
-            var observable = await sceneEntryPoint.Run(_uiRoot, enterParameters);
+            var observable = await sceneEntryPoint.Run(_uiRoot);
 
             var exitParameters = await observable.FirstAsync();
             await HandleExitGameplayScene(exitParameters);

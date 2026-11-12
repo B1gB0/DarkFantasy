@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using _Project.Scripts.Audio;
 using _Project.Scripts.Audio.Sounds;
 using Cysharp.Threading.Tasks;
@@ -17,25 +16,19 @@ namespace _Project.Scripts.Services
 
         private const int CountAudioSources = 10;
 
-        private readonly Dictionary<SoundsType, Sound> _soundDictionary = new();
-
         [SerializeField] private AudioMixerGroup _musicGroup;
         [SerializeField] private AudioMixerGroup _effectsGroup;
 
-        private AudioSource _musicAudioSource;
-        private SoundsType _currentMusicType;
+        private readonly Dictionary<SoundsType, Sound> _soundDictionary = new();
+        private List<AudioSource> _allAudioSources;
 
         private Queue<AudioSource> _availableAudioSources;
-        private List<AudioSource> _allAudioSources;
+        private SoundsType _currentMusicType;
+
+        private AudioSource _musicAudioSource;
         private IResourceService _resourceService;
 
         public bool IsInitiated { get; private set; }
-
-        [Inject]
-        private void Construct(IResourceService resourceService)
-        {
-            _resourceService = resourceService;
-        }
 
         public async UniTask Init()
         {
@@ -47,6 +40,12 @@ namespace _Project.Scripts.Services
             InitializeMusicAudioSource();
             InitializeAudioSourcePool();
             IsInitiated = true;
+        }
+
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
         }
 
         public async UniTask PlaySound(SoundsType sound)
@@ -61,16 +60,15 @@ namespace _Project.Scripts.Services
 
                 var config = _soundDictionary[sound];
 
-                if (!_availableAudioSources.Any())
-                {
-                    CreateAudioSource();
-                }
+                if (!_availableAudioSources.Any()) CreateAudioSource();
 
                 var audioSource = _availableAudioSources.Dequeue();
 
                 await PlaySoundAsync(audioSource, config);
             }
-            catch (OperationCanceledException) { }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         public void PlayMusic(SoundsType musicType)
@@ -96,32 +94,16 @@ namespace _Project.Scripts.Services
             _currentMusicType = musicType;
         }
 
-        public void StopAllSounds()
-        {
-            foreach (var audioSource in _allAudioSources.Where(audioSource => audioSource.isPlaying))
-            {
-                audioSource.Stop();
-                if (!_availableAudioSources.Contains(audioSource))
-                {
-                    _availableAudioSources.Enqueue(audioSource);
-                }
-            }
-        }
-
         public void PauseAllSounds()
         {
             foreach (var audioSource in _allAudioSources.Where(audioSource => audioSource.isPlaying))
-            {
                 audioSource.Pause();
-            }
         }
 
         public void ResumeAllSounds()
         {
             foreach (var audioSource in _allAudioSources.Where(audioSource => audioSource.isPlaying))
-            {
                 audioSource.Play();
-            }
         }
 
         private void StopCurrentMusic()
@@ -134,43 +116,12 @@ namespace _Project.Scripts.Services
             _currentMusicType = SoundsType.None;
         }
 
-        private void StopSound(AudioSource audioSource)
-        {
-            if (audioSource == null)
-                return;
-
-            if (!audioSource.isPlaying)
-                return;
-
-            audioSource.Stop();
-            _availableAudioSources.Enqueue(audioSource);
-        }
-
-        private async UniTask PlayDelayedSound(
-            SoundsType soundType,
-            float delay,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                await UniTask.WaitForSeconds(delay, cancellationToken: cancellationToken);
-                if (!cancellationToken.IsCancellationRequested)
-                {
-                    await PlaySound(soundType);
-                }
-            }
-            catch (OperationCanceledException) { }
-        }
-
         private void InitializeAudioSourcePool()
         {
             _availableAudioSources = new Queue<AudioSource>();
             _allAudioSources = new List<AudioSource>();
 
-            for (int i = 0; i < CountAudioSources; i++)
-            {
-                CreateAudioSource();
-            }
+            for (var i = 0; i < CountAudioSources; i++) CreateAudioSource();
         }
 
         private void InitializeMusicAudioSource()
@@ -179,19 +130,16 @@ namespace _Project.Scripts.Services
             _musicAudioSource.playOnAwake = false;
             _musicAudioSource.loop = true;
 
-            if (_musicGroup != null)
-            {
-                _musicAudioSource.outputAudioMixerGroup = _musicGroup;
-            }
+            if (_musicGroup != null) _musicAudioSource.outputAudioMixerGroup = _musicGroup;
         }
 
         private async UniTask InitializeSoundDictionary()
         {
-            AudioConfig audioConfig = await _resourceService.LoadAsset<AudioConfig>(AudioConfigPath);
+            var audioConfig = await _resourceService.LoadAsset<AudioConfig>(AudioConfigPath);
 
             foreach (var sound in audioConfig.Sounds)
             {
-                AudioClip clip = await _resourceService.LoadAsset<AudioClip>(sound.ClipName);
+                var clip = await _resourceService.LoadAsset<AudioClip>(sound.ClipName);
                 sound.Clip = clip;
                 Enum.TryParse(sound.ClipName, out SoundsType soundType);
                 _soundDictionary.TryAdd(soundType, sound);
@@ -218,10 +166,7 @@ namespace _Project.Scripts.Services
             var audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
 
-            if (_effectsGroup != null)
-            {
-                audioSource.outputAudioMixerGroup = _effectsGroup;
-            }
+            if (_effectsGroup != null) audioSource.outputAudioMixerGroup = _effectsGroup;
 
             _availableAudioSources.Enqueue(audioSource);
             _allAudioSources.Add(audioSource);

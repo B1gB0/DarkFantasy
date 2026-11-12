@@ -9,9 +9,9 @@ namespace _Project.Scripts.Items
 {
     public class LootChest : MonoBehaviour
     {
+        public readonly int Open = Animator.StringToHash(nameof(Open));
+
         private const float Duration = 0.1f;
-        
-        private readonly int Open = Animator.StringToHash(nameof(Open));
 
         [SerializeField] private Animator _animator;
 

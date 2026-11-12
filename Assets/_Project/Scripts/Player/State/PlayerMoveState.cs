@@ -19,7 +19,7 @@ namespace _Project.Scripts.Player.State
         
         private Vector3 _cachedMoveDirection;
 
-        private float _currentSpeed => new Vector3(
+        private float CurrentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
                 MinValue,
                 _player.Rigidbody.velocity.z)
@@ -118,9 +118,9 @@ namespace _Project.Scripts.Player.State
             _player.Rigidbody.velocity = velocity;
             
             float maxSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
-            float safeMaxSpeed = Mathf.Max(0.01f, maxSpeed);
+            float safeMaxSpeed = Mathf.Max(MinMagnitude, maxSpeed);
             
-            float normalizedSpeed = _currentSpeed / safeMaxSpeed;
+            float normalizedSpeed = CurrentSpeed / safeMaxSpeed;
             
             _playerAnimatedState.OnMove(normalizedSpeed); 
         }

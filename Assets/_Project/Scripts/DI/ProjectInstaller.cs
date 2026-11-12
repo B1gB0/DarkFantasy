@@ -4,7 +4,6 @@ using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Services;
 using Reflex.Core;
 using Reflex.Injectors;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.DI
@@ -99,14 +98,6 @@ namespace _Project.Scripts.DI
                 {
                     GameObjectInjector.InjectObject(service, container);
                 }
-
-                // foreach (var service in _monoServices)
-                // {
-                //     if (service is IInitializable initializable)
-                //     {
-                //         initializable.Initialize();
-                //     }
-                // }
             };
         }
     }

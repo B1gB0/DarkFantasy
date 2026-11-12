@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.Game.Constant;
@@ -139,7 +140,7 @@ namespace _Project.Scripts
         public void AddHealth(float healthValue)
         {
             IsSpawnedHealingText?.Invoke(
-                healthValue.ToString(),
+                healthValue.ToString(CultureInfo.CurrentCulture),
                 transform,
                 FloatingTextViewType.Healing,
                 Colors.GetColor(ColorName.HealingColor));

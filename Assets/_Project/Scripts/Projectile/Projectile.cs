@@ -7,18 +7,18 @@ namespace _Project.Scripts.Projectile
     public abstract class Projectile : MonoBehaviour
     {
         private const float DefaultDirectionY = 0f;
-        private const string Ground = nameof(Ground);
-        private const string Borders = nameof(Borders);
-        private const string HighGround = nameof(HighGround);
 
         protected float Damage;
-        protected float ProjectileSpeed;
 
         protected Vector3 Direction;
         protected Transform Transform;
 
         protected ParticleEffectsService ParticleEffectsService;
         protected AudioSoundsService AudioSoundsService;
+        
+        [SerializeField] private LayerMask[] _layers;
+        
+        private float _projectileSpeed;
 
         [field: SerializeField] public float LifeTime { get; private set; } = 4f;
 
@@ -34,7 +34,7 @@ namespace _Project.Scripts.Projectile
 
         protected virtual void FixedUpdate()
         {
-            Transform.position += Direction * (ProjectileSpeed * Time.fixedDeltaTime);
+            Transform.position += Direction * (_projectileSpeed * Time.fixedDeltaTime);
         }
 
         protected virtual void OnTriggerEnter(Collider collision)
@@ -61,10 +61,10 @@ namespace _Project.Scripts.Projectile
             Direction = Direction.normalized;
         }
 
-        public virtual void SetCharacteristics(float damage, float bulletSpeed)
+        public void SetCharacteristics(float damage, float bulletSpeed)
         {
             Damage = damage;
-            ProjectileSpeed = bulletSpeed;
+            _projectileSpeed = bulletSpeed;
         }
 
         public void GetServices(ParticleEffectsService particleEffectsService, AudioSoundsService audioSoundsService)
@@ -75,15 +75,17 @@ namespace _Project.Scripts.Projectile
 
         protected void CheckBordersLayers(Collider collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Ground)
-                || collision.gameObject.layer == LayerMask.NameToLayer(Borders)
-                || collision.gameObject.layer == LayerMask.NameToLayer(HighGround))
+            foreach (var layerMask in _layers)
             {
-                gameObject.SetActive(false);
+                if ((layerMask.value & (1 << collision.gameObject.layer)) != 0)
+                {
+                    gameObject.SetActive(false);
+                    return;
+                }
             }
         }
 
-        protected virtual IEnumerator LifeRoutine()
+        private IEnumerator LifeRoutine()
         {
             yield return new WaitForSeconds(LifeTime);
 

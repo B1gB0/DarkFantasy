@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Game.Constant;
@@ -58,15 +59,18 @@ namespace _Project.Scripts.UI.View
             switch (localizationData.Type)
             {
                 case CharacteristicType.Health:
-                    _currentValue.text = _playerService.Player.PlayerCharacteristics.MaxHealth.ToString();
+                    _currentValue.text =
+                        _playerService.Player.PlayerCharacteristics.MaxHealth.ToString(CultureInfo.CurrentCulture);
                     _iconAttribute.sprite = _icons[0];
                     break;
                 case CharacteristicType.Damage:
-                    _currentValue.text = _playerService.Player.PlayerCharacteristics.Damage.ToString();
+                    _currentValue.text =
+                        _playerService.Player.PlayerCharacteristics.Damage.ToString(CultureInfo.CurrentCulture);
                     _iconAttribute.sprite = _icons[1];
                     break;
                 case CharacteristicType.Armor:
-                    _currentValue.text = _playerService.Player.PlayerCharacteristics.Armor.ToString();
+                    _currentValue.text =
+                        _playerService.Player.PlayerCharacteristics.Armor.ToString(CultureInfo.CurrentCulture);
                     _iconAttribute.sprite = _icons[2];
                     break;
                 default:
@@ -77,7 +81,7 @@ namespace _Project.Scripts.UI.View
 
             _currentData = attributeData;
             
-            _nextValue.text = '+' + attributeData.Value.ToString();
+            _nextValue.text = '+' + attributeData.Value.ToString(CultureInfo.CurrentCulture);
             _price.text = attributeData.Price.ToString();
         }
 

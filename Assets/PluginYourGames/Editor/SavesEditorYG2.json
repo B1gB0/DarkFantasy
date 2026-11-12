@@ -1,10 +1,9 @@
 {
-  "Gold": 760,
-  "AcumulatedScore": 2245,
-  "ExperiencePointsValue": 0,
-  "HealthAttributeNumber": 0,
-  "DamageAttributeNumber": 0,
-  "ArmorAttributeNumber": 0,
+  "Gold": 320,
+  "AcumulatedScore": 2490,
+  "HealthAttributeNumber": 6,
+  "DamageAttributeNumber": 7,
+  "ArmorAttributeNumber": 6,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": true,
   "IsHardDifficultyUnlock": false,
@@ -14,17 +13,16 @@
   "IsCampfireVisited": true,
   "IsCampfireHealed": false,
   "EquippedWeaponId": null,
-  "EquippedArmorId": null,
+  "EquippedArmorId": "45a828f7-e8b3-400b-893d-8364010d8eb5",
   "EquippedRingId": null,
   "CompletedLow": [
     "graveyard"
   ],
-  "CompletedMedium": [],
+  "CompletedMedium": [
+    "graveyard"
+  ],
   "CompletedHigh": [],
-  "Consumables": {
-    "Meat": 1,
-    "SpeedPotion": 1
-  },
+  "Consumables": {},
   "Equipment": [
     {
       "Id": "08733bf0-07db-4f29-b91c-88093016ec99",
@@ -65,15 +63,45 @@
       "Id": "65697818-0e32-471a-a570-2dcb7a985157",
       "Type": 9,
       "Difficulty": 0
+    },
+    {
+      "Id": "8d8b6a6c-cb26-4f41-8652-3341da80b395",
+      "Type": 10,
+      "Difficulty": 1
+    },
+    {
+      "Id": "ebf6e2c9-1e91-43ec-863a-328494eaf27d",
+      "Type": 8,
+      "Difficulty": 1
+    },
+    {
+      "Id": "d09d2602-b153-4209-8239-a0998a6b5f86",
+      "Type": 4,
+      "Difficulty": 1
+    },
+    {
+      "Id": "3b488108-c065-4d8c-8f9d-dd9b7bfa016e",
+      "Type": 14,
+      "Difficulty": 1
+    },
+    {
+      "Id": "c3efbe1b-5936-42ed-9204-5c3c8756426e",
+      "Type": 5,
+      "Difficulty": 1
+    },
+    {
+      "Id": "acd6b86c-844b-49e3-970c-1e57e92727a9",
+      "Type": 12,
+      "Difficulty": 1
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 0,
   "PlayerCharacteristics": {
-    "MaxHealth": 100.0,
-    "TargetHealth": 60.7843,
-    "Armor": 2.0,
-    "Damage": 5.0,
+    "MaxHealth": 121.0,
+    "TargetHealth": 90.82479,
+    "Armor": 23.0,
+    "Damage": 33.0,
     "MoveSpeed": 6.0,
     "RotationSpeed": 7.0,
     "SpeedModifiers": [],
@@ -93,5 +121,5 @@
     false,
     false
   ],
-  "idSave": 50
+  "idSave": 126
 }

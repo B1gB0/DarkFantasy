@@ -27,12 +27,6 @@ namespace _Project.Scripts.Services
             return UniTask.CompletedTask;
         }
 
-        public void SetGold(int gold)
-        {
-            Gold = gold;
-            OnGoldValueChanged?.Invoke(Gold);
-        }
-
         public void AddGold(int gold)
         {
             Gold += gold;
@@ -45,7 +39,7 @@ namespace _Project.Scripts.Services
             Gold -= gold;
             OnGoldValueChanged?.Invoke(Gold);
         }
-        
+
         public void ResetAccumulatedGold()
         {
             AccumulatedGold = MinValue;

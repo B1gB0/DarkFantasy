@@ -2,7 +2,6 @@ using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Camera;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
-using _Project.Scripts.Game.MainMenu;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI.Panel;
 using _Project.Scripts.UI.StateMachine.States;
@@ -91,9 +90,7 @@ namespace _Project.Scripts.Game.Gameplay
             _progressionService = progressionService;
         }
 
-        public async UniTask<Observable<GameplayExitParameters>> Run(
-            UIRootView uiRoot,
-            GameplayEnterParameters enterParameters = null)
+        public async UniTask<Observable<GameplayExitParameters>> Run(UIRootView uiRoot)
         {
             _container = gameObject.scene.GetSceneContainer();
 
@@ -110,9 +107,6 @@ namespace _Project.Scripts.Game.Gameplay
             GameObjectInjector.InjectRecursive(uiRoot.gameObject, _container);
 
             _uiScene.GetUIStateMachine(uiRoot.UIStateMachine, _uiRoot.UIRootButtons);
-
-            // uiRoot.ExitPanel.OnExitToMainMenu += GetMainMenuExitParameters;
-            //  uiRoot.ExitPanel.OnExitToMainMenu += _uiScene.HandleGoToNextSceneButtonClick;
 
             await _dataBaseService.Init();
             await _progressionService.Init();
@@ -133,11 +127,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             _enemyService.GetData(_dataBaseService.EnemyInitData);
 
-            _level.GetDependencies(
-                _freeLookCamera,
-                _viewFactory,
-                _uiRoot.UIStateMachine,
-                _uiRoot);
+            _level.GetDependencies(_freeLookCamera, _viewFactory, _uiRoot);
 
             FloatingTextView floatingTextView = await _viewFactory.CreateFloatingTextView();
             floatingTextView.Deactivate();
@@ -305,14 +295,6 @@ namespace _Project.Scripts.Game.Gameplay
             var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
 
             _exitParameters = new GameplayExitParameters(gameplayEnterParameters);
-        }
-
-        private void GetMainMenuExitParameters()
-        {
-            _uiRoot.UIRootButtons.Activate();
-
-            var mainMenuEnterParameters = new MainMenuEnterParameters();
-            _exitParameters = new GameplayExitParameters(mainMenuEnterParameters);
         }
 
         private void OnShowJoystickWithMobileButtons()

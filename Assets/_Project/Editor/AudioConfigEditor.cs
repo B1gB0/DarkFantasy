@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using _Project.Scripts.Audio;
 using _Project.Scripts.Audio.Sounds;
@@ -67,7 +68,10 @@ namespace _Project.Editor
                 var config = (AudioConfig)target;
                 Undo.RecordObject(config, "Sort by Name");
             
-                config.Sounds.Sort((a, b) => string.Compare(a.ClipName, b.ClipName));
+                config.Sounds.Sort((a, b) => string.Compare(
+                    a.ClipName,
+                    b.ClipName,
+                    StringComparison.Ordinal));
             
                 EditorUtility.SetDirty(config);
             }

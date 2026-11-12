@@ -21,7 +21,7 @@ namespace _Project.Scripts.UI.Panel
         private static readonly int DifficultyCount = Enum.GetValues(typeof(LevelDifficulty)).Length;
 
         [SerializeField] private Button _backSceneButton;
-        [SerializeField] private List<NewMissionView> _missionViews;
+        [SerializeField] private List<MissionView> _missionViews;
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
         [SerializeField] private TMP_Text _difficultyText;
@@ -29,7 +29,6 @@ namespace _Project.Scripts.UI.Panel
 
         private ITweenAnimationService _tweenAnimationService;
         private MissionService _missionService;
-        private ICurrencyService _currencyService;
         private IProgressionService _progressionService;
         private IUILocalizationService _uiLocalizationService;
         private IPlayerService _playerService;
@@ -43,14 +42,12 @@ namespace _Project.Scripts.UI.Panel
         private void Construct(
             ITweenAnimationService tweenAnimationService,
             MissionService missionService,
-            ICurrencyService currencyService,
             IProgressionService progressionService,
             IUILocalizationService uiLocalizationService,
             IPlayerService playerService)
         {
             _tweenAnimationService = tweenAnimationService;
             _missionService = missionService;
-            _currencyService = currencyService;
             _progressionService = progressionService;
             _uiLocalizationService = uiLocalizationService;
             _playerService = playerService;
@@ -122,12 +119,12 @@ namespace _Project.Scripts.UI.Panel
                 var missionView = _missionViews[i];
                 SetMission(mission, missionView);
 
-                bool available = IsMissionAvailable(mission, i, difficulty);
+                bool available = IsMissionAvailable(i, difficulty);
                 missionView.gameObject.SetActive(available);
             }
         }
 
-        private bool IsMissionAvailable(Mission mission, int index, LevelDifficulty difficulty)
+        private bool IsMissionAvailable(int index, LevelDifficulty difficulty)
         {
             var prev = GetPreviousMission(index);
             
@@ -213,7 +210,7 @@ namespace _Project.Scripts.UI.Panel
             OnGoToMission?.Invoke();
         }
 
-        private void SetMission(Mission mission, NewMissionView missionView)
+        private void SetMission(Mission mission, MissionView missionView)
         {
             missionView.GetMission(mission);
         }

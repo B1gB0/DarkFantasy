@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace _Project.Scripts.UI.View
 {
-    public class NewMissionView : View, IPointerEnterHandler, IPointerExitHandler
+    public class MissionView : View, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image _hover;
         [SerializeField] private Button _button;

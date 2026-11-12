@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.EventSystems;
 
 namespace _Project.Scripts.Services

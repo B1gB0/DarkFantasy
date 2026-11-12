@@ -10,20 +10,14 @@ namespace _Project.Scripts.Services
         private const string DataContainer = nameof(DataContainer);
         private const string PlayerInitDataPath = "PlayerInitData";
         private const string EnemyInitDataPath = "EnemyInitData";
+        private SpreadsheetContainer _data;
 
         private IResourceService _resourceService;
-        private SpreadsheetContainer _data;
-        
+
         public PlayerInitData PlayerInitData { get; private set; }
         public EnemyInitData EnemyInitData { get; private set; }
         public bool IsInitiated { get; private set; }
         public SpreadsheetContent Content => _data.Content;
-
-        [Inject]
-        private void Construct(IResourceService resourceService)
-        {
-            _resourceService = resourceService;
-        }
 
         public async UniTask Init()
         {
@@ -35,6 +29,12 @@ namespace _Project.Scripts.Services
             PlayerInitData = await _resourceService.LoadAsset<PlayerInitData>(PlayerInitDataPath);
 
             IsInitiated = true;
+        }
+
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
         }
     }
 }

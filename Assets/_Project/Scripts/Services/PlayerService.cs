@@ -20,33 +20,12 @@ namespace _Project.Scripts.Services
 
         private readonly Dictionary<PlayerType, PlayerData> _playersData = new();
 
-        private IDataBaseService _dataBaseService;
-        private IShopService _shopService;
-        private IInventoryService _inventoryService;
-        private IProgressionService _progressionService;
-
-        public bool IsInitiated { get; private set; }
-        public Player.Core.Player Player { get; private set; }
-
         private Container _container;
 
-        [Inject]
-        public void Construct(
-            IDataBaseService dataBaseService,
-            IShopService shopService,
-            IInventoryService inventoryService,
-            IProgressionService progression)
-        {
-            _dataBaseService = dataBaseService;
-            _shopService = shopService;
-            _inventoryService = inventoryService;
-            _progressionService = progression;
-
-            _inventoryService.OnEquippedItem += RecalculateEquipment;
-            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
-        }
-
-        public CinemachineFreeLook FreeLookCamera { get; private set; }
+        private IDataBaseService _dataBaseService;
+        private IInventoryService _inventoryService;
+        private IProgressionService _progressionService;
+        private IShopService _shopService;
 
         private void Update()
         {
@@ -65,6 +44,11 @@ namespace _Project.Scripts.Services
             _inventoryService.OnEquippedItem -= RecalculateEquipment;
             _inventoryService.OnUnEquippedItem -= RecalculateEquipment;
         }
+
+        public bool IsInitiated { get; private set; }
+        public Player.Core.Player Player { get; private set; }
+
+        public CinemachineFreeLook FreeLookCamera { get; private set; }
 
         public UniTask Init()
         {
@@ -94,7 +78,9 @@ namespace _Project.Scripts.Services
         }
 
         public PlayerData GetPlayerDataByType(PlayerType type)
-            => _playersData[type];
+        {
+            return _playersData[type];
+        }
 
         public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint)
         {
@@ -109,7 +95,7 @@ namespace _Project.Scripts.Services
 
             var characteristics = YG2.saves.PlayerCharacteristics;
             characteristics?.BindToPlayer(Player);
-            
+
             RecalculateEquipment();
 
             if (isRevive || Player.Health.TargetHealth <= MinValue)
@@ -141,6 +127,22 @@ namespace _Project.Scripts.Services
                 inventoryButton,
                 equippedItemButton,
                 pickUpButton);
+        }
+
+        [Inject]
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IShopService shopService,
+            IInventoryService inventoryService,
+            IProgressionService progression)
+        {
+            _dataBaseService = dataBaseService;
+            _shopService = shopService;
+            _inventoryService = inventoryService;
+            _progressionService = progression;
+
+            _inventoryService.OnEquippedItem += RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
         }
 
         private void RecalculateEquipment()

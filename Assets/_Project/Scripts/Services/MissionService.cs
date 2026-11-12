@@ -11,19 +11,13 @@ namespace _Project.Scripts.Services
     {
         private const int DefaultNumberLevel = 0;
 
-        private readonly Dictionary<int, string> _graveyardSceneLevels = new();
+        [field: SerializeField] public List<Mission> Missions { get; private set; } = new();
         private readonly Dictionary<int, string> _banditCampSceneLevels = new();
         private readonly Dictionary<int, string> _castleSceneLevels = new();
 
+        private readonly Dictionary<int, string> _graveyardSceneLevels = new();
+
         private IDataBaseService _dataBaseService;
-
-        [Inject]
-        public void Construct(IDataBaseService dataBaseService)
-        {
-            _dataBaseService = dataBaseService;
-        }
-
-        [field: SerializeField] public List<Mission> Missions { get; private set; } = new();
 
         public Mission CurrentMission { get; private set; }
         public int CurrentNumberLevel { get; private set; }
@@ -35,42 +29,33 @@ namespace _Project.Scripts.Services
                 return UniTask.CompletedTask;
 
             foreach (var mission in Missions)
-            {
-                foreach (var missionData in _dataBaseService.Content.MissionsLocalization)
-                {
-                    if (mission.Id == missionData.Id)
-                    {
-                        mission.SetData(missionData);
-                    }
-                }
-            }
+            foreach (var missionData in _dataBaseService.Content.MissionsLocalization)
+                if (mission.Id == missionData.Id)
+                    mission.SetData(missionData);
 
             foreach (var graveyardSceneLevel in _dataBaseService.Content.GraveyardSceneLevels)
-            {
                 _graveyardSceneLevels.Add(graveyardSceneLevel.Number, graveyardSceneLevel.SceneName);
-            }
-            
+
             foreach (var banditCampSceneLevel in _dataBaseService.Content.BanditCampSceneLevels)
-            {
                 _banditCampSceneLevels.Add(banditCampSceneLevel.Number, banditCampSceneLevel.SceneName);
-            }
-            
+
             foreach (var castleSceneLevel in _dataBaseService.Content.CastleSceneLevels)
-            {
                 _castleSceneLevels.Add(castleSceneLevel.Number, castleSceneLevel.SceneName);
-            }
 
             IsInitiated = true;
 
             return UniTask.CompletedTask;
         }
 
+        [Inject]
+        public void Construct(IDataBaseService dataBaseService)
+        {
+            _dataBaseService = dataBaseService;
+        }
+
         public void SetCurrentMission(string id)
         {
-            foreach (var mission in Missions.Where(mission => id == mission.Id))
-            {
-                CurrentMission = mission;
-            }
+            foreach (var mission in Missions.Where(mission => id == mission.Id)) CurrentMission = mission;
 
             CurrentNumberLevel = DefaultNumberLevel;
         }

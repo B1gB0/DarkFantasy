@@ -23,15 +23,8 @@ namespace _Project.Scripts.Services
         private readonly Dictionary<ItemType, ItemData> _itemsData = new();
 
         private IDataBaseService _dataBaseService;
-        private IResourceService _resourceService;
         private IconsConfig _iconsConfig;
-
-        [Inject]
-        public void Construct(IDataBaseService dataBaseService, IResourceService resourceService)
-        {
-            _dataBaseService = dataBaseService;
-            _resourceService = resourceService;
-        }
+        private IResourceService _resourceService;
 
         public bool IsInitiated { get; private set; }
 
@@ -41,19 +34,12 @@ namespace _Project.Scripts.Services
                 return;
 
             foreach (var attributeData in _dataBaseService.Content.PlayerAttributeLevelData)
-            {
                 _attributesData.TryAdd(attributeData.Id, attributeData);
-            }
 
             foreach (var localizationData in _dataBaseService.Content.CharacteristicsLocalizationData)
-            {
                 _characteristicsLocalizationData.TryAdd(localizationData.Type, localizationData);
-            }
 
-            foreach (var itemData in _dataBaseService.Content.ItemsData)
-            {
-                _itemsData.TryAdd(itemData.Type, itemData);
-            }
+            foreach (var itemData in _dataBaseService.Content.ItemsData) _itemsData.TryAdd(itemData.Type, itemData);
 
             _iconsConfig = await _resourceService.LoadAsset<IconsConfig>(IconsConfigPath);
 
@@ -62,13 +48,11 @@ namespace _Project.Scripts.Services
 
         public List<PlayerAttributeLevelData> GetAttributesByType(CharacteristicType type)
         {
-            List<PlayerAttributeLevelData> attributesData = new List<PlayerAttributeLevelData>();
+            var attributesData = new List<PlayerAttributeLevelData>();
 
             foreach (var attributeData in _attributesData)
-            {
                 if (attributeData.Value.Type == type)
                     attributesData.Add(attributeData.Value);
-            }
 
             return attributesData;
         }
@@ -77,7 +61,7 @@ namespace _Project.Scripts.Services
         {
             return _characteristicsLocalizationData[type];
         }
-        
+
         public string GetLocalizedCharacteristicName(CharacteristicType type)
         {
             if (type == CharacteristicType.None) return string.Empty;
@@ -93,7 +77,7 @@ namespace _Project.Scripts.Services
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn,
+                _ => data.NameEn
             };
         }
 
@@ -101,7 +85,7 @@ namespace _Project.Scripts.Services
         {
             return _itemsData[type];
         }
-        
+
         public Sprite GetItemSpriteByType(ItemType type)
         {
             return _iconsConfig.Get(type);
@@ -110,6 +94,13 @@ namespace _Project.Scripts.Services
         public List<ItemData> GetItemsData()
         {
             return _itemsData.Select(itemData => itemData.Value).ToList();
+        }
+
+        [Inject]
+        public void Construct(IDataBaseService dataBaseService, IResourceService resourceService)
+        {
+            _dataBaseService = dataBaseService;
+            _resourceService = resourceService;
         }
     }
 }

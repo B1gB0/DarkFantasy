@@ -22,28 +22,17 @@ namespace _Project.Scripts.Services
         private const float HighGoldChance = 0.2f;
 
         private readonly List<ItemData> _commonEquipment = new();
-        private readonly List<ItemData> _uncommonEquipment = new();
-        private readonly List<ItemData> _rareEquipment = new();
         private readonly List<ItemData> _consumables = new();
+        private readonly List<ItemData> _rareEquipment = new();
 
         private readonly HashSet<(ItemType, LevelDifficulty)> _reserved = new();
+        private readonly List<ItemData> _uncommonEquipment = new();
 
         private IDataBaseService _dataBaseService;
         private IInventoryService _inventoryService;
         private IProgressionService _progressionService;
 
         public bool IsInitiated { get; private set; }
-
-        [Inject]
-        private void Construct(
-            IDataBaseService dataBaseService,
-            IInventoryService inventoryService,
-            IProgressionService progressionService)
-        {
-            _dataBaseService = dataBaseService;
-            _inventoryService = inventoryService;
-            _progressionService = progressionService;
-        }
 
         public UniTask Init()
         {
@@ -58,10 +47,11 @@ namespace _Project.Scripts.Services
                     case ItemKind.Equipment:
                         switch (item.Rarity)
                         {
-                            case ItemRarity.Common:   _commonEquipment.Add(item); break;
+                            case ItemRarity.Common: _commonEquipment.Add(item); break;
                             case ItemRarity.Uncommon: _uncommonEquipment.Add(item); break;
-                            case ItemRarity.Rare:     _rareEquipment.Add(item); break;
+                            case ItemRarity.Rare: _rareEquipment.Add(item); break;
                         }
+
                         break;
 
                     case ItemKind.Consumable:
@@ -99,7 +89,7 @@ namespace _Project.Scripts.Services
         {
             if (!IsInitiated) return LootResult.None();
 
-            float roll = Random.value;
+            var roll = Random.value;
 
             if (roll < ConsumableChance && TryGetRandomConsumable(out var consumable))
                 return LootResult.Item(consumable.Type, LootType.Consumable);
@@ -112,18 +102,32 @@ namespace _Project.Scripts.Services
             _reserved.Remove((type, difficulty));
         }
 
-        public void ClearReservations() => _reserved.Clear();
+        public void ClearReservations()
+        {
+            _reserved.Clear();
+        }
+
+        [Inject]
+        private void Construct(
+            IDataBaseService dataBaseService,
+            IInventoryService inventoryService,
+            IProgressionService progressionService)
+        {
+            _dataBaseService = dataBaseService;
+            _inventoryService = inventoryService;
+            _progressionService = progressionService;
+        }
 
         private bool TryRollCommonEquipment(out ItemData result)
         {
             result = null;
 
-            float roll = Random.value;
-            ItemRarity target = roll < PrimaryWeight ? ItemRarity.Common : ItemRarity.Uncommon;
+            var roll = Random.value;
+            var target = roll < PrimaryWeight ? ItemRarity.Common : ItemRarity.Uncommon;
 
             if (TryRollFrom(GetPool(target), out result)) return true;
 
-            ItemRarity fallback = target == ItemRarity.Common
+            var fallback = target == ItemRarity.Common
                 ? ItemRarity.Uncommon
                 : ItemRarity.Common;
 
@@ -134,25 +138,28 @@ namespace _Project.Scripts.Services
         {
             result = null;
 
-            float roll = Random.value;
-            ItemRarity target = roll < PrimaryWeight ? ItemRarity.Uncommon : ItemRarity.Rare;
+            var roll = Random.value;
+            var target = roll < PrimaryWeight ? ItemRarity.Uncommon : ItemRarity.Rare;
 
             if (TryRollFrom(GetPool(target), out result)) return true;
 
-            ItemRarity fallback = target == ItemRarity.Uncommon
+            var fallback = target == ItemRarity.Uncommon
                 ? ItemRarity.Rare
                 : ItemRarity.Uncommon;
 
             return TryRollFrom(GetPool(fallback), out result);
         }
 
-        private List<ItemData> GetPool(ItemRarity rarity) => rarity switch
+        private List<ItemData> GetPool(ItemRarity rarity)
         {
-            ItemRarity.Common   => _commonEquipment,
-            ItemRarity.Uncommon => _uncommonEquipment,
-            ItemRarity.Rare     => _rareEquipment,
-            _ => null,
-        };
+            return rarity switch
+            {
+                ItemRarity.Common => _commonEquipment,
+                ItemRarity.Uncommon => _uncommonEquipment,
+                ItemRarity.Rare => _rareEquipment,
+                _ => null
+            };
+        }
 
         private bool TryRollFrom(List<ItemData> pool, out ItemData result)
         {
@@ -168,9 +175,9 @@ namespace _Project.Scripts.Services
 
             if (available.Count == 0) return false;
 
-            int idx = Random.Range(0, available.Count);
+            var idx = Random.Range(0, available.Count);
             result = available[idx];
-            
+
             _reserved.Add((result.Type, difficulty));
             return true;
         }
@@ -180,7 +187,7 @@ namespace _Project.Scripts.Services
             result = null;
             if (_consumables.Count == MinValue) return false;
 
-            int idx = Random.Range(MinValue, _consumables.Count);
+            var idx = Random.Range(MinValue, _consumables.Count);
             result = _consumables[idx];
             return true;
         }

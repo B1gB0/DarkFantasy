@@ -1,6 +1,5 @@
 using _Project.Scripts.DataBase;
 using _Project.Scripts.DataBase.InitDataSO;
-using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.Services
 {

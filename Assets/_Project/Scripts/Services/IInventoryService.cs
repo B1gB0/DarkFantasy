@@ -8,6 +8,11 @@ namespace _Project.Scripts.Services
 {
     public interface IInventoryService : IService
     {
+        public IReadOnlyList<Item> Equipment { get; }
+        public Item EquippedWeapon { get; }
+        public Item EquippedArmor { get; }
+        public Item EquippedRing { get; }
+        public ItemType EquippedConsumableType { get; }
         public void ShowCurrentEquippedConsumableItem();
         public void AddItem(ItemType itemType, int amount = 1);
         public void AddEquipment(Item instance);
@@ -28,10 +33,5 @@ namespace _Project.Scripts.Services
         public event Action OnUnEquippedConsumableItem;
         public event Action OnEquippedItem;
         public event Action OnUnEquippedItem;
-        public IReadOnlyList<Item> Equipment { get; }
-        public Item EquippedWeapon { get; }
-        public Item EquippedArmor { get; }
-        public Item EquippedRing { get; }
-        public ItemType EquippedConsumableType { get; }
     }
 }

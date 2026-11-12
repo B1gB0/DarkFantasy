@@ -17,33 +17,24 @@ namespace _Project.Scripts.Services
         private Dictionary<ItemType, int> _consumables = new();
         private List<Item> _equipment = new();
 
-        private Item _equippedWeapon;
-        private Item _equippedArmor;
-        private Item _equippedRing;
-
-        private ItemType _equippedConsumableType;
-
         private IShopService _shopService;
-
-        public bool IsInitiated { get; private set; }
         public int MaxSlotsCount => MaxSlots;
 
+        public bool IsInitiated { get; private set; }
+
         public IReadOnlyList<Item> Equipment => _equipment;
-        public Item EquippedWeapon => _equippedWeapon;
-        public Item EquippedArmor => _equippedArmor;
-        public Item EquippedRing => _equippedRing;
-        public ItemType EquippedConsumableType => _equippedConsumableType;
+        public Item EquippedWeapon { get; private set; }
+
+        public Item EquippedArmor { get; private set; }
+
+        public Item EquippedRing { get; private set; }
+
+        public ItemType EquippedConsumableType { get; private set; }
 
         public event Action<ItemType, int> OnEquippedConsumableItem;
         public event Action OnUnEquippedConsumableItem;
         public event Action OnEquippedItem;
         public event Action OnUnEquippedItem;
-
-        [Inject]
-        private void Construct(IShopService shopService)
-        {
-            _shopService = shopService;
-        }
 
         public UniTask Init()
         {
@@ -57,10 +48,10 @@ namespace _Project.Scripts.Services
             _equipment = YG2.saves.Equipment ?? new List<Item>();
             YG2.saves.Equipment = _equipment;
 
-            _equippedWeapon = GetEquipment(YG2.saves.EquippedWeaponId);
-            _equippedArmor = GetEquipment(YG2.saves.EquippedArmorId);
-            _equippedRing = GetEquipment(YG2.saves.EquippedRingId);
-            _equippedConsumableType = YG2.saves.EquippedItemType;
+            EquippedWeapon = GetEquipment(YG2.saves.EquippedWeaponId);
+            EquippedArmor = GetEquipment(YG2.saves.EquippedArmorId);
+            EquippedRing = GetEquipment(YG2.saves.EquippedRingId);
+            EquippedConsumableType = YG2.saves.EquippedItemType;
 
             IsInitiated = true;
             return UniTask.CompletedTask;
@@ -77,16 +68,16 @@ namespace _Project.Scripts.Services
         {
             if (string.IsNullOrEmpty(id)) return;
 
-            bool wasEquipped =
-                _equippedWeapon?.Id == id ||
-                _equippedArmor?.Id == id ||
-                _equippedRing?.Id == id;
+            var wasEquipped =
+                EquippedWeapon?.Id == id ||
+                EquippedArmor?.Id == id ||
+                EquippedRing?.Id == id;
 
             _equipment.RemoveAll(i => i.Id == id);
 
-            if (_equippedWeapon?.Id == id) _equippedWeapon = null;
-            if (_equippedArmor?.Id == id) _equippedArmor = null;
-            if (_equippedRing?.Id == id) _equippedRing = null;
+            if (EquippedWeapon?.Id == id) EquippedWeapon = null;
+            if (EquippedArmor?.Id == id) EquippedArmor = null;
+            if (EquippedRing?.Id == id) EquippedRing = null;
 
             Save();
 
@@ -106,9 +97,9 @@ namespace _Project.Scripts.Services
         public IReadOnlyList<Item> GetEquippedItems()
         {
             var result = new List<Item>(3);
-            if (_equippedWeapon != null) result.Add(_equippedWeapon);
-            if (_equippedArmor != null) result.Add(_equippedArmor);
-            if (_equippedRing != null) result.Add(_equippedRing);
+            if (EquippedWeapon != null) result.Add(EquippedWeapon);
+            if (EquippedArmor != null) result.Add(EquippedArmor);
+            if (EquippedRing != null) result.Add(EquippedRing);
             return result;
         }
 
@@ -126,9 +117,9 @@ namespace _Project.Scripts.Services
 
             switch (data.Slot)
             {
-                case EquipmentType.Weapon: _equippedWeapon = instance; break;
-                case EquipmentType.Armor: _equippedArmor = instance; break;
-                case EquipmentType.Ring: _equippedRing = instance; break;
+                case EquipmentType.Weapon: EquippedWeapon = instance; break;
+                case EquipmentType.Armor: EquippedArmor = instance; break;
+                case EquipmentType.Ring: EquippedRing = instance; break;
             }
 
             OnEquippedItem?.Invoke();
@@ -137,9 +128,9 @@ namespace _Project.Scripts.Services
 
         public void UnequipItemByInstanceId(string instanceId)
         {
-            if (_equippedWeapon?.Id == instanceId) _equippedWeapon = null;
-            if (_equippedArmor?.Id == instanceId) _equippedArmor = null;
-            if (_equippedRing?.Id == instanceId) _equippedRing = null;
+            if (EquippedWeapon?.Id == instanceId) EquippedWeapon = null;
+            if (EquippedArmor?.Id == instanceId) EquippedArmor = null;
+            if (EquippedRing?.Id == instanceId) EquippedRing = null;
 
             OnUnEquippedItem?.Invoke();
             Save();
@@ -157,15 +148,17 @@ namespace _Project.Scripts.Services
             if (amount <= 0) return;
             if (!_consumables.TryGetValue(itemType, out var current)) return;
 
-            int newCount = current - amount;
+            var newCount = current - amount;
 
             if (newCount > 0)
+            {
                 _consumables[itemType] = newCount;
+            }
             else
             {
                 _consumables.Remove(itemType);
 
-                if (_equippedConsumableType == itemType)
+                if (EquippedConsumableType == itemType)
                     UnequipConsumableItem();
             }
 
@@ -176,17 +169,21 @@ namespace _Project.Scripts.Services
         {
             if (!_consumables.Remove(itemType)) return;
 
-            if (_equippedConsumableType == itemType)
+            if (EquippedConsumableType == itemType)
                 UnequipConsumableItem();
 
             Save();
         }
 
         public int GetItemCount(ItemType itemType)
-            => _consumables.GetValueOrDefault(itemType, 0);
+        {
+            return _consumables.GetValueOrDefault(itemType, 0);
+        }
 
         public bool HasItem(ItemType itemType)
-            => _consumables.TryGetValue(itemType, out var count) && count > 0;
+        {
+            return _consumables.TryGetValue(itemType, out var count) && count > 0;
+        }
 
         public void EquipConsumableItem(ItemData data)
         {
@@ -199,41 +196,43 @@ namespace _Project.Scripts.Services
                 return;
             }
 
-            _equippedConsumableType = data.Type;
+            EquippedConsumableType = data.Type;
             ShowCurrentEquippedConsumableItem();
             Save();
         }
 
         public void ShowCurrentEquippedConsumableItem()
         {
-            if (_equippedConsumableType == ItemType.None) return;
+            if (EquippedConsumableType == ItemType.None) return;
 
-            var data = _shopService.GetItemDataByType(_equippedConsumableType);
+            var data = _shopService.GetItemDataByType(EquippedConsumableType);
             if (data == null)
             {
                 UnequipConsumableItem();
                 return;
             }
 
-            int count = GetItemCount(_equippedConsumableType);
+            var count = GetItemCount(EquippedConsumableType);
             if (count <= 0)
             {
                 UnequipConsumableItem();
                 return;
             }
 
-            OnEquippedConsumableItem?.Invoke(_equippedConsumableType, count);
+            OnEquippedConsumableItem?.Invoke(EquippedConsumableType, count);
         }
 
         public void UnequipConsumableItem()
         {
-            _equippedConsumableType = ItemType.None;
+            EquippedConsumableType = ItemType.None;
             OnUnEquippedConsumableItem?.Invoke();
             Save();
         }
 
         public bool IsFull()
-            => GetTotalItemCount() >= MaxSlots;
+        {
+            return GetTotalItemCount() >= MaxSlots;
+        }
 
         public bool CanFit(ItemData itemData)
         {
@@ -245,9 +244,15 @@ namespace _Project.Scripts.Services
             return !IsFull();
         }
 
+        [Inject]
+        private void Construct(IShopService shopService)
+        {
+            _shopService = shopService;
+        }
+
         private int GetTotalItemCount()
         {
-            int count = _equipment.Count;
+            var count = _equipment.Count;
 
             foreach (var kvp in _consumables)
                 if (kvp.Value > 0)
@@ -271,10 +276,10 @@ namespace _Project.Scripts.Services
         {
             YG2.saves.Consumables = _consumables;
             YG2.saves.Equipment = _equipment;
-            YG2.saves.EquippedWeaponId = _equippedWeapon?.Id;
-            YG2.saves.EquippedArmorId = _equippedArmor?.Id;
-            YG2.saves.EquippedRingId = _equippedRing?.Id;
-            YG2.saves.EquippedItemType = _equippedConsumableType;
+            YG2.saves.EquippedWeaponId = EquippedWeapon?.Id;
+            YG2.saves.EquippedArmorId = EquippedArmor?.Id;
+            YG2.saves.EquippedRingId = EquippedRing?.Id;
+            YG2.saves.EquippedItemType = EquippedConsumableType;
             YG2.SaveProgress();
         }
     }

@@ -16,29 +16,29 @@ namespace _Project.Scripts.Services
 
         public bool IsInitiated { get; private set; }
 
-        [Inject]
-        private void Construct(IPlayerService playerService, IResourceService resourceService)
-        {
-            _playerService = playerService;
-            _resourceService = resourceService;
-        }
-
         public async UniTask Init()
         {
-            if(_waypoint != null)
+            if (_waypoint != null)
                 _waypoint.GetPlayer(_playerService.Player);
-            
+
             if (IsInitiated) return;
 
             var waypointTemplate = await _resourceService.LoadAsset<GameObject>(NavMeshWaypointPath);
             waypointTemplate = Instantiate(waypointTemplate);
-            
+
             _waypoint = waypointTemplate.GetComponent<NavMeshWaypoint>();
             _waypoint.GetPlayer(_playerService.Player);
 
             DontDestroyOnLoad(_waypoint.gameObject);
 
             IsInitiated = true;
+        }
+
+        [Inject]
+        private void Construct(IPlayerService playerService, IResourceService resourceService)
+        {
+            _playerService = playerService;
+            _resourceService = resourceService;
         }
 
         public void ShowWaypoint(Transform target)

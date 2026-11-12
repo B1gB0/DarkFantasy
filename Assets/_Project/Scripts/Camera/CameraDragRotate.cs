@@ -57,7 +57,7 @@ namespace _Project.Scripts.Camera
                 var dir = input.CameraLookDirection;
                 float sign = _isInverted ? -Sign : Sign;
                 
-                float rotationDelta = 0f;
+                float rotationDelta;
                 
                 if (_isMobile)
                 {

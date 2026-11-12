@@ -9,27 +9,21 @@ namespace _Project.Scripts.Services
     public class ProgressionService : IProgressionService
     {
         private const string DifficultyConfigPath = "DifficultyConfig";
-        
+
         private DifficultyConfig _config;
         private IResourceService _resourceService;
 
         public bool IsInitiated { get; private set; }
         public LevelDifficulty CurrentDifficulty { get; private set; } = LevelDifficulty.Low;
 
-        [Inject]
-        public void Construct(IResourceService resourceService)
-        {
-            _resourceService = resourceService;
-        }
-        
         public async UniTask Init()
         {
             if (IsInitiated) return;
 
             CurrentDifficulty = YG2.saves.CurrentDifficulty;
-            
+
             _config = await _resourceService.LoadAsset<DifficultyConfig>(DifficultyConfigPath);
-            
+
             IsInitiated = true;
         }
 
@@ -54,16 +48,22 @@ namespace _Project.Scripts.Services
         {
             return _config.Get(CurrentDifficulty).EnemyDamageMultiplier;
         }
-        
+
         public bool IsDifficultyUnlocked(LevelDifficulty difficulty)
         {
             return difficulty switch
             {
-                LevelDifficulty.Low   => true,
+                LevelDifficulty.Low => true,
                 LevelDifficulty.Medium => YG2.saves.IsMediumDifficultyUnlock,
-                LevelDifficulty.High   => YG2.saves.IsHardDifficultyUnlock,
-                _ => false,
+                LevelDifficulty.High => YG2.saves.IsHardDifficultyUnlock,
+                _ => false
             };
+        }
+
+        [Inject]
+        public void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
         }
     }
 }

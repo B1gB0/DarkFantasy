@@ -11,13 +11,13 @@ namespace _Project.Scripts.Services
         {
             var handle = Addressables.LoadAssetAsync<T>(assetName);
             await handle.Task;
-            
+
             if (handle.Status != AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError($"[Resource] Failed to load: {assetName}");
                 return default;
             }
-            
+
             return handle.Result;
         }
 
@@ -26,7 +26,7 @@ namespace _Project.Scripts.Services
             var gameObject = await InstantiateAsync(assetName, parent);
             return gameObject != null ? gameObject.GetComponent<T>() : null;
         }
-        
+
         private async UniTask<GameObject> InstantiateAsync(string assetName, Transform parent = null)
         {
             var handle = Addressables.InstantiateAsync(assetName, parent);
@@ -36,6 +36,7 @@ namespace _Project.Scripts.Services
                 Debug.LogError($"[Resource] Failed to instantiate: {assetName}");
                 return null;
             }
+
             return handle.Result;
         }
     }
