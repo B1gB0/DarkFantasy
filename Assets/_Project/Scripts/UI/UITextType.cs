@@ -2,18 +2,16 @@ namespace _Project.Scripts.UI
 {
     public enum UITextType
     {
-        LevelUpPanelTitle = 0,
-        ShopPanelTitle = 1,
-        DefeatPanelTitle = 2,
-        VictoryPanelTitle = 3,
-        PriestName = 4,
-        BanditLeaderName = 5,
-        DarkLordName = 6,
-        Common = 7,
-        Uncommon = 8,
-        Rare = 9,
-        DifficultyLow = 10,
-        DifficultyMedium = 11,
-        DifficultyHigh = 12,
+        DefeatPanelTitle = 0,
+        VictoryPanelTitle = 1,
+        PriestName = 2,
+        BanditLeaderName = 3,
+        DarkLordName = 4,
+        Common = 5,
+        Uncommon = 6,
+        Rare = 7,
+        DifficultyLow = 8,
+        DifficultyMedium = 9,
+        DifficultyHigh = 10,
     }
 }

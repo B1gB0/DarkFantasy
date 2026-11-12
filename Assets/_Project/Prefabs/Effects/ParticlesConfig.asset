@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Particles:
   - ParticleName: BasicHit
-  - ParticleName: SoulsElectricityCoil
   - ParticleName: MagicExplosion
   - ParticleName: ShieldEffect
   - ParticleName: RedBloodHit
   - ParticleName: MagicChargeBlue
   - ParticleName: SoulCoil
-  - ParticleName: ExplosionFireball
   - ParticleName: GenericDeath
+  - ParticleName: ExplosionFireball
   _particleLabel: Particles

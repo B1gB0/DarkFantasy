@@ -13,33 +13,27 @@ MonoBehaviour:
   m_Name: ColorPalette
   m_EditorClassIdentifier: 
   colors:
-  - Name: 3
+  - Name: 2
     Color: {r: 1, g: 1, b: 1, a: 1}
   - Name: 0
     Color: {r: 0.07450981, g: 0.6745098, b: 0, a: 1}
   - Name: 1
     Color: {r: 0.9529412, g: 0, b: 0.39607844, a: 1}
-  - Name: 6
+  - Name: 3
     Color: {r: 0, g: 0, b: 0, a: 1}
-  - Name: 7
-    Color: {r: 0.09019608, g: 0.65882355, b: 0.627451, a: 1}
-  - Name: 9
-    Color: {r: 0.38039216, g: 0.38039216, b: 0.38039216, a: 1}
-  - Name: 8
-    Color: {r: 0.6509804, g: 0, b: 0, a: 1}
-  - Name: 11
+  - Name: 5
     Color: {r: 1, g: 0, b: 0.02745098, a: 1}
-  - Name: 10
+  - Name: 4
     Color: {r: 0, g: 0.4569986, b: 1, a: 1}
-  - Name: 14
+  - Name: 8
     Color: {r: 0, g: 0.75686276, b: 1, a: 1}
-  - Name: 12
+  - Name: 6
     Color: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
-  - Name: 13
+  - Name: 7
     Color: {r: 0.27450982, g: 0.9843137, b: 0.5058824, a: 1}
-  - Name: 15
+  - Name: 9
     Color: {r: 0.054574464, g: 0.82641506, b: 0.3040107, a: 1}
-  - Name: 16
+  - Name: 10
     Color: {r: 0.86450905, g: 0.87169814, b: 0.07730149, a: 1}
-  - Name: 17
+  - Name: 11
     Color: {r: 0.87058824, g: 0.15615688, b: 0.078431375, a: 1}

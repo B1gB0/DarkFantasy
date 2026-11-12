@@ -13,7 +13,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const float CoilChance = 0.66f;
         private const float DarkLordMagicSpellDistance = 5f;
         private const float FiftyChance = 0.5f;
-        private const float MinValue = 0f;
         private const float DistanceFactor = 1.2f;
 
         private float _attackRange;
@@ -25,25 +24,21 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
         
         private float _comboChance1 = 0.3f;
         private float _comboChance2 = 0.4f;
-        private float _comboChance3 = 0.3f;
         private float _dodgeChance = 0.3f;
         private float _attack1Duration = 0.8f;
         private float _attack2Duration = 1.0f;
         private float _attack3Duration = 1.2f;
         private float _dodgeDuration = 2f;
         private float _dodgeDistance = 3f;
-        private float _dodgeSpeed = 6f;
         
         private int _comboLength;
         private int _currentComboIndex;
-        private bool _comboInProgress;
         
         private Vector3 _dodgeDirection;
         private Vector3 _dodgeStartPosition;
         private float _dodgeElapsed;
 
         private AttackSubState _currentSubState;
-        private PriestAttackState _lastPriestRangedAttack = PriestAttackState.None;
         private PriestAttackState _activePriestAttack = PriestAttackState.None;
         private float _subStateTimer;
 
@@ -56,7 +51,6 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             
             if (Enemy.Type == EnemyType.BanditLeader || Enemy.Type == EnemyType.DarkLord)
             {
-                _comboInProgress = false;
                 _currentComboIndex = 0;
             }
     
@@ -284,15 +278,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
                     if (_currentComboIndex < _comboLength)
                     {
-                        var nextState = _currentComboIndex == 1 
+                        var nextState = _currentComboIndex == MinValue 
                             ? AttackSubState.Attack2 
                             : AttackSubState.Attack3;
                         EnterAttackSubState(nextState);
                     }
                     else
                     {
-                        _comboInProgress = false;
-                        
                         if (Random.value < _dodgeChance)
                         {
                             EnterDodge();
@@ -383,8 +375,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             else
                 _comboLength = 3;
 
-            _currentComboIndex = 0;
-            _comboInProgress = true;
+            _currentComboIndex = MinValue;
             EnterAttackSubState(AttackSubState.Attack1);
         }
         

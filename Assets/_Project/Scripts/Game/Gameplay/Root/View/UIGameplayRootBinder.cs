@@ -8,7 +8,6 @@ using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using YG;
 
@@ -20,7 +19,7 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
         private const float LongTutorialDelay = 15f;
         private const int MaxShortTutorials = 3;
         
-        private int _tutorialShowCount = 0;
+        private int _tutorialShowCount;
 
         private Subject<Unit> _exitSceneSignalSubject;
         private UIStateMachine _uiStateMachine;
@@ -80,7 +79,6 @@ namespace _Project.Scripts.Game.Gameplay.Root.View
 
         public void HandleGoToNextScene()
         {
-            // AudioSoundsService.PlaySound(SoundsType.Button).Forget();
             _exitSceneSignalSubject?.OnNext(Unit.Default);
         }
 

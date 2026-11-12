@@ -50,13 +50,13 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 return;
             }
 
-            if (_waypoints == null || _waypoints.Count == 0)
+            if (_waypoints == null || _waypoints.Count == MinValue)
                 return;
             
             if (_isWaiting)
             {
                 _waitTimer -= Time.deltaTime;
-                if (_waitTimer <= 0f)
+                if (_waitTimer <= MinValue)
                 {
                     _isWaiting = false;
                     

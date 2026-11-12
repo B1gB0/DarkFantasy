@@ -11,6 +11,8 @@ namespace _Project.Scripts.UI.View
 {
     public class InventoryItemView : View
     {
+        private const int MinValue = 0;
+        
         [SerializeField] private Image _iconImage;
         [SerializeField] private Image _hoverImage;
         [SerializeField] private Image _equipIcon;
@@ -75,7 +77,7 @@ namespace _Project.Scripts.UI.View
 
             _hoverImage.gameObject.SetActive(false);
 
-            if (template == null || count <= 0)
+            if (template == null || count <= MinValue)
             {
                 Clear();
                 return;
@@ -88,7 +90,7 @@ namespace _Project.Scripts.UI.View
             _count.text = count.ToString();
         }
         
-        public void Set(ItemData itemData = null, int count = 0)
+        public void Set(ItemData itemData = null, int count = MinValue)
         {
             if (itemData == null)
             {

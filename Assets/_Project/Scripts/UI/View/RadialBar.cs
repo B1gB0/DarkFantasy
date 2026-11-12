@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +6,6 @@ namespace _Project.Scripts.UI.View
 {
     public class RadialBar : View
     {
-        private const float RecoveryRate = 10f;
-        private const float ApproximateValue = 0.01f;
-
         private const int DefaultBarValue = 0;
         private const int DefaultBackgroundBarValue = 1;
 
@@ -60,43 +56,10 @@ namespace _Project.Scripts.UI.View
             CancelAnimation();
             _barInstance?.SetFloat(_removedSegments, Mathf.Clamp01(normalized01));
         }
-        
-        public void OnChangeValue(float currentValue, float targetValue, float maxValue)
-        {
-            CancelAnimation();
-            _cancellationTokenSource = new CancellationTokenSource();
-            SetValueAsync(currentValue, targetValue, maxValue, _cancellationTokenSource.Token).Forget();
-        }
 
         public void SetColor(Color color)
         {
             _barInstance.SetColor(_color, color);
-        }
-
-        private async UniTask SetValueAsync(
-            float currentValue,
-            float targetValue,
-            float maxValue,
-            CancellationToken token)
-        {
-            if (maxValue <= 0f)
-                return;
-
-            while (!token.IsCancellationRequested &&
-                   Mathf.Abs(currentValue - targetValue) > ApproximateValue)
-            {
-                currentValue = Mathf.MoveTowards(
-                    currentValue,
-                    targetValue,
-                    RecoveryRate * Time.unscaledDeltaTime);
-
-                _barInstance?.SetFloat(_removedSegments, currentValue / maxValue);
-
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
-            }
-
-            if (!token.IsCancellationRequested)
-                _barInstance?.SetFloat(_removedSegments, targetValue / maxValue);
         }
 
         private void CancelAnimation()

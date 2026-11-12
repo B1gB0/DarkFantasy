@@ -21,15 +21,15 @@ MonoBehaviour:
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1
+  - ClipName: BuyButtonSound
+    Clip: {fileID: 0}
+    IsLoop: 0
+    Volume: 1
   - ClipName: ExplosionFireballSound
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1
   - ClipName: Fireball
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: ExplosionSoulElecticitySound
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1
@@ -54,10 +54,6 @@ MonoBehaviour:
     IsLoop: 0
     Volume: 1
   - ClipName: SkeletonHit
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: BuyButtonSound
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1

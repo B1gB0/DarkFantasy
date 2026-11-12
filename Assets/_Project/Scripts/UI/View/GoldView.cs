@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.UI.View
 {
-    public class GoldView : MonoBehaviour
+    public class GoldView : View
     {
         [SerializeField] private TMP_Text _text;
         [SerializeField] private Transform _showPoint;
@@ -34,14 +34,9 @@ namespace _Project.Scripts.UI.View
             transform.DOKill();
         }
 
-        public void Show()
+        public override void Show()
         {
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
-        }
-
-        public void Hide()
-        {
-            _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint, true);
         }
 
         private void SetValue(int value)

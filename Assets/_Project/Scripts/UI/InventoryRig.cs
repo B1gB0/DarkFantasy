@@ -7,9 +7,6 @@ namespace _Project.Scripts.UI
         [SerializeField] private UnityEngine.Camera _previewCamera;
         [SerializeField] private Transform _modelAnchor;
 
-        public UnityEngine.Camera Camera => _previewCamera;
-        public Transform ModelAnchor => _modelAnchor;
-
         public void SetActive(bool active)
         {
             if (_previewCamera != null)

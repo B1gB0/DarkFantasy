@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Game.GameRoot
@@ -22,22 +20,6 @@ namespace _Project.Scripts.Game.GameRoot
                 Destroy(_temporaryContainer.GetChild(i).gameObject);
             }
         }
-
-        public async UniTask<T> GetOrCreate<T>(string key, Func<UniTask<T>> factory) where T : MonoBehaviour
-        {
-            if (_cache.TryGetValue(key, out var cached))
-            {
-                if (cached != null) return cached as T;
-                
-                _cache.Remove(key);
-            }
-
-            var created = await factory();
-            if (created != null)
-                _cache[key] = created;
-
-            return created;
-        }
         
         public T Get<T>(string key) where T : MonoBehaviour
         {
@@ -52,12 +34,6 @@ namespace _Project.Scripts.Game.GameRoot
         public void Register<T>(string key, T instance) where T : MonoBehaviour
         {
             _cache[key] = instance;
-        }
-
-        public void ClearAll()
-        {
-            ClearTemporaryUI();
-            _cache.Clear();
         }
     }
 }

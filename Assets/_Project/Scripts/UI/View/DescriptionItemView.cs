@@ -199,7 +199,7 @@ namespace _Project.Scripts.UI.View
         private void AppendStat(StringBuilder sb, CharacteristicType type, float value)
         {
             if (type == CharacteristicType.None) return;
-            if (value <= 0f) return;
+            if (value <= MinValue) return;
 
             string localized = _shopService.GetLocalizedCharacteristicName(type);
             if (string.IsNullOrEmpty(localized)) return;

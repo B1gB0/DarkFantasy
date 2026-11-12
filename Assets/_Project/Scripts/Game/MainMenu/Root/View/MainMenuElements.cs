@@ -1,8 +1,6 @@
 ﻿using _Project.Scripts.Services;
-using _Project.Scripts.UI;
 using DG.Tweening;
 using Reflex.Attributes;
-using UnityEngine;
 
 namespace _Project.Scripts.Game.MainMenu.Root.View
 {

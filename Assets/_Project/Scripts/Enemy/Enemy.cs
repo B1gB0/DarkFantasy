@@ -30,8 +30,7 @@ namespace _Project.Scripts.Enemy
         [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
         [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field: SerializeField] public Collider Collider { get; private set; }
-
-        public int Experience { get; private set; }
+        
         public int Score { get; private set; }
         public bool IsEnemy { get; private set; }
         public bool IsBoss { get; private set; }
@@ -76,7 +75,6 @@ namespace _Project.Scripts.Enemy
             Type = Data.Type;
 
             Score = Data.Score;
-            Experience = Data.Experience;
             IsEnemy = true;
 
             FloatingTextService = floatingTextService;

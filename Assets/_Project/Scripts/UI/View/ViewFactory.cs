@@ -103,7 +103,7 @@ namespace _Project.Scripts.UI.View
 
             GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
-            healthBar.GetPoints(UIScene.ShowBossHealthPoint, UIScene.HideBossHealthPoint, UIScene.WeaponPoint);
+            healthBar.GetPoints(UIScene.ShowBossHealthPoint, UIScene.HideBossHealthPoint);
             healthBar.gameObject.SetActive(false);
 
             return healthBar;
@@ -189,7 +189,7 @@ namespace _Project.Scripts.UI.View
             if (cached != null)
             {
                 cached.Construct(health);
-                cached.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
+                cached.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint);
                 return cached;
             }
 
@@ -199,7 +199,7 @@ namespace _Project.Scripts.UI.View
 
             GameObjectInjector.InjectSingle(healthBar.gameObject, _container);
             healthBar.Construct(health);
-            healthBar.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint, UIScene.WeaponPoint);
+            healthBar.GetPoints(UIScene.ShowHealthPoint, UIScene.HideHealthPoint);
 
             _uiRoot.UISceneContainer.Register(HealthBarPath, healthBar);
 

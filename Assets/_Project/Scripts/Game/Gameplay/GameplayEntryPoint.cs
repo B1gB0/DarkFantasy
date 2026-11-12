@@ -1,6 +1,5 @@
 using _Project.Scripts.Audio.Sounds;
 using _Project.Scripts.Camera;
-using _Project.Scripts.DataBase.InitDataSO;
 using _Project.Scripts.Game.Gameplay.Root.View;
 using _Project.Scripts.Game.GameRoot;
 using _Project.Scripts.Game.MainMenu;
@@ -284,7 +283,7 @@ namespace _Project.Scripts.Game.Gameplay
 
             var sceneName = _missionService.GetSceneNameByNumber(nextNumberLevel);
 
-            var gameplayEnterParameters = new GameplayEnterParameters(sceneName, nextNumberLevel);
+            var gameplayEnterParameters = new GameplayEnterParameters(sceneName);
 
             _exitParameters = new GameplayExitParameters(gameplayEnterParameters);
         }

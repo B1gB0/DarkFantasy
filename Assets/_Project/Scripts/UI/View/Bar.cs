@@ -18,7 +18,6 @@ namespace _Project.Scripts.UI.View
 
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
-        [SerializeField] private Transform _weaponPanelPoint;
 
         private ITweenAnimationService _tweenAnimationService;
 
@@ -48,21 +47,10 @@ namespace _Project.Scripts.UI.View
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint, true);
         }
 
-        public void MoveToWeaponPanelPosition()
-        {
-            _tweenAnimationService.AnimateMove(transform, _weaponPanelPoint, _showPoint);
-        }
-
-        public void MoveToShowPosition()
-        {
-            _tweenAnimationService.AnimateMove(transform, _showPoint, _weaponPanelPoint);
-        }
-
-        public void GetPoints(Transform showPoint, Transform hidePoint, Transform weaponPanelPoint)
+        public void GetPoints(Transform showPoint, Transform hidePoint)
         {
             _showPoint = showPoint;
             _hidePoint = hidePoint;
-            _weaponPanelPoint = weaponPanelPoint;
         }
 
         protected void SetValues(float currentValue, float maxValue, float targetValue)

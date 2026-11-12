@@ -32,7 +32,6 @@ namespace _Project.Scripts.Game.GameRoot
 
         private UIRootView _uiRoot;
         private IPauseService _pauseService;
-        private IDataBaseService _dataBaseService;
 
         [Inject]
         private void Construct(
@@ -42,7 +41,6 @@ namespace _Project.Scripts.Game.GameRoot
         {
             _uiRoot = uiRoot;
             _pauseService = pauseService;
-            _dataBaseService = dataBaseService;
 
             EventSystem eventSystem = FindAnyObjectByType<EventSystem>();
             _pauseService.GetEventSystem(eventSystem);

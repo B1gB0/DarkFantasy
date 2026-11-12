@@ -25,7 +25,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             _deathTimer = TotalDeathDuration;
             _deathProcessed = false;
             _dissolveStarted = false;
-            _dissolveTimer = 0f;
+            _dissolveTimer = MinValue;
 
             if (Agent != null && Agent.isOnNavMesh)
             {
@@ -51,11 +51,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             _propertyBlock = new MaterialPropertyBlock();
             
-            SetDissolveAmount(0f);
-
-            // Эффекты можно запустить здесь
-            // ParticleEffectsService.PlayEffect(ParticleType.DeathEffect, Enemy.transform.position);
-            // AudioSoundsService.PlaySound(SoundType.EnemyDeath);
+            SetDissolveAmount(MinValue);
         }
 
         public override void Update()
@@ -65,7 +61,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
             if (!_dissolveStarted && _deathTimer <= TotalDeathDuration - DissolveDelay)
             {
                 _dissolveStarted = true;
-                _dissolveTimer = 0f;
+                _dissolveTimer = MinValue;
             }
             
             if (_dissolveStarted)
@@ -81,7 +77,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
                 }
             }
             
-            if (_deathTimer <= 0f && !_deathProcessed)
+            if (_deathTimer <= MinValue && !_deathProcessed)
             {
                 _deathProcessed = true;
                 Enemy.gameObject.SetActive(false);
@@ -90,7 +86,7 @@ namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Exit()
         {
-            SetDissolveAmount(0f);
+            SetDissolveAmount(MinValue);
         }
 
         private void SetDissolveAmount(float amount)

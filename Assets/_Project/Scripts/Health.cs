@@ -24,7 +24,6 @@ namespace _Project.Scripts
         private float _regenTimer;
 
         public event Action Die;
-        public event Action<Health> DieHealth;
         public event Action<Health, float, bool> OnDamageTaken;
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
@@ -35,8 +34,7 @@ namespace _Project.Scripts
         public float MaxHealth { get; private set; }
         public float TargetHealth { get; private set; }
         public float CurrentHealth { get; private set; }
-
-        public bool IsHitting { get; private set; }
+        
         public Transform HitPoint => _hitPoint;
 
         private void Start()
@@ -118,7 +116,6 @@ namespace _Project.Scripts
                 _characteristics?.ClearHealing();
                 _healthCts?.Cancel();
                 Die?.Invoke();
-                DieHealth?.Invoke(this);
             }
         }
 
@@ -161,7 +158,7 @@ namespace _Project.Scripts
         {
             if (Mathf.Approximately(MaxHealth, newMax)) return;
 
-            float percent = MaxHealth > 0f ? TargetHealth / MaxHealth : 1f;
+            float percent = MaxHealth > MinValue ? TargetHealth / MaxHealth : MinAliveHealth;
 
             MaxHealth = newMax;
 

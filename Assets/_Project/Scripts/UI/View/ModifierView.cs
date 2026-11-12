@@ -5,6 +5,9 @@ namespace _Project.Scripts.UI.View
 {
     public class ModifierView : MonoBehaviour
     {
+        private const float MinValue = 0f;
+        private const float NormalizedValue = 1f;
+        
         [SerializeField] private RadialBar _radialBar;
         [SerializeField] private Image _icon;
         
@@ -33,8 +36,8 @@ namespace _Project.Scripts.UI.View
 
         public void SetProgress(float remainingTime, float totalDuration)
         {
-            float normalized = totalDuration <= 0f
-                ? 0f
+            float normalized = totalDuration <= MinValue
+                ? MinValue
                 : Mathf.Clamp01(remainingTime / totalDuration);
             
             if (_initialized && Mathf.Approximately(_lastProgress, normalized)) return;
@@ -52,7 +55,7 @@ namespace _Project.Scripts.UI.View
             _lastProgress = float.NaN;
 
             _icon.sprite = null;
-            _radialBar.SetProgressImmediate(1f);
+            _radialBar.SetProgressImmediate(NormalizedValue);
         }
     }
 }

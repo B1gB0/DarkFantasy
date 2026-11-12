@@ -14,10 +14,5 @@
         {
             return (T) this;
         }
-
-        public void SetNewSceneName(string sceneName)
-        {
-            SceneName = sceneName;
-        }
     }
 }

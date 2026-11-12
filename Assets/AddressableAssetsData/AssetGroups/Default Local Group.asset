@@ -168,12 +168,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7216cadd4cd6e8043ab6284a1adf750d
-    m_Address: SoulsElectricityCoil
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Particles
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7643fe703cab67c47bc9fa7cae4862e1
     m_Address: Crypt
     m_ReadOnly: 0
@@ -188,12 +182,6 @@ MonoBehaviour:
     m_Address: BanditCamp
     m_ReadOnly: 0
     m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a32874fb8979e24cb9800ed9fc6a374
-    m_Address: ExplosionSoulElecticitySound
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89bc87b0ac4deae4f88c032303851fd1
     m_Address: MagicExplosion
