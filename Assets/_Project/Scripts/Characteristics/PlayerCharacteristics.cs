@@ -11,21 +11,13 @@ namespace _Project.Scripts.Characteristics
     [Serializable]
     public class PlayerCharacteristics
     {
-        private const int MinValue = 0;
+        private const float MinValue = 0f;
         private const int CorrectFactor = 1;
         
         private const float BaseAttackSpeedMultiplier = 1f;
         private const float BaseCritMultiplier  = 1.5f;
         private const float PercentFactor = 100f;
         private const float CritChance = 0.15f;
-
-        public float MaxHealth;
-        public float TargetHealth;
-        public float Armor;
-        public float Damage;
-        public float MoveSpeed;
-        public float RotationSpeed;
-        private float _healthRegenInterval = 1f;
 
         [SerializeField] private List<SpeedModifier> _speedModifiers;
         [SerializeField] private HealingModifier _healingModifier;
@@ -43,6 +35,15 @@ namespace _Project.Scripts.Characteristics
         [NonSerialized] private float _equipmentAttackSpeedBonus;
         [NonSerialized] private float _equipmentCritDamageBonus;
         [NonSerialized] private float _equipmentReverseDamageBonus;
+        
+        public float MaxHealth;
+        public float TargetHealth;
+        public float Armor;
+        public float Damage;
+        public float MoveSpeed;
+        public float RotationSpeed;
+        
+        private float _healthRegenInterval = 1f;
 
         public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
         public HealingModifier HealingModifier => _healingModifier;
@@ -88,15 +89,15 @@ namespace _Project.Scripts.Characteristics
         public void RecalculateEquipmentBonuses(
             IReadOnlyList<Item> equippedItems)
         {
-            _equipmentArmorBonus = 0f;
-            _equipmentDamageBonus = 0f;
-            _equipmentMaxHealthBonus = 0f;
-            _equipmentHealthRegenBonus = 0f;
-            _equipmentMoveSpeedBonus = 0f;
-            _equipmentAttackSpeedBonus = 0f;
-            _equipmentCritDamageBonus = 0f;
-            _equipmentReverseDamageBonus = 0f;
-            _healthRegenInterval = 0f;
+            _equipmentArmorBonus = MinValue;
+            _equipmentDamageBonus = MinValue;
+            _equipmentMaxHealthBonus = MinValue;
+            _equipmentHealthRegenBonus = MinValue;
+            _equipmentMoveSpeedBonus = MinValue;
+            _equipmentAttackSpeedBonus = MinValue;
+            _equipmentCritDamageBonus = MinValue;
+            _equipmentReverseDamageBonus = MinValue;
+            _healthRegenInterval = MinValue;
 
             foreach (var instance in equippedItems)
             {
@@ -115,43 +116,6 @@ namespace _Project.Scripts.Characteristics
                 
                 if (template.CharacteristicType3 != CharacteristicType.None)
                     ApplyBonus(template.CharacteristicType3, template.Value3 * mul, template.Duration);
-            }
-        }
-
-        private void ApplyBonus(CharacteristicType type, float value, float duration = 0f)
-        {
-            switch (type)
-            {
-                case CharacteristicType.Armor: 
-                    _equipmentArmorBonus += value;
-                    break;
-                case CharacteristicType.Damage: 
-                    _equipmentDamageBonus += value;
-                    break;
-                case CharacteristicType.MaxHealth: 
-                    _equipmentMaxHealthBonus += value;
-                    break;
-                case CharacteristicType.HealthRegen: 
-                    _equipmentHealthRegenBonus += value;
-                    _healthRegenInterval = duration;
-                    break;
-                case CharacteristicType.MoveSpeed:  
-                    _equipmentMoveSpeedBonus += value;
-                    break;
-                case CharacteristicType.AttackSpeed:
-                    _equipmentAttackSpeedBonus += value;
-                    break;
-                case CharacteristicType.CritDamage:
-                    _equipmentCritDamageBonus += value;
-                    break;
-                case CharacteristicType.ReverseDamage:
-                    _equipmentReverseDamageBonus += value;
-                    break;
-                case CharacteristicType.None:
-                    break;
-                default:
-                    Debug.LogWarning($"[Characteristics] Unknown bonus: {type}");
-                    break;
             }
         }
 
@@ -291,7 +255,7 @@ namespace _Project.Scripts.Characteristics
         
         public float RollDamage(float baseDamage, out bool isCrit)
         {
-            if (_equipmentCritDamageBonus <= 0f)
+            if (_equipmentCritDamageBonus <= MinValue)
             {
                 isCrit = false;
                 return baseDamage;
@@ -300,6 +264,43 @@ namespace _Project.Scripts.Characteristics
             isCrit = UnityEngine.Random.value < CritChance;
             
             return isCrit ? baseDamage * GetCritMultiplier() : baseDamage;
+        }
+        
+        private void ApplyBonus(CharacteristicType type, float value, float duration = MinValue)
+        {
+            switch (type)
+            {
+                case CharacteristicType.Armor: 
+                    _equipmentArmorBonus += value;
+                    break;
+                case CharacteristicType.Damage: 
+                    _equipmentDamageBonus += value;
+                    break;
+                case CharacteristicType.MaxHealth: 
+                    _equipmentMaxHealthBonus += value;
+                    break;
+                case CharacteristicType.HealthRegen: 
+                    _equipmentHealthRegenBonus += value;
+                    _healthRegenInterval = duration;
+                    break;
+                case CharacteristicType.MoveSpeed:  
+                    _equipmentMoveSpeedBonus += value;
+                    break;
+                case CharacteristicType.AttackSpeed:
+                    _equipmentAttackSpeedBonus += value;
+                    break;
+                case CharacteristicType.CritDamage:
+                    _equipmentCritDamageBonus += value;
+                    break;
+                case CharacteristicType.ReverseDamage:
+                    _equipmentReverseDamageBonus += value;
+                    break;
+                case CharacteristicType.None:
+                    break;
+                default:
+                    Debug.LogWarning($"[Characteristics] Unknown bonus: {type}");
+                    break;
+            }
         }
 
         private void IncreaseHealth(float healthValue)

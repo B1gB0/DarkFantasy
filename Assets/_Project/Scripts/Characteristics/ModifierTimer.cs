@@ -18,9 +18,6 @@ namespace _Project.Scripts.Characteristics
         }
 
         public bool IsActive => RemainingTime > Epsilon;
-
-        public float Progress01 =>
-            TotalDuration <= MinValue ? MinValue : Math.Max(MinValue, RemainingTime / TotalDuration);
         
         public bool Tick(float deltaTime)
         {

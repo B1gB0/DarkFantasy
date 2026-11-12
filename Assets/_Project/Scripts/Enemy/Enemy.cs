@@ -12,7 +12,7 @@ namespace _Project.Scripts.Enemy
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Collider))]
-    public abstract class Enemy : MonoBehaviour, IAcceptable, IExperienceScoreActor
+    public abstract class Enemy : MonoBehaviour, IAcceptable, IScoreActor
     {
         [SerializeField] private Animator _animator;
 

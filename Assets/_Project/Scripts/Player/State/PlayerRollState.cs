@@ -1,8 +1,7 @@
 ﻿using _Project.Scripts.Player.Animation;
-using _Project.Scripts.Player.Core;
 using UnityEngine;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Player.State
 {
     public class PlayerRollState : IPlayerState
     {

@@ -1,6 +1,6 @@
 using _Project.Scripts.Player.Core;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Player.State
 {
     public class PlayerIdleState : IPlayerState
     {

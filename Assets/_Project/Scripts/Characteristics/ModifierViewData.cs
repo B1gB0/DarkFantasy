@@ -12,8 +12,5 @@
             RemainingTime = remainingTime;
             TotalDuration = totalDuration;
         }
-
-        public float Progress01 =>
-            TotalDuration <= 0f ? 0f : RemainingTime / TotalDuration;
     }
 }

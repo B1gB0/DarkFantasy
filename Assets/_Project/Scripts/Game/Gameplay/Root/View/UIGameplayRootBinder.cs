@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using YG;
 

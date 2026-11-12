@@ -13,6 +13,9 @@ namespace _Project.Scripts.Camera
         private const string CameraSensitivity = nameof(CameraSensitivity);
         
         private const float MinValue = 0f;
+        private const float Sign = 1f;
+        private const float DefaultSensitivity = 1.5f;
+        private const float RotationClamp = 10f;
         private const float MouseMultiplier = 0.3f; 
         private const float JoystickMultiplier = 100f; 
 
@@ -21,7 +24,7 @@ namespace _Project.Scripts.Camera
         private bool _isConfigured;
         
         private bool _isInverted;
-        private float _sensitivity = 1.5f;
+        private float _sensitivity = DefaultSensitivity;
         private bool _isMobile;
         
         [Inject]
@@ -52,7 +55,7 @@ namespace _Project.Scripts.Camera
             if (input.IsCameraRotating)
             {
                 var dir = input.CameraLookDirection;
-                float sign = _isInverted ? -1f : 1f;
+                float sign = _isInverted ? -Sign : Sign;
                 
                 float rotationDelta = 0f;
                 
@@ -62,10 +65,8 @@ namespace _Project.Scripts.Camera
                 }
                 else
                 {
-                    // float pixelsToDegreesX = 360f / Mathf.Max(1f, Screen.width) * MouseMultiplier;
-                    
                     rotationDelta = dir.x * MouseMultiplier * _sensitivity * sign;
-                    rotationDelta = Mathf.Clamp(rotationDelta, -10f, 10f);
+                    rotationDelta = Mathf.Clamp(rotationDelta, -RotationClamp, RotationClamp);
                 }
                 
                 cam.m_XAxis.Value += rotationDelta;
@@ -90,8 +91,8 @@ namespace _Project.Scripts.Camera
         
         private void LoadSettings()
         {
-            _isInverted = PlayerPrefs.GetInt(MouseInverted, 0) == 1;
-            _sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, 1.5f);
+            _isInverted = PlayerPrefs.GetInt(MouseInverted, (int)MinValue) == (int)Sign;
+            _sensitivity = PlayerPrefs.GetFloat(CameraSensitivity, DefaultSensitivity);
         }
 
         private bool TryGetDependencies(out CinemachineFreeLook cam, out InputController input)

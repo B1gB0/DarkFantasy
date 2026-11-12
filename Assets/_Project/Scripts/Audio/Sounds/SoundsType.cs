@@ -7,7 +7,6 @@ namespace _Project.Scripts.Audio.Sounds
         ExplosionSoulSound = 2,
         ExplosionFireballSound = 3,
         Fireball = 4,
-        ExplosionSoulElecticitySound = 5,
         PaperButton = 6,
         ExplosionMagic = 7,
         HeavyArmorHit = 8,

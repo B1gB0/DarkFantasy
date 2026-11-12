@@ -10,7 +10,7 @@ namespace _Project.Scripts.Enemy
             AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();
             base.OnPlayHitEffect();
         }
-        
+
         protected override void OnDie()
         {
             ExperiencePoints.OnKill(this);

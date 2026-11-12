@@ -42,7 +42,7 @@ namespace _Project.Scripts.DI
         {
             builder.AddSingleton(typeof(ResourceService), typeof(IResourceService));
             builder.AddSingleton(typeof(DataBaseService), typeof(IDataBaseService));
-            builder.AddSingleton(typeof(ExperiencePoints), typeof(IExperiencePoints));
+            builder.AddSingleton(typeof(Score), typeof(IExperiencePoints));
             builder.AddSingleton(typeof(EnemyService), typeof(IEnemyService));
             builder.AddSingleton(typeof(PauseService), typeof(IPauseService));
             builder.AddSingleton(typeof(FloatingTextService), typeof(IFloatingTextService));
@@ -100,13 +100,13 @@ namespace _Project.Scripts.DI
                     GameObjectInjector.InjectObject(service, container);
                 }
 
-                foreach (var service in _monoServices)
-                {
-                    if (service is IInitializable initializable)
-                    {
-                        initializable.Initialize();
-                    }
-                }
+                // foreach (var service in _monoServices)
+                // {
+                //     if (service is IInitializable initializable)
+                //     {
+                //         initializable.Initialize();
+                //     }
+                // }
             };
         }
     }
