@@ -21,10 +21,6 @@ MonoBehaviour:
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1
-  - ClipName: BuyButtonSound
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
   - ClipName: ExplosionFireballSound
     Clip: {fileID: 0}
     IsLoop: 0
@@ -42,10 +38,6 @@ MonoBehaviour:
     IsLoop: 0
     Volume: 1
   - ClipName: HeavyArmorHit
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: PotionSound
     Clip: {fileID: 0}
     IsLoop: 0
     Volume: 1
