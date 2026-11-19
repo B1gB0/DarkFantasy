@@ -18,6 +18,14 @@ namespace _Project.Scripts.Services
         private List<Item> _equipment = new();
 
         private IShopService _shopService;
+        
+        public event Action<ItemType, int> OnEquippedConsumableItem;
+        
+        public event Action OnUnEquippedConsumableItem;
+        
+        public event Action OnEquippedItem;
+        
+        public event Action OnUnEquippedItem;
 
         public bool IsInitiated { get; private set; }
 
@@ -29,11 +37,6 @@ namespace _Project.Scripts.Services
         public Item EquippedRing { get; private set; }
 
         public ItemType EquippedConsumableType { get; private set; }
-
-        public event Action<ItemType, int> OnEquippedConsumableItem;
-        public event Action OnUnEquippedConsumableItem;
-        public event Action OnEquippedItem;
-        public event Action OnUnEquippedItem;
 
         public UniTask Init()
         {

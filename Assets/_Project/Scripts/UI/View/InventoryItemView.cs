@@ -20,12 +20,12 @@ namespace _Project.Scripts.UI.View
         [SerializeField] private Button _button;
 
         private IShopService _shopService;
+        
+        public event Action<InventoryItemView> OnSelectButtonPressed;
 
         public ItemData ItemData { get; private set; }
         public Item EquipmentInstance { get; private set; }
         public bool HasEquipmentInstance => EquipmentInstance != null;
-
-        public event Action<InventoryItemView> OnSelectButtonPressed;
 
         [Inject]
         private void Construct(IShopService shopService)

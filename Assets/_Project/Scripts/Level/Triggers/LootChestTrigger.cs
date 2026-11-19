@@ -5,9 +5,9 @@ namespace _Project.Scripts.Level.Triggers
 {
     public class LootChestTrigger : Trigger
     {
-        public event Action OnGotLoot;
-
         private bool _isLootGot;
+
+        public event Action OnGotLoot;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -16,7 +16,7 @@ namespace _Project.Scripts.Level.Triggers
 
             OnGotLoot?.Invoke();
         }
-        
+
         public void MarkAsUsed()
         {
             _isLootGot = true;

@@ -23,6 +23,8 @@ namespace _Project.Scripts.Items
         private CancellationTokenSource _cts;
 
         public event Action OnInventoryIsFull;
+        
+        public event Action<LootResult> OnChestOpened;
 
         [Inject]
         private void Construct(
@@ -36,8 +38,6 @@ namespace _Project.Scripts.Items
             _currencyService = currencyService;
             _shopService = shopService;
         }
-
-        public event Action<LootResult> OnChestOpened;
 
         private void Awake()
         {

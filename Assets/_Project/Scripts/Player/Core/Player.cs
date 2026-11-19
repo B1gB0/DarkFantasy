@@ -10,13 +10,6 @@ namespace _Project.Scripts.Player.Core
 {
     public class Player : MonoBehaviour
     {
-        [field: SerializeField] public Health Health { get; private set; }
-        [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
-        [field: SerializeField] public Sword Sword { get; private set; }
-        [field: SerializeField] public Collider HitBox { get; private set; }
-        [field: SerializeField] public float RollSpeed { get; private set; } = 6f;
-        [field: SerializeField] public float RollDistance { get; private set; } = 3f;
-
         private ParticleEffectsService _particleEffectsService;
         private IFloatingTextService _floatingTextService;
 
@@ -34,6 +27,13 @@ namespace _Project.Scripts.Player.Core
         private PlayerSitState _playerSitState;
         
         private Transform  _cameraTransform;
+        
+        [field: SerializeField] public Health Health { get; private set; }
+        [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
+        [field: SerializeField] public Sword Sword { get; private set; }
+        [field: SerializeField] public Collider HitBox { get; private set; }
+        [field: SerializeField] public float RollSpeed { get; private set; } = 6f;
+        [field: SerializeField] public float RollDistance { get; private set; } = 3f;
 
         public Animator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
@@ -114,11 +114,6 @@ namespace _Project.Scripts.Player.Core
             _stateMachine.SwitchState(StateId.Idle);
 
             _inputController.OnUnlockController += OnUnlockController;
-        }
-
-        public void ChangeFollowEnemyState(bool canFollow)
-        {
-            CanFollow = canFollow;
         }
 
         public void AnimationEvent_AllowCombo()

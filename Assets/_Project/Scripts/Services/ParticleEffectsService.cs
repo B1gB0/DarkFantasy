@@ -19,6 +19,8 @@ namespace _Project.Scripts.Services
         private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
 
         private IResourceService _resourceService;
+        
+        public bool IsInitiated { get; private set; }
 
         private void OnDestroy()
         {
@@ -40,8 +42,12 @@ namespace _Project.Scripts.Services
                 _particlePool.Clear();
             }
         }
-
-        public bool IsInitiated { get; private set; }
+        
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
 
         public async UniTask Init()
         {
@@ -57,12 +63,6 @@ namespace _Project.Scripts.Services
             await LoadParticles();
 
             IsInitiated = true;
-        }
-
-        [Inject]
-        private void Construct(IResourceService resourceService)
-        {
-            _resourceService = resourceService;
         }
 
         private async UniTask LoadParticles()

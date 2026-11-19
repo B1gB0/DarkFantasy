@@ -19,12 +19,6 @@ namespace _Project.Scripts.Player
         
         private Vector3 _cachedMoveDirection;
 
-        private float CurrentSpeed => new Vector3(
-                _player.Rigidbody.velocity.x,
-                MinValue,
-                _player.Rigidbody.velocity.z)
-            .magnitude;
-
         public PlayerMoveState(Core.Player player)
         {
             _player = player;
@@ -34,6 +28,12 @@ namespace _Project.Scripts.Player
         }
 
         public StateId IdState => StateId.Move;
+        
+        private float CurrentSpeed => new Vector3(
+                _player.Rigidbody.velocity.x,
+                MinValue,
+                _player.Rigidbody.velocity.z)
+            .magnitude;
 
         public void Enter()
         {

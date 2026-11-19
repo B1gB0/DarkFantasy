@@ -4,10 +4,10 @@ namespace _Project.Scripts.Services
 {
     public interface ICurrencyService : IService
     {
+        public event Action<int> OnGoldValueChanged;
+        
         public int Gold { get; }
         public int AccumulatedGold { get; }
-        
-        public event Action<int> OnGoldValueChanged;
 
         public void AddGold(int gold);
         

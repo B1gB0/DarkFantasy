@@ -25,6 +25,11 @@ namespace _Project.Scripts.Services
         private IInventoryService _inventoryService;
         private IProgressionService _progressionService;
         private IShopService _shopService;
+        
+        public bool IsInitiated { get; private set; }
+        public Player.Core.Player Player { get; private set; }
+
+        public CinemachineFreeLook FreeLookCamera { get; private set; }
 
         private void Update()
         {
@@ -43,11 +48,6 @@ namespace _Project.Scripts.Services
             _inventoryService.OnEquippedItem -= RecalculateEquipment;
             _inventoryService.OnUnEquippedItem -= RecalculateEquipment;
         }
-
-        public bool IsInitiated { get; private set; }
-        public Player.Core.Player Player { get; private set; }
-
-        public CinemachineFreeLook FreeLookCamera { get; private set; }
 
         public UniTask Init()
         {

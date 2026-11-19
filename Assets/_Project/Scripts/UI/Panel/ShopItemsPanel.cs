@@ -16,8 +16,6 @@ namespace _Project.Scripts.UI.Panel
 {
     public class ShopItemsPanel : View.View
     {
-        [field: SerializeField] public Transform ItemContent { get; private set; }
-
         [SerializeField] private Button _backSceneButton;
 
         private ITweenAnimationService _tweenAnimationService;
@@ -28,6 +26,8 @@ namespace _Project.Scripts.UI.Panel
         private AudioSoundsService _audioSoundsService;
 
         private List<ShopItemView> _itemViews;
+        
+        [field: SerializeField] public Transform ItemContent { get; private set; }
 
         public event Action OnBackToSceneButtonPressed;
         

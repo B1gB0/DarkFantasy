@@ -25,18 +25,6 @@ namespace _Project.Scripts.Level.Spawners
 
         private int _enemyCounter;
         
-        public event Action<Enemy.Enemy> OnBossSpawned;
-        
-        public event Action<LootResult, Vector3> OnRewardDropped;
-        
-        public event Action OnPriestKilled;
-        
-        public event Action OnBanditLeaderKilled;
-        
-        public event Action OnDarkLordKilled;
-        
-        public event Action OnAllEnemiesKilled;
-
         public EnemySpawner(
             IEnemyService enemyService,
             int limitEnemies,
@@ -50,6 +38,18 @@ namespace _Project.Scripts.Level.Spawners
             _particleEffectsService = particleEffectsService;
             _lootService = lootService;
         }
+        
+        public event Action<Enemy.Enemy> OnBossSpawned;
+        
+        public event Action<LootResult, Vector3> OnRewardDropped;
+        
+        public event Action OnPriestKilled;
+        
+        public event Action OnBanditLeaderKilled;
+        
+        public event Action OnDarkLordKilled;
+        
+        public event Action OnAllEnemiesKilled;
 
         public void SpawnWave(EnemyWave wave)
         {

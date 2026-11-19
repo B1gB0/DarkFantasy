@@ -8,6 +8,14 @@ namespace _Project.Scripts.Services
 {
     public interface IInventoryService : IService
     {
+        public event Action<ItemType, int> OnEquippedConsumableItem;
+        
+        public event Action OnUnEquippedConsumableItem;
+        
+        public event Action OnEquippedItem;
+        
+        public event Action OnUnEquippedItem;
+        
         public IReadOnlyList<Item> Equipment { get; }
         public Item EquippedWeapon { get; }
         public Item EquippedArmor { get; }
@@ -41,13 +49,5 @@ namespace _Project.Scripts.Services
         public void UnequipItemByInstanceId(string instanceId);
         
         public void UnequipConsumableItem();
-        
-        public event Action<ItemType, int> OnEquippedConsumableItem;
-        
-        public event Action OnUnEquippedConsumableItem;
-        
-        public event Action OnEquippedItem;
-        
-        public event Action OnUnEquippedItem;
     }
 }

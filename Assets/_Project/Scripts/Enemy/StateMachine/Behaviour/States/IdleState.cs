@@ -1,4 +1,6 @@
 ﻿namespace _Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
-    public class IdleState : EnemyState { }
+    public class IdleState : EnemyState
+    {
+    }
 }
