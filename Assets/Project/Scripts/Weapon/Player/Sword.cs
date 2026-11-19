@@ -4,7 +4,6 @@
     {
         public override void Attack()
         {
-            
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Project.Scripts.Game.MainMenu.Root.View
         {
             _playButton.onClick.AddListener(HandleGoToGameplayButtonClick);
         }
-        
+
         private void OnDisable()
         {
             _playButton.onClick.RemoveListener(HandleGoToGameplayButtonClick);

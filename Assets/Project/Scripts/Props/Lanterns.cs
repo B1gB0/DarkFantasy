@@ -25,7 +25,7 @@ namespace Project.Scripts.Props
             {
                 _targetIntensity = Random.Range(minIntensity, maxIntensity);
             }
-            
+
             lightSource.intensity = Mathf.Lerp(
                 lightSource.intensity,
                 _targetIntensity,

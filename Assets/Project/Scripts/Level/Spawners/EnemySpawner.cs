@@ -24,7 +24,7 @@ namespace Project.Scripts.Level.Spawners
         private readonly int _limitEnemies;
 
         private int _enemyCounter;
-        
+
         public EnemySpawner(
             IEnemyService enemyService,
             int limitEnemies,
@@ -38,17 +38,17 @@ namespace Project.Scripts.Level.Spawners
             _particleEffectsService = particleEffectsService;
             _lootService = lootService;
         }
-        
+
         public event Action<Enemy.Enemy> OnBossSpawned;
-        
+
         public event Action<LootResult, Vector3> OnRewardDropped;
-        
+
         public event Action OnPriestKilled;
-        
+
         public event Action OnBanditLeaderKilled;
-        
+
         public event Action OnDarkLordKilled;
-        
+
         public event Action OnAllEnemiesKilled;
 
         public void SpawnWave(EnemyWave wave)
@@ -113,7 +113,7 @@ namespace Project.Scripts.Level.Spawners
             {
                 if (availableSpawnPoints.Count == MinValue)
                     break;
-                
+
                 Vector3 candidatePoint = availableSpawnPoints[MinValue];
                 Priest enemy = SpawnPriest(candidatePoint, patrolPoints);
 
@@ -122,12 +122,12 @@ namespace Project.Scripts.Level.Spawners
                     enemy.SetIsBoss(true);
                     OnBossSpawned?.Invoke(enemy);
                 }
-                
+
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < banditsToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -140,7 +140,7 @@ namespace Project.Scripts.Level.Spawners
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < banditsRangersToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -153,7 +153,7 @@ namespace Project.Scripts.Level.Spawners
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < banditsLeadersToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -167,12 +167,12 @@ namespace Project.Scripts.Level.Spawners
                     enemy.SetIsBoss(true);
                     OnBossSpawned?.Invoke(enemy);
                 }
-                
+
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
             }
-            
+
             for (int i = 0; i < darkLordsToSpawn; i++)
             {
                 if (availableSpawnPoints.Count == MinValue)
@@ -186,7 +186,7 @@ namespace Project.Scripts.Level.Spawners
                     enemy.SetIsBoss(true);
                     OnBossSpawned?.Invoke(enemy);
                 }
-                
+
                 availableSpawnPoints.RemoveAt(MinValue);
                 wave.AddEnemy(enemy);
                 _enemyCounter++;
@@ -205,7 +205,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
-            
+
             skeleton.Rigidbody.isKinematic = true;
             skeleton.Collider.enabled = true;
 
@@ -235,7 +235,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
-            
+
             skeleton.Rigidbody.isKinematic = true;
             skeleton.Collider.enabled = true;
 
@@ -265,7 +265,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             skeleton.transform.position = enemySpawnPosition;
-            
+
             skeleton.Rigidbody.isKinematic = true;
             skeleton.Collider.enabled = true;
 
@@ -295,7 +295,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             priest.transform.position = enemySpawnPosition;
-            
+
             priest.Rigidbody.isKinematic = true;
             priest.Collider.enabled = true;
 
@@ -312,7 +312,7 @@ namespace Project.Scripts.Level.Spawners
 
             return priest;
         }
-        
+
         private Bandit SpawnBanditEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             Bandit bandit = _enemyService.CreateBandit();
@@ -325,7 +325,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             bandit.transform.position = enemySpawnPosition;
-            
+
             bandit.Rigidbody.isKinematic = true;
             bandit.Collider.enabled = true;
 
@@ -342,7 +342,7 @@ namespace Project.Scripts.Level.Spawners
 
             return bandit;
         }
-        
+
         private BanditRanger SpawnBanditRangerEnemy(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             BanditRanger bandit = _enemyService.CreateBanditRanger();
@@ -355,7 +355,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             bandit.transform.position = enemySpawnPosition;
-            
+
             bandit.Rigidbody.isKinematic = true;
             bandit.Collider.enabled = true;
 
@@ -372,7 +372,7 @@ namespace Project.Scripts.Level.Spawners
 
             return bandit;
         }
-        
+
         private BanditLeader SpawnBanditLeader(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             BanditLeader banditLeader = _enemyService.CreateBanditLeader();
@@ -385,7 +385,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             banditLeader.transform.position = enemySpawnPosition;
-            
+
             banditLeader.Rigidbody.isKinematic = true;
             banditLeader.Collider.enabled = true;
 
@@ -402,7 +402,7 @@ namespace Project.Scripts.Level.Spawners
 
             return banditLeader;
         }
-        
+
         private DarkLord SpawnDarkLord(Vector3 enemyPosition, List<Vector3> patrolPoints)
         {
             DarkLord darkLord = _enemyService.CreateDarkLord();
@@ -415,7 +415,7 @@ namespace Project.Scripts.Level.Spawners
             enemySpawnPosition.y = enemyPosition.y + OffsetYPolygonEnemies;
 
             darkLord.transform.position = enemySpawnPosition;
-            
+
             darkLord.Rigidbody.isKinematic = true;
             darkLord.Collider.enabled = true;
 
@@ -436,7 +436,7 @@ namespace Project.Scripts.Level.Spawners
         private void OnKillSkeleton(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillSkeleton;
             _enemyCounter--;
 
@@ -446,7 +446,7 @@ namespace Project.Scripts.Level.Spawners
         private void OnKillSkeletonHeavyArmor(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillSkeletonHeavyArmor;
             _enemyCounter--;
 
@@ -456,7 +456,7 @@ namespace Project.Scripts.Level.Spawners
         private void OnKillSkeletonRanger(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillSkeletonRanger;
             _enemyCounter--;
 
@@ -466,39 +466,39 @@ namespace Project.Scripts.Level.Spawners
         private void OnKillPriest(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillPriest;
             OnPriestKilled?.Invoke();
             _enemyCounter--;
 
             CheckEnemiesCount();
         }
-        
+
         private void OnKillBandit(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillBandit;
             _enemyCounter--;
 
             CheckEnemiesCount();
         }
-        
+
         private void OnKillBanditLeader(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillBanditLeader;
             OnBanditLeaderKilled?.Invoke();
             _enemyCounter--;
 
             CheckEnemiesCount();
         }
-        
+
         private void OnKillDarkLord(Enemy.Enemy enemy)
         {
             HandleEnemyDeath(enemy);
-            
+
             enemy.Die -= OnKillDarkLord;
             OnDarkLordKilled?.Invoke();
             _enemyCounter--;
@@ -511,7 +511,7 @@ namespace Project.Scripts.Level.Spawners
             if (_enemyCounter == MinValue)
                 OnAllEnemiesKilled?.Invoke();
         }
-        
+
         private void HandleEnemyDeath(Enemy.Enemy enemy)
         {
             var reward = _lootService.GetEnemyReward(enemy.IsBoss);

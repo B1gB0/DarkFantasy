@@ -14,7 +14,6 @@ namespace Project.Scripts.UI.Panel
 {
     public class EndGamePanel : View.View
     {
-        private const int CountCorrectFactor = 1;
         private const string RewardAdRebornId = "RebornPlayer";
 
         [SerializeField] private TMP_Text _labelText;
@@ -29,7 +28,6 @@ namespace Project.Scripts.UI.Panel
         [SerializeField] private GameObject _rootWindow;
 
         private IPauseService _pauseService;
-        private MissionService _missionService;
         private ICurrencyService _currencyService;
         private IUILocalizationService _uiLocalizationService;
         private ITweenAnimationService _tweenAnimationService;
@@ -47,7 +45,6 @@ namespace Project.Scripts.UI.Panel
         [Inject]
         public void Construct(
             IPauseService pauseService,
-            MissionService missionService,
             ICurrencyService currencyService,
             IUILocalizationService uiLocalizationService,
             ITweenAnimationService tweenAnimationService,
@@ -55,7 +52,6 @@ namespace Project.Scripts.UI.Panel
             IExperiencePoints experiencePoints)
         {
             _pauseService = pauseService;
-            _missionService = missionService;
             _currencyService = currencyService;
             _uiLocalizationService = uiLocalizationService;
             _tweenAnimationService = tweenAnimationService;

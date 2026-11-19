@@ -30,7 +30,7 @@ namespace Project.Scripts.Items
                     if (asset != null) return asset;
                 }
             }
-            
+
             var guids = AssetDatabase.FindAssets($"t:{nameof(ItemTypeGeneratorSettings)}");
             if (guids.Length > 0)
             {
@@ -42,13 +42,14 @@ namespace Project.Scripts.Items
                     return asset;
                 }
             }
-            
+
             var newAsset = CreateInstance<ItemTypeGeneratorSettings>();
             Directory.CreateDirectory(Path.GetDirectoryName(DefaultPath)!);
             AssetDatabase.CreateAsset(newAsset, DefaultPath);
             AssetDatabase.SaveAssets();
 
-            EditorPrefs.SetString(EditorPrefsKey,
+            EditorPrefs.SetString(
+                EditorPrefsKey,
                 AssetDatabase.AssetPathToGUID(DefaultPath));
 
             Debug.Log($"[ItemTypeGenerator] Created settings at {DefaultPath}. " +

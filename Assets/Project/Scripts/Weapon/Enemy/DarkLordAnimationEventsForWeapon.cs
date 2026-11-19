@@ -9,9 +9,9 @@ namespace Project.Scripts.Weapon.Enemy
         [SerializeField] private MeleeWeapon _meleeWeapon;
 
         public void OnCoilAttack() => _coil.Attack();
-        
+
         public void FireballAttack() => _fireballSpell.Attack();
-        
+
         public void MeleeWeaponAttack() => _meleeWeapon.Attack();
     }
 }

@@ -7,10 +7,10 @@ namespace Project.Scripts.UI.View
     {
         private const float MinValue = 0f;
         private const float NormalizedValue = 1f;
-        
+
         [SerializeField] private RadialBar _radialBar;
         [SerializeField] private Image _icon;
-        
+
         private Sprite _lastIcon;
         private Color _lastColor;
         private float _lastProgress = float.NaN;
@@ -19,7 +19,7 @@ namespace Project.Scripts.UI.View
         public void SetIcon(Sprite icon)
         {
             if (_initialized && _lastIcon == icon) return;
-            
+
             _lastIcon = icon;
             _icon.sprite = icon;
             _initialized = true;
@@ -30,7 +30,7 @@ namespace Project.Scripts.UI.View
             if (_initialized && _lastColor == color) return;
 
             _lastColor = color;
-            
+
             _radialBar.SetColor(color);
         }
 
@@ -39,7 +39,7 @@ namespace Project.Scripts.UI.View
             float normalized = totalDuration <= MinValue
                 ? MinValue
                 : Mathf.Clamp01(remainingTime / totalDuration);
-            
+
             if (_initialized && Mathf.Approximately(_lastProgress, normalized)) return;
 
             _lastProgress = normalized;

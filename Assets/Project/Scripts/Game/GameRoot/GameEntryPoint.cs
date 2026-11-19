@@ -54,7 +54,7 @@ namespace Project.Scripts.Game.GameRoot
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             await StartGame();
-            
+
             _pauseService.OnPlayGame();
 
             YG2.onShowWindowGame += _pauseService.OnPlayGame;
@@ -101,6 +101,7 @@ namespace Project.Scripts.Game.GameRoot
                     var exitParameters = await observable.FirstAsync();
                     await HandleExitGameplayScene(exitParameters);
                 }
+
                 return;
             }
 #endif
@@ -158,9 +159,9 @@ namespace Project.Scripts.Game.GameRoot
 
         private async UniTask LoadScene(string sceneName)
         {
-            if (_isLoadingScene) 
+            if (_isLoadingScene)
                 return;
-            
+
             _isLoadingScene = true;
 
             try
@@ -189,7 +190,7 @@ namespace Project.Scripts.Game.GameRoot
                 }
 
                 _sceneHandle = newSceneHandle;
-                
+
                 InitiateSceneScope();
             }
             finally

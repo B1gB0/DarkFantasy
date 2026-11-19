@@ -13,7 +13,7 @@
         {
             Type = LootType.Gold,
             GoldValue = amount,
-            IsHighChance =  isHighChance,
+            IsHighChance = isHighChance,
         };
 
         public static LootResult Item(ItemType type, LootType lootType) => new LootResult

@@ -15,21 +15,22 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const float FiftyChance = 0.5f;
         private const float DistanceFactor = 1.2f;
 
-        private float _attackRange;
-        private float _reloadDuration = 0.4f;
-        private float _aimDuration = 0.85f;
-        private float _idleDuration = 1f;
-        private float _attackDuration = 2f;
-        private float _priestAimDuration = 1f;
+        private const float ReloadDuration = 0.4f;
+        private const float AimDuration = 0.85f;
+        private const float IdleDuration = 1f;
+        private const float AttackDuration = 2f;
+        private const float PriestAimDuration = 1f;
 
-        private float _comboChance1 = 0.3f;
-        private float _comboChance2 = 0.4f;
-        private float _dodgeChance = 0.3f;
-        private float _attack1Duration = 0.8f;
-        private float _attack2Duration = 1.0f;
-        private float _attack3Duration = 1.2f;
-        private float _dodgeDuration = 2f;
-        private float _dodgeDistance = 3f;
+        private const float ComboChance1 = 0.3f;
+        private const float ComboChance2 = 0.4f;
+        private const float DodgeChance = 0.3f;
+        private const float Attack1Duration = 0.8f;
+        private const float Attack2Duration = 1.0f;
+        private const float Attack3Duration = 1.2f;
+        private const float DodgeDuration = 2f;
+        private const float DodgeDistance = 3f;
+
+        private float _attackRange;
 
         private int _comboLength;
         private int _currentComboIndex;
@@ -99,8 +100,8 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             if (Enemy.Type == EnemyType.BanditLeader && _currentSubState == AttackSubState.Dodge)
             {
                 _dodgeElapsed += Time.fixedDeltaTime;
-                float t = Mathf.Clamp01(_dodgeElapsed / _dodgeDuration);
-                Vector3 targetPos = _dodgeStartPosition + (_dodgeDirection * _dodgeDistance * t);
+                float t = Mathf.Clamp01(_dodgeElapsed / DodgeDuration);
+                Vector3 targetPos = _dodgeStartPosition + (_dodgeDirection * DodgeDistance * t);
                 Enemy.transform.position = targetPos;
             }
 
@@ -250,7 +251,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                     EnterAttackSubState(AttackSubState.Aiming);
                     break;
                 case AttackSubState.Aiming:
-                    _subStateTimer = _priestAimDuration;
+                    _subStateTimer = PriestAimDuration;
                     EnterAttackSubState(AttackSubState.Omni);
                     break;
                 case AttackSubState.Omni:
@@ -286,7 +287,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                     }
                     else
                     {
-                        if (Random.value < _dodgeChance)
+                        if (Random.value < DodgeChance)
                         {
                             EnterDodge();
                         }
@@ -372,9 +373,9 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private void StartNewCombo()
         {
             float rand = Random.value;
-            if (rand < _comboChance1)
+            if (rand < ComboChance1)
                 _comboLength = 1;
-            else if (rand < _comboChance1 + _comboChance2)
+            else if (rand < ComboChance1 + ComboChance2)
                 _comboLength = 2;
             else
                 _comboLength = 3;
@@ -403,43 +404,43 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             {
                 case AttackSubState.Reloading:
                     AnimStateMachine.EnterIn<ReloadingEnemyAnimatedState>();
-                    _subStateTimer = _reloadDuration;
+                    _subStateTimer = ReloadDuration;
                     break;
                 case AttackSubState.Aiming:
                     AnimStateMachine.EnterIn<AimEnemyAnimatedState>();
-                    _subStateTimer = _aimDuration;
+                    _subStateTimer = AimDuration;
                     break;
                 case AttackSubState.Attack:
                     AnimStateMachine.EnterIn<AttackEnemyAnimatedState>();
-                    _subStateTimer = _attackDuration;
+                    _subStateTimer = AttackDuration;
                     break;
                 case AttackSubState.Idle:
                     AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
-                    _subStateTimer = _idleDuration;
+                    _subStateTimer = IdleDuration;
                     break;
                 case AttackSubState.Coil:
                     AnimStateMachine.EnterIn<CoilEnemyAnimatedState>();
-                    _subStateTimer = _attackDuration;
+                    _subStateTimer = AttackDuration;
                     break;
                 case AttackSubState.Omni:
                     AnimStateMachine.EnterIn<OmniEnemyAnimatedState>();
-                    _subStateTimer = _attackDuration;
+                    _subStateTimer = AttackDuration;
                     break;
                 case AttackSubState.Attack1:
                     AnimStateMachine.EnterIn<Attack1EnemyAnimatedState>();
-                    _subStateTimer = _attack1Duration;
+                    _subStateTimer = Attack1Duration;
                     break;
                 case AttackSubState.Attack2:
                     AnimStateMachine.EnterIn<Attack2EnemyAnimatedState>();
-                    _subStateTimer = _attack2Duration;
+                    _subStateTimer = Attack2Duration;
                     break;
                 case AttackSubState.Attack3:
                     AnimStateMachine.EnterIn<Attack3EnemyAnimatedState>();
-                    _subStateTimer = _attack3Duration;
+                    _subStateTimer = Attack3Duration;
                     break;
                 case AttackSubState.Dodge:
                     AnimStateMachine.EnterIn<DodgeEnemyAnimatedState>();
-                    _subStateTimer = _dodgeDuration;
+                    _subStateTimer = DodgeDuration;
                     break;
             }
         }

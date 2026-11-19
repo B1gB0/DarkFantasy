@@ -105,8 +105,7 @@ namespace Project.Scripts.Level
         public void GetDependencies(
             CinemachineFreeLook cinemachineFreeLook,
             ViewFactory viewFactory,
-            UIRootView uiRootView
-        )
+            UIRootView uiRootView)
         {
             _cinemachineFreeLook = cinemachineFreeLook;
 

@@ -9,9 +9,8 @@ namespace Project.Scripts.Level.Triggers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out Player.Core.Player _))
-                return;
-            
+            if (!other.TryGetComponent(out Player.Core.Player _)) return;
+
             OnGoToNextLevel?.Invoke();
         }
     }

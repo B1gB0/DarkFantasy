@@ -11,11 +11,9 @@ namespace Project.Scripts.Level.Triggers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out Player.Core.Player _))
-                return;
+            if (!other.TryGetComponent(out Player.Core.Player _)) return;
 
-            if (_isMissionPanelOpen)
-                return;
+            if (_isMissionPanelOpen) return;
 
             _isMissionPanelOpen = true;
             OnOpenMissionPanel?.Invoke();
@@ -23,8 +21,7 @@ namespace Project.Scripts.Level.Triggers
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out Player.Core.Player _))
-                _isMissionPanelOpen = false;
+            if (other.TryGetComponent(out Player.Core.Player _)) _isMissionPanelOpen = false;
         }
     }
 }

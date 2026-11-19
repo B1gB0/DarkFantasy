@@ -70,8 +70,9 @@ namespace Project.Scripts.Items
             if (string.IsNullOrWhiteSpace(raw))
                 return null;
 
-            string cleaned = Regex.Replace(raw, @"[^a-zA-Z0-9_ \-]", "");
-            var parts = cleaned.Split(new[] { '_', '-', ' ' },
+            string cleaned = Regex.Replace(raw, @"[^a-zA-Z0-9_ \-]", string.Empty);
+            var parts = cleaned.Split(
+                new[] { '_', '-', ' ' },
                 System.StringSplitOptions.RemoveEmptyEntries);
 
             var sb = new StringBuilder();

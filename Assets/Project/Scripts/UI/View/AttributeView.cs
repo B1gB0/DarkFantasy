@@ -48,10 +48,9 @@ namespace Project.Scripts.UI.View
         public void SetCurrencyColor(int gold)
         {
             if (_currentData == null) return;
-            if (_currentData.Price > gold)
-                _price.color = Colors.GetColor(ColorName.RedCurrencyColor);
-            else
-                _price.color = Colors.GetColor(ColorName.BlackUIColor);
+
+            _price.color =
+                Colors.GetColor(_currentData.Price > gold ? ColorName.RedCurrencyColor : ColorName.BlackUIColor);
         }
 
         public void Set(CharacteristicsLocalizationData localizationData, PlayerAttributeLevelData attributeData)

@@ -9,9 +9,9 @@ namespace Project.Scripts.Weapon.Enemy
         [SerializeField] private FireballSpell _fireballSpell;
 
         public void OnCoilAttack() => _coil.Attack();
-        
+
         public void OmniAttack() => _omni.Attack();
-        
+
         public void FireballAttack() => _fireballSpell.Attack();
     }
 }

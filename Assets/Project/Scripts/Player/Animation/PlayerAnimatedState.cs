@@ -18,12 +18,12 @@ namespace Project.Scripts.Player.Animation
         public void OnMove(float speed)
         {
             float currentSpeed = _animator.GetFloat(_playerAnimationId.Run);
-            
+
             float smoothedSpeed = Mathf.MoveTowards(
-                currentSpeed, 
+                currentSpeed,
                 speed,
                 Time.deltaTime * MultiplierSpeed);
-    
+
             _animator.SetFloat(_playerAnimationId.Run, smoothedSpeed);
         }
 
@@ -46,7 +46,7 @@ namespace Project.Scripts.Player.Animation
         {
             _animator.speed = speed;
         }
-        
+
         public void OnSitDown()
         {
             _animator.SetTrigger(_playerAnimationId.SitDown);

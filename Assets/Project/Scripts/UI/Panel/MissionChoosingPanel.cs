@@ -165,7 +165,6 @@ namespace Project.Scripts.UI.Panel
             RefreshMissions();
         }
 
-
         private void NextDifficulty()
         {
             _difficultyIndex = (_difficultyIndex + StepDifficulty) % DifficultyCount;

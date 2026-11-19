@@ -18,7 +18,7 @@ namespace Project.Scripts.Game.Gameplay.Root.View
         private const float ShortTutorialDelay = 5f;
         private const float LongTutorialDelay = 15f;
         private const int MaxShortTutorials = 3;
-        
+
         private int _tutorialShowCount;
 
         private Subject<Unit> _exitSceneSignalSubject;
@@ -35,7 +35,6 @@ namespace Project.Scripts.Game.Gameplay.Root.View
         [field: SerializeField] public Transform HideHealthPoint { get; private set; }
         [field: SerializeField] public Transform ShowBossHealthPoint { get; private set; }
         [field: SerializeField] public Transform HideBossHealthPoint { get; private set; }
-        [field: SerializeField] public Transform WeaponPoint { get; private set; }
         [field: SerializeField] public Transform ShowModifiersPanel { get; private set; }
         [field: SerializeField] public Transform HideModifiersPanel { get; private set; }
         [field: SerializeField] public Joystick MoveJoystick { get; private set; }
@@ -101,13 +100,13 @@ namespace Project.Scripts.Game.Gameplay.Root.View
                 SpaceTutorialView.SetActive(false);
             }
         }
-        
+
         public void HideTutorialImmediately()
         {
             _tutorialCancellationToken?.Cancel();
             _tutorialCancellationToken?.Dispose();
             _tutorialCancellationToken = null;
-            
+
             if (YG2.envir.isDesktop)
             {
                 _tweenAnimationService.AnimateMove(
@@ -121,7 +120,7 @@ namespace Project.Scripts.Game.Gameplay.Root.View
                 JoystickIcon.SetActive(false);
                 TutorialPointer.Deactivate();
             }
-            
+
             CameraTutorialView.SetActive(false);
         }
 
@@ -156,22 +155,23 @@ namespace Project.Scripts.Game.Gameplay.Root.View
             _tutorialCancellationToken?.Cancel();
             _tutorialCancellationToken?.Dispose();
             _tutorialCancellationToken = new CancellationTokenSource();
-            
-            float currentDelay = _tutorialShowCount < MaxShortTutorials 
-                ? ShortTutorialDelay 
+
+            float currentDelay = _tutorialShowCount < MaxShortTutorials
+                ? ShortTutorialDelay
                 : LongTutorialDelay;
 
             try
             {
                 var completedTask = await UniTask.WhenAny(
-                    UniTask.Delay(TimeSpan.FromSeconds(currentDelay),
+                    UniTask.Delay(
+                        TimeSpan.FromSeconds(currentDelay),
                         DelayType.DeltaTime,
                         cancellationToken: _tutorialCancellationToken.Token));
 
                 if (completedTask == 0)
                 {
                     _tutorialShowCount++;
-                    
+
                     if (YG2.envir.isDesktop)
                         ShowTutorialKeyboardView();
                     else

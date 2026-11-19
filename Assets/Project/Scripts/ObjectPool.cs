@@ -32,7 +32,7 @@ namespace Project.Scripts
 
             throw new Exception($"There is no free elements in pool of type {typeof(T)}");
         }
-        
+
         public void Return(T element)
         {
             if (element == null) return;

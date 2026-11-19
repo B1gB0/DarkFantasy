@@ -11,11 +11,9 @@ namespace Project.Scripts.Level.Triggers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out Player.Core.Player _))
-                return;
+            if (!other.TryGetComponent(out Player.Core.Player _)) return;
 
-            if (IsShopOpen)
-                return;
+            if (IsShopOpen) return;
 
             IsShopOpen = true;
             OnOpenShop?.Invoke();
@@ -23,8 +21,7 @@ namespace Project.Scripts.Level.Triggers
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out Player.Core.Player _))
-                IsShopOpen = false;
+            if (other.TryGetComponent(out Player.Core.Player _)) IsShopOpen = false;
         }
     }
 }

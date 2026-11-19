@@ -12,9 +12,9 @@ namespace Project.Scripts.Weapon.Enemy
         private const float OffsetHeight = 0.3f;
 
         private readonly Collider[] _results = new Collider[10];
-        
+
         [SerializeField] private LayerMask _playerLayerMask;
-        
+
         public override void Attack()
         {
             var position = Target.position;

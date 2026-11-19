@@ -50,7 +50,7 @@ namespace Project.Scripts.Level.Triggers
             _currencyService = currencyService;
             _lootService = lootService;
             _progressionService = progressionService;
-            _shopService =  shopService;
+            _shopService = shopService;
         }
 
         public void Pickup()

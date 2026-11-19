@@ -68,8 +68,8 @@ namespace Project.Scripts.UI.View
             return _equipmentType switch
             {
                 EquipmentType.Weapon => _inventoryService.EquippedWeapon,
-                EquipmentType.Armor  => _inventoryService.EquippedArmor,
-                EquipmentType.Ring   => _inventoryService.EquippedRing,
+                EquipmentType.Armor => _inventoryService.EquippedArmor,
+                EquipmentType.Ring => _inventoryService.EquippedRing,
                 _ => null,
             };
         }
@@ -85,9 +85,9 @@ namespace Project.Scripts.UI.View
 
             _rarityBackground.color = data.Rarity switch
             {
-                ItemRarity.Common   => Color.white,
+                ItemRarity.Common => Color.white,
                 ItemRarity.Uncommon => Color.green,
-                ItemRarity.Rare     => Color.blue,
+                ItemRarity.Rare => Color.blue,
                 _ => Color.white,
             };
 
