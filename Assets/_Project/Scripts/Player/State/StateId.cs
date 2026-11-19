@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.Player.State
+﻿namespace _Project.Scripts.Player
 {
     public enum StateId
     {

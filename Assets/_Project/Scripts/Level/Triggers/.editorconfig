@@ -1,0 +1,32 @@
+﻿root = true
+
+# Базовые настройки для всех файлов
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Настройки для C# файлов
+[*.cs]
+# --- Порядок и пустые строки (StyleCop) ---
+# SA1516: Элементы должны разделяться пустой строкой (это касается событий, свойств и методов)
+dotnet_diagnostic.SA1516.severity = warning
+
+# --- Ваши правила для интерфейсов ---
+# Если вы НЕ хотите, чтобы методы в интерфейсах отделялись пустой строкой, 
+# можно отключить правило конкретно для интерфейсов (опционально)
+dotnet_diagnostic.SA1516.severity = warning
+
+# --- Отключаем слишком душные правила, которые часто бесят в Unity ---
+# Например, требование ставить `this.` перед полями (SA1101)
+dotnet_diagnostic.SA1101.severity = none
+# Требование использовать `var` вместо явных типов (или наоборот)
+dotnet_diagnostic.SA1000.severity = none
+# Порядок using'ов (чтобы не переставлял автоматически, если вам не нужно)
+dotnet_diagnostic.SA1200.severity = none
+
+# --- Правила для модификаторов доступа (чтобы не требовал private там, где не надо) ---
+dotnet_diagnostic.SA1401.severity = none

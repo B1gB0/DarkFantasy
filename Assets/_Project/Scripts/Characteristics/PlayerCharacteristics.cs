@@ -49,10 +49,15 @@ namespace _Project.Scripts.Characteristics
         public HealingModifier HealingModifier => _healingModifier;
 
         public float GetTotalArmor() => Armor + _equipmentArmorBonus;
+        
         public float GetTotalDamage() => Damage + _equipmentDamageBonus;
+        
         public float GetReverseDamage() => _equipmentReverseDamageBonus;
+        
         public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
+        
         public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
+        
         public float GetCritChance() => CritChance;
 
         public void SetStartingData(PlayerData data)

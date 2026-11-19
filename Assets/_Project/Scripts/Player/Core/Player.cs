@@ -2,7 +2,6 @@ using _Project.Scripts.Characteristics;
 using _Project.Scripts.Effects;
 using _Project.Scripts.Player.Animation;
 using _Project.Scripts.Player.Input;
-using _Project.Scripts.Player.State;
 using _Project.Scripts.Services;
 using UnityEngine;
 using Sword = _Project.Scripts.Player.Combat.Sword;

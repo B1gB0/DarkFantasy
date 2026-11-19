@@ -17,9 +17,5 @@ namespace _Project.Scripts.DataBase.InitDataSO
             Debug.LogError($"[Difficulty] Not found: {difficulty}");
             return _entries[0];
         }
-
-        public float GetItemStatMultiplier(LevelDifficulty difficulty) => Get(difficulty).ItemStatMultiplier;
-        public float GetEnemyHealthMultiplier(LevelDifficulty difficulty) => Get(difficulty).EnemyHealthMultiplier;
-        public float GetEnemyDamageMultiplier(LevelDifficulty difficulty) => Get(difficulty).EnemyDamageMultiplier;
     }
 }

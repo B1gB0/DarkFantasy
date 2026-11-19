@@ -18,6 +18,7 @@ namespace _Project.Scripts.Level.Triggers
         private IShopService _shopService;
 
         public event Action<LootResult> OnPickedUp;
+        
         public event Action OnInventoryIsFull;
 
         private void OnTriggerEnter(Collider other)

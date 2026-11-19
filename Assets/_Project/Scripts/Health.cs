@@ -25,11 +25,17 @@ namespace _Project.Scripts
         private float _regenTimer;
 
         public event Action Die;
+        
         public event Action<Health, float, bool> OnDamageTaken;
+        
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
+        
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
+        
         public event Action IsDamaged;
+        
         public event Action<float, float, float> HealthChanged;
+        
         public event Action<float> TargetHealthChanged;
 
         public float MaxHealth { get; private set; }

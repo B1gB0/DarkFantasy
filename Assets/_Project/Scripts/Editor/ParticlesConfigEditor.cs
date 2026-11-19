@@ -5,7 +5,7 @@ using _Project.Scripts.Effects;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Editor
+namespace _Project.Scripts.Editor
 {
     [CustomEditor(typeof(ParticlesConfig))]
     public class ParticlesConfigEditor : UnityEditor.Editor

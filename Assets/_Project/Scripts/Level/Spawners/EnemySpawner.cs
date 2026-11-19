@@ -26,10 +26,15 @@ namespace _Project.Scripts.Level.Spawners
         private int _enemyCounter;
         
         public event Action<Enemy.Enemy> OnBossSpawned;
+        
         public event Action<LootResult, Vector3> OnRewardDropped;
+        
         public event Action OnPriestKilled;
+        
         public event Action OnBanditLeaderKilled;
+        
         public event Action OnDarkLordKilled;
+        
         public event Action OnAllEnemiesKilled;
 
         public EnemySpawner(

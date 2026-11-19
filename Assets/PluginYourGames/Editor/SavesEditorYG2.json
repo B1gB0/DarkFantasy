@@ -1,12 +1,12 @@
 {
-  "Gold": 320,
-  "AcumulatedScore": 2490,
+  "Gold": 1010,
+  "AcumulatedScore": 3160,
   "HealthAttributeNumber": 6,
   "DamageAttributeNumber": 7,
   "ArmorAttributeNumber": 6,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": true,
-  "IsHardDifficultyUnlock": false,
+  "IsHardDifficultyUnlock": true,
   "IsAttributeShopVisited": true,
   "IsInventoryShopVisited": true,
   "IsMissionPanelVisited": true,
@@ -19,10 +19,14 @@
     "graveyard"
   ],
   "CompletedMedium": [
-    "graveyard"
+    "graveyard",
+    "banditCamp",
+    "castle"
   ],
   "CompletedHigh": [],
-  "Consumables": {},
+  "Consumables": {
+    "SpeedPotion": 1
+  },
   "Equipment": [
     {
       "Id": "08733bf0-07db-4f29-b91c-88093016ec99",
@@ -37,11 +41,6 @@
     {
       "Id": "1080f285-9538-4a36-a34b-659b47f43c4b",
       "Type": 4,
-      "Difficulty": 0
-    },
-    {
-      "Id": "8958dd75-49cb-49a3-9052-3a92c9e961fe",
-      "Type": 14,
       "Difficulty": 0
     },
     {
@@ -93,13 +92,23 @@
       "Id": "acd6b86c-844b-49e3-970c-1e57e92727a9",
       "Type": 12,
       "Difficulty": 1
+    },
+    {
+      "Id": "a868246b-d25f-426a-9fd3-5ab4e837cf0a",
+      "Type": 15,
+      "Difficulty": 1
+    },
+    {
+      "Id": "23158cc4-1a23-4343-b87b-bef88a7e8e82",
+      "Type": 9,
+      "Difficulty": 1
     }
   ],
   "EquippedItemType": 0,
-  "CurrentDifficulty": 0,
+  "CurrentDifficulty": 2,
   "PlayerCharacteristics": {
     "MaxHealth": 121.0,
-    "TargetHealth": 90.82479,
+    "TargetHealth": 121.0,
     "Armor": 23.0,
     "Damage": 33.0,
     "MoveSpeed": 6.0,
@@ -121,5 +130,5 @@
     false,
     false
   ],
-  "idSave": 128
+  "idSave": 144
 }

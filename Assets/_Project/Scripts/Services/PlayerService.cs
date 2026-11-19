@@ -2,7 +2,6 @@
 using _Project.Scripts.Characteristics;
 using _Project.Scripts.DataBase.Data;
 using _Project.Scripts.Player;
-using _Project.Scripts.Player.State;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;

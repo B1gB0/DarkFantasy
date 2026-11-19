@@ -1,5 +1,5 @@
 ﻿using System;
-using _Project.Scripts.Player.State;
+using _Project.Scripts.Player;
 using UnityEngine;
 using YG;
 
@@ -19,8 +19,11 @@ namespace _Project.Scripts.Level.Triggers
         private StateId _lastState;
 
         public event Action OnPlayerInside;
+        
         public event Action OnPlayerOutside;
+        
         public event Action OnPlayerSatDown;
+        
         public event Action OnPlayerStoodUp;
 
         private void OnTriggerEnter(Collider other)

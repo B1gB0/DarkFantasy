@@ -6,7 +6,7 @@ using _Project.Scripts.Audio.Sounds;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Editor
+namespace _Project.Scripts.Editor
 {
     [CustomEditor(typeof(AudioConfig))]
     public class AudioConfigEditor : UnityEditor.Editor

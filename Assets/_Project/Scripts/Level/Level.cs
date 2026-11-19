@@ -9,7 +9,6 @@ using _Project.Scripts.Player;
 using _Project.Scripts.Services;
 using _Project.Scripts.UI;
 using _Project.Scripts.UI.Panel;
-using _Project.Scripts.UI.StateMachine;
 using _Project.Scripts.UI.View;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -62,6 +61,7 @@ namespace _Project.Scripts.Level
         private CinemachineFreeLook _cinemachineFreeLook;
 
         public event Action IsInitiatedSpawners;
+        
         public event Action OnBossHealthBarCreated;
 
         public HealthBar HealthBar { get; private set; }

@@ -5,7 +5,7 @@ using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace _Project.Editor
+namespace _Project.Scripts.Editor
 {
     public class AtlasLabelPacker
     {
