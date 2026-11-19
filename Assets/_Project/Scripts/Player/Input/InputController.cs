@@ -28,15 +28,16 @@ namespace _Project.Scripts.Player.Input
         private Button _interactButton;
 
         private bool _uiAttackPressed;
-        private bool _isPickUpLocked;
 
         private float _rollCooldownTimer;
         private bool _rollRequested;
-
-        public event Action OnEquippedItemButtonPressed;
+        
         public event Action OnInventoryButtonPressed;
+        
         public event Action OnAttackButtonPressed;
+        
         public event Action OnMoveButtonsPressed;
+        
         public event Action OnUnlockController;
 
         public Vector2 MoveDirection { get; private set; }
@@ -95,7 +96,6 @@ namespace _Project.Scripts.Player.Input
             if (_attackButton != null) _attackButton.onClick.RemoveListener(OnAttackByButton);
             if (_rollButton != null) _rollButton.onClick.RemoveListener(OnRollByButton);
             if (_inventoryButton != null) _inventoryButton.onClick.RemoveListener(OnInventoryButtonClicked);
-            if (_equippedItemButton != null) _equippedItemButton.onClick.RemoveListener(OnEquippedItemButtonClicked);
             if (_interactButton != null) _interactButton.onClick.RemoveListener(OnPickUpByButton);
         }
 
@@ -105,7 +105,6 @@ namespace _Project.Scripts.Player.Input
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton,
             Button interactButton)
         {
             _moveJoystick = moveJoystick;
@@ -117,8 +116,6 @@ namespace _Project.Scripts.Player.Input
             _rollButton.onClick.AddListener(OnRollByButton);
             _inventoryButton = inventoryButton;
             _inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
-            _equippedItemButton = equippedItemButton;
-            _equippedItemButton.onClick.AddListener(OnEquippedItemButtonClicked);
             _interactButton = interactButton;
             _interactButton.onClick.AddListener(OnPickUpByButton);
         }
@@ -143,16 +140,6 @@ namespace _Project.Scripts.Player.Input
             _isAttackLocked = isLocked;
             _isRollLocked = isLocked;
         }
-        
-        public void LockPickUp()
-        {
-            _isPickUpLocked = true;
-        }
-        
-        public void UnLockPickUp()
-        {
-            _isPickUpLocked = false;
-        }
 
         private void UpdateAttackInput()
         {
@@ -167,8 +154,7 @@ namespace _Project.Scripts.Player.Input
 
         private void UpdateInteractInput()
         {
-            IsPickUpPressed = _inputSystem.Player.PickUp.WasPressedThisFrame()
-                              && !IsPointerOverUI() && !_isPickUpLocked;
+            IsPickUpPressed = _inputSystem.Player.PickUp.WasPressedThisFrame() && !IsPointerOverUI();
         }
 
         private bool IsPointerOverUI()
@@ -295,18 +281,12 @@ namespace _Project.Scripts.Player.Input
 
         private void OnPickUpByButton()
         {
-            if (_isPickUpLocked) return;
             IsPickUpPressed = true;
         }
 
         private void OnInventoryButtonClicked()
         {
             OnInventoryButtonPressed?.Invoke();
-        }
-
-        private void OnEquippedItemButtonClicked()
-        {
-            OnEquippedItemButtonPressed?.Invoke();
         }
     }
 }

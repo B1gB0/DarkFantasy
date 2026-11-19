@@ -18,7 +18,6 @@ namespace _Project.Scripts.Services
         private List<Item> _equipment = new();
 
         private IShopService _shopService;
-        public int MaxSlotsCount => MaxSlots;
 
         public bool IsInitiated { get; private set; }
 
@@ -180,11 +179,6 @@ namespace _Project.Scripts.Services
             return _consumables.GetValueOrDefault(itemType, 0);
         }
 
-        public bool HasItem(ItemType itemType)
-        {
-            return _consumables.TryGetValue(itemType, out var count) && count > 0;
-        }
-
         public void EquipConsumableItem(ItemData data)
         {
             if (data == null) return;
@@ -229,11 +223,6 @@ namespace _Project.Scripts.Services
             Save();
         }
 
-        public bool IsFull()
-        {
-            return GetTotalItemCount() >= MaxSlots;
-        }
-
         public bool CanFit(ItemData itemData)
         {
             if (itemData == null) return false;
@@ -248,6 +237,16 @@ namespace _Project.Scripts.Services
         private void Construct(IShopService shopService)
         {
             _shopService = shopService;
+        }
+        
+        private bool IsFull()
+        {
+            return GetTotalItemCount() >= MaxSlots;
+        }
+        
+        private bool HasItem(ItemType itemType)
+        {
+            return _consumables.TryGetValue(itemType, out var count) && count > 0;
         }
 
         private int GetTotalItemCount()

@@ -7,9 +7,13 @@ namespace _Project.Scripts.Services
         LevelDifficulty CurrentDifficulty { get; }
 
         public void SetDifficulty(LevelDifficulty difficulty);
+        
         public float GetItemMultiplier(LevelDifficulty difficulty);
+        
         public float GetEnemyHealthMultiplier();
+        
         public float GetEnemyDamageMultiplier();
+        
         public bool IsDifficultyUnlocked(LevelDifficulty difficulty);
     }
 }

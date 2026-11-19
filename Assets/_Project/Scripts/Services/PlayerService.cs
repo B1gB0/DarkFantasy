@@ -115,7 +115,6 @@ namespace _Project.Scripts.Services
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton,
             Button pickUpButton)
         {
             Player.InputController.GetButtons(
@@ -124,7 +123,6 @@ namespace _Project.Scripts.Services
                 attackButton,
                 rollButton,
                 inventoryButton,
-                equippedItemButton,
                 pickUpButton);
         }
 

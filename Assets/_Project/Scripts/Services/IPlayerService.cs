@@ -12,10 +12,15 @@ namespace _Project.Scripts.Services
     {
         public CinemachineFreeLook FreeLookCamera { get; }
         public Player.Core.Player Player { get; }
+        
         public PlayerData GetPlayerDataByType(PlayerType type);
+        
         public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint);
+        
         public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data);
+        
         public void SpawnPlayer(bool isRevive = false);
+        
         public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera);
 
         public void GetButtons(
@@ -24,7 +29,6 @@ namespace _Project.Scripts.Services
             Button attackButton,
             Button rollButton,
             Button inventoryButton,
-            Button equippedItemButton,
             Button pickUpButton);
     }
 }

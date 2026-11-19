@@ -216,11 +216,6 @@ namespace _Project.Scripts.Services
             _enemyInitData = enemyInitData;
         }
 
-        public EnemyData GetEnemyDataByType(EnemyType type)
-        {
-            return _enemiesData[type];
-        }
-
         [Inject]
         public void Construct(
             IDataBaseService dataBaseService,

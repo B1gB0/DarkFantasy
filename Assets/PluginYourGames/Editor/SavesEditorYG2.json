@@ -1,6 +1,6 @@
 {
   "Gold": 1010,
-  "AcumulatedScore": 3160,
+  "AcumulatedScore": 3220,
   "HealthAttributeNumber": 6,
   "DamageAttributeNumber": 7,
   "ArmorAttributeNumber": 6,
@@ -12,9 +12,9 @@
   "IsMissionPanelVisited": true,
   "IsCampfireVisited": true,
   "IsCampfireHealed": false,
-  "EquippedWeaponId": null,
+  "EquippedWeaponId": "8d8b6a6c-cb26-4f41-8652-3341da80b395",
   "EquippedArmorId": "45a828f7-e8b3-400b-893d-8364010d8eb5",
-  "EquippedRingId": null,
+  "EquippedRingId": "1080f285-9538-4a36-a34b-659b47f43c4b",
   "CompletedLow": [
     "graveyard"
   ],
@@ -24,9 +24,7 @@
     "castle"
   ],
   "CompletedHigh": [],
-  "Consumables": {
-    "SpeedPotion": 1
-  },
+  "Consumables": {},
   "Equipment": [
     {
       "Id": "08733bf0-07db-4f29-b91c-88093016ec99",
@@ -84,11 +82,6 @@
       "Difficulty": 1
     },
     {
-      "Id": "c3efbe1b-5936-42ed-9204-5c3c8756426e",
-      "Type": 5,
-      "Difficulty": 1
-    },
-    {
       "Id": "acd6b86c-844b-49e3-970c-1e57e92727a9",
       "Type": 12,
       "Difficulty": 1
@@ -102,13 +95,23 @@
       "Id": "23158cc4-1a23-4343-b87b-bef88a7e8e82",
       "Type": 9,
       "Difficulty": 1
+    },
+    {
+      "Id": "8a6d5333-a3a7-4390-bdcb-5011ddfd8d61",
+      "Type": 4,
+      "Difficulty": 2
+    },
+    {
+      "Id": "afd89c99-3102-43df-acdb-10ac727da392",
+      "Type": 10,
+      "Difficulty": 2
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 2,
   "PlayerCharacteristics": {
     "MaxHealth": 121.0,
-    "TargetHealth": 121.0,
+    "TargetHealth": 122.0,
     "Armor": 23.0,
     "Damage": 33.0,
     "MoveSpeed": 6.0,
@@ -130,5 +133,5 @@
     false,
     false
   ],
-  "idSave": 144
+  "idSave": 161
 }

@@ -115,6 +115,7 @@ namespace _Project.Scripts.Player
         }
 
         public void StartDamageWindow() => _player.Sword.ActivateCollider();
+        
         public void EndDamageWindow()   => _player.Sword.DeactivateCollider();
 
         public void EndAttack()
