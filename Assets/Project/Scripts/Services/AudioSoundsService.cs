@@ -16,10 +16,11 @@ namespace Project.Scripts.Services
 
         private const int CountAudioSources = 10;
 
+        private readonly Dictionary<SoundsType, Sound> _soundDictionary = new();
+
         [SerializeField] private AudioMixerGroup _musicGroup;
         [SerializeField] private AudioMixerGroup _effectsGroup;
 
-        private readonly Dictionary<SoundsType, Sound> _soundDictionary = new();
         private List<AudioSource> _allAudioSources;
 
         private Queue<AudioSource> _availableAudioSources;
@@ -55,10 +56,8 @@ namespace Project.Scripts.Services
                 if (!IsInitiated)
                     return;
 
-                if (!_soundDictionary.ContainsKey(sound))
+                if (!_soundDictionary.TryGetValue(sound, out var config))
                     return;
-
-                var config = _soundDictionary[sound];
 
                 if (!_availableAudioSources.Any()) CreateAudioSource();
 

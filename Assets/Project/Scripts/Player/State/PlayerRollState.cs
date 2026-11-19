@@ -7,7 +7,7 @@ namespace Project.Scripts.Player.State
     {
         private const float MinValue = 0f;
         private const float MinMagnitude = 0.01f;
-        
+
         private readonly Core.Player _player;
         private readonly PlayerAnimatedState _animationSystem;
 
@@ -27,7 +27,7 @@ namespace Project.Scripts.Player.State
         public void Enter()
         {
             _player.HitBox.enabled = false;
-            
+
             Vector2 moveInput = _player.InputController.MoveDirection;
 
             Vector3 camForward = UnityEngine.Camera.main.transform.forward;
@@ -37,7 +37,7 @@ namespace Project.Scripts.Player.State
             camForward.Normalize();
             camRight.Normalize();
 
-            Vector3 moveDirection = camForward * moveInput.y + camRight * moveInput.x;
+            Vector3 moveDirection = (camForward * moveInput.y) + (camRight * moveInput.x);
 
             if (moveDirection.sqrMagnitude < MinMagnitude)
             {
@@ -60,7 +60,7 @@ namespace Project.Scripts.Player.State
 
             _rollSpeed = _player.RollSpeed;
             _isRolling = true;
-            
+
             _animationSystem.OnRoll();
         }
 
@@ -80,7 +80,7 @@ namespace Project.Scripts.Player.State
         {
             if (!_isRolling)
                 return;
-            
+
             Vector3 targetVelocity = _rollDirection * _rollSpeed;
             _player.Rigidbody.velocity = new Vector3(targetVelocity.x, _player.Rigidbody.velocity.y, targetVelocity.z);
         }
@@ -89,7 +89,7 @@ namespace Project.Scripts.Player.State
         {
             _player.HitBox.enabled = true;
             _isRolling = false;
-            
+
             _player.Rigidbody.velocity = new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
         }
     }

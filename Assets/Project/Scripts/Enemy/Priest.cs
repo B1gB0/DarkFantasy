@@ -12,7 +12,7 @@ namespace Project.Scripts.Enemy
         [field: SerializeField] public FireballSpell FireballSpell { get; private set; }
         [field: SerializeField] public Coil Coil { get; private set; }
         [field: SerializeField] public Omni Omni { get; private set; }
-        
+
         protected override void OnPlayHitEffect()
         {
             AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();

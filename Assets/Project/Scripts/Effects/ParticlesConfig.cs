@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
-#endif 
+#endif
 using UnityEngine;
 
 namespace Project.Scripts.Effects
@@ -57,7 +57,7 @@ namespace Project.Scripts.Effects
                         {
                             var particle = new ParticleEffect
                             {
-                                ParticleName = particleAsset.name
+                                ParticleName = particleAsset.name,
                             };
 
                             Particles.Add(particle);

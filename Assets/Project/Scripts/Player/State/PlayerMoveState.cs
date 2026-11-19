@@ -59,8 +59,8 @@ namespace Project.Scripts.Player.State
             camRight.Normalize();
 
             _cachedMoveDirection =
-                camForward * _player.InputController.MoveDirection.y
-                + camRight * _player.InputController.MoveDirection.x;
+                (camForward * _player.InputController.MoveDirection.y)
+                + (camRight * _player.InputController.MoveDirection.x);
         }
 
         public void FixedUpdate()
@@ -89,7 +89,7 @@ namespace Project.Scripts.Player.State
             Vector3 velocity = moveDirection * currentSpeed;
 
             float rayLength = RayLength;
-            Vector3 rayStart = _player.transform.position + Vector3.up * HeightOffset;
+            Vector3 rayStart = _player.transform.position + (Vector3.up * HeightOffset);
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
             {

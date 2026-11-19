@@ -27,15 +27,6 @@ namespace Project.Scripts.UI.StateMachine
             _currentState.Enter();
         }
 
-        public void ExitFrom<T>()
-            where T : UIState
-        {
-            var type = typeof(T);
-            
-            if(_currentState.GetType() == type)
-                _currentState.Exit();
-        }
-
         public void AddState(UIState state)
         {
             var type = state.GetType();
@@ -51,10 +42,7 @@ namespace Project.Scripts.UI.StateMachine
         {
             var type = typeof(T);
 
-            if (_states.ContainsKey(type))
-            {
-                _states.Remove(type);
-            }
+            _states.Remove(type);
         }
     }
 }

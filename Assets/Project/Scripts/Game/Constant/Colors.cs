@@ -4,9 +4,9 @@ namespace Project.Scripts.Game.Constant
 {
     public static class Colors
     {
-        private static CustomPalette _palette;
-        
         private const string PalettePath = "ColorPalette";
+
+        private static CustomPalette _palette;
 
         public static Color GetColor(ColorName colorName)
         {

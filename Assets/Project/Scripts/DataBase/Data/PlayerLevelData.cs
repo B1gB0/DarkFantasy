@@ -7,7 +7,7 @@ namespace Project.Scripts.DataBase.Data
     public class PlayerLevelData
     {
         [SerializeField] private int _requiredExperience;
-        
+
         public int RequiredExperience => _requiredExperience;
     }
 }

@@ -101,7 +101,7 @@ namespace Project.Scripts.Level.Spawners
         {
             if (reward.Type == LootType.None) return;
 
-            Vector3 spawnPos = position + Vector3.up * SpawnOffsetY;
+            Vector3 spawnPos = position + (Vector3.up * SpawnOffsetY);
             var lootEnemyTrigger = _pool.GetFreeElement();
             lootEnemyTrigger.transform.position = spawnPos;
             lootEnemyTrigger.OnPickedUp -= _rewardView.Show;

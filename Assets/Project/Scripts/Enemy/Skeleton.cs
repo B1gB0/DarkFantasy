@@ -10,7 +10,7 @@ namespace Project.Scripts.Enemy
             AudioSoundsService.PlaySound(SoundsType.SkeletonHit).Forget();
             base.OnPlayHitEffect();
         }
-        
+
         protected override void OnDie()
         {
             ExperiencePoints.OnKill(this);

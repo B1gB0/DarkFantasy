@@ -62,7 +62,8 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour
             }
         }
 
-        public void SwitchState<T>() where T : EnemyState
+        public void SwitchState<T>()
+            where T : EnemyState
         {
             Type newStateType = typeof(T);
             if (!_states.ContainsKey(newStateType))

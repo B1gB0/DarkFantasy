@@ -9,7 +9,7 @@ namespace Project.Scripts.Player.State
         private const int LayerIndex = 0;
         private const float FallbackEndThreshold = 0.95f;
         private const float InputDelay = 0.2f;
-        
+
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _anim;
@@ -29,12 +29,12 @@ namespace Project.Scripts.Player.State
         public void Enter()
         {
             _player.Rigidbody.velocity = Vector3.zero;
-            
+
             _anim.OnSitDown();
             _isStandingUp = false;
             _inputTimer = InputDelay;
-            
-            _player.InputController.LockPlayerMovement(); 
+
+            _player.InputController.LockPlayerMovement();
         }
 
         public void Update()
@@ -42,21 +42,21 @@ namespace Project.Scripts.Player.State
             if (_isStandingUp)
             {
                 AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(LayerIndex);
-                
+
                 if (stateInfo.IsName("StandUp") && stateInfo.normalizedTime >= FallbackEndThreshold)
                 {
                     _stateMachine.SwitchState(StateId.Idle);
                 }
-                
+
                 return;
             }
-            
+
             if (_inputTimer > 0f)
             {
                 _inputTimer -= Time.deltaTime;
                 return;
             }
-            
+
             bool wantToStandUp = _player.InputController.IsPickUpPressed;
 
             if (wantToStandUp)
@@ -66,7 +66,9 @@ namespace Project.Scripts.Player.State
             }
         }
 
-        public void FixedUpdate() { }
+        public void FixedUpdate()
+        {
+        }
 
         public void Exit()
         {

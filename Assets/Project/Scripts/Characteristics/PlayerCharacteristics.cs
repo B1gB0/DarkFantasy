@@ -187,12 +187,12 @@ namespace Project.Scripts.Characteristics
 
         public float GetAttackSpeedMultiplier()
         {
-            return BaseAttackSpeedMultiplier + _equipmentAttackSpeedBonus / PercentFactor;
+            return BaseAttackSpeedMultiplier + (_equipmentAttackSpeedBonus / PercentFactor);
         }
 
         public float GetCritMultiplier()
         {
-            return BaseCritMultiplier + _equipmentCritDamageBonus / PercentFactor;
+            return BaseCritMultiplier + (_equipmentCritDamageBonus / PercentFactor);
         }
 
         public void SaveTargetHealth(float targetHealth)

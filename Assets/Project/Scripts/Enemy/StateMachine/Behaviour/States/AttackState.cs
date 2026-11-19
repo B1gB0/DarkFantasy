@@ -21,7 +21,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _idleDuration = 1f;
         private float _attackDuration = 2f;
         private float _priestAimDuration = 1f;
-        
+
         private float _comboChance1 = 0.3f;
         private float _comboChance2 = 0.4f;
         private float _dodgeChance = 0.3f;
@@ -30,10 +30,10 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _attack3Duration = 1.2f;
         private float _dodgeDuration = 2f;
         private float _dodgeDistance = 3f;
-        
+
         private int _comboLength;
         private int _currentComboIndex;
-        
+
         private Vector3 _dodgeDirection;
         private Vector3 _dodgeStartPosition;
         private float _dodgeElapsed;
@@ -44,21 +44,20 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Enter()
         {
-            _currentSubState = Enemy.Type is EnemyType.BanditRanger
-                or EnemyType.SkeletonRanger
+            _currentSubState = Enemy.Type is EnemyType.BanditRanger or EnemyType.SkeletonRanger
                 ? AttackSubState.Aiming
                 : AttackSubState.Idle;
-            
+
             if (Enemy.Type == EnemyType.BanditLeader || Enemy.Type == EnemyType.DarkLord)
             {
                 _currentComboIndex = 0;
             }
-    
+
             if (Enemy.Type == EnemyType.Priest || Enemy.Type == EnemyType.DarkLord)
             {
                 _activePriestAttack = PriestAttackState.None;
             }
-            
+
             _attackRange = Enemy.Type == EnemyType.DarkLord ? DarkLordMagicSpellDistance : Data.RangeAttack;
         }
 
@@ -74,8 +73,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                 return;
             }
 
-            if (Player == null
-                || !Player.CanFollow)
+            if (Player == null || !Player.CanFollow)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
                 return;
@@ -97,12 +95,12 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                 direction,
                 rotationSpeed * Time.fixedDeltaTime,
                 MinValue);
-            
+
             if (Enemy.Type == EnemyType.BanditLeader && _currentSubState == AttackSubState.Dodge)
             {
                 _dodgeElapsed += Time.fixedDeltaTime;
                 float t = Mathf.Clamp01(_dodgeElapsed / _dodgeDuration);
-                Vector3 targetPos = _dodgeStartPosition + _dodgeDirection * _dodgeDistance * t;
+                Vector3 targetPos = _dodgeStartPosition + (_dodgeDirection * _dodgeDistance * t);
                 Enemy.transform.position = targetPos;
             }
 
@@ -128,6 +126,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Reloading);
                             break;
                     }
+
                     break;
                 case EnemyType.Priest:
                     if (_activePriestAttack == PriestAttackState.None)
@@ -148,6 +147,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterInOmniAttack();
                             break;
                     }
+
                     break;
                 case EnemyType.BanditLeader:
                     UpdateBanditLeader();
@@ -165,6 +165,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Attack);
                             break;
                     }
+
                     break;
             }
         }
@@ -174,7 +175,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             ParticleEffectsService.StopEffect(ParticleType.ShieldEffect);
             ParticleEffectsService.StopEffect(ParticleType.MagicChargeBlue);
             _activePriestAttack = PriestAttackState.None;
-            
+
             if (Agent != null && !Agent.enabled)
                 Agent.enabled = true;
         }
@@ -266,7 +267,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                     break;
             }
         }
-        
+
         private void UpdateBanditLeader()
         {
             switch (_currentSubState)
@@ -278,8 +279,8 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
 
                     if (_currentComboIndex < _comboLength)
                     {
-                        var nextState = _currentComboIndex == MinValue 
-                            ? AttackSubState.Attack2 
+                        var nextState = _currentComboIndex == MinValue
+                            ? AttackSubState.Attack2
                             : AttackSubState.Attack3;
                         EnterAttackSubState(nextState);
                     }
@@ -294,6 +295,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                             EnterAttackSubState(AttackSubState.Idle);
                         }
                     }
+
                     break;
                 case AttackSubState.Dodge:
                     Agent.enabled = true;
@@ -309,17 +311,18 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                     {
                         StartNewCombo();
                     }
+
                     break;
                 default:
                     EnterAttackSubState(AttackSubState.Idle);
                     break;
             }
         }
-        
+
         private void UpdateDarkLord()
         {
             float dist = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-            
+
             if (_activePriestAttack != PriestAttackState.None)
             {
                 switch (_activePriestAttack)
@@ -331,9 +334,10 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                         EnterInCoilAttack();
                         break;
                 }
+
                 return;
             }
-            
+
             if (_currentSubState == AttackSubState.Attack1 ||
                 _currentSubState == AttackSubState.Attack2 ||
                 _currentSubState == AttackSubState.Attack3 ||
@@ -342,7 +346,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                 UpdateBanditLeader();
                 return;
             }
-            
+
             if (dist > DarkLordMagicSpellDistance)
             {
                 EnemyStateMachine.SwitchState<FollowState>();
@@ -356,15 +360,15 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
                 StartNewCombo();
             }
         }
-        
+
         private void StartDarkLordMagicAttack()
         {
             _activePriestAttack =
                 Random.value > FiftyChance ? PriestAttackState.Fireball : PriestAttackState.Coil;
-            
+
             EnterAttackSubState(AttackSubState.Idle);
         }
-        
+
         private void StartNewCombo()
         {
             float rand = Random.value;
@@ -378,7 +382,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             _currentComboIndex = MinValue;
             EnterAttackSubState(AttackSubState.Attack1);
         }
-        
+
         private void EnterDodge()
         {
             Vector3 right = Enemy.transform.right;

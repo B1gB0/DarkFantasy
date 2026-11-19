@@ -6,11 +6,13 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
 {
     public class DeathState : EnemyState
     {
-        private static readonly int DissolveAmountID = Shader.PropertyToID("_DissolveAmount");
-
         private const float DissolveDelay = 4f;
         private const float DissolveDuration = 3f;
         private const float TotalDeathDuration = 10f;
+
+        private static readonly int DissolveAmountID = Shader.PropertyToID("_DissolveAmount");
+
+        private readonly List<Renderer> _dissolveRenderers = new();
 
         private float _deathTimer;
         private bool _deathProcessed;
@@ -18,7 +20,6 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private float _dissolveTimer;
 
         private MaterialPropertyBlock _propertyBlock;
-        private List<Renderer> _dissolveRenderers = new List<Renderer>();
 
         public override void Enter()
         {
@@ -39,9 +40,9 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             var rb = Enemy.GetComponent<Rigidbody>();
             if (rb != null)
                 rb.isKinematic = true;
-            
+
             AnimStateMachine.EnterIn<DeathAnimatedState>();
-            
+
             _dissolveRenderers.Clear();
             foreach (var rend in Enemy.GetComponentsInChildren<Renderer>())
             {
@@ -50,33 +51,33 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             }
 
             _propertyBlock = new MaterialPropertyBlock();
-            
+
             SetDissolveAmount(MinValue);
         }
 
         public override void Update()
         {
             _deathTimer -= Time.deltaTime;
-            
+
             if (!_dissolveStarted && _deathTimer <= TotalDeathDuration - DissolveDelay)
             {
                 _dissolveStarted = true;
                 _dissolveTimer = MinValue;
             }
-            
+
             if (_dissolveStarted)
             {
                 _dissolveTimer += Time.deltaTime;
                 float progress = Mathf.Clamp01(_dissolveTimer / DissolveDuration);
                 SetDissolveAmount(progress);
-                
+
                 if (progress >= 1f && !_deathProcessed)
                 {
                     _deathProcessed = true;
                     Enemy.gameObject.SetActive(false);
                 }
             }
-            
+
             if (_deathTimer <= MinValue && !_deathProcessed)
             {
                 _deathProcessed = true;

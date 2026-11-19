@@ -4,7 +4,8 @@
     {
         private readonly View.View _uiRootButtons;
 
-        public GameplayState(View.View view, View.View uiRootButtons) : base(view)
+        public GameplayState(View.View view, View.View uiRootButtons)
+            : base(view)
         {
             _uiRootButtons = uiRootButtons;
         }

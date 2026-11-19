@@ -9,7 +9,7 @@ namespace Project.Scripts.Audio.Sounds
         public string ClipName;
         public AudioClip Clip;
         public bool IsLoop;
-        
+
         [Range(0f, 1f)] public float Volume = 1f;
     }
 }

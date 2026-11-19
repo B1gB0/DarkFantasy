@@ -94,8 +94,7 @@ namespace Project.Scripts
             float armor = MinValue,
             Health attacker = null,
             bool isCrit = false,
-            bool isReverse = false
-        )
+            bool isReverse = false)
         {
             if (TargetHealth <= MinValue) return;
             if (damage <= MinValue) return;
@@ -105,13 +104,15 @@ namespace Project.Scripts
             float finalDamage = CalculateFinalDamage(damage, armor);
             if (finalDamage <= MinValue) return;
 
+            var damageTextColor = isCrit
+                ? Colors.GetColor(ColorName.RedCurrencyColor)
+                : Colors.GetColor(ColorName.DefaultWhiteTextColor);
+
             IsSpawnedDamageText?.Invoke(
                 damage.ToString("0"),
                 transform,
                 FloatingTextViewType.Damage,
-                isCrit
-                    ? Colors.GetColor(ColorName.RedCurrencyColor)
-                    : Colors.GetColor(ColorName.DefaultWhiteTextColor));
+                damageTextColor);
 
             TargetHealth -= finalDamage;
             OnChangeHealth();

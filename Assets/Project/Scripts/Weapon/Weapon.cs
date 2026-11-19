@@ -9,9 +9,9 @@ namespace Project.Scripts.Weapon
         protected ParticleEffectsService ParticleEffectsService;
         protected float Damage;
         protected Transform Target;
-        
+
         public abstract void Attack();
-        
+
         public void GetServices(AudioSoundsService audioSoundsService, ParticleEffectsService particleEffectsService)
         {
             AudioSoundsService = audioSoundsService;

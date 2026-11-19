@@ -21,12 +21,12 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
 
         public override void Update()
         {
-            if(Enemy.Health.TargetHealth <= MinValue)
+            if (Enemy.Health.TargetHealth <= MinValue)
             {
                 EnemyStateMachine.SwitchState<DeathState>();
                 return;
             }
-            
+
             if (Player == null || !Player.CanFollow || !Enemy.CanFollow)
             {
                 EnemyStateMachine.SwitchState<PatrolState>();
@@ -34,27 +34,27 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             }
 
             float distanceToPlayer = Vector3.Distance(Enemy.transform.position, Player.transform.position);
-            
+
             if (distanceToPlayer <= _attackRange)
             {
                 EnemyStateMachine.SwitchState<AttackState>();
                 return;
             }
-            
+
             Agent.destination = Player.transform.position;
-            
+
             Vector3 direction = (Player.transform.position - Enemy.transform.position).normalized;
-            
+
             float rotationSpeed = Data.RotationSpeed;
-            
+
             Enemy.transform.forward = Vector3.RotateTowards(
                 Enemy.transform.forward,
-                direction, 
+                direction,
                 rotationSpeed * Time.fixedDeltaTime,
                 MinValue);
-            
+
             bool isMoving = Agent.remainingDistance > Agent.stoppingDistance;
-            
+
             if (isMoving)
                 AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
             else

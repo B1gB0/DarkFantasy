@@ -9,12 +9,12 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         private const int StepIndex = 1;
         private const float StopDistance = 0.2f;
         private const float WaitTimeAtWaypoint = 2f;
-        
+
         private readonly List<Vector3> _waypoints;
 
         private int _currentWaypointIndex;
         private bool _isPatrolStarted;
-        
+
         private float _waitTimer;
         private bool _isWaiting;
 
@@ -41,7 +41,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
         {
             Agent.ResetPath();
         }
-        
+
         public override void Update()
         {
             if (Player != null && Player.CanFollow && Enemy.CanFollow)
@@ -52,36 +52,37 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
 
             if (_waypoints == null || _waypoints.Count == MinValue)
                 return;
-            
+
             if (_isWaiting)
             {
                 _waitTimer -= Time.deltaTime;
                 if (_waitTimer <= MinValue)
                 {
                     _isWaiting = false;
-                    
+
                     SetNextWaypoint();
                     GoToCurrentWaypoint();
-                    
+
                     AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
                 }
+
                 return;
             }
-            
+
             if (!_isPatrolStarted)
             {
                 AnimStateMachine.EnterIn<MoveEnemyAnimatedState>();
                 GoToCurrentWaypoint();
                 _isPatrolStarted = true;
             }
-            
+
             if (!Agent.pathPending && Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 _isWaiting = true;
                 _waitTimer = WaitTimeAtWaypoint;
 
                 Agent.ResetPath();
-                
+
                 AnimStateMachine.EnterIn<IdleEnemyAnimatedState>();
             }
         }

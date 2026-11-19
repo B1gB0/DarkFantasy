@@ -4,7 +4,8 @@
     {
         private readonly View.View _view;
 
-        public SettingsPanelState(View.View view) : base(view)
+        public SettingsPanelState(View.View view)
+            : base(view)
         {
             _view = view;
         }

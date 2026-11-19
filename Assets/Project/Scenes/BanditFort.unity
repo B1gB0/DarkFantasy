@@ -7347,6 +7347,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.13
       objectReference: {fileID: 0}
+    - target: {fileID: 791479854096226781, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
+      propertyPath: _levelInitData
+      value: 
+      objectReference: {fileID: 11400000, guid: ce6e3ea4a29dacc45aee2fffb45ba150, type: 2}
     - target: {fileID: 823866786333269142, guid: a9163c2dc123d8d4da30161666546de7, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0

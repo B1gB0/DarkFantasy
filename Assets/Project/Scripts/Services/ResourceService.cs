@@ -21,7 +21,8 @@ namespace Project.Scripts.Services
             return handle.Result;
         }
 
-        public async UniTask<T> InstantiateAsync<T>(string assetName, Transform parent = null) where T : Component
+        public async UniTask<T> InstantiateAsync<T>(string assetName, Transform parent = null)
+            where T : Component
         {
             var gameObject = await InstantiateAsync(assetName, parent);
             return gameObject != null ? gameObject.GetComponent<T>() : null;

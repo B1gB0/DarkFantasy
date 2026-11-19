@@ -4,11 +4,12 @@ namespace Project.Scripts.UI.StateMachine.States
     {
         private readonly View.View _view;
 
-        public LeaderboardPanelState(View.View view) : base(view)
+        public LeaderboardPanelState(View.View view)
+            : base(view)
         {
             _view = view;
         }
-        
+
         public override void Enter()
         {
             _view.Show();

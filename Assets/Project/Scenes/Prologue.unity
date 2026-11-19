@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d720b86ebcbe45e29682bd1cb23da578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInitData: {fileID: 11400000, guid: 7c1a3c1fe85f9454f99508e684255823, type: 2}
+  _levelInitData: {fileID: 11400000, guid: 7c1a3c1fe85f9454f99508e684255823, type: 2}
 --- !u!114 &1409093915
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ namespace Project.Scripts.Game.MainMenu
 {
     public class MainMenuEnterParameters : SceneEnterParameters
     {
-        public MainMenuEnterParameters() : base(Scenes.MainMenu)
+        public MainMenuEnterParameters()
+            : base(Scenes.MainMenu)
         {
         }
     }

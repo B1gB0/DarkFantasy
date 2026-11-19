@@ -1154,6 +1154,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 69299985801115712, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: _levelInitData
+      value: 
+      objectReference: {fileID: 11400000, guid: e19297545aa7f234589daa965860ee8b, type: 2}
     - target: {fileID: 85470002667571019, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: m_Lightmapping
       value: 4

@@ -85,17 +85,21 @@ namespace Project.Scripts.Items
         {
             _animator.CrossFade(Open, Duration);
 
-            await UniTask.WaitUntil(() =>
-            {
-                var info = _animator.GetCurrentAnimatorStateInfo(0);
-                return info.IsName("Open");
-            }, cancellationToken: token);
+            await UniTask.WaitUntil(
+                () =>
+                {
+                    var info = _animator.GetCurrentAnimatorStateInfo(0);
+                    return info.IsName("Open");
+                },
+                cancellationToken: token);
 
-            await UniTask.WaitUntil(() =>
-            {
-                var info = _animator.GetCurrentAnimatorStateInfo(0);
-                return info.normalizedTime >= 1f;
-            }, cancellationToken: token);
+            await UniTask.WaitUntil(
+                () =>
+                {
+                    var info = _animator.GetCurrentAnimatorStateInfo(0);
+                    return info.normalizedTime >= 1f;
+                },
+                cancellationToken: token);
 
             ApplyReward(reward);
 

@@ -26,7 +26,7 @@ namespace Project.Scripts.Player.State
         public void Update()
         {
             _player.PlayerAnimatedState.OnMove(MinValue);
-            
+
             if (_player.InputController.IsRollInputPerformed)
             {
                 _stateMachine.SwitchState(StateId.Roll);
@@ -47,7 +47,7 @@ namespace Project.Scripts.Player.State
         {
             _player.InputController.OnAttackButtonPressed -= EnterAttack;
         }
-        
+
         private void EnterAttack()
         {
             _stateMachine.SwitchState(StateId.Attack);

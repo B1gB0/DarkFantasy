@@ -11,7 +11,7 @@ namespace Project.Scripts.Enemy
             AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();
             ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Health.HitPoint.position);
         }
-        
+
         protected override void OnDie()
         {
             ExperiencePoints.OnKill(this);

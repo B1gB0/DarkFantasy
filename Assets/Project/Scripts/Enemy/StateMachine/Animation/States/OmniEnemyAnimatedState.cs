@@ -8,7 +8,7 @@ namespace Project.Scripts.Enemy.StateMachine.Animation.States
             : base(animator, enemyAnimationBase)
         {
         }
-        
+
         public override void Enter()
         {
             base.Enter();

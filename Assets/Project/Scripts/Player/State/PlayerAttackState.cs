@@ -9,7 +9,7 @@ namespace Project.Scripts.Player.State
         private const int MaxCombo = 3;
         private const int MinValue = 0;
         private const int StartCounter = 1;
-        
+
         private const float DefaultAnimationSpeed = 1f;
         private const float FallbackEndThreshold = 0.95f;
         private const float LungeForce = 7f;
@@ -25,15 +25,15 @@ namespace Project.Scripts.Player.State
         private bool _isAttackBuffered;
         private int _comboCounter;
         private bool _fallbackEndInvoked;
-        
-        private Vector3 _lockedAttackDirection; 
+
+        private Vector3 _lockedAttackDirection;
 
         public PlayerAttackState(Core.Player player)
         {
             _player = player;
             _anim = player.PlayerAnimatedState;
             _stateMachine = player.StateMachine;
-            
+
             _cameraTransform = UnityEngine.Camera.main.transform;
         }
 
@@ -41,53 +41,52 @@ namespace Project.Scripts.Player.State
 
         public void Enter()
         {
-            _anim.OnMove(MinValue); 
+            _anim.OnMove(MinValue);
             _player.InputController.OnAttackButtonPressed += OnAttackButtonPressed;
-            
+
             Vector2 input = _player.InputController.MoveDirection;
-            
+
             if (input.sqrMagnitude > 0.01f || _player.InputController.IsMoveInputPerformed)
             {
                 _currentLungeForce = LungeForce;
-                
-                // Берем направление от камеры
+
                 Vector3 attackDir = _cameraTransform.forward;
-                attackDir.y = 0f; 
+                attackDir.y = 0f;
                 attackDir.Normalize();
-                
+
                 if (attackDir.sqrMagnitude > 0.01f)
                 {
                     _lockedAttackDirection = attackDir;
-                    
+
                     _player.Rigidbody.rotation = Quaternion.LookRotation(_lockedAttackDirection);
                     _player.Rigidbody.angularVelocity = Vector3.zero;
                 }
             }
             else
             {
-                _currentLungeForce = MinValue; 
+                _currentLungeForce = MinValue;
                 _lockedAttackDirection = _player.transform.forward;
             }
-            
+
             float animationSpeed = _player.PlayerCharacteristics?.GetAttackSpeedMultiplier() ?? DefaultAnimationSpeed;
             _anim.ChangeAnimationSpeed(animationSpeed);
-            
+
             StartCombo();
-            
+
             _fallbackEndInvoked = false;
         }
 
         public void Update()
         {
             _anim.OnMove(MinValue);
-            
+
             AnimatorStateInfo stateInfo = _player.Animator.GetCurrentAnimatorStateInfo(MinValue);
             if (stateInfo.IsTag("Attack") && stateInfo.normalizedTime >= FallbackEndThreshold && !_fallbackEndInvoked)
             {
                 _fallbackEndInvoked = true;
                 EndAttack();
             }
-            
+
             if (_player.InputController.IsRollInputPerformed)
                 _stateMachine.SwitchState(StateId.Roll);
         }
@@ -97,9 +96,9 @@ namespace Project.Scripts.Player.State
             if (_currentLungeForce > 0.1f)
             {
                 _player.Rigidbody.velocity =
-                    _lockedAttackDirection * _currentLungeForce +
+                    (_lockedAttackDirection * _currentLungeForce) +
                     new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
-                
+
                 _currentLungeForce = Mathf.MoveTowards(
                     _currentLungeForce,
                     MinValue,
@@ -115,8 +114,8 @@ namespace Project.Scripts.Player.State
         }
 
         public void StartDamageWindow() => _player.Sword.ActivateCollider();
-        
-        public void EndDamageWindow()   => _player.Sword.DeactivateCollider();
+
+        public void EndDamageWindow() => _player.Sword.DeactivateCollider();
 
         public void EndAttack()
         {

@@ -20,7 +20,7 @@ namespace Project.Scripts.DataBase.Data
         [SerializeField] private float _armor;
         [SerializeField] private float _speedProjectile;
         [SerializeField] private int _gold;
-        
+
         public EnemyType Type => _type;
         public float Health => _health;
         public float Speed => _speed;

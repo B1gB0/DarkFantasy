@@ -11,7 +11,7 @@ namespace Project.Scripts.DataBase.Data
         [SerializeField] private string _nameRu;
         [SerializeField] private string _nameEn;
         [SerializeField] private string _nameTr;
-        
+
         public CharacteristicType Type => _type;
         public string NameRu => _nameRu;
         public string NameEn => _nameEn;

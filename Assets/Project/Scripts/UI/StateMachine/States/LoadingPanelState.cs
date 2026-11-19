@@ -4,7 +4,8 @@
     {
         private readonly View.View _view;
 
-        public LoadingPanelState(View.View view) : base(view)
+        public LoadingPanelState(View.View view)
+            : base(view)
         {
             _view = view;
         }

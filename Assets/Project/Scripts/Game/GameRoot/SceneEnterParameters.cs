@@ -9,10 +9,10 @@
 
         public string SceneName { get; private set; }
 
-        public T As<T>() 
+        public T As<T>()
             where T : SceneEnterParameters
         {
-            return (T) this;
+            return (T)this;
         }
     }
 }
