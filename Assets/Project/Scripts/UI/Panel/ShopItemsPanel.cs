@@ -26,12 +26,12 @@ namespace Project.Scripts.UI.Panel
         private AudioSoundsService _audioSoundsService;
 
         private List<ShopItemView> _itemViews;
-        
-        [field: SerializeField] public Transform ItemContent { get; private set; }
 
         public event Action OnBackToSceneButtonPressed;
-        
+
         public event Action OnInventoryIsFull;
+
+        [field: SerializeField] public Transform ItemContent { get; private set; }
 
         [Inject]
         private void Construct(
@@ -115,7 +115,7 @@ namespace Project.Scripts.UI.Panel
         {
             if (itemData == null) return;
             if (itemData.Price > _currencyService.Gold) return;
-            
+
             if (!_inventoryService.CanFit(itemData))
             {
                 OnInventoryIsFull?.Invoke();

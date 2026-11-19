@@ -56,7 +56,7 @@ namespace Project.Scripts.Services
                 LevelDifficulty.Low => true,
                 LevelDifficulty.Medium => YG2.saves.IsMediumDifficultyUnlock,
                 LevelDifficulty.High => YG2.saves.IsHardDifficultyUnlock,
-                _ => false
+                _ => false,
             };
         }
 

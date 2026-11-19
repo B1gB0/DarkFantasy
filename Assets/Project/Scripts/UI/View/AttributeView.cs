@@ -18,7 +18,7 @@ namespace Project.Scripts.UI.View
         [SerializeField] private Button _attributeButton;
         [SerializeField] private List<Sprite> _icons;
         [SerializeField] private Image _iconAttribute;
-        
+
         [SerializeField] private TMP_Text _title;
         [SerializeField] private TMP_Text _price;
         [SerializeField] private TMP_Text _nextValue;
@@ -26,15 +26,15 @@ namespace Project.Scripts.UI.View
 
         private PlayerAttributeLevelData _currentData;
         private IPlayerService _playerService;
-        
+
         public event Action<PlayerAttributeLevelData, AttributeView> OnButtonClicked;
-        
+
         [Inject]
         private void Construct(IPlayerService playerService)
         {
             _playerService = playerService;
         }
-        
+
         private void OnEnable()
         {
             _attributeButton.onClick.AddListener(OnButtonClick);
@@ -47,8 +47,8 @@ namespace Project.Scripts.UI.View
 
         public void SetCurrencyColor(int gold)
         {
-            if(_currentData == null) return;
-            if(_currentData.Price > gold)
+            if (_currentData == null) return;
+            if (_currentData.Price > gold)
                 _price.color = Colors.GetColor(ColorName.RedCurrencyColor);
             else
                 _price.color = Colors.GetColor(ColorName.BlackUIColor);
@@ -80,7 +80,7 @@ namespace Project.Scripts.UI.View
             SetLocalization(localizationData);
 
             _currentData = attributeData;
-            
+
             _nextValue.text = '+' + attributeData.Value.ToString(CultureInfo.CurrentCulture);
             _price.text = attributeData.Price.ToString();
         }
@@ -92,7 +92,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => _title.text
+                _ => _title.text,
             };
         }
 

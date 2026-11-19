@@ -18,12 +18,12 @@ namespace Project.Scripts.UI.Panel
     {
         [SerializeField] private List<AttributeView> _attributeViews;
         [SerializeField] private Button _backSceneButton;
-        
+
         private ITweenAnimationService _tweenAnimationService;
         private IShopService _shopService;
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
-        private AudioSoundsService  _audioSoundsService;
+        private AudioSoundsService _audioSoundsService;
 
         private List<PlayerAttributeLevelData> _healthAttributes;
         private List<PlayerAttributeLevelData> _damageAttributes;
@@ -44,11 +44,11 @@ namespace Project.Scripts.UI.Panel
             _currencyService = currencyService;
             _playerService = playerService;
             _audioSoundsService = audioSoundsService;
-            
+
             _healthAttributes = _shopService.GetAttributesByType(CharacteristicType.Health);
             _damageAttributes = _shopService.GetAttributesByType(CharacteristicType.Damage);
             _armorAttributes = _shopService.GetAttributesByType(CharacteristicType.Armor);
-            
+
             foreach (var attributeView in _attributeViews)
             {
                 _currencyService.OnGoldValueChanged += attributeView.SetCurrencyColor;
@@ -63,7 +63,7 @@ namespace Project.Scripts.UI.Panel
         private void OnEnable()
         {
             _backSceneButton.onClick.AddListener(MoveBackToScene);
-            
+
             _attributeViews[0].OnButtonClicked += ApplyPurchase;
             _attributeViews[1].OnButtonClicked += ApplyPurchase;
             _attributeViews[2].OnButtonClicked += ApplyPurchase;
@@ -72,7 +72,7 @@ namespace Project.Scripts.UI.Panel
         private void OnDisable()
         {
             _backSceneButton.onClick.RemoveListener(MoveBackToScene);
-            
+
             _attributeViews[0].OnButtonClicked -= ApplyPurchase;
             _attributeViews[1].OnButtonClicked -= ApplyPurchase;
             _attributeViews[2].OnButtonClicked -= ApplyPurchase;
@@ -84,20 +84,20 @@ namespace Project.Scripts.UI.Panel
             {
                 _currencyService.OnGoldValueChanged -= attributeView.SetCurrencyColor;
             }
-            
+
             transform.DOKill();
         }
-        
+
         public override void Show()
         {
             _playerService.Player.InputController.LockPlayerMovement();
             SetAttributeViews();
-            
+
             foreach (var attributeView in _attributeViews)
             {
                 attributeView.SetCurrencyColor(_currencyService.Gold);
             }
-            
+
             _tweenAnimationService.AnimateScale(transform);
         }
 
@@ -111,7 +111,7 @@ namespace Project.Scripts.UI.Panel
         {
             SetAttributeViews();
         }
-        
+
         private void MoveBackToScene()
         {
             OnBackToSceneButtonPressed?.Invoke();
@@ -122,11 +122,11 @@ namespace Project.Scripts.UI.Panel
             _attributeViews[0].Set(
                 _shopService.GetLocalizationDataByType(CharacteristicType.Health),
                 _healthAttributes[YG2.saves.HealthAttributeNumber]);
-            
+
             _attributeViews[1].Set(
                 _shopService.GetLocalizationDataByType(CharacteristicType.Damage),
                 _damageAttributes[YG2.saves.DamageAttributeNumber]);
-            
+
             _attributeViews[2].Set(
                 _shopService.GetLocalizationDataByType(CharacteristicType.Armor),
                 _armorAttributes[YG2.saves.ArmorAttributeNumber]);
@@ -136,26 +136,26 @@ namespace Project.Scripts.UI.Panel
         {
             if (data.Price > _currencyService.Gold)
                 return;
-            
+
             List<PlayerAttributeLevelData> attributeList = data.Type switch
             {
                 CharacteristicType.Health => _healthAttributes,
                 CharacteristicType.Damage => _damageAttributes,
                 CharacteristicType.Armor => _armorAttributes,
-                _ => null
+                _ => null,
             };
-            
+
             if (attributeList == null || attributeList.IndexOf(data) == attributeList.Count - 1)
                 return;
-            
+
             _currencyService.SpendGold(data.Price);
-            
+
             _audioSoundsService.PlaySound(SoundsType.BuyButtonSound).Forget();
-            
+
             YG2.saves.PlayerCharacteristics.ApplyImprovement(data.Type, data.Value);
-            
+
             PlayerAttributeLevelData newAttributeData = null;
-            
+
             switch (data.Type)
             {
                 case CharacteristicType.Health:
@@ -168,14 +168,14 @@ namespace Project.Scripts.UI.Panel
                     newAttributeData = _armorAttributes[YG2.saves.ArmorAttributeNumber];
                     break;
             }
-            
+
             attributeView.Set(
                 _shopService.GetLocalizationDataByType(data.Type),
                 newAttributeData);
-            
+
             YG2.SaveProgress();
             _currencyService.SaveGold();
-            
+
             foreach (var view in _attributeViews)
             {
                 view.SetCurrencyColor(_currencyService.Gold);

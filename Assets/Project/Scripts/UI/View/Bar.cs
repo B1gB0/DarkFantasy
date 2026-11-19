@@ -26,7 +26,7 @@ namespace Project.Scripts.UI.View
         {
             _tweenAnimationService = tweenAnimationService;
         }
-        
+
         private void Start()
         {
             TextValue.gameObject.SetActive(_isShowTextValue);

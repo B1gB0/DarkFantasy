@@ -17,7 +17,7 @@ namespace Project.Scripts.Level
             _spawnCyclicWaveTrigger.OnSpawnEnemies += OnSpawnCyclicWave;
             OnBossHealthBarCreated += TryShowBossUI;
         }
-        
+
         private void FixedUpdate()
         {
             if (_spawnCyclicWaveTrigger.IsEnemySpawned)
@@ -43,10 +43,10 @@ namespace Project.Scripts.Level
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
-            
+
             EnemySpawner.OnPriestKilled += OnPriestKilled;
             EnemySpawner.OnPriestKilled += OnShowWaypointToNextLevel;
-            
+
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
@@ -69,7 +69,7 @@ namespace Project.Scripts.Level
             {
                 portal.SetActive(true);
             }
-            
+
             IsBossTriggered = true;
             TryShowBossUI();
         }
@@ -83,25 +83,25 @@ namespace Project.Scripts.Level
             EnemyWaves[SecondWaveEnemy].KillEnemies();
             EnemyWaves[ThirdWaveEnemy].KillEnemies();
             EnemyWaves[FourthWaveEnemy].KillEnemies();
-            
+
             foreach (var portal in _portals)
             {
                 portal.SetActive(false);
             }
-            
+
             BossHealthBar.Hide();
-            
+
             var missionId = MissionService.CurrentMission.Id;
             var difficulty = ProgressionService.CurrentDifficulty;
             YG2.saves.MarkMissionCompleted(missionId, difficulty);
         }
-        
+
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
-        
+
         private void OnShowWaypointToNextLevel()
         {
             NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);

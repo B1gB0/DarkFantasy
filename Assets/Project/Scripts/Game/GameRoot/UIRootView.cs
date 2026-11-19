@@ -22,7 +22,7 @@ namespace Project.Scripts.Game.GameRoot
         [SerializeField] private LeaderboardPanel _leaderboardPanel;
         [SerializeField] private LocalizationLanguageSwitcher _localizationLanguageSwitcher;
         [SerializeField] private GoldView _goldView;
-        
+
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _leaderboardButton;
 
@@ -59,7 +59,7 @@ namespace Project.Scripts.Game.GameRoot
             _settingsButton.onClick.AddListener(StopGame);
             _settingsButton.onClick.AddListener(_settingsPanel.Show);
             _settingsPanel.OnBackToSceneButtonPressed += PlayGame;
-            
+
             _leaderboardButton.onClick.AddListener(ShowLeaderboardPanel);
             _leaderboardPanel.OnBackToSceneButtonPressed += ShowUIScene;
             _leaderboardPanel.OnBackToSceneButtonPressed += PlayGame;
@@ -71,7 +71,7 @@ namespace Project.Scripts.Game.GameRoot
             _settingsButton.onClick.RemoveListener(StopGame);
             _settingsButton.onClick.RemoveListener(_settingsPanel.Show);
             _settingsPanel.OnBackToSceneButtonPressed -= PlayGame;
-            
+
             _leaderboardButton.onClick.RemoveListener(ShowLeaderboardPanel);
             _leaderboardPanel.OnBackToSceneButtonPressed -= ShowUIScene;
             _leaderboardPanel.OnBackToSceneButtonPressed -= PlayGame;
@@ -88,7 +88,7 @@ namespace Project.Scripts.Game.GameRoot
 
             sceneUI.transform.SetParent(_uiSceneContainer.TemporaryContainer, false);
         }
-        
+
         private void ShowLeaderboardPanel()
         {
             _audioSoundsService.PauseAllSounds();
@@ -96,7 +96,7 @@ namespace Project.Scripts.Game.GameRoot
             UIStateMachine.EnterIn<LeaderboardPanelState>();
             StopGame();
         }
-        
+
         private void PlayGame()
         {
             if (SceneManager.GetActiveScene().name == Scenes.MainMenu)
@@ -110,7 +110,7 @@ namespace Project.Scripts.Game.GameRoot
         private void StopGame()
         {
             _audioSoundsService.PlaySound(SoundsType.UIButtonClick).Forget();
-            
+
             if (SceneManager.GetActiveScene().name == Scenes.MainMenu)
                 return;
 

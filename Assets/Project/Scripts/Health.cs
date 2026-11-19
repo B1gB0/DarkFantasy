@@ -25,23 +25,23 @@ namespace Project.Scripts
         private float _regenTimer;
 
         public event Action Die;
-        
+
         public event Action<Health, float, bool> OnDamageTaken;
-        
+
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedDamageText;
-        
+
         public event Action<string, Transform, FloatingTextViewType, Color> IsSpawnedHealingText;
-        
+
         public event Action IsDamaged;
-        
+
         public event Action<float, float, float> HealthChanged;
-        
+
         public event Action<float> TargetHealthChanged;
 
         public float MaxHealth { get; private set; }
         public float TargetHealth { get; private set; }
         public float CurrentHealth { get; private set; }
-        
+
         public Transform HitPoint => _hitPoint;
 
         private void Start()
@@ -182,7 +182,7 @@ namespace Project.Scripts
             TargetHealth = healthValue;
             OnChangeHealth();
         }
-        
+
         public void AddHealthSilent(float value)
         {
             TargetHealth += value;

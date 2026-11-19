@@ -12,7 +12,7 @@ namespace Project.Scripts.Level
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
         [SerializeField] private LootChestTrigger _lootChestTrigger;
         [SerializeField] private LootChest _lootChest;
-        
+
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
@@ -34,19 +34,19 @@ namespace Project.Scripts.Level
             _lootChest.OnChestOpened -= OnChestOpenedHandler;
             _lootChestTrigger.OnGotLoot -= _lootChest.OpenInstantly;
             _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
-            
+
             YG2.SaveProgress();
         }
 
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
-            
+
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
             EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
-            
+
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
-            
+
             _lootChest.OnChestOpened += ViewFactory.UIScene.RewardView.Show;
             _lootChest.OnInventoryIsFull += ViewFactory.UIScene.InventoryIsFullView.Show;
             _lootChest.OnChestOpened += OnChestOpenedHandler;
@@ -64,18 +64,18 @@ namespace Project.Scripts.Level
         {
             CreateWaveOfEnemies(FourthWaveEnemy);
         }
-        
+
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetGameplayExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
-        
+
         private void OnShowWaypointToNextLevel()
         {
             NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
-        
+
         private void OnChestOpenedHandler(LootResult result)
         {
             _lootChestTrigger.MarkAsUsed();

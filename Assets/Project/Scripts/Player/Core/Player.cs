@@ -26,9 +26,9 @@ namespace Project.Scripts.Player.Core
         private PlayerMoveState _playerMoveState;
         private PlayerRollState _playerRollState;
         private PlayerSitState _playerSitState;
-        
-        private Transform  _cameraTransform;
-        
+
+        private Transform _cameraTransform;
+
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public PlayerCollisionHandler PlayerCollisionHandler { get; private set; }
         [field: SerializeField] public Sword Sword { get; private set; }
@@ -90,7 +90,7 @@ namespace Project.Scripts.Player.Core
 
             Health.IsSpawnedHealingText += _floatingTextService.OnSpawnFloatingText;
         }
-        
+
         public void Initialize()
         {
             _animator = GetComponent<Animator>();
@@ -138,7 +138,7 @@ namespace Project.Scripts.Player.Core
         }
 
         public void AnimationEvent_EndRoll()
-        { 
+        {
             _stateMachine.SwitchState(InputController.IsMoveInputPerformed ? StateId.Move : StateId.Idle);
         }
 
@@ -161,7 +161,7 @@ namespace Project.Scripts.Player.Core
             Health.SetHealthValue(0);
             gameObject.SetActive(false);
         }
-        
+
         private void HandleDamageTaken(Health attacker, float damage, bool isReverse)
         {
             if (isReverse) return;

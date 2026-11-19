@@ -6,22 +6,24 @@ namespace Project.Scripts.UI.View
 {
     public class NavMeshWaypoint : View
     {
-        private readonly List<Vector3> _smoothedPath = new ();
-        
-        [Header("Path Settings")]
+        private readonly List<Vector3> _smoothedPath = new();
+
+        [Header("Path Settings")] 
         [SerializeField] private float _pathUpdateInterval = 0.3f;
+
         [SerializeField] private float _smoothingAngle = 30f;
         [SerializeField] private float _transitionSpeed = 4f;
         [SerializeField] private float _heightOffset = 0.5f;
-        
-        [Header("Offset Settings")]
+
+        [Header("Offset Settings")] 
         [SerializeField] private float _startOffset = 1.5f;
+
         [SerializeField] private float _endOffset = 0.5f;
 
-        [Header("Arrow Animation")]
+        [Header("Arrow Animation")] 
         [SerializeField] private float _scrollSpeed = 0.8f;
 
-        [Header("Line Settings")]
+        [Header("Line Settings")] 
         [SerializeField] private float _lineWidth = 0.3f;
 
         private Material _materialInstance;
@@ -34,7 +36,7 @@ namespace Project.Scripts.UI.View
         private float _timer;
         private Vector2 _textureOffset;
 
-        private List<Vector3> _previousPath = new ();
+        private List<Vector3> _previousPath = new();
         private float _transitionProgress = 1f;
 
         private void Awake()
@@ -45,7 +47,7 @@ namespace Project.Scripts.UI.View
 
             _lineRenderer.startWidth = _lineWidth;
             _lineRenderer.endWidth = _lineWidth;
-            
+
             _lineRenderer.textureMode = LineTextureMode.Tile;
             _lineRenderer.useWorldSpace = true;
             _lineRenderer.numCapVertices = 4;
@@ -60,18 +62,18 @@ namespace Project.Scripts.UI.View
                 _lineRenderer.enabled = false;
                 return;
             }
-            
+
             _timer += Time.deltaTime;
             if (_timer >= _pathUpdateInterval)
             {
                 _timer = 0f;
-                
+
                 CalculateAndSmoothPath();
-                
+
                 _previousPath = new List<Vector3>(_smoothedPath);
                 _transitionProgress = 0f;
             }
-            
+
             if (_transitionProgress < 1f && _previousPath.Count == _smoothedPath.Count)
             {
                 _transitionProgress += Time.deltaTime * _transitionSpeed;
@@ -88,7 +90,7 @@ namespace Project.Scripts.UI.View
                 _lineRenderer.positionCount = _smoothedPath.Count;
                 _lineRenderer.SetPositions(_smoothedPath.ToArray());
             }
-            
+
             _textureOffset.x -= _scrollSpeed * Time.deltaTime;
             _lineRenderer.material.mainTextureOffset = _textureOffset;
         }
@@ -119,11 +121,11 @@ namespace Project.Scripts.UI.View
                     _lineRenderer.enabled = false;
                     return;
                 }
-                
+
                 Vector3 start = _path.corners[0];
                 Vector3 next = _path.corners[1];
                 _path.corners[0] = Vector3.MoveTowards(start, next, _startOffset);
-                
+
                 if (_path.corners.Length > 2)
                 {
                     Vector3 end = _path.corners[^1];
@@ -159,7 +161,7 @@ namespace Project.Scripts.UI.View
                 }
 
                 _smoothedPath.Add(_path.corners[^1]);
-                
+
                 for (int i = 0; i < _smoothedPath.Count; i++)
                 {
                     Vector3 p = _smoothedPath[i];

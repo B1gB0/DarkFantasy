@@ -19,7 +19,7 @@ namespace Project.Scripts.Services
         private Dictionary<ParticleType, Queue<ParticleSystem>> _particlePool;
 
         private IResourceService _resourceService;
-        
+
         public bool IsInitiated { get; private set; }
 
         private void OnDestroy()
@@ -27,22 +27,32 @@ namespace Project.Scripts.Services
             if (_activeParticles != null)
             {
                 foreach (var set in _activeParticles.Values)
-                foreach (var particleEffect in set)
-                    if (particleEffect != null)
-                        Destroy(particleEffect.gameObject);
+                {
+                    foreach (var particleEffect in set)
+                    {
+                        if (particleEffect != null)
+                            Destroy(particleEffect.gameObject);
+                    }
+                }
+
                 _activeParticles.Clear();
             }
 
             if (_particlePool != null)
             {
                 foreach (var pool in _particlePool.Values)
-                foreach (var particleEffect in pool)
-                    if (particleEffect != null)
-                        Destroy(particleEffect.gameObject);
+                {
+                    foreach (var particleEffect in pool)
+                    {
+                        if (particleEffect != null)
+                            Destroy(particleEffect.gameObject);
+                    }
+                }
+
                 _particlePool.Clear();
             }
         }
-        
+
         [Inject]
         private void Construct(IResourceService resourceService)
         {
@@ -63,6 +73,30 @@ namespace Project.Scripts.Services
             await LoadParticles();
 
             IsInitiated = true;
+        }
+
+        public void PlayEffect(ParticleType effectType, Vector3 position)
+        {
+            if (!IsInitiated)
+                return;
+
+            if (!_particles.ContainsKey(effectType))
+                return;
+
+            PlayEffectAsync(effectType, position).Forget();
+        }
+
+        public void StopEffect(ParticleType effectType)
+        {
+            if (!_activeParticles.TryGetValue(effectType, out var activeSet))
+                return;
+
+            var toStop = new List<ParticleSystem>(activeSet);
+            foreach (var particleEffect in toStop)
+            {
+                if (particleEffect != null)
+                    ReturnParticleSystemToPool(effectType, particleEffect);
+            }
         }
 
         private async UniTask LoadParticles()
@@ -107,17 +141,6 @@ namespace Project.Scripts.Services
             }
         }
 
-        public void PlayEffect(ParticleType effectType, Vector3 position)
-        {
-            if (!IsInitiated)
-                return;
-
-            if (!_particles.ContainsKey(effectType))
-                return;
-
-            PlayEffectAsync(effectType, position).Forget();
-        }
-
         private async UniTaskVoid PlayEffectAsync(ParticleType effectType, Vector3 position)
         {
             var particleEffect = GetOrCreateParticleSystem(effectType);
@@ -129,19 +152,8 @@ namespace Project.Scripts.Services
 
             await WaitForParticleSystem(particleEffect);
 
-            if (particleEffect != null && particleEffect.gameObject.activeSelf)
+            if (particleEffect.gameObject.activeSelf)
                 ReturnParticleSystemToPool(effectType, particleEffect);
-        }
-
-        public void StopEffect(ParticleType effectType)
-        {
-            if (!_activeParticles.TryGetValue(effectType, out var activeSet))
-                return;
-
-            var toStop = new List<ParticleSystem>(activeSet);
-            foreach (var particleEffect in toStop)
-                if (particleEffect != null)
-                    ReturnParticleSystemToPool(effectType, particleEffect);
         }
 
         private ParticleSystem GetOrCreateParticleSystem(ParticleType effectType)
@@ -209,7 +221,7 @@ namespace Project.Scripts.Services
             if (system == null)
                 return;
 
-            await UniTask.WaitUntil(() => system == null || !system.IsAlive(true));
+            await UniTask.WaitUntil(() => !system.IsAlive(true));
         }
     }
 }

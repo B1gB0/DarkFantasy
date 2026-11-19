@@ -42,7 +42,7 @@ namespace Project.Scripts.UI.Panel
         {
             _pool = new ObjectPool<ModifierView>(_viewPrefab, _initialPoolSize, _container)
             {
-                AutoExpand = true
+                AutoExpand = true,
             };
         }
 
@@ -73,9 +73,9 @@ namespace Project.Scripts.UI.Panel
 
         private void SyncViews()
         {
-            if (_shopService is not { IsInitiated: true } || _playerService is not { IsInitiated: true }) 
+            if (_shopService is not { IsInitiated: true } || _playerService is not { IsInitiated: true })
                 return;
-            
+
             var data = CollectActiveModifiers();
 
             while (_active.Count < data.Count)

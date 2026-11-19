@@ -20,7 +20,7 @@ namespace Project.Scripts.DI
         [SerializeField] private GameEntryPoint _gameEntryPointPrefab;
         [SerializeField] private MissionService _missionServicePrefab;
         [SerializeField] private NavMeshWaypointService _navMeshWaypointServicePrefab;
-        
+
         private void OnDestroy()
         {
             foreach (var obj in _monoServiceObjects)
@@ -29,12 +29,12 @@ namespace Project.Scripts.DI
             }
         }
 
-        public void InstallBindings(ContainerBuilder builder)
+        public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            RegisterCoreServices(builder);
+            RegisterCoreServices(containerBuilder);
             CreateMonoServices();
-            RegisterCreatedServices(builder);
-            RegisterContainerDependentServices(builder);
+            RegisterCreatedServices(containerBuilder);
+            RegisterContainerDependentServices(containerBuilder);
         }
 
         private void RegisterCoreServices(ContainerBuilder builder)

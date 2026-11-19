@@ -90,6 +90,51 @@ namespace Project.Scripts.Game.Gameplay
             _progressionService = progressionService;
         }
 
+        private void OnDestroy()
+        {
+#if CHEATS
+            _uiScene.CheatButton.onClick.RemoveListener(_cheatPanel.Show);
+#endif
+            _uiRoot.SettingsPanel.OnMouseInversionChanged -= _cameraDragRotate.ChangeMouseInversion;
+            _uiRoot.SettingsPanel.OnMouseSensitivityChanged -= _cameraDragRotate.ChangeMouseSensitivity;
+
+            var scene = SceneManager.GetActiveScene();
+
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _inventoryPanel.Show;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _uiRoot.UIRootButtons.Deactivate;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.HealthBar.Hide;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.ModifiersPanel.Hide;
+            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.TryHideBossUI;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _inventoryPanel.Hide;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _uiRoot.UIRootButtons.Activate;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _level.HealthBar.Show;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _level.ModifiersPanel.Show;
+            _inventoryPanel.OnBackToSceneButtonPressed -= _level.TryShowBossUI;
+
+            _inventoryService.OnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.Set;
+            _inventoryService.OnUnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.UnSet;
+            _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
+
+            if (scene.name != Scenes.VillageHub)
+            {
+                _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
+                _endGamePanel.GoToVillageButton.onClick.RemoveListener(_uiScene.HandleGoToNextScene);
+                _playerService.Player.Health.Die -= _endGamePanel.Show;
+                _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
+                _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
+                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
+                _endGamePanel.OnSpawnPlayer -= _level.HealthBar.Show;
+                _endGamePanel.OnSpawnPlayer -= _level.ModifiersPanel.Show;
+                _endGamePanel.OnSpawnPlayer -= _level.TryShowBossUI;
+            }
+
+            _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
+            _playerService.Player.Health.Die -= YG2.saves.PlayerCharacteristics.ClearSpeedModifiers;
+            _playerService.Player.InputController.OnMoveButtonsPressed -= _uiScene.ResetCountdownTutorialPointer;
+            _uiRoot.SettingsButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
+            _uiRoot.LeaderboardButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
+        }
+
         public async UniTask<Observable<GameplayExitParameters>> Run(UIRootView uiRoot)
         {
             _container = gameObject.scene.GetSceneContainer();
@@ -141,7 +186,7 @@ namespace Project.Scripts.Game.Gameplay
 
             uiRoot.UIStateMachine.EnterIn<GameplayState>();
             uiRoot.GoldView.Show();
-            
+
             _playerService.GetButtons(
                 _uiScene.MoveJoystick,
                 _uiScene.CameraJoystick,
@@ -149,7 +194,7 @@ namespace Project.Scripts.Game.Gameplay
                 _uiScene.RollButton,
                 _uiScene.InventoryButton,
                 _uiScene.InteractButton);
-            
+
             OnShowJoystickWithMobileButtons();
 
             var scene = SceneManager.GetActiveScene();
@@ -162,7 +207,7 @@ namespace Project.Scripts.Game.Gameplay
 #endif
             _uiRoot.SettingsPanel.OnMouseInversionChanged += _cameraDragRotate.ChangeMouseInversion;
             _uiRoot.SettingsPanel.OnMouseSensitivityChanged += _cameraDragRotate.ChangeMouseSensitivity;
-            
+
             _playerService.Player.InputController.OnInventoryButtonPressed += _inventoryPanel.Show;
             _playerService.Player.InputController.OnInventoryButtonPressed += uiRoot.UIRootButtons.Deactivate;
             _playerService.Player.InputController.OnInventoryButtonPressed += _level.HealthBar.Hide;
@@ -209,56 +254,10 @@ namespace Project.Scripts.Game.Gameplay
             _uiScene.HandlePCTutorialButtons();
 
             await _viewFactory.GetOrCreateInventoryRig();
-            
+
             _inventoryService.ShowCurrentEquippedConsumableItem();
 
             return exitToSceneSignal;
-        }
-
-        private void OnDestroy()
-        {
-            
-#if CHEATS
-            _uiScene.CheatButton.onClick.RemoveListener(_cheatPanel.Show);
-#endif
-            _uiRoot.SettingsPanel.OnMouseInversionChanged -= _cameraDragRotate.ChangeMouseInversion;
-            _uiRoot.SettingsPanel.OnMouseSensitivityChanged -= _cameraDragRotate.ChangeMouseSensitivity;
-            
-            var scene = SceneManager.GetActiveScene();
-
-            _playerService.Player.InputController.OnInventoryButtonPressed -= _inventoryPanel.Show;
-            _playerService.Player.InputController.OnInventoryButtonPressed -= _uiRoot.UIRootButtons.Deactivate;
-            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.HealthBar.Hide;
-            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.ModifiersPanel.Hide;
-            _playerService.Player.InputController.OnInventoryButtonPressed -= _level.TryHideBossUI;
-            _inventoryPanel.OnBackToSceneButtonPressed -= _inventoryPanel.Hide;
-            _inventoryPanel.OnBackToSceneButtonPressed -= _uiRoot.UIRootButtons.Activate;
-            _inventoryPanel.OnBackToSceneButtonPressed -= _level.HealthBar.Show;
-            _inventoryPanel.OnBackToSceneButtonPressed -= _level.ModifiersPanel.Show;
-            _inventoryPanel.OnBackToSceneButtonPressed -= _level.TryShowBossUI;
-
-            _inventoryService.OnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.Set;
-            _inventoryService.OnUnEquippedConsumableItem -= _uiScene.EquippedConsumableItemView.UnSet;
-            _uiScene.EquippedItemButton.onClick.RemoveListener(_uiScene.EquippedConsumableItemView.ApplyItemEffect);
-
-            if (scene.name != Scenes.VillageHub)
-            {
-                _endGamePanel.GoToVillageButton.onClick.RemoveListener(GetVillageHubExitParameters);
-                _endGamePanel.GoToVillageButton.onClick.RemoveListener(_uiScene.HandleGoToNextScene);
-                _playerService.Player.Health.Die -= _endGamePanel.Show;
-                _playerService.Player.Health.Die -= _endGamePanel.SetDefeatPanel;
-                _playerService.Player.Health.Die -= _pauseService.OnStopGameWithoutMusic;
-                _uiRoot.LocalizationLanguageSwitcher.OnLanguageChanged -= _endGamePanel.SetLabelText;
-                _endGamePanel.OnSpawnPlayer -= _level.HealthBar.Show;
-                _endGamePanel.OnSpawnPlayer -= _level.ModifiersPanel.Show;
-                _endGamePanel.OnSpawnPlayer -= _level.TryShowBossUI;
-            }
-
-            _playerService.Player.Health.Die -= _uiScene.ResetCountdownTutorialPointer;
-            _playerService.Player.Health.Die -= YG2.saves.PlayerCharacteristics.ClearSpeedModifiers;
-            _playerService.Player.InputController.OnMoveButtonsPressed -= _uiScene.ResetCountdownTutorialPointer;
-            _uiRoot.SettingsButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
-            _uiRoot.LeaderboardButton.onClick.RemoveListener(_playerService.Player.InputController.LockPlayerMovement);
         }
 
         public void GetGameplayExitParameters()
@@ -284,7 +283,7 @@ namespace Project.Scripts.Game.Gameplay
                 YG2.saves.IsFirstLaunch = false;
                 YG2.SaveProgress();
             }
-            
+
             _audioSoundsService.PlayMusic(SoundsType.VillageMusic);
 
             _missionService.SetCurrentNumberLevel(MinCountValue);

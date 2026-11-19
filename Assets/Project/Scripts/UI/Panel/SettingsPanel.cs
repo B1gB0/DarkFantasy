@@ -18,7 +18,7 @@ namespace Project.Scripts.UI.Panel
 
         private const float StartVolumeSlider = 0.8f;
         private const float StartSensitivitySlider = 1.5f;
-        
+
         [SerializeField] private List<GameObject> _elements;
 
         [SerializeField] private Button _settingsButton;
@@ -38,9 +38,9 @@ namespace Project.Scripts.UI.Panel
         private IPlayerService _playerService;
 
         public event Action<float> OnMouseSensitivityChanged;
-        
+
         public event Action<bool> OnMouseInversionChanged;
-        
+
         public event Action OnBackToSceneButtonPressed;
 
         [Inject]
@@ -59,7 +59,7 @@ namespace Project.Scripts.UI.Panel
             _effectsVolumeSlider.onValueChanged.AddListener(ChangeEffectsVolume);
             _isMouseInverted.onValueChanged.AddListener(ChangeMouseInverted);
             _cameraSensitivitySlider.onValueChanged.AddListener(ChangeCameraSensitivity);
-            
+
             Application.focusChanged += OnFocusChanged;
         }
 
@@ -68,10 +68,10 @@ namespace Project.Scripts.UI.Panel
             LoadValuesVolume();
             LoadSensitivityMouseVolume();
             LoadToggleMouseInverted();
-            
+
             foreach (var element in _elements)
                 element.SetActive(true);
-            
+
             Deactivate();
         }
 
@@ -84,7 +84,7 @@ namespace Project.Scripts.UI.Panel
             _effectsVolumeSlider.onValueChanged.RemoveListener(ChangeEffectsVolume);
             _isMouseInverted.onValueChanged.RemoveListener(ChangeMouseInverted);
             _cameraSensitivitySlider.onValueChanged.RemoveListener(ChangeCameraSensitivity);
-            
+
             Application.focusChanged -= OnFocusChanged;
         }
 
@@ -105,7 +105,7 @@ namespace Project.Scripts.UI.Panel
             if (_playerService.Player != null)
                 _playerService.Player.InputController.UnlockPlayerMovement();
         }
-        
+
         private void OnFocusChanged(bool hasFocus)
         {
             if (hasFocus)
@@ -152,12 +152,12 @@ namespace Project.Scripts.UI.Panel
             PlayerPrefs.SetFloat(EffectsVolume, volume);
             PlayerPrefs.Save();
         }
-        
+
         private void ChangeCameraSensitivity(float sensitivity)
         {
             PlayerPrefs.SetFloat(CameraSensitivity, sensitivity);
             PlayerPrefs.Save();
-            
+
             OnMouseSensitivityChanged?.Invoke(sensitivity);
         }
 
@@ -165,7 +165,7 @@ namespace Project.Scripts.UI.Panel
         {
             PlayerPrefs.SetInt(MouseInverted, isOn ? 1 : 0);
             PlayerPrefs.Save();
-            
+
             OnMouseInversionChanged?.Invoke(isOn);
         }
     }

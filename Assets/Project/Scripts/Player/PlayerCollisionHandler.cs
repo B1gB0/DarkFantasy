@@ -10,7 +10,7 @@ namespace Project.Scripts.Player
     public class PlayerCollisionHandler : MonoBehaviour
     {
         private List<EnemyWave> _enemyWaves;
-        
+
         private void OnTriggerEnter(Collider trigger)
         {
             if (!trigger.TryGetComponent(out EnemyWaveFollowTrigger followTrigger)) return;
@@ -19,7 +19,7 @@ namespace Project.Scripts.Player
                 enemy.ChangeFollowEnemyState(true);
             }
         }
-        
+
         public void GetEnemyWaves(List<EnemyWave> enemyWaves)
         {
             _enemyWaves = enemyWaves;

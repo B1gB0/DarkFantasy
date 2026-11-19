@@ -16,11 +16,12 @@ namespace Project.Scripts.Enemy
     {
         [SerializeField] private Animator _animator;
 
-        protected IFloatingTextService FloatingTextService;
         protected AudioSoundsService AudioSoundsService;
         protected ParticleEffectsService ParticleEffectsService;
         protected IExperiencePoints ExperiencePoints;
-        protected ICurrencyService CurrencyService;
+
+        private IFloatingTextService _floatingTextService;
+        private ICurrencyService _currencyService;
 
         private bool _isDead;
 
@@ -30,7 +31,7 @@ namespace Project.Scripts.Enemy
         [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
         [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field: SerializeField] public Collider Collider { get; private set; }
-        
+
         public int Score { get; private set; }
         public bool IsEnemy { get; private set; }
         public bool IsBoss { get; private set; }
@@ -77,15 +78,15 @@ namespace Project.Scripts.Enemy
             Score = Data.Score;
             IsEnemy = true;
 
-            FloatingTextService = floatingTextService;
+            _floatingTextService = floatingTextService;
             ParticleEffectsService = particleEffectsService;
             AudioSoundsService = audioSoundsService;
             ExperiencePoints = experiencePoints;
-            CurrencyService = currencyService;
+            _currencyService = currencyService;
 
             Armor = Data.Armor;
 
-            Health.IsSpawnedDamageText += FloatingTextService.OnSpawnFloatingText;
+            Health.IsSpawnedDamageText += _floatingTextService.OnSpawnFloatingText;
         }
 
         public void ChangeFollowEnemyState(bool canFollow)
@@ -96,7 +97,7 @@ namespace Project.Scripts.Enemy
         public void AcceptScore(IScoreActorVisitor visitor)
         {
             visitor.Visit(this);
-            CurrencyService.AddGold(Data.Gold);
+            _currencyService.AddGold(Data.Gold);
         }
 
         public virtual void OnReactState(bool isEnteredToState)
@@ -123,7 +124,7 @@ namespace Project.Scripts.Enemy
             if (_isDead) return;
             _isDead = true;
 
-            Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
+            Health.IsSpawnedDamageText -= _floatingTextService.OnSpawnFloatingText;
 
             Die?.Invoke(this);
             ParticleEffectsService.PlayEffect(ParticleType.GenericDeath, Health.HitPoint.position);

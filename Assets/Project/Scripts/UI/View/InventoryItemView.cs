@@ -12,7 +12,7 @@ namespace Project.Scripts.UI.View
     public class InventoryItemView : View
     {
         private const int MinValue = 0;
-        
+
         [SerializeField] private Image _iconImage;
         [SerializeField] private Image _hoverImage;
         [SerializeField] private Image _equipIcon;
@@ -20,7 +20,7 @@ namespace Project.Scripts.UI.View
         [SerializeField] private Button _button;
 
         private IShopService _shopService;
-        
+
         public event Action<InventoryItemView> OnSelectButtonPressed;
 
         public ItemData ItemData { get; private set; }
@@ -42,7 +42,7 @@ namespace Project.Scripts.UI.View
         {
             _button.onClick.RemoveListener(OnSelectItem);
         }
-        
+
         public void SetEquipment(ItemData template, Item instance)
         {
             ItemData = template;
@@ -58,10 +58,10 @@ namespace Project.Scripts.UI.View
 
             _iconImage.gameObject.SetActive(true);
             _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
-            
+
             _count.gameObject.SetActive(false);
         }
-        
+
         public void SetEquippedState(bool isEquipped)
         {
             if (_equipIcon != null)
@@ -69,7 +69,7 @@ namespace Project.Scripts.UI.View
                 _equipIcon.gameObject.SetActive(isEquipped);
             }
         }
-        
+
         public void SetConsumable(ItemData template, int count)
         {
             ItemData = template;
@@ -89,7 +89,7 @@ namespace Project.Scripts.UI.View
             _count.gameObject.SetActive(true);
             _count.text = count.ToString();
         }
-        
+
         public void Set(ItemData itemData = null, int count = MinValue)
         {
             if (itemData == null)
@@ -105,7 +105,7 @@ namespace Project.Scripts.UI.View
         }
 
         public void ShowHover() => _hoverImage.gameObject.SetActive(true);
-        
+
         public void HideHover() => _hoverImage.gameObject.SetActive(false);
 
         private void Clear()

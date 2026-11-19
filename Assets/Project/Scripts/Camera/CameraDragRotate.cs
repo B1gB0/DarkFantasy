@@ -11,22 +11,22 @@ namespace Project.Scripts.Camera
     {
         private const string MouseInverted = nameof(MouseInverted);
         private const string CameraSensitivity = nameof(CameraSensitivity);
-        
+
         private const float MinValue = 0f;
         private const float Sign = 1f;
         private const float DefaultSensitivity = 1.5f;
         private const float RotationClamp = 10f;
-        private const float MouseMultiplier = 0.3f; 
-        private const float JoystickMultiplier = 100f; 
+        private const float MouseMultiplier = 0.3f;
+        private const float JoystickMultiplier = 100f;
 
         private IPlayerService _playerService;
 
         private bool _isConfigured;
-        
+
         private bool _isInverted;
         private float _sensitivity = DefaultSensitivity;
         private bool _isMobile;
-        
+
         [Inject]
         public void Construct(IPlayerService playerService)
         {
@@ -36,14 +36,14 @@ namespace Project.Scripts.Camera
         private void Start()
         {
             LoadSettings();
-            
-            _isMobile = YG2.envir.isMobile; 
+
+            _isMobile = YG2.envir.isMobile;
         }
 
         private void LateUpdate()
         {
             if (!TryGetDependencies(out var cam, out var input)) return;
-            
+
             if (Time.timeScale == MinValue) return;
 
             if (!_isConfigured)
@@ -56,9 +56,9 @@ namespace Project.Scripts.Camera
             {
                 var dir = input.CameraLookDirection;
                 float sign = _isInverted ? -Sign : Sign;
-                
+
                 float rotationDelta;
-                
+
                 if (_isMobile)
                 {
                     rotationDelta = dir.x * JoystickMultiplier * _sensitivity * sign * Time.deltaTime;
@@ -68,7 +68,7 @@ namespace Project.Scripts.Camera
                     rotationDelta = dir.x * MouseMultiplier * _sensitivity * sign;
                     rotationDelta = Mathf.Clamp(rotationDelta, -RotationClamp, RotationClamp);
                 }
-                
+
                 cam.m_XAxis.Value += rotationDelta;
             }
             else
@@ -88,7 +88,7 @@ namespace Project.Scripts.Camera
         {
             _isInverted = isOn;
         }
-        
+
         private void LoadSettings()
         {
             _isInverted = PlayerPrefs.GetInt(MouseInverted, (int)MinValue) == (int)Sign;
@@ -114,10 +114,10 @@ namespace Project.Scripts.Camera
         {
             cam.m_XAxis.m_InputAxisName = string.Empty;
             cam.m_YAxis.m_InputAxisName = string.Empty;
-            
+
             cam.m_YAxis.m_MaxSpeed = MinValue;
             cam.m_XAxis.m_MaxSpeed = MinValue;
-            
+
             cam.m_XAxis.m_InputAxisValue = MinValue;
             cam.m_YAxis.m_InputAxisValue = MinValue;
         }

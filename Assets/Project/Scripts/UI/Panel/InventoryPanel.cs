@@ -195,7 +195,7 @@ namespace Project.Scripts.UI.Panel
                        _inventoryService.EquippedArmor?.Id == instance.Id ||
                        _inventoryService.EquippedRing?.Id == instance.Id;
             }
-            
+
             return _inventoryService.EquippedConsumableType == type;
         }
 

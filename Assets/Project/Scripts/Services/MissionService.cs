@@ -10,13 +10,13 @@ namespace Project.Scripts.Services
     public class MissionService : MonoBehaviour, IService
     {
         private const int DefaultNumberLevel = 0;
-        
+
         private readonly Dictionary<int, string> _banditCampSceneLevels = new();
         private readonly Dictionary<int, string> _castleSceneLevels = new();
         private readonly Dictionary<int, string> _graveyardSceneLevels = new();
 
         private IDataBaseService _dataBaseService;
-        
+
         [field: SerializeField] public List<Mission> Missions { get; private set; } = new();
 
         public Mission CurrentMission { get; private set; }
@@ -29,9 +29,13 @@ namespace Project.Scripts.Services
                 return UniTask.CompletedTask;
 
             foreach (var mission in Missions)
-            foreach (var missionData in _dataBaseService.Content.MissionsLocalization)
-                if (mission.Id == missionData.Id)
-                    mission.SetData(missionData);
+            {
+                foreach (var missionData in _dataBaseService.Content.MissionsLocalization)
+                {
+                    if (mission.Id == missionData.Id)
+                        mission.SetData(missionData);
+                }
+            }
 
             foreach (var graveyardSceneLevel in _dataBaseService.Content.GraveyardSceneLevels)
                 _graveyardSceneLevels.Add(graveyardSceneLevel.Number, graveyardSceneLevel.SceneName);
@@ -77,7 +81,7 @@ namespace Project.Scripts.Services
                 Game.Constant.Missions.Graveyard => _graveyardSceneLevels[number],
                 Game.Constant.Missions.BanditCamp => _banditCampSceneLevels[number],
                 Game.Constant.Missions.Castle => _castleSceneLevels[number],
-                _ => null
+                _ => null,
             };
         }
     }

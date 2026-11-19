@@ -112,11 +112,11 @@ namespace Project.Scripts.Level
                 _shopItemsPanelTrigger.Deactivate();
                 _missionChoosingTrigger.Deactivate();
                 _campfireTrigger.Deactivate();
-                
+
                 YG2.saves.IsInventoryShopVisited = false;
                 YG2.saves.IsCampfireVisited = false;
                 YG2.saves.IsMissionPanelVisited = false;
-                
+
                 return;
             }
 
@@ -124,10 +124,10 @@ namespace Project.Scripts.Level
             {
                 NavMeshWaypointService.ShowWaypoint(_shopItemsPanelTrigger.transform);
                 _campfireTrigger.Deactivate();
-                
+
                 YG2.saves.IsCampfireVisited = false;
                 YG2.saves.IsMissionPanelVisited = false;
-                
+
                 return;
             }
 
@@ -135,9 +135,9 @@ namespace Project.Scripts.Level
             {
                 NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
                 _missionChoosingTrigger.Deactivate();
-                
+
                 YG2.saves.IsMissionPanelVisited = false;
-                
+
                 return;
             }
 
@@ -180,7 +180,7 @@ namespace Project.Scripts.Level
 
             NavMeshWaypointService.ShowWaypoint(_campfireTrigger.transform);
             _campfireTrigger.Activate();
-            
+
             YG2.saves.IsInventoryShopVisited = true;
         }
 
@@ -190,21 +190,21 @@ namespace Project.Scripts.Level
 
             _missionChoosingTrigger.Activate();
             NavMeshWaypointService.ShowWaypoint(_missionChoosingTrigger.transform);
-            
+
             YG2.saves.IsCampfireVisited = true;
         }
 
         private void OnShowStandUpView()
         {
             ViewFactory.UIScene.InteractView.Show(InteractViewType.StandUp);
-            
+
             ViewFactory.UIScene.HideTutorialImmediately();
         }
 
         private void OnShowSitDownView()
         {
             ViewFactory.UIScene.InteractView.Show(InteractViewType.SitDown);
-            
+
             ViewFactory.UIScene.ResetCountdownTutorialPointer();
         }
     }

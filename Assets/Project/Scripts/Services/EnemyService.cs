@@ -237,7 +237,7 @@ namespace Project.Scripts.Services
             _progressionService = progressionService;
         }
 
-        private (float hp, float dmg) GetMultipliers()
+        private (float HealthMultiplier, float DamageMultiplier) GetMultipliers()
         {
             return (_progressionService.GetEnemyHealthMultiplier(),
                 _progressionService.GetEnemyDamageMultiplier());
@@ -272,7 +272,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
 
@@ -285,7 +285,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonHeavyArmorPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
 
@@ -298,7 +298,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(SkeletonRangerPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
 
             CreateArrowPool();
@@ -313,7 +313,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(PriestPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
 
             CreateMagicBallPool();
@@ -328,7 +328,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
 
@@ -341,7 +341,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditRangerPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
 
             CreateArrowPool();
@@ -356,7 +356,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(BanditLeaderPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
 
@@ -369,7 +369,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(DarkLordPool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
 
             CreateMagicBallPool();
@@ -384,7 +384,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(ArrowProjectilePool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
 
@@ -397,7 +397,7 @@ namespace Project.Scripts.Services
                 DefaultCountObjectsInPool,
                 new GameObject(MagicBallProjectilePool).transform)
             {
-                AutoExpand = IsAutoExpand
+                AutoExpand = IsAutoExpand,
             };
         }
     }

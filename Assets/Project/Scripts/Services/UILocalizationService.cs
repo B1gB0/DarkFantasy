@@ -48,7 +48,7 @@ namespace Project.Scripts.Services
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn
+                _ => data.NameEn,
             };
         }
 

@@ -7,7 +7,7 @@ namespace Project.Scripts.Level
     public class PrologueLevel : Level
     {
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
-        
+
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
@@ -28,11 +28,11 @@ namespace Project.Scripts.Level
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
-            
+
             EnemySpawner.OnAllEnemiesKilled += _nextLevelTrigger.Activate;
             EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
-            
+
             EnemySpawner.OnRewardDropped -= LootSpawner.SpawnLoot;
         }
 

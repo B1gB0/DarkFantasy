@@ -13,11 +13,18 @@ namespace Project.Scripts.Characteristics
     {
         private const float MinValue = 0f;
         private const int CorrectFactor = 1;
-        
+
         private const float BaseAttackSpeedMultiplier = 1f;
-        private const float BaseCritMultiplier  = 1.5f;
+        private const float BaseCritMultiplier = 1.5f;
         private const float PercentFactor = 100f;
         private const float CritChance = 0.15f;
+
+        public float MaxHealth;
+        public float TargetHealth;
+        public float Armor;
+        public float Damage;
+        public float MoveSpeed;
+        public float RotationSpeed;
 
         [SerializeField] private List<SpeedModifier> _speedModifiers;
         [SerializeField] private HealingModifier _healingModifier;
@@ -35,29 +42,22 @@ namespace Project.Scripts.Characteristics
         [NonSerialized] private float _equipmentAttackSpeedBonus;
         [NonSerialized] private float _equipmentCritDamageBonus;
         [NonSerialized] private float _equipmentReverseDamageBonus;
-        
-        public float MaxHealth;
-        public float TargetHealth;
-        public float Armor;
-        public float Damage;
-        public float MoveSpeed;
-        public float RotationSpeed;
-        
+
         private float _healthRegenInterval = 1f;
 
         public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
         public HealingModifier HealingModifier => _healingModifier;
 
         public float GetTotalArmor() => Armor + _equipmentArmorBonus;
-        
+
         public float GetTotalDamage() => Damage + _equipmentDamageBonus;
-        
+
         public float GetReverseDamage() => _equipmentReverseDamageBonus;
-        
+
         public float GetTotalMaxHealth() => MaxHealth + _equipmentMaxHealthBonus;
-        
+
         public float GetTotalMoveSpeed() => GetCurrentMoveSpeed() + _equipmentMoveSpeedBonus;
-        
+
         public float GetCritChance() => CritChance;
 
         public void SetStartingData(PlayerData data)
@@ -90,7 +90,7 @@ namespace Project.Scripts.Characteristics
 
             _baseMoveSpeed = MoveSpeed;
         }
-        
+
         public void RecalculateEquipmentBonuses(
             IReadOnlyList<Item> equippedItems)
         {
@@ -112,13 +112,13 @@ namespace Project.Scripts.Characteristics
                 if (template == null) continue;
 
                 float mul = _progressionService.GetItemMultiplier(instance.Difficulty);
-                
+
                 if (template.CharacteristicType != CharacteristicType.None)
                     ApplyBonus(template.CharacteristicType, template.Value * mul, template.Duration);
-                
+
                 if (template.CharacteristicType2 != CharacteristicType.None)
                     ApplyBonus(template.CharacteristicType2, template.Value2 * mul, template.Duration);
-                
+
                 if (template.CharacteristicType3 != CharacteristicType.None)
                     ApplyBonus(template.CharacteristicType3, template.Value3 * mul, template.Duration);
             }
@@ -149,7 +149,7 @@ namespace Project.Scripts.Characteristics
             if (_healingModifier != null && _healingModifier.Tick(deltaTime))
                 _healingModifier = null;
         }
-        
+
         public float GetHealthRegenAmount()
         {
             return _equipmentHealthRegenBonus;
@@ -159,12 +159,12 @@ namespace Project.Scripts.Characteristics
         {
             return _healthRegenInterval;
         }
-        
+
         public float GetReverseDamageMultiplier()
         {
             return _equipmentReverseDamageBonus / PercentFactor;
         }
-        
+
         public float GetCurrentMoveSpeed()
         {
             float result = _baseMoveSpeed;
@@ -184,12 +184,12 @@ namespace Project.Scripts.Characteristics
 
             return result;
         }
-        
+
         public float GetAttackSpeedMultiplier()
         {
             return BaseAttackSpeedMultiplier + _equipmentAttackSpeedBonus / PercentFactor;
         }
-        
+
         public float GetCritMultiplier()
         {
             return BaseCritMultiplier + _equipmentCritDamageBonus / PercentFactor;
@@ -257,7 +257,7 @@ namespace Project.Scripts.Characteristics
             _healingModifier = new HealingModifier(totalAmount, duration);
             return true;
         }
-        
+
         public float RollDamage(float baseDamage, out bool isCrit)
         {
             if (_equipmentCritDamageBonus <= MinValue)
@@ -265,30 +265,30 @@ namespace Project.Scripts.Characteristics
                 isCrit = false;
                 return baseDamage;
             }
-            
+
             isCrit = UnityEngine.Random.value < CritChance;
-            
+
             return isCrit ? baseDamage * GetCritMultiplier() : baseDamage;
         }
-        
+
         private void ApplyBonus(CharacteristicType type, float value, float duration = MinValue)
         {
             switch (type)
             {
-                case CharacteristicType.Armor: 
+                case CharacteristicType.Armor:
                     _equipmentArmorBonus += value;
                     break;
-                case CharacteristicType.Damage: 
+                case CharacteristicType.Damage:
                     _equipmentDamageBonus += value;
                     break;
-                case CharacteristicType.MaxHealth: 
+                case CharacteristicType.MaxHealth:
                     _equipmentMaxHealthBonus += value;
                     break;
-                case CharacteristicType.HealthRegen: 
+                case CharacteristicType.HealthRegen:
                     _equipmentHealthRegenBonus += value;
                     _healthRegenInterval = duration;
                     break;
-                case CharacteristicType.MoveSpeed:  
+                case CharacteristicType.MoveSpeed:
                     _equipmentMoveSpeedBonus += value;
                     break;
                 case CharacteristicType.AttackSpeed:

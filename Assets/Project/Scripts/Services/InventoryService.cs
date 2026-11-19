@@ -18,13 +18,13 @@ namespace Project.Scripts.Services
         private List<Item> _equipment = new();
 
         private IShopService _shopService;
-        
+
         public event Action<ItemType, int> OnEquippedConsumableItem;
-        
+
         public event Action OnUnEquippedConsumableItem;
-        
+
         public event Action OnEquippedItem;
-        
+
         public event Action OnUnEquippedItem;
 
         public bool IsInitiated { get; private set; }
@@ -90,8 +90,9 @@ namespace Project.Scripts.Services
         public bool HasEquipment(ItemType type, LevelDifficulty difficulty)
         {
             foreach (var item in _equipment)
-                if (item.Type == type && item.Difficulty == difficulty)
-                    return true;
+            {
+                if (item.Type == type && item.Difficulty == difficulty) return true;
+            }
 
             return false;
         }
@@ -241,12 +242,12 @@ namespace Project.Scripts.Services
         {
             _shopService = shopService;
         }
-        
+
         private bool IsFull()
         {
             return GetTotalItemCount() >= MaxSlots;
         }
-        
+
         private bool HasItem(ItemType itemType)
         {
             return _consumables.TryGetValue(itemType, out var count) && count > 0;
@@ -257,8 +258,10 @@ namespace Project.Scripts.Services
             var count = _equipment.Count;
 
             foreach (var kvp in _consumables)
+            {
                 if (kvp.Value > 0)
                     count++;
+            }
 
             return count;
         }
@@ -268,8 +271,10 @@ namespace Project.Scripts.Services
             if (string.IsNullOrEmpty(id)) return null;
 
             foreach (var item in _equipment)
+            {
                 if (item.Id == id)
                     return item;
+            }
 
             return null;
         }

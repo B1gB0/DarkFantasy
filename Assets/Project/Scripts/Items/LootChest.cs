@@ -23,7 +23,7 @@ namespace Project.Scripts.Items
         private CancellationTokenSource _cts;
 
         public event Action OnInventoryIsFull;
-        
+
         public event Action<LootResult> OnChestOpened;
 
         [Inject]

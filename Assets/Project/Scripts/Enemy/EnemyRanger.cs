@@ -10,7 +10,7 @@ namespace Project.Scripts.Enemy
         [field: SerializeField] public GameObject FakeArrow { get; private set; }
 
         public Longbow Longbow { get; private set; }
-        
+
         private void Awake()
         {
             Longbow = GetComponent<Longbow>();

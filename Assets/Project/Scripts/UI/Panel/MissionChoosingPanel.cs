@@ -36,6 +36,7 @@ namespace Project.Scripts.UI.Panel
         private int _difficultyIndex;
 
         public event Action OnBackToSceneButtonPressed;
+
         public event Action OnGoToMission;
 
         [Inject]
@@ -90,7 +91,7 @@ namespace Project.Scripts.UI.Panel
         public override void Show()
         {
             _playerService.Player.InputController.LockPlayerMovement();
-            
+
             _difficultyIndex = (int)_progressionService.CurrentDifficulty;
 
             RefreshMissions();
@@ -127,9 +128,9 @@ namespace Project.Scripts.UI.Panel
         private bool IsMissionAvailable(int index, LevelDifficulty difficulty)
         {
             var prev = GetPreviousMission(index);
-            
+
             if (prev == null) return true;
-            
+
             return YG2.saves.IsMissionCompleted(prev.Id, difficulty);
         }
 
@@ -160,7 +161,7 @@ namespace Project.Scripts.UI.Panel
 
             if (_progressionService.CurrentDifficulty != difficulty)
                 _progressionService.SetDifficulty(difficulty);
-            
+
             RefreshMissions();
         }
 
@@ -184,7 +185,7 @@ namespace Project.Scripts.UI.Panel
                 LevelDifficulty.Low => UITextType.DifficultyLow,
                 LevelDifficulty.Medium => UITextType.DifficultyMedium,
                 LevelDifficulty.High => UITextType.DifficultyHigh,
-                _ => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null),
             };
         }
 

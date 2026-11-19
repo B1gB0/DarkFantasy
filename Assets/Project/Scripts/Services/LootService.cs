@@ -157,7 +157,7 @@ namespace Project.Scripts.Services
                 ItemRarity.Common => _commonEquipment,
                 ItemRarity.Uncommon => _uncommonEquipment,
                 ItemRarity.Rare => _rareEquipment,
-                _ => null
+                _ => null,
             };
         }
 

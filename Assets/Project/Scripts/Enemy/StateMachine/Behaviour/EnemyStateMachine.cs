@@ -23,7 +23,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour
         {
             _enemy = GetComponent<Enemy>();
             _agent = GetComponent<NavMeshAgent>();
-            
+
             _states = new Dictionary<Type, EnemyState>
             {
                 { typeof(IdleState), new IdleState() },
@@ -75,7 +75,7 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour
             _currentState = _states[newStateType];
             _currentState.Enter();
         }
-        
+
         public void GetServices(AudioSoundsService audioSoundsService, ParticleEffectsService particleEffectsService)
         {
             _audioSoundsService = audioSoundsService;

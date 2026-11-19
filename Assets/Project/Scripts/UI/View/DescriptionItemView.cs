@@ -20,16 +20,16 @@ namespace Project.Scripts.UI.View
     {
         private const float FactorPrice = 0.5f;
         private const int MinValue = 0;
-        
+
         [SerializeField] private TMP_Text _description;
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _rarity;
         [SerializeField] private TMP_Text _equipText;
         [SerializeField] private TMP_Text _unEquipText;
         [SerializeField] private TMP_Text _sellButtonText;
-        
+
         [SerializeField] private Image _icon;
-        
+
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _removeButton;
@@ -40,15 +40,15 @@ namespace Project.Scripts.UI.View
         private ITweenAnimationService _tweenAnimationService;
         private IShopService _shopService;
         private IProgressionService _progressionService;
-        private IUILocalizationService  _uiLocalizationService;
+        private IUILocalizationService _uiLocalizationService;
         private IPauseService _pauseService;
         private ICurrencyService _currencyService;
 
         private ItemData _currentTemplate;
         private Item _currentInstance;
-        
+
         public event Action OnItemDeleted;
-        
+
         public event Action OnRefreshEquip;
 
         [Inject]
@@ -67,7 +67,7 @@ namespace Project.Scripts.UI.View
             _tweenAnimationService = tweenAnimationService;
             _shopService = shopService;
             _progressionService = progressionService;
-            _uiLocalizationService =  uiLocalizationService;
+            _uiLocalizationService = uiLocalizationService;
             _pauseService = pauseService;
             _currencyService = currencyService;
         }
@@ -102,12 +102,12 @@ namespace Project.Scripts.UI.View
             _tweenAnimationService.AnimateScale(transform);
             _pauseService.OnStopGameWithoutMusic();
         }
-        
+
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
             _pauseService.OnPlayGame();
-        } 
+        }
 
         public void SetConsumable(ItemData template)
         {
@@ -146,7 +146,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn
+                _ => data.NameEn,
             };
         }
 
@@ -162,22 +162,22 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => data.DescriptionRu,
                 LocalizationCode.En => data.DescriptionEn,
                 LocalizationCode.Tr => data.DescriptionTr,
-                _ => data.DescriptionEn
+                _ => data.DescriptionEn,
             };
         }
-        
+
         private void UpdateSellButtonText(ItemData template)
         {
             if (template == null) return;
-            
+
             int sellPrice = Mathf.RoundToInt(template.Price * FactorPrice);
-            
+
             if (sellPrice <= MinValue)
             {
                 _sellButton.gameObject.SetActive(false);
                 return;
             }
-            
+
             _sellButtonText.SetText(sellPrice.ToString());
             _sellButton.gameObject.SetActive(true);
         }
@@ -204,7 +204,7 @@ namespace Project.Scripts.UI.View
 
             string localized = _shopService.GetLocalizedCharacteristicName(type);
             if (string.IsNullOrEmpty(localized)) return;
-            
+
             bool isPercent = IsPercentStat(type);
 
             sb.Append('+');
@@ -228,10 +228,10 @@ namespace Project.Scripts.UI.View
             {
                 EquipCurrentItem();
             }
-            
+
             OnRefreshEquip?.Invoke();
         }
-        
+
         private void EquipCurrentItem()
         {
             if (_currentTemplate.Kind == ItemKind.Consumable)
@@ -243,10 +243,10 @@ namespace Project.Scripts.UI.View
                 if (_currentInstance == null) return;
                 _inventoryService.EquipItem(_currentInstance.Id);
             }
-    
+
             UpdateEquipButtonState();
         }
-        
+
         private void UnequipCurrentItem()
         {
             if (_currentTemplate.Kind == ItemKind.Consumable)
@@ -258,14 +258,14 @@ namespace Project.Scripts.UI.View
                 if (_currentInstance == null) return;
                 _inventoryService.UnequipItemByInstanceId(_currentInstance.Id);
             }
-    
+
             UpdateEquipButtonState();
         }
-        
+
         private void UpdateEquipButtonState()
         {
             bool equipped = IsCurrentlyEquipped();
-            
+
             if (equipped)
             {
                 _equipText.gameObject.SetActive(false);
@@ -277,7 +277,7 @@ namespace Project.Scripts.UI.View
                 _unEquipText.gameObject.SetActive(false);
             }
         }
-        
+
         private bool IsCurrentlyEquipped()
         {
             if (_currentTemplate == null) return false;
@@ -289,10 +289,10 @@ namespace Project.Scripts.UI.View
                                       _inventoryService.EquippedArmor?.Id == _currentInstance.Id ||
                                       _inventoryService.EquippedRing?.Id == _currentInstance.Id,
                 ItemKind.Consumable => _inventoryService.EquippedConsumableType == _currentTemplate.Type,
-                _ => false
+                _ => false,
             };
         }
-        
+
         private void OnRemoveButtonClicked()
         {
             if (_currentTemplate == null) return;
@@ -313,24 +313,24 @@ namespace Project.Scripts.UI.View
 
             OnItemDeleted?.Invoke();
         }
-        
+
         private void OnSellButtonClicked()
         {
             if (_currentTemplate == null) return;
-            
+
             int sellPrice = Mathf.RoundToInt(_currentTemplate.Price * FactorPrice);
-            
-            if (sellPrice <= MinValue) 
+
+            if (sellPrice <= MinValue)
             {
                 Debug.LogWarning("Этот предмет нельзя продать за ноль монет.");
-                return; 
+                return;
             }
 
             _audioSoundsService.PlaySound(SoundsType.BuyButtonSound).Forget();
-            
+
             _currencyService.AddGold(sellPrice);
             _currencyService.SaveGold();
-            
+
             if (_currentTemplate.Kind == ItemKind.Equipment)
             {
                 if (_currentInstance == null) return;
@@ -340,11 +340,11 @@ namespace Project.Scripts.UI.View
             {
                 _inventoryService.RemoveAllOfType(_currentTemplate.Type);
             }
-            
+
             Hide();
             OnItemDeleted?.Invoke();
         }
-        
+
         private void SetRarity(ItemData data)
         {
             _rarity.gameObject.SetActive(true);
@@ -354,7 +354,7 @@ namespace Project.Scripts.UI.View
                 ItemRarity.Common => _uiLocalizationService.GetLocalizedText(UITextType.Common),
                 ItemRarity.Uncommon => _uiLocalizationService.GetLocalizedText(UITextType.Uncommon),
                 ItemRarity.Rare => _uiLocalizationService.GetLocalizedText(UITextType.Rare),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(),
             };
 
             _rarity.color = data.Rarity switch
@@ -365,14 +365,14 @@ namespace Project.Scripts.UI.View
                 _ => Colors.GetColor(ColorName.DefaultWhiteTextColor),
             };
         }
-        
+
         private bool IsPercentStat(CharacteristicType type)
         {
             return type switch
             {
-                CharacteristicType.MoveSpeed   => true,
+                CharacteristicType.MoveSpeed => true,
                 CharacteristicType.AttackSpeed => true,
-                CharacteristicType.CritDamage  => true,
+                CharacteristicType.CritDamage => true,
                 _ => false,
             };
         }

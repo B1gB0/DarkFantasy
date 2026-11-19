@@ -15,9 +15,9 @@ namespace Project.Scripts.Projectile
 
         protected ParticleEffectsService ParticleEffectsService;
         protected AudioSoundsService AudioSoundsService;
-        
+
         [SerializeField] private LayerMask[] _layers;
-        
+
         private float _projectileSpeed;
 
         [field: SerializeField] public float LifeTime { get; private set; } = 4f;

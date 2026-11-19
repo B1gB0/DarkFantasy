@@ -7,7 +7,7 @@ namespace Project.Scripts.Characteristics
     {
         private const float Epsilon = 0.05f;
         private const float MinValue = 0f;
-        
+
         public float TotalDuration;
         public float RemainingTime;
 
@@ -18,7 +18,7 @@ namespace Project.Scripts.Characteristics
         }
 
         public bool IsActive => RemainingTime > Epsilon;
-        
+
         public bool Tick(float deltaTime)
         {
             RemainingTime -= deltaTime;

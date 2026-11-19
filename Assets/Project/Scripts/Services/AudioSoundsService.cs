@@ -30,6 +30,12 @@ namespace Project.Scripts.Services
 
         public bool IsInitiated { get; private set; }
 
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
+
         public async UniTask Init()
         {
             if (IsInitiated)
@@ -40,12 +46,6 @@ namespace Project.Scripts.Services
             InitializeMusicAudioSource();
             InitializeAudioSourcePool();
             IsInitiated = true;
-        }
-
-        [Inject]
-        private void Construct(IResourceService resourceService)
-        {
-            _resourceService = resourceService;
         }
 
         public async UniTask PlaySound(SoundsType sound)
@@ -79,10 +79,8 @@ namespace Project.Scripts.Services
             if (_currentMusicType == musicType && _musicAudioSource.isPlaying)
                 return;
 
-            if (!_soundDictionary.ContainsKey(musicType))
+            if (!_soundDictionary.TryGetValue(musicType, out var musicConfig))
                 return;
-
-            var musicConfig = _soundDictionary[musicType];
 
             StopCurrentMusic();
 

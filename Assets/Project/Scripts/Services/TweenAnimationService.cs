@@ -181,7 +181,7 @@ namespace Project.Scripts.Services
 
         private bool IsTargetValid(Transform target)
         {
-            return target != null && target.gameObject != null;
+            return target != null;
         }
     }
 }

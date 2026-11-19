@@ -11,12 +11,12 @@ namespace Project.Scripts.Player.State
         private const float HeightOffset = 0.1f;
         private const float Gravity = 2f;
         private const float RayLength = 0.5f;
-        
+
         private readonly Core.Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerAnimatedState _playerAnimatedState;
         private readonly Transform _cameraTransform;
-        
+
         private Vector3 _cachedMoveDirection;
 
         public PlayerMoveState(Core.Player player)
@@ -28,17 +28,12 @@ namespace Project.Scripts.Player.State
         }
 
         public StateId IdState => StateId.Move;
-        
+
         private float CurrentSpeed => new Vector3(
                 _player.Rigidbody.velocity.x,
                 MinValue,
                 _player.Rigidbody.velocity.z)
             .magnitude;
-
-        public void Enter()
-        {
-            _player.InputController.OnAttackButtonPressed += EnterAttack;
-        }
 
         public void Update()
         {
@@ -53,20 +48,19 @@ namespace Project.Scripts.Player.State
                 _stateMachine.SwitchState(StateId.Idle);
                 return;
             }
-            
+
             Vector3 camForward = _cameraTransform.forward;
             Vector3 camRight = _cameraTransform.right;
 
             camForward.y = MinValue;
             camRight.y = MinValue;
-            
+
             camForward.Normalize();
             camRight.Normalize();
 
-            _cachedMoveDirection = 
-                camForward * _player.InputController.MoveDirection.y 
+            _cachedMoveDirection =
+                camForward * _player.InputController.MoveDirection.y
                 + camRight * _player.InputController.MoveDirection.x;
-            
         }
 
         public void FixedUpdate()
@@ -75,27 +69,32 @@ namespace Project.Scripts.Player.State
             Rotate(_cachedMoveDirection);
         }
 
+        public void Enter()
+        {
+            _player.InputController.OnAttackButtonPressed += EnterAttack;
+        }
+
         public void Exit()
         {
             _player.InputController.OnAttackButtonPressed -= EnterAttack;
-            
+
             _player.Rigidbody.velocity = Vector3.zero;
-            
-            _playerAnimatedState.OnMove(MinValue); 
+
+            _playerAnimatedState.OnMove(MinValue);
         }
 
         private void Move(Vector3 moveDirection)
         {
             float currentSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
             Vector3 velocity = moveDirection * currentSpeed;
-            
-            float rayLength = RayLength; 
+
+            float rayLength = RayLength;
             Vector3 rayStart = _player.transform.position + Vector3.up * HeightOffset;
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayLength))
             {
                 Vector3 projectedVelocity = Vector3.ProjectOnPlane(velocity, hit.normal);
-                
+
                 if (projectedVelocity.sqrMagnitude > MinMagnitude)
                 {
                     velocity = projectedVelocity.normalized * currentSpeed;
@@ -104,7 +103,7 @@ namespace Project.Scripts.Player.State
                 {
                     velocity = projectedVelocity;
                 }
-                
+
                 if (velocity.y < MinValue)
                 {
                     velocity.y -= Gravity;
@@ -116,13 +115,13 @@ namespace Project.Scripts.Player.State
             }
 
             _player.Rigidbody.velocity = velocity;
-            
+
             float maxSpeed = _player.PlayerCharacteristics.GetCurrentMoveSpeed();
             float safeMaxSpeed = Mathf.Max(MinMagnitude, maxSpeed);
-            
+
             float normalizedSpeed = CurrentSpeed / safeMaxSpeed;
-            
-            _playerAnimatedState.OnMove(normalizedSpeed); 
+
+            _playerAnimatedState.OnMove(normalizedSpeed);
         }
 
         private void Rotate(Vector3 moveDirection)
@@ -130,12 +129,12 @@ namespace Project.Scripts.Player.State
             if (moveDirection.sqrMagnitude > MinMagnitude)
             {
                 Quaternion target = Quaternion.LookRotation(moveDirection);
-                
+
                 Quaternion newRotation = Quaternion.Slerp(
                     _player.Rigidbody.rotation,
                     target,
                     Time.fixedDeltaTime * _player.PlayerCharacteristics.RotationSpeed);
-            
+
                 _player.Rigidbody.MoveRotation(newRotation);
             }
         }

@@ -47,7 +47,7 @@ namespace Project.Scripts.UI.View
         }
 
         private void OnEnable() => _buyButton.onClick.AddListener(OnButtonClick);
-        
+
         private void OnDisable() => _buyButton.onClick.RemoveListener(OnButtonClick);
 
         public void SetCurrencyColor(int gold)
@@ -81,7 +81,7 @@ namespace Project.Scripts.UI.View
         public void SetLocalization()
         {
             if (_currentData == null) return;
-            
+
             _name.text = YG2.lang switch
             {
                 LocalizationCode.Ru => _currentData.NameRu,
@@ -89,11 +89,11 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Tr => _currentData.NameTr,
                 _ => _currentData.NameEn,
             };
-            
+
             _description.text = _currentData.Kind == ItemKind.Equipment
                 ? BuildEquipmentStats(_currentData, _progression.CurrentDifficulty)
                 : GetLocalizedDescription(_currentData);
-            
+
             if (_currentData.Rarity == ItemRarity.None)
             {
                 _rarity.gameObject.SetActive(false);
@@ -104,7 +104,7 @@ namespace Project.Scripts.UI.View
 
             _rarity.gameObject.SetActive(true);
         }
-        
+
         private void SetRarity(ItemData data)
         {
             _rarity.gameObject.SetActive(true);
@@ -114,7 +114,7 @@ namespace Project.Scripts.UI.View
                 ItemRarity.Common => _uiLocalizationService.GetLocalizedText(UITextType.Common),
                 ItemRarity.Uncommon => _uiLocalizationService.GetLocalizedText(UITextType.Uncommon),
                 ItemRarity.Rare => _uiLocalizationService.GetLocalizedText(UITextType.Rare),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(),
             };
 
             _rarity.color = data.Rarity switch
@@ -149,7 +149,7 @@ namespace Project.Scripts.UI.View
 
             return string.Join(", ", parts);
         }
-        
+
         private void AddStatPart(List<string> parts, CharacteristicType type, float value)
         {
             if (type == CharacteristicType.None) return;
@@ -169,14 +169,14 @@ namespace Project.Scripts.UI.View
         {
             OnButtonClicked?.Invoke(_currentData, this);
         }
-        
+
         private bool IsPercentStat(CharacteristicType type)
         {
             return type switch
             {
-                CharacteristicType.MoveSpeed   => true,
+                CharacteristicType.MoveSpeed => true,
                 CharacteristicType.AttackSpeed => true,
-                CharacteristicType.CritDamage  => true,
+                CharacteristicType.CritDamage => true,
                 _ => false,
             };
         }

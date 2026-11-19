@@ -28,6 +28,13 @@ namespace Project.Scripts.Services
 
         public bool IsInitiated { get; private set; }
 
+        [Inject]
+        public void Construct(IDataBaseService dataBaseService, IResourceService resourceService)
+        {
+            _dataBaseService = dataBaseService;
+            _resourceService = resourceService;
+        }
+
         public async UniTask Init()
         {
             if (IsInitiated)
@@ -51,8 +58,10 @@ namespace Project.Scripts.Services
             var attributesData = new List<PlayerAttributeLevelData>();
 
             foreach (var attributeData in _attributesData)
+            {
                 if (attributeData.Value.Type == type)
                     attributesData.Add(attributeData.Value);
+            }
 
             return attributesData;
         }
@@ -77,7 +86,7 @@ namespace Project.Scripts.Services
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn
+                _ => data.NameEn,
             };
         }
 
@@ -94,13 +103,6 @@ namespace Project.Scripts.Services
         public List<ItemData> GetItemsData()
         {
             return _itemsData.Select(itemData => itemData.Value).ToList();
-        }
-
-        [Inject]
-        public void Construct(IDataBaseService dataBaseService, IResourceService resourceService)
-        {
-            _dataBaseService = dataBaseService;
-            _resourceService = resourceService;
         }
     }
 }

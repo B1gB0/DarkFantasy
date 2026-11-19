@@ -165,7 +165,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => "Золото",
                 LocalizationCode.En => "Gold",
                 LocalizationCode.Tr => "Altın",
-                _ => "Gold"
+                _ => "Gold",
             };
 
             _description.text = YG2.lang switch
@@ -173,7 +173,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => $"Получено {result.GoldValue} золотых",
                 LocalizationCode.En => $"Received {result.GoldValue} gold",
                 LocalizationCode.Tr => $"{result.GoldValue} altın alındı",
-                _ => $"+{result.GoldValue}"
+                _ => $"+{result.GoldValue}",
             };
 
             _icon.sprite = result.IsHighChance ? _highGoldSprite : _lowGoldSprite;
@@ -188,7 +188,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => data.NameRu,
                 LocalizationCode.En => data.NameEn,
                 LocalizationCode.Tr => data.NameTr,
-                _ => data.NameEn
+                _ => data.NameEn,
             };
         }
 
@@ -199,7 +199,7 @@ namespace Project.Scripts.UI.View
                 LocalizationCode.Ru => data.DescriptionRu,
                 LocalizationCode.En => data.DescriptionEn,
                 LocalizationCode.Tr => data.DescriptionTr,
-                _ => data.DescriptionEn
+                _ => data.DescriptionEn,
             };
         }
 
@@ -212,7 +212,7 @@ namespace Project.Scripts.UI.View
                 ItemRarity.Common => _uiLocalizationService.GetLocalizedText(UITextType.Common),
                 ItemRarity.Uncommon => _uiLocalizationService.GetLocalizedText(UITextType.Uncommon),
                 ItemRarity.Rare => _uiLocalizationService.GetLocalizedText(UITextType.Rare),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(),
             };
 
             _rarity.color = data.Rarity switch

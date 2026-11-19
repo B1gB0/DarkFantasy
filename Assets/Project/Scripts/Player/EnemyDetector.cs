@@ -6,13 +6,9 @@ namespace Project.Scripts.Player
 {
     public class EnemyDetector : MonoBehaviour
     {
-        private const int MinValue = 0;
-
-        private readonly HashSet<Enemy.Enemy> _enemiesInRange = new ();
+        private readonly HashSet<Enemy.Enemy> _enemiesInRange = new();
 
         private float _closestEnemyDistanceSqr;
-
-        public float ClosestEnemyDistance => Mathf.Sqrt(_closestEnemyDistanceSqr);
 
         private void OnTriggerEnter(Collider otherCollider)
         {
@@ -42,35 +38,6 @@ namespace Project.Scripts.Player
             }
 
             _enemiesInRange.Clear();
-        }
-
-        public Enemy.Enemy GetClosestEnemy()
-        {
-            if (_enemiesInRange.Count <= MinValue)
-                return null;
-
-            Enemy.Enemy bestTarget = null;
-            _closestEnemyDistanceSqr = Mathf.Infinity;
-            var currentPosition = transform.position;
-
-            foreach (Enemy.Enemy closestEnemy in _enemiesInRange)
-            {
-                var directionToTarget = closestEnemy.transform.position - currentPosition;
-                var dSqrToTarget = directionToTarget.sqrMagnitude;
-
-                if (!(dSqrToTarget < _closestEnemyDistanceSqr))
-                    continue;
-
-                _closestEnemyDistanceSqr = dSqrToTarget;
-                bestTarget = closestEnemy;
-            }
-
-            return bestTarget;
-        }
-
-        public HashSet<Enemy.Enemy> GetEnemiesInRange()
-        {
-            return _enemiesInRange;
         }
 
         private void OnEnemyDie(Enemy.Enemy enemy)

@@ -52,13 +52,13 @@ namespace Project.Scripts.UI.View
         {
             _mission = mission;
         }
-        
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_hover != null)
                 _tweenAnimationService.AnimateFade(_hover.transform);
         }
-        
+
         public void OnPointerExit(PointerEventData eventData)
         {
             if (_hover != null)

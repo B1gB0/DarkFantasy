@@ -6,7 +6,7 @@ namespace Project.Scripts.Services
     public interface IUILocalizationService : IService
     {
         public UILocalizationData GetLevelTextData(UITextType type);
-        
+
         public string GetLocalizedText(UITextType type);
     }
 }

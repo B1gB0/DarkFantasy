@@ -30,7 +30,7 @@ namespace Project.Scripts.Level.Spawners
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
         private ILootService _lootService;
-        private IProgressionService  _progressionService;
+        private IProgressionService _progressionService;
         private IShopService _shopService;
 
         [Inject]
@@ -90,7 +90,7 @@ namespace Project.Scripts.Level.Spawners
             RecalculateNearest();
         }
 
-        public void GetViews(RewardView rewardView, InteractView interactView, InventoryIsFullView  inventoryIsFullView)
+        public void GetViews(RewardView rewardView, InteractView interactView, InventoryIsFullView inventoryIsFullView)
         {
             _rewardView = rewardView;
             _interactView = interactView;
@@ -106,7 +106,7 @@ namespace Project.Scripts.Level.Spawners
             lootEnemyTrigger.transform.position = spawnPos;
             lootEnemyTrigger.OnPickedUp -= _rewardView.Show;
             lootEnemyTrigger.OnInventoryIsFull -= _inventoryIsFullView.Show;
-            
+
             lootEnemyTrigger.Setup(
                 reward,
                 this,
@@ -115,7 +115,7 @@ namespace Project.Scripts.Level.Spawners
                 _lootService,
                 _progressionService,
                 _shopService);
-            
+
             lootEnemyTrigger.OnPickedUp += _rewardView.Show;
             lootEnemyTrigger.OnInventoryIsFull += _inventoryIsFullView.Show;
         }

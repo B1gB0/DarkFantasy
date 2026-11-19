@@ -12,12 +12,12 @@ namespace Project.Scripts.UI.Panel
         [SerializeField] private LeaderboardYG _leaderboardYg;
         [SerializeField] private Button _leaderboardButton;
         [SerializeField] private Button _backToSceneButton;
-        
+
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
 
         public event Action OnBackToSceneButtonPressed;
-        
+
         [Inject]
         private void Construct(ITweenAnimationService tweenAnimationService, IPlayerService playerService)
         {
@@ -29,7 +29,7 @@ namespace Project.Scripts.UI.Panel
         {
             _leaderboardYg.SetLeaderboard(YG2.saves.AcumulatedScore);
             _leaderboardYg.UpdateLB();
-            
+
             _backToSceneButton.onClick.AddListener(MoveBackToScene);
             _leaderboardButton.gameObject.SetActive(false);
         }
@@ -48,8 +48,8 @@ namespace Project.Scripts.UI.Panel
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
-            
-            if(_playerService.Player != null)
+
+            if (_playerService.Player != null)
                 _playerService.Player.InputController.UnlockPlayerMovement();
         }
 

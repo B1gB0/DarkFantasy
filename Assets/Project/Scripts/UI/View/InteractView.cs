@@ -14,8 +14,8 @@ namespace Project.Scripts.UI.View
         [SerializeField] private GameObject _desktopButton;
         [SerializeField] private Transform _showPoint;
         [SerializeField] private Transform _hidePoint;
-        
-        [Header("Texts")]
+
+        [Header("Texts")] 
         [SerializeField] private TMP_Text _pickUpText;
         [SerializeField] private TMP_Text _standUpText;
         [SerializeField] private TMP_Text _sitDownText;
@@ -47,14 +47,14 @@ namespace Project.Scripts.UI.View
         {
             transform.DOKill();
         }
-        
+
         public void Show(InteractViewType type)
         {
             _pickUpText.gameObject.SetActive(false);
             _standUpText.gameObject.SetActive(false);
             _sitDownText.gameObject.SetActive(false);
             _descriptionText.gameObject.SetActive(false);
-            
+
             switch (type)
             {
                 case InteractViewType.PickUp:
@@ -68,7 +68,7 @@ namespace Project.Scripts.UI.View
                     _standUpText.gameObject.SetActive(true);
                     break;
             }
-            
+
             _tweenAnimationService.AnimateMove(transform, _showPoint, _hidePoint);
         }
 

@@ -234,7 +234,7 @@ namespace Project.Scripts.UI.View
             _inventoryPanel = await _resourceService.InstantiateAsync<InventoryPanel>(
                 InventoryPanelPath,
                 _uiRoot.UISceneContainer.PersistentContainer);
-            
+
             GameObjectInjector.InjectRecursive(_inventoryPanel.gameObject, _container);
 
             _uiRoot.UISceneContainer.Register(InventoryPanelPath, _inventoryPanel);

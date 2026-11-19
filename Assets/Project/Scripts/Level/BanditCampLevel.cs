@@ -46,7 +46,7 @@ namespace Project.Scripts.Level
             EnemySpawner.OnAllEnemiesKilled += OnShowWaypointToNextLevel;
 
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
-            
+
             _lootChest.OnChestOpened += ViewFactory.UIScene.RewardView.Show;
             _lootChest.OnInventoryIsFull += ViewFactory.UIScene.InventoryIsFullView.Show;
             _lootChest.OnChestOpened += OnChestOpenedHandler;
@@ -75,7 +75,7 @@ namespace Project.Scripts.Level
         {
             NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
         }
-        
+
         private void OnChestOpenedHandler(LootResult result)
         {
             _lootChestTrigger.MarkAsUsed();

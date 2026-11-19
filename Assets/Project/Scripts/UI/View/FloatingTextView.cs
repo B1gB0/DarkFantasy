@@ -31,7 +31,7 @@ namespace Project.Scripts.UI.View
             _text.color = color;
 
             SetIcon(viewType);
-            
+
             transform.position = new Vector3(
                 target.position.x,
                 target.position.y + YOffset,
@@ -43,7 +43,7 @@ namespace Project.Scripts.UI.View
             _icon.sprite = viewType switch
             {
                 FloatingTextViewType.Gold => _sprites[0],
-                _ => null
+                _ => null,
             };
         }
 

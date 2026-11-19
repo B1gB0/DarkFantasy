@@ -3,7 +3,7 @@ namespace Project.Scripts.UI.View
     public class HealthBar : Bar
     {
         private Health _health;
-        
+
         private void OnEnable()
         {
             Subscribe();
@@ -17,34 +17,10 @@ namespace Project.Scripts.UI.View
         public void Construct(Health health)
         {
             Unsubscribe();
-            
+
             _health = health;
-            
+
             Subscribe();
-        }
-        
-        private void Subscribe()
-        {
-            if (_health == null) return;
-            
-            _health.Die -= OnDie;
-            _health.Die += OnDie;
-            
-            _health.HealthChanged -= OnChangedValues;
-            _health.HealthChanged += OnChangedValues;
-        }
-
-        private void Unsubscribe()
-        {
-            if (_health == null) return;
-            
-            _health.Die -= OnDie;
-            _health.HealthChanged -= OnChangedValues;
-        }
-
-        private void OnDie()
-        {
-            Hide();
         }
 
         public override void Show()
@@ -54,6 +30,30 @@ namespace Project.Scripts.UI.View
             {
                 OnChangedValues(_health.CurrentHealth, _health.MaxHealth, _health.TargetHealth);
             }
+        }
+
+        private void Subscribe()
+        {
+            if (_health == null) return;
+
+            _health.Die -= OnDie;
+            _health.Die += OnDie;
+
+            _health.HealthChanged -= OnChangedValues;
+            _health.HealthChanged += OnChangedValues;
+        }
+
+        private void Unsubscribe()
+        {
+            if (_health == null) return;
+
+            _health.Die -= OnDie;
+            _health.HealthChanged -= OnChangedValues;
+        }
+
+        private void OnDie()
+        {
+            Hide();
         }
 
         private void OnChangedValues(float currentHealth, float maxHealth, float targetHealth)

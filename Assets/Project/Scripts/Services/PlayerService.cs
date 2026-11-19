@@ -26,11 +26,27 @@ namespace Project.Scripts.Services
         private IInventoryService _inventoryService;
         private IProgressionService _progressionService;
         private IShopService _shopService;
-        
+
         public bool IsInitiated { get; private set; }
         public Player.Core.Player Player { get; private set; }
 
         public CinemachineFreeLook FreeLookCamera { get; private set; }
+
+        [Inject]
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IShopService shopService,
+            IInventoryService inventoryService,
+            IProgressionService progression)
+        {
+            _dataBaseService = dataBaseService;
+            _shopService = shopService;
+            _inventoryService = inventoryService;
+            _progressionService = progression;
+
+            _inventoryService.OnEquippedItem += RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
+        }
 
         private void Update()
         {
@@ -125,22 +141,6 @@ namespace Project.Scripts.Services
                 rollButton,
                 inventoryButton,
                 pickUpButton);
-        }
-
-        [Inject]
-        public void Construct(
-            IDataBaseService dataBaseService,
-            IShopService shopService,
-            IInventoryService inventoryService,
-            IProgressionService progression)
-        {
-            _dataBaseService = dataBaseService;
-            _shopService = shopService;
-            _inventoryService = inventoryService;
-            _progressionService = progression;
-
-            _inventoryService.OnEquippedItem += RecalculateEquipment;
-            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
         }
 
         private void RecalculateEquipment()

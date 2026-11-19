@@ -11,8 +11,8 @@ namespace Project.Scripts.Player.Input
         private const float MinMagnitude = 0.01f;
         private const float MinValue = 0f;
 
-        [Header("Action Locks")] 
         [SerializeField] private bool _isMovementLocked;
+
         [SerializeField] private bool _isAttackLocked;
         [SerializeField] private bool _isRollLocked;
 
@@ -31,13 +31,13 @@ namespace Project.Scripts.Player.Input
 
         private float _rollCooldownTimer;
         private bool _rollRequested;
-        
+
         public event Action OnInventoryButtonPressed;
-        
+
         public event Action OnAttackButtonPressed;
-        
+
         public event Action OnMoveButtonsPressed;
-        
+
         public event Action OnUnlockController;
 
         public Vector2 MoveDirection { get; private set; }
@@ -133,7 +133,7 @@ namespace Project.Scripts.Player.Input
 
             OnUnlockController?.Invoke();
         }
-        
+
         public void SetMovementLock(bool isLocked)
         {
             _isMovementLocked = isLocked;

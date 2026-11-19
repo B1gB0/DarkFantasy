@@ -50,7 +50,7 @@ namespace Project.Scripts.UI.View
             if (_barInstance != null) Destroy(_barInstance);
             if (_backgroundInstance != null) Destroy(_backgroundInstance);
         }
-        
+
         public void SetProgressImmediate(float normalized01)
         {
             CancelAnimation();

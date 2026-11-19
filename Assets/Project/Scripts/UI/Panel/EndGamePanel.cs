@@ -25,7 +25,7 @@ namespace Project.Scripts.UI.Panel
         [SerializeField] private Button _goToVillageButton;
         [SerializeField] private Button _rebornPlayerButton;
         [SerializeField] private Button _nextLevelButton;
-        
+
         [SerializeField] private GameObject _rootWindow;
 
         private IPauseService _pauseService;
@@ -35,14 +35,14 @@ namespace Project.Scripts.UI.Panel
         private ITweenAnimationService _tweenAnimationService;
         private IPlayerService _playerService;
         private IExperiencePoints _experiencePoints;
-        
+
         private UILocalizationData _uiLocalizationData;
 
         public event Action OnRewardAdSuccessShowed;
+
         public event Action OnSpawnPlayer;
 
         public Button GoToVillageButton => _goToVillageButton;
-        public Button NextLevelButton => _nextLevelButton;
 
         [Inject]
         public void Construct(
@@ -61,13 +61,13 @@ namespace Project.Scripts.UI.Panel
             _tweenAnimationService = tweenAnimationService;
             _playerService = playerService;
             _experiencePoints = experiencePoints;
-            
+
             YG2.onShowWindowGame -= _pauseService.OnPlayGame;
             YG2.onHideWindowGame -= _pauseService.OnStopGameWithMusic;
-            
+
             _nextLevelButton.onClick.AddListener(_pauseService.OnPlayGame);
             _goToVillageButton.onClick.AddListener(_pauseService.OnPlayGame);
-            
+
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.AddListener(_pauseService.OnPlayGame);
 #endif
@@ -105,46 +105,19 @@ namespace Project.Scripts.UI.Panel
         {
             YG2.onShowWindowGame += _pauseService.OnPlayGame;
             YG2.onHideWindowGame += _pauseService.OnStopGameWithMusic;
-            
+
             _experiencePoints.ResetAccumulatedValues();
             _currencyService.ResetAccumulatedGold();
-            
+
             _nextLevelButton.onClick.RemoveListener(_pauseService.OnPlayGame);
             _goToVillageButton.onClick.RemoveListener(_pauseService.OnPlayGame);
-            
+
 #if UNITY_EDITOR
             _rebornPlayerButton.onClick.RemoveListener(_pauseService.OnPlayGame);
 #endif
-            
+
             OnRewardAdSuccessShowed -= OnRewardSuccess;
             _rootWindow.transform.DOKill();
-        }
-
-        public void SetVictoryPanel()
-        {
-            if (_missionService.CurrentNumberLevel ==
-                _missionService.CurrentMission.Maps.Count - CountCorrectFactor)
-            {
-                _nextLevelButton.gameObject.SetActive(false);
-
-                switch (_missionService.CurrentMission.Id)
-                {
-                    case Missions.Graveyard:
-                        YG2.SaveProgress();
-                        break;
-                    case Missions.BanditCamp:
-                        YG2.SaveProgress();
-                        break;
-                }
-            }
-            else
-            {
-                _nextLevelButton.gameObject.SetActive(true);
-            }
-
-            _rebornPlayerButton.gameObject.SetActive(false);
-
-            SetLocalizationData(UITextType.VictoryPanelTitle);
         }
 
         public void SetDefeatPanel()
@@ -160,10 +133,10 @@ namespace Project.Scripts.UI.Panel
             _accumulatedGoldText.text = _currencyService.AccumulatedGold.ToString();
             _accumulatedKillsText.text = _experiencePoints.AccumulatedKills.ToString();
             _accumulatedScoreText.text = _experiencePoints.AccumulatedScore.ToString();
-            
+
             _tweenAnimationService.AnimateScale(transform);
         }
-        
+
         public override void Hide()
         {
             _tweenAnimationService.AnimateScale(transform, true);
@@ -179,7 +152,7 @@ namespace Project.Scripts.UI.Panel
                 LocalizationCode.Ru => _uiLocalizationData.NameRu,
                 LocalizationCode.En => _uiLocalizationData.NameEn,
                 LocalizationCode.Tr => _uiLocalizationData.NameTr,
-                _ => _labelText.text
+                _ => _labelText.text,
             };
         }
 

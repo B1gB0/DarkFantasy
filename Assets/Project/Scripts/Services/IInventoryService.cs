@@ -9,45 +9,45 @@ namespace Project.Scripts.Services
     public interface IInventoryService : IService
     {
         public event Action<ItemType, int> OnEquippedConsumableItem;
-        
+
         public event Action OnUnEquippedConsumableItem;
-        
+
         public event Action OnEquippedItem;
-        
+
         public event Action OnUnEquippedItem;
-        
+
         public IReadOnlyList<Item> Equipment { get; }
         public Item EquippedWeapon { get; }
         public Item EquippedArmor { get; }
         public Item EquippedRing { get; }
         public ItemType EquippedConsumableType { get; }
-        
+
         public void ShowCurrentEquippedConsumableItem();
-        
+
         public void AddItem(ItemType itemType, int amount = 1);
-        
+
         public void AddEquipment(Item instance);
-        
+
         public void EquipConsumableItem(ItemData data);
-        
+
         public IReadOnlyList<Item> GetEquippedItems();
-        
+
         public void RemoveItem(ItemType itemType, int amount = 1);
-        
+
         public void RemoveEquipment(string id);
-        
+
         public void RemoveAllOfType(ItemType itemType);
-        
+
         public bool CanFit(ItemData itemData);
-        
+
         public bool HasEquipment(ItemType type, LevelDifficulty difficulty);
-        
+
         public int GetItemCount(ItemType itemType);
-        
+
         public void EquipItem(string instanceId);
-        
+
         public void UnequipItemByInstanceId(string instanceId);
-        
+
         public void UnequipConsumableItem();
     }
 }

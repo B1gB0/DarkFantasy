@@ -10,7 +10,7 @@ namespace Project.Scripts.UI.View
     {
         [SerializeField] private TMP_Text _text;
         [SerializeField] private Image _image;
-        
+
         private ITweenAnimationService _tweenAnimationService;
 
         [Inject]

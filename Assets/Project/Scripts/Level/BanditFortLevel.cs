@@ -9,9 +9,9 @@ namespace Project.Scripts.Level
     {
         [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
         [SerializeField] private NextLevelTrigger _nextLevelTrigger;
-        
+
         [SerializeField] private GameObject[] _portals;
-        
+
         private void OnEnable()
         {
             IsInitiatedSpawners += SpawnStartWaves;
@@ -19,7 +19,7 @@ namespace Project.Scripts.Level
             _spawnCyclicWaveTrigger.OnSpawnEnemies += OnSpawnCyclicWave;
             OnBossHealthBarCreated += TryShowBossUI;
         }
-        
+
         private void FixedUpdate()
         {
             if (_spawnCyclicWaveTrigger.IsEnemySpawned)
@@ -46,10 +46,10 @@ namespace Project.Scripts.Level
         public override async UniTask OnStartLevel()
         {
             await base.OnStartLevel();
-            
+
             EnemySpawner.OnBanditLeaderKilled += OnBanditLeaderKilled;
             EnemySpawner.OnBanditLeaderKilled += OnShowWaypointToNextLevel;
-            
+
             _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
         }
 
@@ -64,7 +64,7 @@ namespace Project.Scripts.Level
         {
             CreateWaveOfEnemyByTimer(FourthWaveEnemy);
         }
-        
+
         private void OnSpawnCyclicWave()
         {
             IsBossTriggered = true;
@@ -77,9 +77,9 @@ namespace Project.Scripts.Level
             {
                 portal.SetActive(true);
             }
-            
+
             CreateWaveOfEnemies(FifthWaveNumber);
-            
+
             foreach (var enemy in EnemyWaves[FifthWaveNumber].Enemies)
             {
                 enemy.ChangeFollowEnemyState(true);
@@ -90,25 +90,25 @@ namespace Project.Scripts.Level
         {
             _nextLevelTrigger.Activate();
             _spawnCyclicWaveTrigger.OnOffEnemySpawn();
-            
+
             foreach (var portal in _portals)
             {
                 portal.SetActive(false);
             }
-            
+
             BossHealthBar.Hide();
-            
+
             var missionId = MissionService.CurrentMission.Id;
             var difficulty = ProgressionService.CurrentDifficulty;
             YG2.saves.MarkMissionCompleted(missionId, difficulty);
         }
-        
+
         private void HandleMissionTransition()
         {
             ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
             ViewFactory.UIScene.HandleGoToNextScene();
         }
-        
+
         private void OnShowWaypointToNextLevel()
         {
             NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
