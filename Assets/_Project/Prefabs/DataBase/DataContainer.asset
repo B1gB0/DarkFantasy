@@ -52,19 +52,6 @@ MonoBehaviour:
       _speedProjectile: 0
       _gold: 5
     - _type: 1
-      _health: 15
-      _speed: 5
-      _rotationSpeed: 250
-      _damage: 3
-      _fireRate: 0
-      _rangeAttack: 2
-      _experience: 8
-      _score: 5
-      _stopDistance: 2
-      _armor: 0
-      _speedProjectile: 0
-      _gold: 10
-    - _type: 2
       _health: 30
       _speed: 3
       _rotationSpeed: 250
@@ -77,20 +64,7 @@ MonoBehaviour:
       _armor: 2
       _speedProjectile: 0
       _gold: 20
-    - _type: 3
-      _health: 20
-      _speed: 4
-      _rotationSpeed: 250
-      _damage: 6
-      _fireRate: 0
-      _rangeAttack: 4
-      _experience: 10
-      _score: 15
-      _stopDistance: 2
-      _armor: 2
-      _speedProjectile: 0
-      _gold: 15
-    - _type: 4
+    - _type: 2
       _health: 10
       _speed: 5
       _rotationSpeed: 250
@@ -103,7 +77,7 @@ MonoBehaviour:
       _armor: 0
       _speedProjectile: 10
       _gold: 5
-    - _type: 5
+    - _type: 3
       _health: 50
       _speed: 5
       _rotationSpeed: 250
@@ -116,7 +90,7 @@ MonoBehaviour:
       _armor: 0
       _speedProjectile: 7
       _gold: 30
-    - _type: 6
+    - _type: 4
       _health: 20
       _speed: 5
       _rotationSpeed: 250
@@ -129,7 +103,7 @@ MonoBehaviour:
       _armor: 0
       _speedProjectile: 0
       _gold: 10
-    - _type: 7
+    - _type: 5
       _health: 10
       _speed: 5
       _rotationSpeed: 250
@@ -142,7 +116,7 @@ MonoBehaviour:
       _armor: 0
       _speedProjectile: 10
       _gold: 10
-    - _type: 8
+    - _type: 6
       _health: 70
       _speed: 5
       _rotationSpeed: 250
@@ -155,7 +129,7 @@ MonoBehaviour:
       _armor: 0
       _speedProjectile: 0
       _gold: 50
-    - _type: 9
+    - _type: 7
       _health: 100
       _speed: 5
       _rotationSpeed: 250

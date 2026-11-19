@@ -6,25 +6,25 @@ namespace _Project.Scripts.Level.Triggers
     public class MissionChoosingTrigger : Trigger
     {
         public event Action OnOpenMissionPanel;
-        
-        public bool IsMissionPanelOpen { get; private set; }
+
+        private bool _isMissionPanelOpen;
 
         private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent(out Player.Core.Player _))
                 return;
 
-            if (IsMissionPanelOpen)
+            if (_isMissionPanelOpen)
                 return;
 
-            IsMissionPanelOpen = true;
+            _isMissionPanelOpen = true;
             OnOpenMissionPanel?.Invoke();
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out Player.Core.Player _))
-                IsMissionPanelOpen = false;
+                _isMissionPanelOpen = false;
         }
     }
 }

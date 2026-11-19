@@ -3,14 +3,12 @@ namespace _Project.Scripts.Enemy
     public enum EnemyType
     {
         Skeleton = 0,
-        SkeletonFlesh = 1,
-        SkeletonHeavyArmor = 2,
-        SkeletonLightArmor = 3,
-        SkeletonRanger = 4,
-        Priest = 5,
-        BanditMelee = 6,
-        BanditRanger = 7,
-        BanditLeader = 8,
-        DarkLord = 9,
+        SkeletonHeavyArmor = 1,
+        SkeletonRanger = 2,
+        Priest = 3,
+        BanditMelee = 4,
+        BanditRanger = 5,
+        BanditLeader = 6,
+        DarkLord = 7,
     }
 }

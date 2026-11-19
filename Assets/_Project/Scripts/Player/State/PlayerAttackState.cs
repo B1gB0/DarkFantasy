@@ -101,9 +101,9 @@ namespace _Project.Scripts.Player
                     new Vector3(MinValue, _player.Rigidbody.velocity.y, MinValue);
                 
                 _currentLungeForce = Mathf.MoveTowards(
-                        _currentLungeForce,
-                        MinValue,
-                        Time.fixedDeltaTime * MultiplierLungeForce);
+                    _currentLungeForce,
+                    MinValue,
+                    Time.fixedDeltaTime * MultiplierLungeForce);
             }
         }
 

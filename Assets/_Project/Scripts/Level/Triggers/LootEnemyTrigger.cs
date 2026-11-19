@@ -18,7 +18,7 @@ namespace _Project.Scripts.Level.Triggers
         private IShopService _shopService;
 
         public event Action<LootResult> OnPickedUp;
-        
+
         public event Action OnInventoryIsFull;
 
         private void OnTriggerEnter(Collider other)
@@ -60,7 +60,7 @@ namespace _Project.Scripts.Level.Triggers
                 OnInventoryIsFull?.Invoke();
                 return;
             }
-            
+
             _lootSpawner.Unregister(this);
 
             var difficulty = _progressionService.CurrentDifficulty;
@@ -83,7 +83,7 @@ namespace _Project.Scripts.Level.Triggers
             Deactivate();
             OnPickedUp?.Invoke(_reward);
         }
-        
+
         private bool CanPickupReward()
         {
             if (_reward.Type == LootType.Gold) return true;

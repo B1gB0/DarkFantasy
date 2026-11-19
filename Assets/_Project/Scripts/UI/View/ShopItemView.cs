@@ -65,7 +65,7 @@ namespace _Project.Scripts.UI.View
             _currentData = itemData;
 
             bool owned = itemData.Kind == ItemKind.Equipment
-                && _inventoryService.HasEquipment(itemData.Type, _progression.CurrentDifficulty);
+                         && _inventoryService.HasEquipment(itemData.Type, _progression.CurrentDifficulty);
 
             _buyButton.gameObject.SetActive(!owned);
             _purchaisedText.gameObject.SetActive(owned);
