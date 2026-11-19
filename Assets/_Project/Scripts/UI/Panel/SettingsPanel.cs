@@ -38,7 +38,9 @@ namespace _Project.Scripts.UI.Panel
         private IPlayerService _playerService;
 
         public event Action<float> OnMouseSensitivityChanged;
+        
         public event Action<bool> OnMouseInversionChanged;
+        
         public event Action OnBackToSceneButtonPressed;
 
         [Inject]

@@ -12,9 +12,9 @@ namespace _Project.Scripts.Services
         private const int DefaultNumberLevel = 0;
 
         [field: SerializeField] public List<Mission> Missions { get; private set; } = new();
+        
         private readonly Dictionary<int, string> _banditCampSceneLevels = new();
         private readonly Dictionary<int, string> _castleSceneLevels = new();
-
         private readonly Dictionary<int, string> _graveyardSceneLevels = new();
 
         private IDataBaseService _dataBaseService;

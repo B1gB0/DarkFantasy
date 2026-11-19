@@ -1,11 +1,9 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Services
 {
     public interface ITweenAnimationService : IService
     {
-        public UniTask AnimateScaleAsync(Transform target, bool isDisableTarget = false);
         public void AnimateScale(Transform target, bool isDisableTarget = false);
 
         public void AnimateMove(
@@ -16,7 +14,9 @@ namespace _Project.Scripts.Services
             bool isSetParentToPoint = false);
 
         public void AnimatePointer(Transform target, Transform pointerPoint);
+        
         public void AnimateFade(Transform target, bool isFade = false);
+        
         public void AnimateTemporaryAppearance(Transform target);
     }
 }

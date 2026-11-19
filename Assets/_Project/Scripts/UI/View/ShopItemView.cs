@@ -47,6 +47,7 @@ namespace _Project.Scripts.UI.View
         }
 
         private void OnEnable() => _buyButton.onClick.AddListener(OnButtonClick);
+        
         private void OnDisable() => _buyButton.onClick.RemoveListener(OnButtonClick);
 
         public void SetCurrencyColor(int gold)

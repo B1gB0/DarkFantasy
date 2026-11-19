@@ -105,6 +105,7 @@ namespace _Project.Scripts.UI.View
         }
 
         public void ShowHover() => _hoverImage.gameObject.SetActive(true);
+        
         public void HideHover() => _hoverImage.gameObject.SetActive(false);
 
         private void Clear()

@@ -49,21 +49,6 @@ namespace _Project.Scripts.Services
             scaleSequence.OnComplete(() => { TryOffGameObject(target, isDisableTarget); });
         }
 
-        public async UniTask AnimateScaleAsync(Transform target, bool isDisableTarget = false)
-        {
-            if (!IsTargetValid(target))
-                return;
-
-            if (!isDisableTarget)
-                target.gameObject.SetActive(true);
-
-            var scaleSequence = CreateScaleSequence(target, isDisableTarget);
-
-            await scaleSequence.AsyncWaitForCompletion();
-
-            TryOffGameObject(target, isDisableTarget);
-        }
-
         public void AnimateMove(
             Transform target,
             Transform showPoint,
@@ -79,7 +64,7 @@ namespace _Project.Scripts.Services
                 target.localPosition = hidePoint.localPosition;
             }
 
-            var _ = DOTween.Sequence()
+            _ = DOTween.Sequence()
                 .Append(!isDisableTarget
                     ? target.DOMove(showPoint.position, DurationShow)
                     : target.DOMove(hidePoint.position, DurationHide))
@@ -103,7 +88,7 @@ namespace _Project.Scripts.Services
             var topY = originalY + MoveDistance;
             var bottomY = originalY - MoveDistance;
 
-            var _ = DOTween.Sequence()
+            _ = DOTween.Sequence()
                 .Append(target.DOLocalMoveY(bottomY, DurationHide).SetEase(Ease.Linear))
                 .AppendInterval(SmallPause)
                 .Append(target.DOLocalMoveY(topY, DurationHide).SetEase(Ease.OutSine))

@@ -48,6 +48,7 @@ namespace _Project.Scripts.UI.View
         private Item _currentInstance;
         
         public event Action OnItemDeleted;
+        
         public event Action OnRefreshEquip;
 
         [Inject]

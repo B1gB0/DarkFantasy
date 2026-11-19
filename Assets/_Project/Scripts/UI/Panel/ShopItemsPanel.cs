@@ -30,6 +30,7 @@ namespace _Project.Scripts.UI.Panel
         private List<ShopItemView> _itemViews;
 
         public event Action OnBackToSceneButtonPressed;
+        
         public event Action OnInventoryIsFull;
 
         [Inject]
