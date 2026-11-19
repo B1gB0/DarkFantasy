@@ -1,0 +1,128 @@
+﻿using System;
+using Project.Scripts.DataBase.Data;
+using Project.Scripts.Items;
+using Project.Scripts.Services;
+using Reflex.Attributes;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Project.Scripts.UI.View
+{
+    public class InventoryItemView : View
+    {
+        private const int MinValue = 0;
+        
+        [SerializeField] private Image _iconImage;
+        [SerializeField] private Image _hoverImage;
+        [SerializeField] private Image _equipIcon;
+        [SerializeField] private TMP_Text _count;
+        [SerializeField] private Button _button;
+
+        private IShopService _shopService;
+        
+        public event Action<InventoryItemView> OnSelectButtonPressed;
+
+        public ItemData ItemData { get; private set; }
+        public Item EquipmentInstance { get; private set; }
+        public bool HasEquipmentInstance => EquipmentInstance != null;
+
+        [Inject]
+        private void Construct(IShopService shopService)
+        {
+            _shopService = shopService;
+        }
+
+        private void Start()
+        {
+            _button.onClick.AddListener(OnSelectItem);
+        }
+
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(OnSelectItem);
+        }
+        
+        public void SetEquipment(ItemData template, Item instance)
+        {
+            ItemData = template;
+            EquipmentInstance = instance;
+
+            _hoverImage.gameObject.SetActive(false);
+
+            if (template == null || instance == null)
+            {
+                Clear();
+                return;
+            }
+
+            _iconImage.gameObject.SetActive(true);
+            _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
+            
+            _count.gameObject.SetActive(false);
+        }
+        
+        public void SetEquippedState(bool isEquipped)
+        {
+            if (_equipIcon != null)
+            {
+                _equipIcon.gameObject.SetActive(isEquipped);
+            }
+        }
+        
+        public void SetConsumable(ItemData template, int count)
+        {
+            ItemData = template;
+            EquipmentInstance = null;
+
+            _hoverImage.gameObject.SetActive(false);
+
+            if (template == null || count <= MinValue)
+            {
+                Clear();
+                return;
+            }
+
+            _iconImage.gameObject.SetActive(true);
+            _iconImage.sprite = _shopService.GetItemSpriteByType(template.Type);
+
+            _count.gameObject.SetActive(true);
+            _count.text = count.ToString();
+        }
+        
+        public void Set(ItemData itemData = null, int count = MinValue)
+        {
+            if (itemData == null)
+            {
+                Clear();
+                return;
+            }
+
+            if (itemData.Kind == ItemKind.Equipment)
+                SetEquipment(itemData, null);
+            else
+                SetConsumable(itemData, count);
+        }
+
+        public void ShowHover() => _hoverImage.gameObject.SetActive(true);
+        
+        public void HideHover() => _hoverImage.gameObject.SetActive(false);
+
+        private void Clear()
+        {
+            ItemData = null;
+            EquipmentInstance = null;
+
+            _hoverImage.gameObject.SetActive(false);
+            _iconImage.gameObject.SetActive(false);
+            _count.gameObject.SetActive(false);
+            _equipIcon.gameObject.SetActive(false);
+        }
+
+        private void OnSelectItem()
+        {
+            if (ItemData == null) return;
+            OnSelectButtonPressed?.Invoke(this);
+        }
+    }
+}

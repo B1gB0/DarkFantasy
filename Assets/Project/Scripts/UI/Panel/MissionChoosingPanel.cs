@@ -1,0 +1,218 @@
+﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
+using Project.Scripts.Game.Constant;
+using Project.Scripts.Level;
+using Project.Scripts.Services;
+using Project.Scripts.UI.View;
+using Reflex.Attributes;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using YG;
+
+namespace Project.Scripts.UI.Panel
+{
+    public class MissionChoosingPanel : View.View
+    {
+        private const string PrologueId = "prologue";
+        private const int StepDifficulty = 1;
+
+        private static readonly int DifficultyCount = Enum.GetValues(typeof(LevelDifficulty)).Length;
+
+        [SerializeField] private Button _backSceneButton;
+        [SerializeField] private List<MissionView> _missionViews;
+        [SerializeField] private Button _nextButton;
+        [SerializeField] private Button _previousButton;
+        [SerializeField] private TMP_Text _difficultyText;
+        [SerializeField] private Image _locker;
+
+        private ITweenAnimationService _tweenAnimationService;
+        private MissionService _missionService;
+        private IProgressionService _progressionService;
+        private IUILocalizationService _uiLocalizationService;
+        private IPlayerService _playerService;
+
+        private int _difficultyIndex;
+
+        public event Action OnBackToSceneButtonPressed;
+        public event Action OnGoToMission;
+
+        [Inject]
+        private void Construct(
+            ITweenAnimationService tweenAnimationService,
+            MissionService missionService,
+            IProgressionService progressionService,
+            IUILocalizationService uiLocalizationService,
+            IPlayerService playerService)
+        {
+            _tweenAnimationService = tweenAnimationService;
+            _missionService = missionService;
+            _progressionService = progressionService;
+            _uiLocalizationService = uiLocalizationService;
+            _playerService = playerService;
+        }
+
+        private void Start()
+        {
+            Deactivate();
+        }
+
+        private void OnEnable()
+        {
+            _backSceneButton.onClick.AddListener(MoveBackToScene);
+            _nextButton.onClick.AddListener(NextDifficulty);
+            _previousButton.onClick.AddListener(PreviousDifficulty);
+
+            foreach (var missionView in _missionViews)
+            {
+                missionView.OnMissionChose += OnMoveToMission;
+            }
+        }
+
+        private void OnDisable()
+        {
+            _backSceneButton.onClick.RemoveListener(MoveBackToScene);
+            _nextButton.onClick.RemoveListener(NextDifficulty);
+            _previousButton.onClick.RemoveListener(PreviousDifficulty);
+
+            foreach (var missionView in _missionViews)
+            {
+                missionView.OnMissionChose -= OnMoveToMission;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            transform.DOKill();
+        }
+
+        public override void Show()
+        {
+            _playerService.Player.InputController.LockPlayerMovement();
+            
+            _difficultyIndex = (int)_progressionService.CurrentDifficulty;
+
+            RefreshMissions();
+            UpdateDifficultyDisplay();
+
+            _tweenAnimationService.AnimateScale(transform);
+        }
+
+        public override void Hide()
+        {
+            _playerService.Player.InputController.UnlockPlayerMovement();
+            _tweenAnimationService.AnimateScale(transform, true);
+        }
+
+        private void RefreshMissions()
+        {
+            var difficulty = (LevelDifficulty)_difficultyIndex;
+
+            for (int i = 0; i < _missionService.Missions.Count; i++)
+            {
+                if (i >= _missionViews.Count) break;
+
+                var mission = _missionService.Missions[i];
+                if (mission.Id == PrologueId) continue;
+
+                var missionView = _missionViews[i];
+                SetMission(mission, missionView);
+
+                bool available = IsMissionAvailable(i, difficulty);
+                missionView.gameObject.SetActive(available);
+            }
+        }
+
+        private bool IsMissionAvailable(int index, LevelDifficulty difficulty)
+        {
+            var prev = GetPreviousMission(index);
+            
+            if (prev == null) return true;
+            
+            return YG2.saves.IsMissionCompleted(prev.Id, difficulty);
+        }
+
+        private Mission GetPreviousMission(int index)
+        {
+            for (int i = index - 1; i >= 0; i--)
+            {
+                if (_missionService.Missions[i].Id == PrologueId) continue;
+                return _missionService.Missions[i];
+            }
+
+            return null;
+        }
+
+        private void UpdateDifficultyDisplay()
+        {
+            var difficulty = (LevelDifficulty)_difficultyIndex;
+            bool unlocked = _progressionService.IsDifficultyUnlocked(difficulty);
+
+            _locker.gameObject.SetActive(!unlocked);
+            _difficultyText.gameObject.SetActive(unlocked);
+
+            if (!unlocked) return;
+
+            var textType = GetDifficultyTextType(difficulty);
+            _difficultyText.text = _uiLocalizationService.GetLocalizedText(textType);
+            _difficultyText.color = GetDifficultyColor(difficulty);
+
+            if (_progressionService.CurrentDifficulty != difficulty)
+                _progressionService.SetDifficulty(difficulty);
+            
+            RefreshMissions();
+        }
+
+
+        private void NextDifficulty()
+        {
+            _difficultyIndex = (_difficultyIndex + StepDifficulty) % DifficultyCount;
+            UpdateDifficultyDisplay();
+        }
+
+        private void PreviousDifficulty()
+        {
+            _difficultyIndex = (_difficultyIndex - StepDifficulty + DifficultyCount) % DifficultyCount;
+            UpdateDifficultyDisplay();
+        }
+
+        private UITextType GetDifficultyTextType(LevelDifficulty difficulty)
+        {
+            return difficulty switch
+            {
+                LevelDifficulty.Low => UITextType.DifficultyLow,
+                LevelDifficulty.Medium => UITextType.DifficultyMedium,
+                LevelDifficulty.High => UITextType.DifficultyHigh,
+                _ => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null)
+            };
+        }
+
+        private Color GetDifficultyColor(LevelDifficulty difficulty)
+        {
+            return difficulty switch
+            {
+                LevelDifficulty.Low => Colors.GetColor(ColorName.LowColor),
+                LevelDifficulty.Medium => Colors.GetColor(ColorName.MediumColor),
+                LevelDifficulty.High => Colors.GetColor(ColorName.HighColor),
+                _ => Colors.GetColor(ColorName.DefaultWhiteTextColor),
+            };
+        }
+
+        private void MoveBackToScene()
+        {
+            OnBackToSceneButtonPressed?.Invoke();
+        }
+
+        private void OnMoveToMission(Mission mission)
+        {
+            _missionService.SetCurrentMission(mission.Id);
+            OnGoToMission?.Invoke();
+        }
+
+        private void SetMission(Mission mission, MissionView missionView)
+        {
+            missionView.GetMission(mission);
+        }
+    }
+}

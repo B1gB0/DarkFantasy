@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+namespace Project.Scripts.Enemy.StateMachine.Animation.States
+{
+    public class Attack3EnemyAnimatedState : EnemyAnimatedState
+    {
+        public Attack3EnemyAnimatedState(Animator animator, EnemyAnimationNamesBase enemyAnimationNamesBase)
+            : base(animator, enemyAnimationNamesBase)
+        {
+        }
+        
+        public override void Enter()
+        {
+            base.Enter();
+            Animator.CrossFade(EnemyAnimationBase.Attack3, Duration);
+        }
+    }
+}

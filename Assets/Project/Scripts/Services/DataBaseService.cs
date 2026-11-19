@@ -1,0 +1,40 @@
+using Cysharp.Threading.Tasks;
+using Project.Scripts.DataBase;
+using Project.Scripts.DataBase.InitDataSO;
+using Reflex.Attributes;
+
+namespace Project.Scripts.Services
+{
+    public class DataBaseService : IDataBaseService
+    {
+        private const string DataContainer = nameof(DataContainer);
+        private const string PlayerInitDataPath = "PlayerInitData";
+        private const string EnemyInitDataPath = "EnemyInitData";
+        private SpreadsheetContainer _data;
+
+        private IResourceService _resourceService;
+
+        public PlayerInitData PlayerInitData { get; private set; }
+        public EnemyInitData EnemyInitData { get; private set; }
+        public bool IsInitiated { get; private set; }
+        public SpreadsheetContent Content => _data.Content;
+
+        public async UniTask Init()
+        {
+            if (IsInitiated)
+                return;
+
+            _data = await _resourceService.LoadAsset<SpreadsheetContainer>(DataContainer);
+            EnemyInitData = await _resourceService.LoadAsset<EnemyInitData>(EnemyInitDataPath);
+            PlayerInitData = await _resourceService.LoadAsset<PlayerInitData>(PlayerInitDataPath);
+
+            IsInitiated = true;
+        }
+
+        [Inject]
+        private void Construct(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
+    }
+}

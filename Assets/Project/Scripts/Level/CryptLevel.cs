@@ -1,0 +1,110 @@
+﻿using Cysharp.Threading.Tasks;
+using Project.Scripts.Level.Triggers;
+using UnityEngine;
+using YG;
+
+namespace Project.Scripts.Level
+{
+    public class CryptLevel : Level
+    {
+        [SerializeField] private SpawnTrigger _spawnCyclicWaveTrigger;
+        [SerializeField] private NextLevelTrigger _nextLevelTrigger;
+        [SerializeField] private GameObject[] _portals;
+
+        private void OnEnable()
+        {
+            IsInitiatedSpawners += SpawnStartWaves;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies += OnSpawnCyclicWave;
+            OnBossHealthBarCreated += TryShowBossUI;
+        }
+        
+        private void FixedUpdate()
+        {
+            if (_spawnCyclicWaveTrigger.IsEnemySpawned)
+            {
+                SpawnCyclicWave();
+            }
+        }
+
+        private void OnDisable()
+        {
+            IsInitiatedSpawners -= SpawnStartWaves;
+            _spawnCyclicWaveTrigger.OnSpawnEnemies -= OnSpawnCyclicWave;
+            OnBossHealthBarCreated -= TryShowBossUI;
+        }
+
+        private void OnDestroy()
+        {
+            EnemySpawner.OnPriestKilled -= OnPriestKilled;
+            EnemySpawner.OnPriestKilled -= OnShowWaypointToNextLevel;
+            _nextLevelTrigger.OnGoToNextLevel -= HandleMissionTransition;
+        }
+
+        public override async UniTask OnStartLevel()
+        {
+            await base.OnStartLevel();
+            
+            EnemySpawner.OnPriestKilled += OnPriestKilled;
+            EnemySpawner.OnPriestKilled += OnShowWaypointToNextLevel;
+            
+            _nextLevelTrigger.OnGoToNextLevel += HandleMissionTransition;
+        }
+
+        private void SpawnStartWaves()
+        {
+            CreateWaveOfEnemies(FirstWaveEnemy);
+            CreateWaveOfEnemies(SecondWaveEnemy);
+            CreateWaveOfEnemies(ThirdWaveEnemy);
+            CreateWaveOfEnemies(FifthWaveNumber);
+        }
+
+        private void SpawnCyclicWave()
+        {
+            CreateWaveOfEnemyByTimer(FourthWaveEnemy);
+        }
+
+        private void OnSpawnCyclicWave()
+        {
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(true);
+            }
+            
+            IsBossTriggered = true;
+            TryShowBossUI();
+        }
+
+        private void OnPriestKilled()
+        {
+            _nextLevelTrigger.Activate();
+            _spawnCyclicWaveTrigger.OnOffEnemySpawn();
+
+            EnemyWaves[FirstWaveEnemy].KillEnemies();
+            EnemyWaves[SecondWaveEnemy].KillEnemies();
+            EnemyWaves[ThirdWaveEnemy].KillEnemies();
+            EnemyWaves[FourthWaveEnemy].KillEnemies();
+            
+            foreach (var portal in _portals)
+            {
+                portal.SetActive(false);
+            }
+            
+            BossHealthBar.Hide();
+            
+            var missionId = MissionService.CurrentMission.Id;
+            var difficulty = ProgressionService.CurrentDifficulty;
+            YG2.saves.MarkMissionCompleted(missionId, difficulty);
+        }
+        
+        private void HandleMissionTransition()
+        {
+            ViewFactory.GameplayEntryPoint.GetVillageHubExitParameters();
+            ViewFactory.UIScene.HandleGoToNextScene();
+        }
+        
+        private void OnShowWaypointToNextLevel()
+        {
+            NavMeshWaypointService.ShowWaypoint(_nextLevelTrigger.transform);
+        }
+    }
+}

@@ -1,0 +1,50 @@
+﻿using Project.Scripts.UI.View;
+using Reflex.Attributes;
+using UnityEngine;
+
+namespace Project.Scripts.Services
+{
+    public class FloatingTextService : IFloatingTextService
+    {
+        private const string ObjectPoolDamageText = "PoolDamageText";
+        private const int Count = 4;
+        private const bool IsAutoExpand = true;
+        private IPlayerService _playerService;
+
+        private ObjectPool<FloatingTextView> _poolDamageText;
+
+        public void Init(FloatingTextView textView)
+        {
+            _poolDamageText =
+                new ObjectPool<FloatingTextView>(textView, Count, new GameObject(ObjectPoolDamageText).transform)
+                {
+                    AutoExpand = IsAutoExpand
+                };
+        }
+
+        public void OnSpawnFloatingText(
+            string value,
+            Transform target,
+            FloatingTextViewType floatingTextViewType,
+            Color color)
+        {
+            ChangeText(value, target, floatingTextViewType, color);
+        }
+
+        [Inject]
+        private void Construct(IPlayerService playerService)
+        {
+            _playerService = playerService;
+        }
+
+        private void ChangeText(string value, Transform target, FloatingTextViewType floatingTextViewType, Color color)
+        {
+            var textView = _poolDamageText.GetFreeElement();
+            textView.SetFloatingText(value, target, floatingTextViewType, color);
+            textView.Activate();
+
+            var directionToCamera = _playerService.FreeLookCamera.transform.position - textView.transform.position;
+            textView.transform.rotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
+        }
+    }
+}

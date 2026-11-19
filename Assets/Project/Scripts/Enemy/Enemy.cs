@@ -1,0 +1,137 @@
+using System;
+using Project.Scripts.DataBase.Data;
+using Project.Scripts.Effects;
+using Project.Scripts.Enemy.StateMachine.Animation;
+using Project.Scripts.Enemy.StateMachine.Behaviour;
+using Project.Scripts.Experience;
+using Project.Scripts.Services;
+using UnityEngine;
+
+namespace Project.Scripts.Enemy
+{
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider))]
+    public abstract class Enemy : MonoBehaviour, IAcceptable, IScoreActor
+    {
+        [SerializeField] private Animator _animator;
+
+        protected IFloatingTextService FloatingTextService;
+        protected AudioSoundsService AudioSoundsService;
+        protected ParticleEffectsService ParticleEffectsService;
+        protected IExperiencePoints ExperiencePoints;
+        protected ICurrencyService CurrencyService;
+
+        private bool _isDead;
+
+        public event Action<Enemy> Die;
+
+        [field: SerializeField] public Health Health { get; private set; }
+        [field: SerializeField] public EnemyStateMachine EnemyStateMachine { get; private set; }
+        [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
+        [field: SerializeField] public Collider Collider { get; private set; }
+        
+        public int Score { get; private set; }
+        public bool IsEnemy { get; private set; }
+        public bool IsBoss { get; private set; }
+        public bool IsDead => _isDead;
+
+        public EnemyData Data { get; private set; }
+        public Player.Core.Player Player { get; private set; }
+        public EnemyAnimatedStateMachine AnimatedStateMachine { get; private set; }
+        public EnemyType Type { get; private set; }
+        public bool CanFollow { get; private set; }
+        public float Armor { get; private set; }
+
+        private void Start()
+        {
+            AnimatedStateMachine = new EnemyAnimatedStateMachine(_animator);
+        }
+
+        private void OnEnable()
+        {
+            _isDead = false;
+            Health.Die += OnDie;
+            Health.IsDamaged += OnPlayHitEffect;
+        }
+
+        private void OnDisable()
+        {
+            Health.Die -= OnDie;
+            Health.IsDamaged -= OnPlayHitEffect;
+        }
+
+        public void Construct(
+            Player.Core.Player player,
+            EnemyData enemyData,
+            IFloatingTextService floatingTextService,
+            ParticleEffectsService particleEffectsService,
+            AudioSoundsService audioSoundsService,
+            IExperiencePoints experiencePoints,
+            ICurrencyService currencyService)
+        {
+            Player = player;
+            Data = enemyData;
+            Type = Data.Type;
+
+            Score = Data.Score;
+            IsEnemy = true;
+
+            FloatingTextService = floatingTextService;
+            ParticleEffectsService = particleEffectsService;
+            AudioSoundsService = audioSoundsService;
+            ExperiencePoints = experiencePoints;
+            CurrencyService = currencyService;
+
+            Armor = Data.Armor;
+
+            Health.IsSpawnedDamageText += FloatingTextService.OnSpawnFloatingText;
+        }
+
+        public void ChangeFollowEnemyState(bool canFollow)
+        {
+            CanFollow = canFollow;
+        }
+
+        public void AcceptScore(IScoreActorVisitor visitor)
+        {
+            visitor.Visit(this);
+            CurrencyService.AddGold(Data.Gold);
+        }
+
+        public virtual void OnReactState(bool isEnteredToState)
+        {
+        }
+
+        public void ForceKill()
+        {
+            if (_isDead || Health == null) return;
+
+            if (Health.TargetHealth > 0f)
+                Health.TakeDamage(Health.MaxHealth);
+            else
+                OnDie();
+        }
+
+        public void SetIsBoss(bool isBoss)
+        {
+            IsBoss = isBoss;
+        }
+
+        protected virtual void OnDie()
+        {
+            if (_isDead) return;
+            _isDead = true;
+
+            Health.IsSpawnedDamageText -= FloatingTextService.OnSpawnFloatingText;
+
+            Die?.Invoke(this);
+            ParticleEffectsService.PlayEffect(ParticleType.GenericDeath, Health.HitPoint.position);
+        }
+
+        protected virtual void OnPlayHitEffect()
+        {
+            ParticleEffectsService.PlayEffect(ParticleType.BasicHit, Health.HitPoint.position);
+        }
+    }
+}

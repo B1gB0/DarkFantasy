@@ -1,0 +1,158 @@
+﻿using System.Collections.Generic;
+using Cinemachine;
+using Cysharp.Threading.Tasks;
+using Project.Scripts.Characteristics;
+using Project.Scripts.DataBase.Data;
+using Project.Scripts.Player;
+using Project.Scripts.Player.State;
+using Reflex.Attributes;
+using Reflex.Core;
+using Reflex.Injectors;
+using UnityEngine;
+using UnityEngine.UI;
+using YG;
+
+namespace Project.Scripts.Services
+{
+    public class PlayerService : MonoBehaviour, IPlayerService
+    {
+        private const float MinValue = 0f;
+
+        private readonly Dictionary<PlayerType, PlayerData> _playersData = new();
+
+        private Container _container;
+
+        private IDataBaseService _dataBaseService;
+        private IInventoryService _inventoryService;
+        private IProgressionService _progressionService;
+        private IShopService _shopService;
+        
+        public bool IsInitiated { get; private set; }
+        public Player.Core.Player Player { get; private set; }
+
+        public CinemachineFreeLook FreeLookCamera { get; private set; }
+
+        private void Update()
+        {
+            if (YG2.saves == null) return;
+
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            if (characteristics == null) return;
+
+            characteristics.Tick(Time.deltaTime);
+        }
+
+        private void OnDestroy()
+        {
+            if (_inventoryService == null) return;
+
+            _inventoryService.OnEquippedItem -= RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem -= RecalculateEquipment;
+        }
+
+        public UniTask Init()
+        {
+            if (IsInitiated) return UniTask.CompletedTask;
+
+            foreach (var player in _dataBaseService.Content.Players)
+                _playersData.TryAdd(player.Type, player);
+
+            IsInitiated = true;
+            return UniTask.CompletedTask;
+        }
+
+        public PlayerCharacteristics InitPlayerCharacteristics(PlayerData data)
+        {
+            var characteristics = YG2.saves.PlayerCharacteristics;
+
+            if (characteristics == null || characteristics.MaxHealth <= MinValue)
+            {
+                characteristics ??= new PlayerCharacteristics();
+                characteristics.SetStartingData(data);
+            }
+
+            characteristics.SetCharacteristics(this, _shopService, _progressionService);
+            YG2.saves.PlayerCharacteristics = characteristics;
+
+            return characteristics;
+        }
+
+        public PlayerData GetPlayerDataByType(PlayerType type)
+        {
+            return _playersData[type];
+        }
+
+        public Player.Core.Player CreatePlayerByPrefab(Player.Core.Player playerPrefab, Vector3 spawnPoint)
+        {
+            Player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+            GameObjectInjector.InjectObject(Player.gameObject, _container);
+            return Player;
+        }
+
+        public void SpawnPlayer(bool isRevive = false)
+        {
+            Player.gameObject.SetActive(true);
+
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            characteristics?.BindToPlayer(Player);
+
+            RecalculateEquipment();
+
+            if (isRevive || Player.Health.TargetHealth <= MinValue)
+                Player.Health.SetHealthValue(Player.Health.MaxHealth);
+
+            Player.StateMachine.SwitchState(StateId.Idle);
+        }
+
+        public void GetSceneObjects(Container container, CinemachineFreeLook freeLookCamera)
+        {
+            _container = container;
+            FreeLookCamera = freeLookCamera;
+        }
+
+        public void GetButtons(
+            Joystick moveJoystick,
+            Joystick cameraJoystick,
+            Button attackButton,
+            Button rollButton,
+            Button inventoryButton,
+            Button pickUpButton)
+        {
+            Player.InputController.GetButtons(
+                moveJoystick,
+                cameraJoystick,
+                attackButton,
+                rollButton,
+                inventoryButton,
+                pickUpButton);
+        }
+
+        [Inject]
+        public void Construct(
+            IDataBaseService dataBaseService,
+            IShopService shopService,
+            IInventoryService inventoryService,
+            IProgressionService progression)
+        {
+            _dataBaseService = dataBaseService;
+            _shopService = shopService;
+            _inventoryService = inventoryService;
+            _progressionService = progression;
+
+            _inventoryService.OnEquippedItem += RecalculateEquipment;
+            _inventoryService.OnUnEquippedItem += RecalculateEquipment;
+        }
+
+        private void RecalculateEquipment()
+        {
+            var characteristics = YG2.saves.PlayerCharacteristics;
+            if (characteristics == null) return;
+
+            var equipped = _inventoryService.GetEquippedItems();
+            characteristics.RecalculateEquipmentBonuses(equipped);
+
+            if (Player != null && Player.Health != null)
+                Player.Health.SetMaxHealth(characteristics.GetTotalMaxHealth());
+        }
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.Characteristics;
-using _Project.Scripts.Items;
-using _Project.Scripts.Level;
+using Project.Scripts.Characteristics;
+using Project.Scripts.Items;
+using Project.Scripts.Level;
 
 namespace YG
 {

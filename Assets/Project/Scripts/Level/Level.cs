@@ -1,0 +1,296 @@
+﻿using System;
+using System.Collections.Generic;
+using Cinemachine;
+using Cysharp.Threading.Tasks;
+using Project.Scripts.Camera;
+using Project.Scripts.DataBase.InitDataSO;
+using Project.Scripts.Enemy;
+using Project.Scripts.Game.GameRoot;
+using Project.Scripts.Level.Spawners;
+using Project.Scripts.Player;
+using Project.Scripts.Services;
+using Project.Scripts.UI;
+using Project.Scripts.UI.Panel;
+using Project.Scripts.UI.View;
+using Reflex.Attributes;
+using UnityEngine;
+
+namespace Project.Scripts.Level
+{
+    public abstract class Level : MonoBehaviour
+    {
+        protected const int FirstWaveEnemy = 0;
+        protected const int SecondWaveEnemy = 1;
+        protected const int ThirdWaveEnemy = 2;
+        protected const int FourthWaveEnemy = 3;
+        protected const int FifthWaveNumber = 4;
+
+        private const float MinValue = 0f;
+        private const int MinIndex = 0;
+        
+        [SerializeField] protected float SpawnWaveOfEnemyDelay = 10f;
+        [SerializeField] protected List<EnemyWave> EnemyWaves;
+        [SerializeField] protected LootSpawner LootSpawner;
+        
+        [SerializeField] private int _limitEnemies;
+        [SerializeField] private LevelInitData _levelInitData;
+        [SerializeField] private CameraTargetFollower _cameraTargetFollower;
+
+        protected ViewFactory ViewFactory;
+        protected UIRootView UIRootView;
+
+        protected NavMeshWaypointService NavMeshWaypointService;
+        protected MissionService MissionService;
+        protected IProgressionService ProgressionService;
+
+        protected EnemySpawner EnemySpawner;
+        protected BossHealthBar BossHealthBar;
+        protected bool IsBossTriggered;
+
+        private IEnemyService _enemyService;
+        private IPlayerService _playerService;
+        private IUILocalizationService _uiLocalizationService;
+        private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
+        private IFloatingTextService _floatingTextService;
+        private ILootService _lootService;
+        private IDataBaseService _dataBaseService;
+
+        private Enemy.Enemy _boss;
+        private float _lastSpawnTime;
+        private CinemachineFreeLook _cinemachineFreeLook;
+
+        public event Action IsInitiatedSpawners;
+        
+        public event Action OnBossHealthBarCreated;
+
+        public HealthBar HealthBar { get; private set; }
+        public ModifiersPanel ModifiersPanel { get; private set; }
+
+        [Inject]
+        private void Construct(
+            IEnemyService enemyService,
+            IPlayerService playerService,
+            ParticleEffectsService particleEffectsService,
+            AudioSoundsService audioSoundsService,
+            IUILocalizationService uiLocalizationService,
+            NavMeshWaypointService navMeshWaypointService,
+            IFloatingTextService floatingTextService,
+            ILootService lootService,
+            MissionService missionService,
+            IProgressionService progressionService,
+            IDataBaseService dataBaseService)
+        {
+            _enemyService = enemyService;
+            _playerService = playerService;
+            _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
+            _uiLocalizationService = uiLocalizationService;
+            _floatingTextService = floatingTextService;
+            _lootService = lootService;
+            _dataBaseService = dataBaseService;
+            
+            NavMeshWaypointService = navMeshWaypointService;
+            MissionService =  missionService;
+            ProgressionService = progressionService;
+        }
+
+        private void OnDestroy()
+        {
+            EnemySpawner.OnBossSpawned -= OnBossSpawned;
+            EnemySpawner.OnRewardDropped -= LootSpawner.SpawnLoot;
+            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged -= SetBossNameLocalization;
+        }
+
+        public void GetDependencies(
+            CinemachineFreeLook cinemachineFreeLook,
+            ViewFactory viewFactory,
+            UIRootView uiRootView
+        )
+        {
+            _cinemachineFreeLook = cinemachineFreeLook;
+
+            ViewFactory = viewFactory;
+            UIRootView = uiRootView;
+        }
+
+        public virtual async UniTask OnStartLevel()
+        {
+            await CreatePlayer();
+
+            InitSpawners(_enemyService);
+
+            await NavMeshWaypointService.Init();
+        }
+
+        public void TryShowBossUI()
+        {
+            if (!IsBossTriggered || BossHealthBar == null || _boss == null || _boss.IsDead)
+                return;
+
+            BossHealthBar.Show();
+            SetBossNameLocalization();
+
+            OnBossHealthBarCreated -= TryShowBossUI;
+        }
+
+        public void TryHideBossUI()
+        {
+            if (!IsBossTriggered || BossHealthBar == null || _boss == null)
+                return;
+
+            BossHealthBar.Hide();
+        }
+
+        protected void CreateWaveOfEnemyByTimer(int numberWaveEnemy)
+        {
+            if (_lastSpawnTime <= MinValue)
+            {
+                CreateWaveOfEnemies(numberWaveEnemy);
+
+                foreach (var enemy in EnemyWaves[numberWaveEnemy].Enemies)
+                {
+                    enemy.ChangeFollowEnemyState(true);
+                }
+
+                _lastSpawnTime = SpawnWaveOfEnemyDelay;
+            }
+
+            _lastSpawnTime -= Time.fixedDeltaTime;
+        }
+
+        protected void CreateWaveOfEnemies(int numberWave)
+        {
+            if (EnemyWaves.Count == MinIndex)
+                return;
+
+            EnemySpawner.SpawnWave(EnemyWaves[numberWave]);
+        }
+
+        private async UniTask CreatePlayer()
+        {
+            var data = _playerService.GetPlayerDataByType(PlayerType.CommonHero);
+
+            Player.Core.Player player = _playerService.CreatePlayerByPrefab(
+                _dataBaseService.PlayerInitData.CommonHero,
+                _levelInitData.PlayerSpawnPosition);
+
+            var playerCharacteristics = _playerService.InitPlayerCharacteristics(data);
+            
+            player.Construct(
+                playerCharacteristics,
+                _particleEffectsService,
+                _floatingTextService);
+            
+            player.Initialize();
+
+            _cinemachineFreeLook.LookAt = _cameraTargetFollower.transform;
+            _cinemachineFreeLook.Follow = _cameraTargetFollower.transform;
+
+            _playerService.Player.PlayerCollisionHandler.GetEnemyWaves(EnemyWaves);
+            
+            _playerService.SpawnPlayer();
+
+            HealthBar = await ViewFactory.GetOrCreateHealthBar(player.Health);
+            HealthBar.Show();
+
+            ModifiersPanel = await ViewFactory.CreateModifiersPanel();
+            ModifiersPanel.Show();
+        }
+
+        private void SetBossNameLocalization()
+        {
+            if (_boss == null || BossHealthBar == null) return;
+
+            UITextType uiTextType = GetBossUITextType(_boss.Data.Type);
+            string localizedName = GetLocalizedText(uiTextType);
+            BossHealthBar.SetName(localizedName);
+        }
+
+        private async void OnBossSpawned(Enemy.Enemy enemy)
+        {
+            _boss = enemy;
+            await CreateBossHealthBar();
+            OnBossHealthBarCreated?.Invoke();
+            UIRootView.LocalizationLanguageSwitcher.OnLanguageChanged += SetBossNameLocalization;
+        }
+
+        private UITextType GetBossUITextType(EnemyType enemyType) => enemyType switch
+        {
+            EnemyType.Priest => UITextType.PriestName,
+            EnemyType.BanditLeader => UITextType.BanditLeaderName,
+            EnemyType.DarkLord => UITextType.DarkLordName,
+            _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, "Unknown boss type")
+        };
+
+        private string GetLocalizedText(UITextType uiTextType)
+        {
+            var text = _uiLocalizationService.GetLocalizedText(uiTextType);
+            return text;
+        }
+
+        private void InitSpawners(IEnemyService enemyService)
+        {
+            InitEnemyWaves();
+
+            EnemySpawner = new EnemySpawner(
+                enemyService,
+                _limitEnemies,
+                _audioSoundsService,
+                _particleEffectsService,
+                _lootService);
+
+            LootSpawner.GetViews(
+                ViewFactory.UIScene.RewardView,
+                ViewFactory.UIScene.InteractView,
+                ViewFactory.UIScene.InventoryIsFullView);
+
+            EnemySpawner.OnBossSpawned += OnBossSpawned;
+            EnemySpawner.OnRewardDropped += LootSpawner.SpawnLoot;
+
+            IsInitiatedSpawners?.Invoke();
+        }
+
+        private void InitEnemyWaves()
+        {
+            for (int i = MinIndex; i < EnemyWaves.Count; i++)
+            {
+                switch (i)
+                {
+                    case FirstWaveEnemy:
+                        EnemyWaves[i].GetEnemyPositions(
+                            _levelInitData.FirstWaveSpawnPoints,
+                            _levelInitData.EnemyFirstPatrolPositions);
+                        break;
+                    case SecondWaveEnemy:
+                        EnemyWaves[i].GetEnemyPositions(
+                            _levelInitData.SecondWaveSpawnPoints,
+                            _levelInitData.EnemySecondPatrolPositions);
+                        break;
+                    case ThirdWaveEnemy:
+                        EnemyWaves[i].GetEnemyPositions(
+                            _levelInitData.ThirdWaveSpawnPoints,
+                            _levelInitData.EnemyThirdPatrolPositions);
+                        break;
+                    case FourthWaveEnemy:
+                        EnemyWaves[i].GetEnemyPositions(
+                            _levelInitData.FourthWaveSpawnPoints,
+                            _levelInitData.EnemyFourthPatrolPositions);
+                        break;
+                    case FifthWaveNumber:
+                        EnemyWaves[i].GetEnemyPositions(
+                            _levelInitData.FifthWaveSpawnPoints,
+                            _levelInitData.EnemyFifthPatrolPositions);
+                        break;
+                    default:
+                        throw new Exception("There is not enough data for new waves");
+                }
+            }
+        }
+
+        private async UniTask CreateBossHealthBar()
+        {
+            BossHealthBar = await ViewFactory.CreateBossHealthBar(_boss.Health);
+        }
+    }
+}

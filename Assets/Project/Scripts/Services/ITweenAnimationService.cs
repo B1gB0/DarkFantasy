@@ -1,0 +1,22 @@
+using UnityEngine;
+
+namespace Project.Scripts.Services
+{
+    public interface ITweenAnimationService : IService
+    {
+        public void AnimateScale(Transform target, bool isDisableTarget = false);
+
+        public void AnimateMove(
+            Transform target,
+            Transform showPoint,
+            Transform hidePoint,
+            bool isDisableTarget = false,
+            bool isSetParentToPoint = false);
+
+        public void AnimatePointer(Transform target, Transform pointerPoint);
+        
+        public void AnimateFade(Transform target, bool isFade = false);
+        
+        public void AnimateTemporaryAppearance(Transform target);
+    }
+}

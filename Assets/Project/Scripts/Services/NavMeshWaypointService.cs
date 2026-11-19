@@ -1,0 +1,55 @@
+﻿using Cysharp.Threading.Tasks;
+using Project.Scripts.UI.View;
+using Reflex.Attributes;
+using UnityEngine;
+
+namespace Project.Scripts.Services
+{
+    public class NavMeshWaypointService : MonoBehaviour, IService
+    {
+        private const string NavMeshWaypointPath = "WaypointLine";
+
+        private IPlayerService _playerService;
+        private IResourceService _resourceService;
+
+        private NavMeshWaypoint _waypoint;
+
+        public bool IsInitiated { get; private set; }
+
+        public async UniTask Init()
+        {
+            if (_waypoint != null)
+                _waypoint.GetPlayer(_playerService.Player);
+
+            if (IsInitiated) return;
+
+            var waypointTemplate = await _resourceService.LoadAsset<GameObject>(NavMeshWaypointPath);
+            waypointTemplate = Instantiate(waypointTemplate);
+
+            _waypoint = waypointTemplate.GetComponent<NavMeshWaypoint>();
+            _waypoint.GetPlayer(_playerService.Player);
+
+            DontDestroyOnLoad(_waypoint.gameObject);
+
+            IsInitiated = true;
+        }
+
+        [Inject]
+        private void Construct(IPlayerService playerService, IResourceService resourceService)
+        {
+            _playerService = playerService;
+            _resourceService = resourceService;
+        }
+
+        public void ShowWaypoint(Transform target)
+        {
+            _waypoint.SetTarget(target);
+            _waypoint.SetActive(true);
+        }
+
+        public void HideWaypoint()
+        {
+            _waypoint.SetActive(false);
+        }
+    }
+}

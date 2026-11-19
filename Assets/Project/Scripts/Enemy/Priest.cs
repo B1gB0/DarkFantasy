@@ -1,0 +1,28 @@
+﻿using Cysharp.Threading.Tasks;
+using Project.Scripts.Audio.Sounds;
+using Project.Scripts.Effects;
+using Project.Scripts.Weapon.Enemy;
+using UnityEngine;
+
+namespace Project.Scripts.Enemy
+{
+    public class Priest : Enemy
+    {
+        [field: SerializeField] public UnityEngine.AI.NavMeshAgent NavMeshAgent { get; private set; }
+        [field: SerializeField] public FireballSpell FireballSpell { get; private set; }
+        [field: SerializeField] public Coil Coil { get; private set; }
+        [field: SerializeField] public Omni Omni { get; private set; }
+        
+        protected override void OnPlayHitEffect()
+        {
+            AudioSoundsService.PlaySound(SoundsType.LightArmorHit).Forget();
+            ParticleEffectsService.PlayEffect(ParticleType.RedBloodHit, Player.transform.position);
+        }
+
+        protected override void OnDie()
+        {
+            ExperiencePoints.OnKill(this);
+            base.OnDie();
+        }
+    }
+}
