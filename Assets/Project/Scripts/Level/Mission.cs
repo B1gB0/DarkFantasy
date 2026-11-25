@@ -13,7 +13,7 @@ namespace Project.Scripts.Level
         [field: SerializeField] public string NameRu { get; private set; }
         [field: SerializeField] public string NameEn { get; private set; }
         [field: SerializeField] public string NameTr { get; private set; }
-        
+
         [field: SerializeField] public Sprite Image { get; private set; }
 
         public void SetData(MissionLocalizationData data)

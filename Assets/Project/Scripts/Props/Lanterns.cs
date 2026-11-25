@@ -29,8 +29,7 @@ namespace Project.Scripts.Props
             lightSource.intensity = Mathf.Lerp(
                 lightSource.intensity,
                 _targetIntensity,
-                Time.deltaTime * speed
-            );
+                Time.deltaTime * speed);
         }
     }
 }

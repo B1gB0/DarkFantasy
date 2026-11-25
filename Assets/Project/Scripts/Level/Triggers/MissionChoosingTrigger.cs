@@ -5,9 +5,9 @@ namespace Project.Scripts.Level.Triggers
 {
     public class MissionChoosingTrigger : Trigger
     {
-        public event Action OnOpenMissionPanel;
-
         private bool _isMissionPanelOpen;
+
+        public event Action OnOpenMissionPanel;
 
         private void OnTriggerEnter(Collider other)
         {
