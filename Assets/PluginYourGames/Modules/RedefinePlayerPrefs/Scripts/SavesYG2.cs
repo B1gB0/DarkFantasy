@@ -23,13 +23,13 @@ namespace YG
         public bool IsInventoryShopVisited;
         public bool IsMissionPanelVisited;
         public bool IsCampfireVisited;
-        
+
         public bool IsCampfireHealed;
 
         public string EquippedWeaponId;
         public string EquippedArmorId;
         public string EquippedRingId;
-        
+
         public List<string> CompletedLow = new();
         public List<string> CompletedMedium = new();
         public List<string> CompletedHigh = new();
@@ -51,14 +51,14 @@ namespace YG
 
         public List<string> intKeys = new List<string>();
         public List<int> intValues = new List<int>();
-        
+
         public List<string> GetCompletedMissions(LevelDifficulty difficulty)
         {
             return difficulty switch
             {
-                LevelDifficulty.Low    => CompletedLow,
+                LevelDifficulty.Low => CompletedLow,
                 LevelDifficulty.Medium => CompletedMedium,
-                LevelDifficulty.High   => CompletedHigh,
+                LevelDifficulty.High => CompletedHigh,
                 _ => CompletedLow,
             };
         }
@@ -67,7 +67,7 @@ namespace YG
         {
             return GetCompletedMissions(difficulty).Contains(missionId);
         }
-        
+
         public void MarkMissionCompleted(string missionId, LevelDifficulty difficulty)
         {
             var list = GetCompletedMissions(difficulty);

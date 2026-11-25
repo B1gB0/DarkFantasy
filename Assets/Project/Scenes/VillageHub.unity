@@ -879,6 +879,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 119.33, y: -30, z: 0}
+--- !u!114 &1382637554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6624435048850094327, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+  m_PrefabInstance: {fileID: 6885978586469822541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b40fbb7fb44e019769141b5f0a121b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1504714801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1542,6 +1553,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5953121075063434209, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
+      propertyPath: _lootSpawner
+      value: 
+      objectReference: {fileID: 1382637554}
     - target: {fileID: 5953121075063434209, guid: c4be6ca4199b5c14f9f2f4f749a33db2, type: 3}
       propertyPath: _cameraTargetFollower
       value: 

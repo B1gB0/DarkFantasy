@@ -4,11 +4,16 @@ namespace Project.Scripts.Game.Gameplay
 {
     public class GameplayExitParameters
     {
-        public readonly SceneEnterParameters TargetSceneEnterParameters;
+        private readonly SceneEnterParameters _targetSceneEnterParameters;
 
         public GameplayExitParameters(SceneEnterParameters targetSceneEnterParameters)
         {
-            TargetSceneEnterParameters = targetSceneEnterParameters;
+            _targetSceneEnterParameters = targetSceneEnterParameters;
+        }
+
+        public SceneEnterParameters GetTargetSceneEnterParameters()
+        {
+            return _targetSceneEnterParameters;
         }
     }
 }

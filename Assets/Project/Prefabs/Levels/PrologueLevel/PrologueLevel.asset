@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: PrologueLevel
   m_EditorClassIdentifier: 
-  EnemyFirstPatrolPositions:
-  - {x: 6.94, y: 0, z: 31.45}
+  _enemyFirstPatrolPositions:
   - {x: -1.47, y: 0, z: 28.68}
+  - {x: 6.94, y: 0, z: 31.45}
   - {x: 1.8, y: 0, z: 21.87}
-  EnemySecondPatrolPositions:
+  _enemySecondPatrolPositions:
   - {x: -2.41, y: 0, z: 34.15}
-  - {x: 6.25, y: 0, z: 34.89}
   - {x: 5.45, y: 0, z: 42.75}
-  EnemyThirdPatrolPositions: []
-  EnemyFourthPatrolPositions: []
-  EnemyFifthPatrolPositions: []
-  FirstWaveSpawnPoints:
+  - {x: 6.25, y: 0, z: 34.89}
+  _enemyThirdPatrolPositions: []
+  _enemyFourthPatrolPositions: []
+  _enemyFifthPatrolPositions: []
+  _firstWaveSpawnPoints:
   - {x: 7.82, y: 0, z: 30.69}
   - {x: -0.06, y: 0, z: 21.33}
-  SecondWaveSpawnPoints:
+  _secondWaveSpawnPoints:
   - {x: 2.36, y: 0, z: 35.45}
-  ThirdWaveSpawnPoints: []
-  FourthWaveSpawnPoints: []
-  FifthWaveSpawnPoints: []
-  PlayerSpawnPosition: {x: -1.06, y: 0, z: 7.89}
+  _thirdWaveSpawnPoints: []
+  _fourthWaveSpawnPoints: []
+  _fifthWaveSpawnPoints: []
+  _playerSpawnPosition: {x: -1.06, y: 0, z: 7.89}

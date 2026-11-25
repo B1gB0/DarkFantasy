@@ -16,9 +16,9 @@ namespace Project.Scripts.Enemy
     {
         [SerializeField] private Animator _animator;
 
-        protected AudioSoundsService AudioSoundsService;
-        protected ParticleEffectsService ParticleEffectsService;
-        protected IExperiencePoints ExperiencePoints;
+        private AudioSoundsService _audioSoundsService;
+        private ParticleEffectsService _particleEffectsService;
+        private IExperiencePoints _experiencePoints;
 
         private IFloatingTextService _floatingTextService;
         private ICurrencyService _currencyService;
@@ -43,6 +43,10 @@ namespace Project.Scripts.Enemy
         public EnemyType Type { get; private set; }
         public bool CanFollow { get; private set; }
         public float Armor { get; private set; }
+
+        protected AudioSoundsService AudioSoundsService => _audioSoundsService;
+        protected ParticleEffectsService ParticleEffectsService => _particleEffectsService;
+        protected IExperiencePoints ExperiencePoints => _experiencePoints;
 
         private void Start()
         {
@@ -79,9 +83,9 @@ namespace Project.Scripts.Enemy
             IsEnemy = true;
 
             _floatingTextService = floatingTextService;
-            ParticleEffectsService = particleEffectsService;
-            AudioSoundsService = audioSoundsService;
-            ExperiencePoints = experiencePoints;
+            _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
+            _experiencePoints = experiencePoints;
             _currencyService = currencyService;
 
             Armor = Data.Armor;
@@ -127,12 +131,12 @@ namespace Project.Scripts.Enemy
             Health.IsSpawnedDamageText -= _floatingTextService.OnSpawnFloatingText;
 
             Die?.Invoke(this);
-            ParticleEffectsService.PlayEffect(ParticleType.GenericDeath, Health.HitPoint.position);
+            _particleEffectsService.PlayEffect(ParticleType.GenericDeath, Health.HitPoint.position);
         }
 
         protected virtual void OnPlayHitEffect()
         {
-            ParticleEffectsService.PlayEffect(ParticleType.BasicHit, Health.HitPoint.position);
+            _particleEffectsService.PlayEffect(ParticleType.BasicHit, Health.HitPoint.position);
         }
     }
 }

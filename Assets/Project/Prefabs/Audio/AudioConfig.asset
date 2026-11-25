@@ -12,54 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40daddb4f80329e45897db242d727fe1, type: 3}
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
-  Sounds:
-  - ClipName: LightArmorHit
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: ExplosionSoulSound
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: ExplosionFireballSound
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: Fireball
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: PaperButton
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: ExplosionMagic
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: HeavyArmorHit
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: UIButtonClick
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: SkeletonHit
-    Clip: {fileID: 0}
-    IsLoop: 0
-    Volume: 1
-  - ClipName: ActionMusic
-    Clip: {fileID: 0}
-    IsLoop: 1
-    Volume: 1
-  - ClipName: MainMenuMusic
-    Clip: {fileID: 0}
-    IsLoop: 1
-    Volume: 1
-  - ClipName: VillageMusic
-    Clip: {fileID: 0}
-    IsLoop: 1
-    Volume: 1
+  _sounds:
+  - _clipName: LightArmorHit
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: ExplosionSoulSound
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: BuyButtonSound
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: ExplosionFireballSound
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: Fireball
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: PaperButton
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: ExplosionMagic
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: HeavyArmorHit
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: PotionSound
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: UIButtonClick
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: SkeletonHit
+    _clip: {fileID: 0}
+    _isLoop: 0
+    _volume: 1
+  - _clipName: ActionMusic
+    _clip: {fileID: 0}
+    _isLoop: 1
+    _volume: 1
+  - _clipName: MainMenuMusic
+    _clip: {fileID: 0}
+    _isLoop: 1
+    _volume: 1
+  - _clipName: VillageMusic
+    _clip: {fileID: 0}
+    _isLoop: 1
+    _volume: 1
   _soundLabel: Sound
   _musicLabel: Music

@@ -12,7 +12,7 @@ namespace Project.Scripts.Effects
     [CreateAssetMenu(menuName = "ParticlesConfig")]
     public class ParticlesConfig : ScriptableObject
     {
-        public List<ParticleEffect> Particles = new();
+        [SerializeField] private List<ParticleEffect> _particles = new();
 
 #if UNITY_EDITOR
         [SerializeField] private string _particleLabel = "Particles";
@@ -27,12 +27,17 @@ namespace Project.Scripts.Effects
             }
 
             Undo.RecordObject(this, "Import from Addressables");
-            Particles.Clear();
+            _particles.Clear();
 
             ImportByLabel(_particleLabel);
 
             EditorUtility.SetDirty(this);
-            Debug.Log($"Imported from Addressables: {Particles.Count} particles total");
+            Debug.Log($"Imported from Addressables: {_particles.Count} particles total");
+        }
+
+        public List<ParticleEffect> GetParticles()
+        {
+            return _particles;
         }
 
         private void ImportByLabel(string label)
@@ -51,16 +56,14 @@ namespace Project.Scripts.Effects
                     if (particleAsset != null)
                     {
                         var existingParticle
-                            = Particles.FirstOrDefault(p => p.ParticleName == particleAsset.name);
+                            = _particles.FirstOrDefault(p => p.ParticleName == particleAsset.name);
 
                         if (existingParticle == null)
                         {
-                            var particle = new ParticleEffect
-                            {
-                                ParticleName = particleAsset.name,
-                            };
+                            var particle = new ParticleEffect();
+                            particle.SetName(particleAsset.name);
 
-                            Particles.Add(particle);
+                            _particles.Add(particle);
                         }
                     }
                 }

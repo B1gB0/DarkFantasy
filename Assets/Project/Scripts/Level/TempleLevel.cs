@@ -65,7 +65,7 @@ namespace Project.Scripts.Level
 
         private void ShowPortals()
         {
-            IsBossTriggered = true;
+            SetIsBossTriggered(true);
             TryShowBossUI();
 
             foreach (var portal in _portals)

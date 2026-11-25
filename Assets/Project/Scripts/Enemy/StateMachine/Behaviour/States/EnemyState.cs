@@ -9,15 +9,19 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
     {
         protected const int MinValue = 0;
 
-        protected NavMeshAgent Agent;
-        protected Enemy Enemy;
-        protected ParticleEffectsService ParticleEffectsService;
-        protected AudioSoundsService AudioSoundsService;
+        private NavMeshAgent _agent;
+        private Enemy _enemy;
+        private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
 
-        protected EnemyStateMachine EnemyStateMachine => Enemy.EnemyStateMachine;
-        protected EnemyAnimatedStateMachine AnimStateMachine => Enemy.AnimatedStateMachine;
-        protected Player.Core.Player Player => Enemy.Player;
-        protected EnemyData Data => Enemy.Data;
+        protected NavMeshAgent Agent => _agent;
+        protected Enemy Enemy => _enemy;
+        protected ParticleEffectsService ParticleEffectsService => _particleEffectsService;
+        protected AudioSoundsService AudioSoundsService => _audioSoundsService;
+        protected EnemyStateMachine EnemyStateMachine => _enemy.EnemyStateMachine;
+        protected EnemyAnimatedStateMachine AnimStateMachine => _enemy.AnimatedStateMachine;
+        protected Player.Core.Player Player => _enemy.Player;
+        protected EnemyData Data => _enemy.Data;
 
         public virtual void Initialize(
             Enemy enemy,
@@ -25,10 +29,10 @@ namespace Project.Scripts.Enemy.StateMachine.Behaviour.States
             ParticleEffectsService particleEffectsService,
             AudioSoundsService audioSoundsService)
         {
-            Enemy = enemy;
-            Agent = agent;
-            ParticleEffectsService = particleEffectsService;
-            AudioSoundsService = audioSoundsService;
+            _enemy = enemy;
+            _agent = agent;
+            _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
         }
 
         public virtual void Enter()

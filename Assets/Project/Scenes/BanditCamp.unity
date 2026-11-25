@@ -4813,13 +4813,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d109a8943fe43ce97e41e3882a3b2fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnWaveOfEnemyDelay: 10
-  EnemyWaves:
+  _spawnWaveOfEnemyDelay: 10
+  _enemyWaves:
   - {fileID: 11400000, guid: ec44cdc17a92b7b409c0aca4d4843018, type: 2}
   - {fileID: 11400000, guid: a47ccf106402fd8428d604cbcc917af2, type: 2}
   - {fileID: 11400000, guid: 44c750fa6f1394d4ba2744529536d1dd, type: 2}
   - {fileID: 11400000, guid: 1a3ed63015d9e3d43aa59e06619e2043, type: 2}
-  LootSpawner: {fileID: 6300273336773890276}
+  _lootSpawner: {fileID: 6300273336773890276}
   _limitEnemies: 12
   _levelInitData: {fileID: 11400000, guid: 6822431181e266a46a2bc9bad43da49c, type: 2}
   _cameraTargetFollower: {fileID: 658910464}

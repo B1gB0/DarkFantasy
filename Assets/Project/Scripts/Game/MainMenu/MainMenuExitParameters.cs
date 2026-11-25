@@ -4,11 +4,16 @@ namespace Project.Scripts.Game.MainMenu
 {
     public class MainMenuExitParameters
     {
-        public readonly SceneEnterParameters TargetSceneEnterParameters;
+        private readonly SceneEnterParameters _targetSceneEnterParameters;
 
         public MainMenuExitParameters(SceneEnterParameters targetSceneEnterParameters)
         {
-            TargetSceneEnterParameters = targetSceneEnterParameters;
+            _targetSceneEnterParameters = targetSceneEnterParameters;
+        }
+
+        public SceneEnterParameters GetTargetSceneEnterParameters()
+        {
+            return _targetSceneEnterParameters;
         }
     }
 }

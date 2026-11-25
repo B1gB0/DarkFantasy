@@ -13,7 +13,7 @@ namespace Project.Scripts.Audio
     [CreateAssetMenu(menuName = "AudioConfig")]
     public class AudioConfig : ScriptableObject
     {
-        public List<Sound> Sounds = new();
+        [SerializeField] private List<Sound> _sounds = new();
 
 #if UNITY_EDITOR
         [SerializeField] private string _soundLabel = "Sound";
@@ -29,13 +29,18 @@ namespace Project.Scripts.Audio
             }
 
             Undo.RecordObject(this, "Import from Addressables");
-            Sounds.Clear();
+            _sounds.Clear();
 
             ImportByLabel(_soundLabel);
             ImportByLabel(_musicLabel);
 
             EditorUtility.SetDirty(this);
-            Debug.Log($"Imported from Addressables: {Sounds.Count} sounds total");
+            Debug.Log($"Imported from Addressables: {_sounds.Count} sounds total");
+        }
+
+        public List<Sound> GetSounds()
+        {
+            return _sounds;
         }
 
         private void ImportByLabel(string label)
@@ -53,19 +58,18 @@ namespace Project.Scripts.Audio
                     var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(entry.AssetPath);
                     if (clip != null)
                     {
-                        var existingSound = Sounds.FirstOrDefault(s => s.ClipName == clip.name);
+                        var existingSound = _sounds.FirstOrDefault(sound => sound.ClipName == clip.name);
                         if (existingSound == null)
                         {
-                            var sound = new Sound
-                            {
-                                ClipName = clip.name,
-                                Volume = 1f,
-                            };
+                            var sound = new Sound();
+
+                            sound.SetClipName(clip.name);
+                            sound.SetVolume(1f);
 
                             if (label == _musicLabel)
-                                sound.IsLoop = true;
+                                sound.SetIsLoop(true);
 
-                            Sounds.Add(sound);
+                            _sounds.Add(sound);
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Project.Scripts.DataBase.Data;
 using Project.Scripts.Items;
 using Project.Scripts.Services;
@@ -19,34 +20,39 @@ namespace Project.Scripts.Characteristics
         private const float PercentFactor = 100f;
         private const float CritChance = 0.15f;
 
-        public float MaxHealth;
-        public float TargetHealth;
-        public float Armor;
-        public float Damage;
-        public float MoveSpeed;
-        public float RotationSpeed;
+        [JsonProperty] private float _maxHealth;
+        [JsonProperty] private float _targetHealth;
+        [JsonProperty] private float _armor;
+        [JsonProperty] private float _damage;
+        [JsonProperty] private float _rotationSpeed;
+        [JsonProperty] private float _moveSpeed;
 
-        [SerializeField] private List<SpeedModifier> _speedModifiers;
-        [SerializeField] private HealingModifier _healingModifier;
+        [JsonProperty] private List<SpeedModifier> _speedModifiers;
+        [JsonProperty] private HealingModifier _healingModifier;
 
-        [NonSerialized] private float _baseMoveSpeed;
-        [NonSerialized] private IPlayerService _playerService;
-        [NonSerialized] private IShopService _shopService;
-        [NonSerialized] private IProgressionService _progressionService;
+        private float _baseMoveSpeed;
+        private IPlayerService _playerService;
+        private IShopService _shopService;
+        private IProgressionService _progressionService;
 
-        [NonSerialized] private float _equipmentArmorBonus;
-        [NonSerialized] private float _equipmentDamageBonus;
-        [NonSerialized] private float _equipmentMaxHealthBonus;
-        [NonSerialized] private float _equipmentHealthRegenBonus;
-        [NonSerialized] private float _equipmentMoveSpeedBonus;
-        [NonSerialized] private float _equipmentAttackSpeedBonus;
-        [NonSerialized] private float _equipmentCritDamageBonus;
-        [NonSerialized] private float _equipmentReverseDamageBonus;
+        private float _equipmentArmorBonus;
+        private float _equipmentDamageBonus;
+        private float _equipmentMaxHealthBonus;
+        private float _equipmentHealthRegenBonus;
+        private float _equipmentMoveSpeedBonus;
+        private float _equipmentAttackSpeedBonus;
+        private float _equipmentCritDamageBonus;
+        private float _equipmentReverseDamageBonus;
 
         private float _healthRegenInterval = 1f;
 
-        public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
-        public HealingModifier HealingModifier => _healingModifier;
+        [JsonIgnore] public float MaxHealth => _maxHealth;
+        [JsonIgnore] public float Armor => _armor;
+        [JsonIgnore] public float Damage => _damage;
+        [JsonIgnore] public float RotationSpeed => _rotationSpeed;
+
+        [JsonIgnore] public IReadOnlyList<SpeedModifier> SpeedModifiers => _speedModifiers;
+        [JsonIgnore] public HealingModifier HealingModifier => _healingModifier;
 
         public float GetTotalArmor() => Armor + _equipmentArmorBonus;
 
@@ -62,12 +68,12 @@ namespace Project.Scripts.Characteristics
 
         public void SetStartingData(PlayerData data)
         {
-            MaxHealth = data.Health;
-            TargetHealth = data.Health;
-            MoveSpeed = data.MoveSpeed;
-            RotationSpeed = data.RotationSpeed;
-            Armor = data.Armor;
-            Damage = data.Damage;
+            _maxHealth = data.Health;
+            _targetHealth = data.Health;
+            _moveSpeed = data.MoveSpeed;
+            _rotationSpeed = data.RotationSpeed;
+            _armor = data.Armor;
+            _damage = data.Damage;
 
             _baseMoveSpeed = data.MoveSpeed;
         }
@@ -88,7 +94,7 @@ namespace Project.Scripts.Characteristics
                     _speedModifiers.RemoveAt(i);
             }
 
-            _baseMoveSpeed = MoveSpeed;
+            _baseMoveSpeed = _moveSpeed;
         }
 
         public void RecalculateEquipmentBonuses(
@@ -129,12 +135,16 @@ namespace Project.Scripts.Characteristics
             if (player == null || player.Health == null)
                 return;
 
-            player.Health.LoadHealth(GetTotalMaxHealth(), TargetHealth);
+            player.Health.LoadHealth(GetTotalMaxHealth(), _targetHealth);
             player.Health.BindCharacteristics(this);
         }
 
         public void Tick(float deltaTime)
         {
+            if (_playerService == null) return;
+
+            if (!_playerService.Player || !_playerService.Player.gameObject.activeInHierarchy) return;
+
             if (_speedModifiers != null && _speedModifiers.Count > MinValue)
             {
                 for (int i = _speedModifiers.Count - CorrectFactor; i >= MinValue; i--)
@@ -197,7 +207,7 @@ namespace Project.Scripts.Characteristics
 
         public void SaveTargetHealth(float targetHealth)
         {
-            TargetHealth = targetHealth;
+            _targetHealth = targetHealth;
         }
 
         public void ApplyImprovement(CharacteristicType type, float factor)
@@ -310,18 +320,18 @@ namespace Project.Scripts.Characteristics
 
         private void IncreaseHealth(float healthValue)
         {
-            MaxHealth += healthValue;
+            _maxHealth += healthValue;
             _playerService.Player.Health.ImproveHealth(healthValue);
         }
 
         private void IncreaseArmor(float armorValue)
         {
-            Armor += armorValue;
+            _armor += armorValue;
         }
 
         private void IncreaseDamage(float damageValue)
         {
-            Damage += damageValue;
+            _damage += damageValue;
         }
     }
 }

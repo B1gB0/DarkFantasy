@@ -48,7 +48,7 @@ namespace Project.Scripts.Effects
             var allParticleNames = new HashSet<string>();
             var stringBuilder = new StringBuilder();
 
-            foreach (var particle in config.Particles)
+            foreach (var particle in config.GetParticles())
             {
                 if (!string.IsNullOrEmpty(particle.ParticleName))
                 {

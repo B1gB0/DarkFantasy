@@ -9,8 +9,6 @@ namespace Project.Scripts.Items
 {
     public class LootChest : MonoBehaviour
     {
-        public readonly int Open = Animator.StringToHash(nameof(Open));
-
         private const float Duration = 0.1f;
 
         [SerializeField] private Animator _animator;
@@ -25,6 +23,8 @@ namespace Project.Scripts.Items
         public event Action OnInventoryIsFull;
 
         public event Action<LootResult> OnChestOpened;
+
+        public int Open { get; } = Animator.StringToHash(nameof(Open));
 
         [Inject]
         private void Construct(

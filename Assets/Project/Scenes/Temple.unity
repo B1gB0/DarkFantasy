@@ -1978,6 +1978,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 565094024}
     - target: {fileID: 1628756667268099193, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
+      propertyPath: _lootSpawner
+      value: 
+      objectReference: {fileID: 565094024}
+    - target: {fileID: 1628756667268099193, guid: 50959184ebd021b40a23b62b3a4fdbb4, type: 3}
       propertyPath: _limitEnemies
       value: 12
       objectReference: {fileID: 0}

@@ -24,7 +24,7 @@ namespace Project.Scripts.DataBase.InitDataSO
             GameObject[] fourthWavePoints = GameObject.FindGameObjectsWithTag("FourthWaveEnemySpawnPoints");
             GameObject[] fifthWavePoints = GameObject.FindGameObjectsWithTag("FifthWaveEnemySpawnPoints");
 
-            _levelInitData.PlayerSpawnPosition = playerSpawnPoint.transform.position;
+            _levelInitData.SetPlayerSpawnPosition(playerSpawnPoint.transform.position);
 
             _levelInitData.EnemyFirstPatrolPositions.Clear();
             _levelInitData.EnemySecondPatrolPositions.Clear();

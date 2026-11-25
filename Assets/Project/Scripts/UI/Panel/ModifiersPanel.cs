@@ -117,8 +117,8 @@ namespace Project.Scripts.UI.Panel
             {
                 _buffer.Add(new ModifierViewData(
                     ModifierType.Health,
-                    heal.Timer.RemainingTime,
-                    heal.Timer.TotalDuration));
+                    heal.Timer.GetRemainingTime(),
+                    heal.Timer.GetTotalDuration()));
             }
 
             var speedModifiers = _playerService.Player.PlayerCharacteristics.SpeedModifiers;
@@ -129,8 +129,8 @@ namespace Project.Scripts.UI.Panel
 
                 _buffer.Add(new ModifierViewData(
                     ModifierType.Speed,
-                    speedModifier.Timer.RemainingTime,
-                    speedModifier.Timer.TotalDuration));
+                    speedModifier.Timer.GetRemainingTime(),
+                    speedModifier.Timer.GetTotalDuration()));
             }
 
             return _buffer;

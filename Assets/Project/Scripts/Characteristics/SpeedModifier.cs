@@ -1,21 +1,26 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Project.Scripts.Characteristics
 {
     [Serializable]
     public class SpeedModifier
     {
-        public ModifierTimer Timer;
-        public float Value;
-        public bool IsMultiplier;
+        [JsonProperty] private ModifierTimer _timer;
+        [JsonProperty] private float _value;
+        [JsonProperty] private bool _isMultiplier;
 
         public SpeedModifier(float value, bool isMultiplier, float duration)
         {
-            Value = value;
-            IsMultiplier = isMultiplier;
-            Timer = new ModifierTimer(duration);
+            _value = value;
+            _isMultiplier = isMultiplier;
+            _timer = new ModifierTimer(duration);
         }
 
-        public bool Tick(float deltaTime) => Timer.Tick(deltaTime);
+        [JsonIgnore] public ModifierTimer Timer => _timer;
+        [JsonIgnore] public float Value => _value;
+        [JsonIgnore] public bool IsMultiplier => _isMultiplier;
+
+        public bool Tick(float deltaTime) => _timer.Tick(deltaTime);
     }
 }

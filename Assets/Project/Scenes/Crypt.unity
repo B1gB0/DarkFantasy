@@ -20797,6 +20797,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7601994939830411270}
     - target: {fileID: 3041254214612064319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
+      propertyPath: _lootSpawner
+      value: 
+      objectReference: {fileID: 7601994939830411270}
+    - target: {fileID: 3041254214612064319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
       propertyPath: _limitEnemies
       value: 10
       objectReference: {fileID: 0}
@@ -20856,6 +20860,14 @@ PrefabInstance:
       propertyPath: EnemyWaves.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: 55374968a93634943aafdabfb3d490b3, type: 2}
+    - target: {fileID: 3041254214612064319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
+      propertyPath: _enemyWaves.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: bab0f41ac48aa5649966c919f291fb36, type: 2}
+    - target: {fileID: 3041254214612064319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
+      propertyPath: _enemyWaves.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 975049dca9cc4d94e8a813a7f54738be, type: 2}
     - target: {fileID: 3041254214612064319, guid: 422acc4162ec5af4ba25081c9faa7b03, type: 3}
       propertyPath: _enemyWaves.Array.data[2]
       value: 

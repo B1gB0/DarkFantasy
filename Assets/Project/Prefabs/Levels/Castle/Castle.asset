@@ -12,40 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ef0295262d4c2f88de3bfe51b52dc4, type: 3}
   m_Name: Castle
   m_EditorClassIdentifier: 
-  EnemyFirstPatrolPositions:
-  - {x: 16.46, y: 0, z: 22.71}
-  - {x: 26.59, y: 0, z: 26.36}
-  - {x: 19.6, y: 0, z: 33.5}
-  - {x: 10.63, y: 0, z: 37.42}
-  EnemySecondPatrolPositions:
-  - {x: 26.39, y: 0, z: 16.04}
-  - {x: 7.82, y: 0, z: 17.68}
-  - {x: 16.59, y: 0, z: 19.67}
-  EnemyThirdPatrolPositions:
-  - {x: 4.15, y: 0, z: 5.08}
-  - {x: 25.29, y: 0, z: -1.06}
-  - {x: 16.84, y: 0, z: -4.99}
-  EnemyFourthPatrolPositions:
-  - {x: 17.09, y: 0, z: 13.89}
-  EnemyFifthPatrolPositions: []
-  FirstWaveSpawnPoints:
-  - {x: 22.97, y: 0, z: 29.3}
-  - {x: 7.32, y: 0, z: 29.59}
-  - {x: 22.97, y: 0, z: 37.44}
-  - {x: 10.83, y: 0, z: 39.97}
-  SecondWaveSpawnPoints:
-  - {x: 8.42, y: 0, z: 13.6}
-  - {x: 23.46, y: 0, z: 9.92}
-  - {x: 23.22, y: 0, z: 18.84}
-  - {x: 13.31, y: 0, z: 26.44}
-  ThirdWaveSpawnPoints:
-  - {x: 11.35, y: 0, z: 5.23}
-  - {x: 23.37, y: 0, z: -4.87}
-  - {x: 7.68, y: 0, z: -2.2}
-  - {x: 22.86, y: 0, z: 4.54}
-  FourthWaveSpawnPoints:
-  - {x: 24.81, y: 0, z: 21.66}
-  - {x: 18.06, y: 0, z: 25.45}
-  - {x: 12.14, y: 0, z: 19.12}
-  FifthWaveSpawnPoints: []
-  PlayerSpawnPosition: {x: 15.17, y: 0, z: 54.89}
+  _enemyFirstPatrolPositions:
+  - {x: 16.363155, y: 0.032925323, z: 22.7175}
+  - {x: 26.498459, y: -0.07202175, z: 26.351244}
+  - {x: 19.520325, y: 0.0028608888, z: 33.50245}
+  - {x: 10.557128, y: 0.09761639, z: 37.436836}
+  _enemySecondPatrolPositions:
+  - {x: 26.281881, y: -0.07256624, z: 16.031578}
+  - {x: 7.7155566, y: 0.12194652, z: 17.701374}
+  - {x: 16.488266, y: 0.030790374, z: 19.677298}
+  _enemyThirdPatrolPositions:
+  - {x: 4.0255094, y: 0.1570884, z: 5.1072774}
+  - {x: 25.15446, y: -0.06543505, z: -1.066634}
+  - {x: 16.698614, y: 0.021881133, z: -4.9830704}
+  _enemyFourthPatrolPositions:
+  - {x: 16.978947, y: 0.024088591, z: 13.896503}
+  _enemyFifthPatrolPositions: []
+  _firstWaveSpawnPoints:
+  - {x: 22.883387, y: -0.033434764, z: 29.297049}
+  - {x: 7.2347274, y: 0.13021341, z: 29.612158}
+  - {x: 22.89647, y: -0.031356454, z: 37.437035}
+  - {x: 10.761214, y: 0.096177064, z: 39.986515}
+  _secondWaveSpawnPoints:
+  - {x: 8.308965, y: 0.1146336, z: 13.620416}
+  - {x: 23.342207, y: -0.043504402, z: 9.916287}
+  - {x: 23.116558, y: -0.038718447, z: 18.83666}
+  - {x: 13.21933, y: 0.06680153, z: 26.452553}
+  _thirdWaveSpawnPoints:
+  - {x: 11.225348, y: 0.08187212, z: 5.2457247}
+  - {x: 23.228443, y: -0.046339944, z: -4.873548}
+  - {x: 7.5436106, y: 0.11833401, z: -2.178377}
+  - {x: 22.733597, y: -0.038606837, z: 4.537257}
+  _fourthWaveSpawnPoints:
+  - {x: 24.711004, y: -0.054617167, z: 21.654106}
+  - {x: 17.967472, y: 0.016901657, z: 25.454931}
+  - {x: 12.037629, y: 0.077161446, z: 19.13444}
+  _fifthWaveSpawnPoints: []
+  _playerSpawnPosition: {x: 15.124953, y: 0.054624677, z: 54.89953}

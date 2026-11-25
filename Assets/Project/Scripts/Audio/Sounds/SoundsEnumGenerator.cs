@@ -48,7 +48,7 @@ namespace Project.Scripts.Audio.Sounds
             var allClipNames = new HashSet<string>();
             var stringBuilder = new StringBuilder();
 
-            foreach (var sound in config.Sounds)
+            foreach (var sound in config.GetSounds())
             {
                 if (!string.IsNullOrEmpty(sound.ClipName))
                 {

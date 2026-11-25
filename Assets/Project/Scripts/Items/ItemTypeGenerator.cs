@@ -38,7 +38,7 @@ namespace Project.Scripts.Items
             sb.AppendLine("//     the code is regenerated.");
             sb.AppendLine("// </auto-generated>");
             sb.AppendLine();
-            sb.AppendLine("namespace _Project.Scripts.Items");
+            sb.AppendLine("namespace Project.Scripts.Items");
             sb.AppendLine("{");
             sb.AppendLine("    public enum ItemType");
             sb.AppendLine("    {");

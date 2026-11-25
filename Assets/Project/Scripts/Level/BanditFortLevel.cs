@@ -67,7 +67,7 @@ namespace Project.Scripts.Level
 
         private void OnSpawnCyclicWave()
         {
-            IsBossTriggered = true;
+            SetIsBossTriggered(true);
             TryShowBossUI();
         }
 

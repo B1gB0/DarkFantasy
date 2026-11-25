@@ -5,23 +5,28 @@ namespace Project.Scripts.Weapon
 {
     public abstract class Weapon : MonoBehaviour
     {
-        protected AudioSoundsService AudioSoundsService;
-        protected ParticleEffectsService ParticleEffectsService;
-        protected float Damage;
-        protected Transform Target;
+        private AudioSoundsService _audioSoundsService;
+        private ParticleEffectsService _particleEffectsService;
+        private float _damage;
+        private Transform _target;
+
+        protected AudioSoundsService AudioSoundsService => _audioSoundsService;
+        protected ParticleEffectsService ParticleEffectsService => _particleEffectsService;
+        protected float Damage => _damage;
+        protected Transform Target => _target;
 
         public abstract void Attack();
 
         public void GetServices(AudioSoundsService audioSoundsService, ParticleEffectsService particleEffectsService)
         {
-            AudioSoundsService = audioSoundsService;
-            ParticleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
         }
 
         public virtual void SetData(Transform target, float damage)
         {
-            Target = target;
-            Damage = damage;
+            _target = target;
+            _damage = damage;
         }
     }
 }

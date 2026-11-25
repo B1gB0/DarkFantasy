@@ -8,23 +8,29 @@ namespace Project.Scripts.Projectile
     {
         private const float DefaultDirectionY = 0f;
 
-        protected float Damage;
-
-        protected Vector3 Direction;
-        protected Transform Transform;
-
-        protected ParticleEffectsService ParticleEffectsService;
-        protected AudioSoundsService AudioSoundsService;
-
         [SerializeField] private LayerMask[] _layers;
+
+        private float _damage;
+
+        private Vector3 _direction;
+        private Transform _transform;
+
+        private ParticleEffectsService _particleEffectsService;
+        private AudioSoundsService _audioSoundsService;
 
         private float _projectileSpeed;
 
         [field: SerializeField] public float LifeTime { get; private set; } = 4f;
 
+        protected float Damage => _damage;
+        protected Vector3 Direction => _direction;
+        protected Transform Transform => _transform;
+        protected ParticleEffectsService ParticleEffectsService => _particleEffectsService;
+        protected AudioSoundsService AudioSoundsService => _audioSoundsService;
+
         private void Awake()
         {
-            Transform = transform;
+            _transform = transform;
         }
 
         protected virtual void OnEnable()
@@ -34,7 +40,7 @@ namespace Project.Scripts.Projectile
 
         protected virtual void FixedUpdate()
         {
-            Transform.position += Direction * (_projectileSpeed * Time.fixedDeltaTime);
+            _transform.position += _direction * (_projectileSpeed * Time.fixedDeltaTime);
         }
 
         protected virtual void OnTriggerEnter(Collider collision)
@@ -43,7 +49,7 @@ namespace Project.Scripts.Projectile
 
             if (collision.gameObject.TryGetComponent(out Enemy.Enemy enemy))
             {
-                enemy.Health.TakeDamage(Damage);
+                enemy.Health.TakeDamage(_damage);
                 gameObject.SetActive(false);
             }
         }
@@ -55,22 +61,22 @@ namespace Project.Scripts.Projectile
 
         public virtual void SetDirection(Vector3 targetPosition)
         {
-            Direction = (targetPosition - Transform.position).normalized;
-            Transform.forward = Direction;
-            Direction.y = DefaultDirectionY;
-            Direction = Direction.normalized;
+            _direction = (targetPosition - _transform.position).normalized;
+            _transform.forward = _direction;
+            _direction.y = DefaultDirectionY;
+            _direction = _direction.normalized;
         }
 
         public void SetCharacteristics(float damage, float bulletSpeed)
         {
-            Damage = damage;
+            _damage = damage;
             _projectileSpeed = bulletSpeed;
         }
 
         public void GetServices(ParticleEffectsService particleEffectsService, AudioSoundsService audioSoundsService)
         {
-            ParticleEffectsService = particleEffectsService;
-            AudioSoundsService = audioSoundsService;
+            _particleEffectsService = particleEffectsService;
+            _audioSoundsService = audioSoundsService;
         }
 
         protected void CheckBordersLayers(Collider collision)

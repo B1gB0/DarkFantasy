@@ -19,7 +19,7 @@ namespace Project.Scripts.Editor
 
             EditorGUILayout.Space(20);
             EditorGUILayout.LabelField("Particles List", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("Particles"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_particles"), true);
 
             serializedObject.ApplyModifiedProperties();
 
@@ -44,7 +44,7 @@ namespace Project.Scripts.Editor
                 {
                     var config = (ParticlesConfig)target;
                     Undo.RecordObject(config, "Clear All");
-                    config.Particles.Clear();
+                    config.GetParticles().Clear();
                     EditorUtility.SetDirty(config);
                 }
             }
@@ -67,7 +67,7 @@ namespace Project.Scripts.Editor
                 var config = (ParticlesConfig)target;
                 Undo.RecordObject(config, "Sort by Name");
 
-                config.Particles.Sort((a, b) => string.Compare(
+                config.GetParticles().Sort((a, b) => string.Compare(
                     a.ParticleName,
                     b.ParticleName,
                     StringComparison.Ordinal));
@@ -86,7 +86,7 @@ namespace Project.Scripts.Editor
             bool hasErrors = false;
             var particleNames = new HashSet<string>();
 
-            foreach (var particle in config.Particles)
+            foreach (var particle in config.GetParticles())
             {
                 if (string.IsNullOrEmpty(particle.ParticleName))
                 {
@@ -102,7 +102,7 @@ namespace Project.Scripts.Editor
 
             if (!hasErrors)
             {
-                Debug.Log($"AudioConfig is valid. Total sounds: {config.Particles.Count}");
+                Debug.Log($"AudioConfig is valid. Total sounds: {config.GetParticles().Count}");
             }
         }
     }

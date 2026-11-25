@@ -56,6 +56,8 @@ namespace Project.Scripts.Level
             _missionChoosingPanel.OnBackToSceneButtonPressed -= HealthBar.Show;
             _missionChoosingPanel.OnBackToSceneButtonPressed -= ModifiersPanel.Show;
             _missionChoosingPanel.OnGoToMission -= HandleMissionTransition;
+
+            YG2.SaveProgress();
         }
 
         public override async UniTask OnStartLevel()

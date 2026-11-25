@@ -9,10 +9,10 @@ namespace Project.Scripts.UI.View
 {
     public abstract class Bar : View
     {
-        [SerializeField] protected Slider SmoothSlider;
-        [SerializeField] protected Slider Slider;
+        [SerializeField] private Slider _smoothSlider;
+        [SerializeField] private Slider _slider;
 
-        [SerializeField] protected TMP_Text TextValue;
+        [SerializeField] private TMP_Text _textValue;
 
         [SerializeField] private bool _isShowTextValue;
 
@@ -29,7 +29,7 @@ namespace Project.Scripts.UI.View
 
         private void Start()
         {
-            TextValue.gameObject.SetActive(_isShowTextValue);
+            _textValue.gameObject.SetActive(_isShowTextValue);
         }
 
         private void OnDestroy()
@@ -55,12 +55,12 @@ namespace Project.Scripts.UI.View
 
         protected void SetValues(float currentValue, float maxValue, float targetValue)
         {
-            SmoothSlider.value = currentValue / maxValue;
+            _smoothSlider.value = currentValue / maxValue;
 
-            Slider.value = targetValue / maxValue;
+            _slider.value = targetValue / maxValue;
 
             if (!_isShowTextValue) return;
-            TextValue.text = (int)targetValue + "/" + (int)maxValue;
+            _textValue.text = (int)targetValue + "/" + (int)maxValue;
         }
     }
 }

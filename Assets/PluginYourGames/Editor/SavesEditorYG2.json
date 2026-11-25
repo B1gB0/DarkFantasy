@@ -1,9 +1,9 @@
 {
-  "Gold": 1010,
-  "AcumulatedScore": 3220,
-  "HealthAttributeNumber": 6,
-  "DamageAttributeNumber": 7,
-  "ArmorAttributeNumber": 6,
+  "Gold": 1620,
+  "AcumulatedScore": 1900,
+  "HealthAttributeNumber": 4,
+  "DamageAttributeNumber": 2,
+  "ArmorAttributeNumber": 2,
   "IsFirstLaunch": false,
   "IsMediumDifficultyUnlock": true,
   "IsHardDifficultyUnlock": true,
@@ -12,11 +12,13 @@
   "IsMissionPanelVisited": true,
   "IsCampfireVisited": true,
   "IsCampfireHealed": false,
-  "EquippedWeaponId": "8d8b6a6c-cb26-4f41-8652-3341da80b395",
-  "EquippedArmorId": "45a828f7-e8b3-400b-893d-8364010d8eb5",
-  "EquippedRingId": "1080f285-9538-4a36-a34b-659b47f43c4b",
+  "EquippedWeaponId": "c63ace68-c1d8-492b-aef3-cab8b11f7b2c",
+  "EquippedArmorId": "0184f680-3941-457f-9edd-82bfd9000481",
+  "EquippedRingId": "159e75de-dee7-4b40-9d6d-a76e6274ad31",
   "CompletedLow": [
-    "graveyard"
+    "graveyard",
+    "banditCamp",
+    "castle"
   ],
   "CompletedMedium": [
     "graveyard",
@@ -24,100 +26,97 @@
     "castle"
   ],
   "CompletedHigh": [],
-  "Consumables": {},
+  "Consumables": {
+    "SpeedPotion": 1
+  },
   "Equipment": [
     {
-      "Id": "08733bf0-07db-4f29-b91c-88093016ec99",
-      "Type": 10,
-      "Difficulty": 0
+      "_id": "11d12252-5118-4da2-b3d5-0d8633c753c1",
+      "_type": 5,
+      "_difficulty": 0
     },
     {
-      "Id": "4c92b26f-47e9-4255-b07d-36c5bc298cd4",
-      "Type": 8,
-      "Difficulty": 0
+      "_id": "3d20c01e-2ba3-404d-8b42-ac6a9e1c30dc",
+      "_type": 14,
+      "_difficulty": 0
     },
     {
-      "Id": "1080f285-9538-4a36-a34b-659b47f43c4b",
-      "Type": 4,
-      "Difficulty": 0
+      "_id": "ee100ff6-629b-4166-abee-cac6143233ed",
+      "_type": 10,
+      "_difficulty": 0
     },
     {
-      "Id": "eda59d7e-38b0-4925-b0df-2917c962867b",
-      "Type": 5,
-      "Difficulty": 0
+      "_id": "3cd395ec-206d-4ed9-8c87-9a960bff5f3c",
+      "_type": 8,
+      "_difficulty": 0
     },
     {
-      "Id": "35ffdabb-93ff-4674-beee-a0510542e563",
-      "Type": 12,
-      "Difficulty": 0
+      "_id": "b590aa97-92ba-4d0a-8611-fa1662b231c1",
+      "_type": 4,
+      "_difficulty": 0
     },
     {
-      "Id": "45a828f7-e8b3-400b-893d-8364010d8eb5",
-      "Type": 15,
-      "Difficulty": 0
+      "_id": "159e75de-dee7-4b40-9d6d-a76e6274ad31",
+      "_type": 9,
+      "_difficulty": 0
     },
     {
-      "Id": "65697818-0e32-471a-a570-2dcb7a985157",
-      "Type": 9,
-      "Difficulty": 0
+      "_id": "55054cf8-97d3-4a83-8fe8-a07015886c6d",
+      "_type": 12,
+      "_difficulty": 0
     },
     {
-      "Id": "8d8b6a6c-cb26-4f41-8652-3341da80b395",
-      "Type": 10,
-      "Difficulty": 1
+      "_id": "0184f680-3941-457f-9edd-82bfd9000481",
+      "_type": 15,
+      "_difficulty": 0
     },
     {
-      "Id": "ebf6e2c9-1e91-43ec-863a-328494eaf27d",
-      "Type": 8,
-      "Difficulty": 1
+      "_id": "1398987f-6553-42de-994d-a972aea3e9a4",
+      "_type": 10,
+      "_difficulty": 1
     },
     {
-      "Id": "d09d2602-b153-4209-8239-a0998a6b5f86",
-      "Type": 4,
-      "Difficulty": 1
+      "_id": "6d12bc8c-6512-41e4-971b-dbe894af14c7",
+      "_type": 4,
+      "_difficulty": 1
     },
     {
-      "Id": "3b488108-c065-4d8c-8f9d-dd9b7bfa016e",
-      "Type": 14,
-      "Difficulty": 1
+      "_id": "379a0408-65e8-4801-ac06-a63c2e303f2c",
+      "_type": 14,
+      "_difficulty": 1
     },
     {
-      "Id": "acd6b86c-844b-49e3-970c-1e57e92727a9",
-      "Type": 12,
-      "Difficulty": 1
+      "_id": "0d234cd2-3aad-4dc9-a66f-d95ed6a651f0",
+      "_type": 8,
+      "_difficulty": 1
     },
     {
-      "Id": "a868246b-d25f-426a-9fd3-5ab4e837cf0a",
-      "Type": 15,
-      "Difficulty": 1
+      "_id": "51cbe1dc-2397-4881-bb19-99069d5a555b",
+      "_type": 15,
+      "_difficulty": 1
     },
     {
-      "Id": "23158cc4-1a23-4343-b87b-bef88a7e8e82",
-      "Type": 9,
-      "Difficulty": 1
+      "_id": "c63ace68-c1d8-492b-aef3-cab8b11f7b2c",
+      "_type": 12,
+      "_difficulty": 1
     },
     {
-      "Id": "8a6d5333-a3a7-4390-bdcb-5011ddfd8d61",
-      "Type": 4,
-      "Difficulty": 2
-    },
-    {
-      "Id": "afd89c99-3102-43df-acdb-10ac727da392",
-      "Type": 10,
-      "Difficulty": 2
+      "_id": "f6f9700c-b667-4137-bcde-0259758b24e1",
+      "_type": 9,
+      "_difficulty": 1
     }
   ],
   "EquippedItemType": 0,
   "CurrentDifficulty": 2,
   "PlayerCharacteristics": {
-    "MaxHealth": 121.0,
-    "TargetHealth": 122.0,
-    "Armor": 23.0,
-    "Damage": 33.0,
-    "MoveSpeed": 6.0,
-    "RotationSpeed": 7.0,
-    "SpeedModifiers": [],
-    "HealingModifier": null
+    "_maxHealth": 110.0,
+    "_targetHealth": 113.0,
+    "_armor": 5.0,
+    "_damage": 8.0,
+    "_rotationSpeed": 7.0,
+    "_moveSpeed": 6.0,
+    "_speedModifiers": [],
+    "_healingModifier": null
   },
   "stringKeys": [],
   "stringValues": [],
@@ -133,5 +132,5 @@
     false,
     false
   ],
-  "idSave": 161
+  "idSave": 119
 }

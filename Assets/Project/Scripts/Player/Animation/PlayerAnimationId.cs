@@ -4,11 +4,11 @@ namespace Project.Scripts.Player.Animation
 {
     public class PlayerAnimationId
     {
-        public readonly int Run = Animator.StringToHash(nameof(Run));
-        public readonly int Attack = Animator.StringToHash(nameof(Attack));
-        public readonly int ComboStep = Animator.StringToHash(nameof(ComboStep));
-        public readonly int Roll = Animator.StringToHash(nameof(Roll));
-        public readonly int SitDown = Animator.StringToHash(nameof(SitDown));
-        public readonly int StandUp = Animator.StringToHash(nameof(StandUp));
+        public int Run { get; } = Animator.StringToHash(nameof(Run));
+        public int Attack { get; } = Animator.StringToHash(nameof(Attack));
+        public int ComboStep { get; } = Animator.StringToHash(nameof(ComboStep));
+        public int Roll { get; } = Animator.StringToHash(nameof(Roll));
+        public int SitDown { get; } = Animator.StringToHash(nameof(SitDown));
+        public int StandUp { get; } = Animator.StringToHash(nameof(StandUp));
     }
 }

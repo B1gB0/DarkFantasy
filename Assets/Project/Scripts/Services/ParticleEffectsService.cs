@@ -108,7 +108,7 @@ namespace Project.Scripts.Services
                 return;
             }
 
-            foreach (var effect in config.Particles)
+            foreach (var effect in config.GetParticles())
             {
                 if (string.IsNullOrEmpty(effect.ParticleName))
                 {

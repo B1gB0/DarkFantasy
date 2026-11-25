@@ -31,12 +31,14 @@ namespace Project.Scripts.Services
         {
             Gold += gold;
             AccumulatedGold += gold;
+            YG2.saves.Gold = Gold;
             OnGoldValueChanged?.Invoke(Gold);
         }
 
         public void SpendGold(int gold)
         {
             Gold -= gold;
+            YG2.saves.Gold = Gold;
             OnGoldValueChanged?.Invoke(Gold);
         }
 

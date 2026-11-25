@@ -1,14 +1,15 @@
 #if CHEATS
 
-using _Project.Scripts.Experience;
-using _Project.Scripts.Services;
+using Project.Scripts.Experience;
+using Project.Scripts.Services;
+using Project.Scripts.UI.View;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Project.Scripts.UI.Panel
 {
-    public class CheatPanel : View.View, IAcceptable
+    public class CheatPanel : View, IAcceptable
     {
         private const int _goldValue = 50;
         private const int _healthValue = 60;
@@ -23,7 +24,6 @@ namespace _Project.Scripts.UI.Panel
 
         private ICurrencyService _currencyService;
         private IPlayerService _playerService;
-        // private ExperiencePoints _experiencePoints;
 
         public int ExpValue => _expValue;
 
@@ -62,11 +62,6 @@ namespace _Project.Scripts.UI.Panel
             gameObject.SetActive(false);
         }
 
-        public void GetServices(ExperiencePoints experiencePoints)
-        {
-            // _experiencePoints = experiencePoints;
-        }
-        
         public void AcceptScore(IScoreActorVisitor visitor)
         {
             visitor.Visit(this);

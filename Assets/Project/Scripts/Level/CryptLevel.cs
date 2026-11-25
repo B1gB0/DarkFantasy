@@ -70,7 +70,7 @@ namespace Project.Scripts.Level
                 portal.SetActive(true);
             }
 
-            IsBossTriggered = true;
+            SetIsBossTriggered(true);
             TryShowBossUI();
         }
 

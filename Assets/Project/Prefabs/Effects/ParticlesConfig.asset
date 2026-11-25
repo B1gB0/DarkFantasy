@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66898159fdbc49bba948aa5b991fe92b, type: 3}
   m_Name: ParticlesConfig
   m_EditorClassIdentifier: 
-  Particles:
-  - ParticleName: BasicHit
-  - ParticleName: MagicExplosion
-  - ParticleName: ShieldEffect
-  - ParticleName: RedBloodHit
-  - ParticleName: MagicChargeBlue
-  - ParticleName: SoulCoil
-  - ParticleName: GenericDeath
-  - ParticleName: ExplosionFireball
+  _particles:
+  - _particleName: BasicHit
+  - _particleName: MagicExplosion
+  - _particleName: ShieldEffect
+  - _particleName: RedBloodHit
+  - _particleName: MagicChargeBlue
+  - _particleName: SoulCoil
+  - _particleName: GenericDeath
+  - _particleName: ExplosionFireball
   _particleLabel: Particles

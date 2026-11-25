@@ -1,19 +1,27 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Project.Scripts.Characteristics
 {
     [Serializable]
     public class HealingModifier
     {
-        public ModifierTimer Timer;
-        public float HealPerSecond;
+        [JsonProperty] private ModifierTimer _timer;
+        [JsonProperty] private float _healPerSecond;
+
+        public HealingModifier()
+        {
+        }
 
         public HealingModifier(float healPerSecond, float duration)
         {
-            HealPerSecond = healPerSecond;
-            Timer = new ModifierTimer(duration);
+            _healPerSecond = healPerSecond;
+            _timer = new ModifierTimer(duration);
         }
 
-        public bool Tick(float deltaTime) => Timer.Tick(deltaTime);
+        [JsonIgnore] public ModifierTimer Timer => _timer;
+        [JsonIgnore] public float HealPerSecond => _healPerSecond;
+
+        public bool Tick(float deltaTime) => _timer.Tick(deltaTime);
     }
 }

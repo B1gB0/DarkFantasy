@@ -6,23 +6,26 @@ namespace Project.Scripts.Enemy.StateMachine.Animation
     {
         protected const float Duration = 0.1f;
 
-        protected readonly Animator Animator;
-        protected readonly EnemyAnimationNamesBase EnemyAnimationBase;
+        private readonly Animator _animator;
+        private readonly EnemyAnimationNamesBase _enemyAnimationBase;
 
         protected EnemyAnimatedState(Animator animator, EnemyAnimationNamesBase enemyAnimationBase)
         {
-            Animator = animator;
-            EnemyAnimationBase = enemyAnimationBase;
+            _animator = animator;
+            _enemyAnimationBase = enemyAnimationBase;
         }
+
+        protected Animator Animator => _animator;
+        protected EnemyAnimationNamesBase EnemyAnimationBase => _enemyAnimationBase;
 
         public virtual void Enter()
         {
-            Animator.StopPlayback();
+            _animator.StopPlayback();
         }
 
         public virtual void Exit()
         {
-            Animator.StopPlayback();
+            _animator.StopPlayback();
         }
     }
 }

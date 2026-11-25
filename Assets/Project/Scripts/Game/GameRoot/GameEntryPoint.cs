@@ -90,7 +90,7 @@ namespace Project.Scripts.Game.GameRoot
                     sceneEntryPoint.Run(_uiRoot).Subscribe(mainMenuExitParameters =>
                     {
                         LoadAndStartGameplay(mainMenuExitParameters
-                            .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
+                            .GetTargetSceneEnterParameters().As<GameplayEnterParameters>()).Forget();
                     });
                 }
                 else
@@ -119,7 +119,7 @@ namespace Project.Scripts.Game.GameRoot
             sceneEntryPoint.Run(_uiRoot, enterParameters).Subscribe(mainMenuExitParameters =>
             {
                 LoadAndStartGameplay(mainMenuExitParameters
-                    .TargetSceneEnterParameters.As<GameplayEnterParameters>()).Forget();
+                    .GetTargetSceneEnterParameters().As<GameplayEnterParameters>()).Forget();
             });
         }
 
@@ -141,17 +141,17 @@ namespace Project.Scripts.Game.GameRoot
         {
             YG2.InterstitialAdvShow();
 
-            var targetSceneName = gameplayExitParameters.TargetSceneEnterParameters.SceneName;
+            var targetSceneName = gameplayExitParameters.GetTargetSceneEnterParameters().SceneName;
 
             if (targetSceneName == Scenes.MainMenu)
             {
                 await LoadAndStartMainMenu(gameplayExitParameters
-                    .TargetSceneEnterParameters.As<MainMenuEnterParameters>());
+                    .GetTargetSceneEnterParameters().As<MainMenuEnterParameters>());
             }
             else
             {
                 await LoadAndStartGameplay(gameplayExitParameters
-                    .TargetSceneEnterParameters.As<GameplayEnterParameters>());
+                    .GetTargetSceneEnterParameters().As<GameplayEnterParameters>());
             }
 
             return gameplayExitParameters;
@@ -159,8 +159,7 @@ namespace Project.Scripts.Game.GameRoot
 
         private async UniTask LoadScene(string sceneName)
         {
-            if (_isLoadingScene)
-                return;
+            if (_isLoadingScene) return;
 
             _isLoadingScene = true;
 

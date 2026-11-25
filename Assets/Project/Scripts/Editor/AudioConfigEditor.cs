@@ -21,7 +21,7 @@ namespace Project.Scripts.Editor
 
             EditorGUILayout.Space(20);
             EditorGUILayout.LabelField("Sounds List", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("Sounds"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_sounds"), true);
 
             serializedObject.ApplyModifiedProperties();
 
@@ -45,7 +45,7 @@ namespace Project.Scripts.Editor
                 {
                     var config = (AudioConfig)target;
                     Undo.RecordObject(config, "Clear All");
-                    config.Sounds.Clear();
+                    config.GetSounds().Clear();
                     EditorUtility.SetDirty(config);
                 }
             }
@@ -68,7 +68,7 @@ namespace Project.Scripts.Editor
                 var config = (AudioConfig)target;
                 Undo.RecordObject(config, "Sort by Name");
 
-                config.Sounds.Sort((a, b) => string.Compare(
+                config.GetSounds().Sort((a, b) => string.Compare(
                     a.ClipName,
                     b.ClipName,
                     StringComparison.Ordinal));
@@ -87,7 +87,7 @@ namespace Project.Scripts.Editor
             bool hasErrors = false;
             var clipNames = new HashSet<string>();
 
-            foreach (var sound in config.Sounds)
+            foreach (var sound in config.GetSounds())
             {
                 if (string.IsNullOrEmpty(sound.ClipName))
                 {
@@ -103,7 +103,7 @@ namespace Project.Scripts.Editor
 
             if (!hasErrors)
             {
-                Debug.Log($"AudioConfig is valid. Total sounds: {config.Sounds.Count}");
+                Debug.Log($"AudioConfig is valid. Total sounds: {config.GetSounds().Count}");
             }
         }
     }

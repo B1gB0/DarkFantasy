@@ -139,13 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0587688d0ca44cc4bb1af2174cc14b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmoothSlider: {fileID: 1307878932289104527}
-  Slider: {fileID: 3763862485438495459}
-  TextValue: {fileID: 4668441061715619293}
+  _smoothSlider: {fileID: 1307878932289104527}
+  _slider: {fileID: 3763862485438495459}
+  _textValue: {fileID: 4668441061715619293}
   _isShowTextValue: 1
   _showPoint: {fileID: 0}
   _hidePoint: {fileID: 0}
-  _weaponPanelPoint: {fileID: 0}
 --- !u!1 &2236234404950454193
 GameObject:
   m_ObjectHideFlags: 0
