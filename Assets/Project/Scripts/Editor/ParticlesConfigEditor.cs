@@ -37,9 +37,10 @@ namespace Project.Scripts.Editor
             if (GUILayout.Button("Clear All", GUILayout.Width(100), GUILayout.Height(30)))
             {
                 if (EditorUtility.DisplayDialog(
-                        "Clear All",
-                        "Удалить все звуки из конфига?",
-                        "Да", "Нет"))
+                    "Clear All",
+                    "Удалить все звуки из конфига?",
+                    "Да",
+                    "Нет"))
                 {
                     var config = (ParticlesConfig)target;
                     Undo.RecordObject(config, "Clear All");
